@@ -1,0 +1,4 @@
+#summary Welcome.
+
+= Introduction =
+Welcome to the game project of Darkaif. This is an on progress in building a game engine with basics elements for building a role playing game or real time world adventure as people create maps. The game is under development. The game document is being re-worked and refine. This will go online for web browser support for those who don’t have high tech computer. All objects will be simple with texture that reduces some load time.
