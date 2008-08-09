@@ -1,0 +1,16 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Game NPCS
+	This will greatly effect player and bot to the npcs.
+	
+TO DO LIST:
+-AI
+-QUEST
+-MISSION
+-HEALTH
+-STATS
+-SHOPS
+-HELPER

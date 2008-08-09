@@ -1,0 +1,41 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+			var keysDown:Array = new Array();
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, addKey, false, 0, true);
+			stage.addEventListener(KeyboardEvent.KEY_UP, removeKey, false, 0, true);
+
+			function addKey(e:KeyboardEvent):void {
+				keysDown[e.keyCode] = true;
+				FlashConnect.trace(String(keysDown[e.keyCode]));
+				FlashConnect.trace("addKey!");
+			}
+			function removeKey(e:KeyboardEvent):void {
+				keysDown[e.keyCode] = false;
+				FlashConnect.trace(String(keysDown[e.keyCode]));
+				FlashConnect.trace("removeKey");
+			}
+			// here's how you'd implement it:
+			var t:Timer = new Timer(25);
+			t.start();
+			t.addEventListener(TimerEvent.TIMER, tick, false, 0, true);
+			
+			function tick(e:TimerEvent):void {
+				//FlashConnect.trace("tick");
+				// old way- if (Key.isDown(Key.RIGHT)) {
+				if (keysDown[Keyboard.RIGHT]) {
+				FlashConnect.trace("right key is down!");
+				}
+				if (keysDown[Keyboard.LEFT]) {
+				FlashConnect.trace("Left key is down!");
+				}
+				if (keysDown[Keyboard.UP]) {
+				FlashConnect.trace("Up key is down!");
+				}
+				if (keysDown[Keyboard.DOWN]) {
+				FlashConnect.trace("Down key is down!");
+				}
+			// etc.
+			}

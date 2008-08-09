@@ -1,0 +1,3 @@
+<?php
+$GameName = 'ItemShopStand.swf';
+?>

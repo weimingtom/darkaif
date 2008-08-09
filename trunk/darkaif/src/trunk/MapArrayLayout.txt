@@ -1,0 +1,38 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+public function MapArrayLayout():void{
+					FlashConnect.trace(
+			"Lenght Row:" + myarray[0].length + " Colum:" + myarray.length
+			);
+			var testrext:TextField = new TextField();
+			
+			FlashConnect.trace(
+			"Lenght Row:" + myarray[1][1]
+			);
+			//myarray[0].length //row
+			//myarray.length //colum
+			var count_x:Number = -1;
+			var count_y:Number = -1;
+			
+			while(true){ //y colum
+				count_y = count_y + 1
+				if (count_y >= myarray.length){
+					FlashConnect.trace("ARRAY DONE");
+					break;					
+				}
+				var tmpstring:String = new String;
+				while(true){ //x row
+					var count_col:Number = count_y;
+					count_x = count_x + 1
+					if (count_x >= myarray[count_y].length){
+						FlashConnect.trace("Row:" + tmpstring);
+						tmpstring = tmpstring.replace('1');
+						break;					
+					}			
+					tmpstring = tmpstring + myarray[count_col][count_x];
+				}
+			}
+		}	

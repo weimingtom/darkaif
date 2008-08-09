@@ -1,0 +1,20 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Game introduction
+
+	Welcome to our world fill with different places to explore the cyber world. There are many places where you can explore and battle between people. That is all depend on your style of your game play. The game is in detail but simple format for easy display menu and status. Although the game is not build only it is in test phase of the game project. The game is real time and never same world you live in. The website is update regularly.
+	
+	There are different map portal and some maps are big. There are safe area and not safe zone.
+	
+	Where you can fight with people or fight with your monster. There will be an area for people who want to fight or duel. There will be some tournament when the game is working in order.
+	
+	You can customizing your character and build they way you wanted it. The game will have a clothing system in place making your own custom clothing’s for event stuff. That makes it fun and not the same ones. But it will have admin or game master approval of the image is approach age.
+	
+	Skill system will be build differently the way you level your skill by using them and required weapons or other relation to the stats of that skills.
+	
+	
+	
+	

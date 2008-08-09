@@ -1,0 +1,46 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+		public function MenuName():void{
+			var moveposition_x:Number;
+			var moveposition_y:Number;
+			var MenuMove:Boolean = false;
+			var Button_drag:RectButton = new RectButton("Drag Me");
+			Button_drag.height = 20;
+			
+			/**
+			 * Note: If button drag to fast the will stop moving. 
+			 * If go near the button area it will up date and click again to make it stop moving.
+			 * Note: If you put graphic shape in here it will not update it need to be redraw over.
+			 */
+			
+			//MOVE
+			Button_drag.addEventListener(MouseEvent.MOUSE_MOVE,Button_DragMove);
+			function Button_DragMove(event:MouseEvent):void{
+				if (MenuMove == true){
+				Button_drag.x = mouseX + moveposition_x;
+				Button_drag.y = mouseY + moveposition_y ;
+				//FlashConnect.trace("move move:"+ MenuMove);
+				//FlashConnect.trace("BUTTON:" + String(Button_drag.x + ":" + Button_drag.y));
+				//FlashConnect.trace("Different:" + String(moveposition_x + ":" + moveposition_y));
+				//FlashConnect.trace("mouse:" + mouseX + ":" + mouseY);
+				}
+			}
+			//DRAG DOWN
+			Button_drag.addEventListener(MouseEvent.MOUSE_DOWN,Button_DragDown);
+			function Button_DragDown(event:MouseEvent):void{
+				moveposition_x = Button_drag.x - mouseX;
+				moveposition_y = Button_drag.y - mouseY;
+				//Button_drag.x = mouseX - 5; //(Button_drag.x - Button_drag.width) + mouseX;
+				//Button_drag.y = mouseY - 5; //(Button_drag.y - Button_drag.height) + mouseY;
+				MenuMove = true;
+				//FlashConnect.trace("move update" + MouseEvent.MOUSE_DOWN);				
+			}
+			//STOP
+			Button_drag.addEventListener(MouseEvent.MOUSE_UP,Button_DragUp);
+			function Button_DragUp(event:MouseEvent):void{
+				MenuMove = false;
+			}
+		}

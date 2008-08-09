@@ -1,0 +1,45 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Game_Jobs   
+Game Jobs -Ideas
+Jobs
+
+Ideas:
+
+You will begin with novice class and you can pick your jobs later. You can change your jobs but your stats will be reset but your main skills are disable that depends on the jobs for skills don't have to be wasted. Paid service will play this part. It will increase over time you change your jobs.
+
+    * Attacker
+    * Swordsman
+    * Dual sword
+    * Spear man
+    * Thief
+    * Assassin 
+
+    * Defender
+    * Tank
+    * Paladin 
+
+    * Long Range
+    * Gunner
+    * Bowman
+    * Cross man
+    * Hunter 
+
+    * Special
+    * Ninja
+    * Samurai 
+
+    * Support
+    * Mage
+    * Cleric
+    * Sage
+    * Archmage
+    * Wizard
+    * Summoner
+    * Red Mage
+    * Blue Mage 
+
+Note: This just listing some jobs that all.

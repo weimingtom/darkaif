@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>flashname.swf</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>	
+	<object>
+		<embed src="flashname.swf"
+		width="500" height="375">			
+		</embed>
+	</object>	
+</body>
+</html>

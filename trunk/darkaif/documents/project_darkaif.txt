@@ -1,0 +1,14 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Project: Darkaif
+Date Created: 9/27/2007
+
+Game type: MMO/RPG/RT
+
+Information:
+	The game is mixed with real time world and role playing game style. That you can explore the world with out even fight or you have to fight. It what ever you want to fight with people or not. There will be area for player who wants to fight but area you can’t do about when the area involves fighting. This game will have or will not have build in game editor. It is depend on the game type and how it will affect real game world. There are many area need improvement. There are features that will help the new type of game play that involve the AI. This will be the challenge for new type of player. This will involve programming and writing your own AI. There will be some preset data starter. You have to teach your AI to talk and other Players. This AI will have the thought progress and battle pattern. This will involve basic idea with the game build. There will be a contest for bot AI chat and Battle Fight in battle.
+	
+Building from the ground up will take time to finish the work. That dealing with testing and code will take time to finish. Working offline and online issue will have some road blocks.

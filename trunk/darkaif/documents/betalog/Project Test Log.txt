@@ -1,0 +1,39 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+======================
+WEBSITE FOR TEST FILES
+======================
+
+http://x.x.x.x/darkaif/
+
+==================================
+FILES THAT HAVE BEEN TESTED ON IE7
+==================================
+
+http://x.x.x.x/darkaif/mutiplayer_web.html
+
+Tested and works but very slow.
+
+----------------------------------------------
+
+http://x.x.x.x/darkaif/MenuTestPanel.html 
+
+Tested and works!
+
+----------------------------------------------
+
+
+=============================================
+FILES THAT NEED TO BE TESTED ON FIREFOX STILL
+=============================================
+
+http://x.x.x.x/darkaif/mutiplayer_web.html
+
+
+http://x.x.x.x/darkaif/MenuTestPanel.html
+
+
+

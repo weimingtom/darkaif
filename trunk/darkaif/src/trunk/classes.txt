@@ -1,0 +1,110 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+			/*
+			//check regsiter script
+			var reg:register = new register();
+			
+			reg.Name = 'Test';
+			reg.password = 'admin';
+			reg.passwordverfity = 'admin';
+			reg.email = 'admin';
+			reg.emailverfity = 'admin';
+			reg.SendData();
+			reg.CheckInput();
+			*/
+			
+			/*
+			//check login script
+			var log:gamelogin = new gamelogin();
+			log.Username = 'admin';
+			log.Password = 'admin.';
+			log.SendData();
+			
+			FlashConnect.trace('GAME ID:' + log.gameloginid);
+			log.CheckGameID();
+			//FlashConnect.trace('Check ID:'+ log.CheckGameID() );
+			*/
+			
+			//var dialog:Dialog = new Dialog();
+			//addChild(dialog);
+			
+			//THIS CREATE MENU BUTTON IN A ROW
+			/*
+			var nmenu:navigationmenu = new navigationmenu();
+			nmenu.addbutton('Hello World');
+			nmenu.addbutton('Hello World');
+			nmenu.addbutton('World');
+			nmenu.addbutton('Hello');
+			nmenu.addbutton('TEST');
+			//addChild(nmenu);
+			
+			var menu:Menu = new Menu();
+			nmenu.y = 26;
+			menu.addChild(nmenu);
+			addChild(menu);
+			//FlashConnect.trace(''+menu.height);
+			*/
+			
+			
+			//FlashConnect.trace(''+);
+			/*
+			var button:Button = new Button();
+			button.x = 200;
+			addChild(button)
+			*/
+		
+			/*
+			var mysound:audio = new audio();
+			mysound.playaudio();
+			*/
+			//}
+			
+			/*
+			var item:Item = new Item();
+			item.getItemdata();
+			item.additem('default','paper',10.11, 12.12);
+
+			
+			item.total();
+			item.price();
+			item.next();
+			item.next();
+			item.next();
+			//item.back();
+			item.price();
+			item.next();
+			item.next();
+			item.next();
+			item.next();
+			//item.sell();
+			*/
+			
+			
+			/*
+			var itemarray:Array = new Array();
+			itemarray = itemshop.GetData();
+			FlashConnect.trace(String(itemarray.length));
+			itemshop.total();
+			//itemshop.total();
+			*/
+			
+			/*
+			var a:Array = new Array();
+			a['name'] = 'admin';
+			a['username'] = 'none';
+			
+			var b:Array = new Array();
+			b[0] = a;
+			var stringarray:String = b[0]['username'];
+			FlashConnect.trace(stringarray);
+			
+			var c:Array = new Array({'name':'admin'},{'username':'none'});
+			FlashConnect.trace(String(c[0]['name']));
+			*/
+			/*
+			var idatabase:ItemDataBase = new ItemDataBase();
+			FlashConnect.trace(String(idatabase.playerx));
+			*/

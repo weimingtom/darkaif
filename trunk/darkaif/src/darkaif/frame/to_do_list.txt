@@ -1,0 +1,20 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+
+Working this section slowly and the class a bit.
+Need to work on the name of the class panel for a bit but for now leave it as it will be change later.
+
+toolbarmenu
+selectboxmenu
+radiobutton
+menu
+dropboxmenu
+checkbox
+
+Drop Item Menu
+Radio Item
+Select Item
+Check Item
