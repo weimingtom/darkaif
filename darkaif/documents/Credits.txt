@@ -1,0 +1,22 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Here are other people work and link and notes to the page of src.
+Please credit people work when working your projects.
+
+CREDITS:
+
+//====================
+User:senocular
+Class:Key
+Information: Key Multi Handler
+Note:port to AS2 to AS3
+http://www.kirupa.com/forum/showpost.php?p=2098269&postcount=319)
+//====================
+User:Rezmason
+Class:none
+Information:Multi Key timer,key array
+http://www.kirupa.com/forum/archive/index.php/t-259803.html
+//====================

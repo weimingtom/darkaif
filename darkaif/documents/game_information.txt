@@ -1,0 +1,78 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+//{
+//===============================================================================================//
+GAME SYTLE:
+//===============================================================================================//
+Game style:
+2D Game and map world is flat and angle slop.
+//}
+//{
+//===============================================================================================//
+GAME PLAY:
+//===============================================================================================//
+	There will be different type of game play during the game develop phase. The game plays are depend on the author and the game design to be build on stand alone or multi players. There are games for earning points in exchange for an item or play for fun.
+
+ There is many ways for real time update that all depend how it is code to reduce bandwidth that deal with the site or server program. There is turn base, point and click move, real time, and etc. Those all depend on game type and how real related to them.  There are different types of game play to talk about but they are different information and how the game is formatted. The game deal with role player game or massive multiplayer online.
+	
+Turn Base Turns:
+	-When the player executes the code it does query for every action you do and check if the other player is finish their turn or not.
+	-Board games
+	-Battle turns
+	
+Point and Click Move:
+	-Player is move to map to map or next scene to the next scene when there is select object is selected or hover over…  
+	-When you’re moving around the map by tile by tile that does every query. That deal with anti-hack issues.
+
+Real Time:
+	This required more information about how local network is connecting with out looping the code. Not enough information about this one that this required a server to run real time. The commutation between the server programs is need.
+//}
+//{	
+//===============================================================================================//
+GAME ART:
+//===============================================================================================//
+Information: The art design is still not created yet until the game codes are done.
+//}
+//{
+//===============================================================================================//
+GAME ENGINE
+//===============================================================================================//
+	Information: The Game will be base on real-time update for player to interact with each other online.  Server code will be build and simple function will be made. There is not enough information to write this out until it is build and ready for more information.
+
+IDEAS BASE: (Offline might not be added …)
+	This game will be online and offline system is code where base if possible to interact with the coder and the players. That depend if there really a game. Heh. These parts of the AI code build around them. Building the code that can connect to the server and have fun doing things.
+//}
+//{
+//===============================================================================================//
+GAME MAP
+//===============================================================================================//
+Map Code will be build in 2D and other support codes for render issues.
+
+Zone Area:
+	The zone will be create for if they are willing to fight or not and some time you don't have a choice since the area are for fighting.
+	The Zone Area:
+	-Public Zone	-(This area is control by the admin, gm and other groups that depend on the build)
+	-Private Zone	-(This area for player who owns certain area or Safe zone)
+	-Free Zone		-(This Choice what ever you want to attack player with their settings on or not)
+	There are different zone that will be built and the type zone will be support. This Zone area will be made differently and work on later to fix some spot area.
+	
+Free Areas
+	There are areas to explore you can explore freely and there are sometime not. There areas with in free Area are not allowed to enter. Some area needs to work on it by the admin or the gm. When this new area are being build and being release before there any error to occur. There some area will have some monsters that will attack players for event or mission. This makes the game interesting what ever if you want to fight or not.
+//}
+//{
+//===============================================================================================//
+AS3 | PHP | MYSQL
+//===============================================================================================//
+There is much software that depends with format and connects issues. If you want free software look around and do research how good the program is. Free software does time and effort to run a game severs.
+
+
+The php code that connect to the data base that eat up band width when the code is loop when checking out data base when the action script 3 is need to update real time to get the information. That depend how to code it. That is limit to local hosting from the source website. Linking the database that is depends on the user if the host is a web interface or server program. Well it hard to explain if there not enough information that I writing this out. 
+
+IDEA ONLY!
+
+There been a lot of people use boting for their own way to play on their own with out doing much and would be call cheating in the game. But this game allows it that will be your main partner. The bot are not use for boottin like for farming, fighting and such. This Bot that you have interact with your bot and talk with your bot and other user and player in the game.
+//}
+

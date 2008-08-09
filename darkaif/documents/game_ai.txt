@@ -1,0 +1,32 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Game AI   
+
+Note: This just an idea builds code work. base on the flow chart and working on the some part of the area need to work out for the game to run.
+Information
+
+    The AI(Artificial Intelligent) will be build a simple chat for talking to the bot and there lot of complex code and pattern to built the correct version of it. Coding and testing will take some to finish part of the game conditions. 
+
+Basic AI
+
+    There is two or more basic AI code to be built. This is just a simple AI and to be added on for game functions. One is to talk to the player for information use or feed in as the data grows. Two, thinking and processing AI direction. 
+
+Advance AI
+
+    This involve in psychics of the objects. Like how much the object weight and how many joint that move freely or limit to the movements. There another one see and hear. TO recognizes the objects. 
+
+Learning Method AI
+
+    This section will be applying and changing conditions. Update the AI thinning process dealing with movement and talking and the balance act. The different blocks of the AI codes will have event and action to trigger what the Ai is thinking. From the real world or the fantasy world that deal with objects physics. 
+
+Beyond AI
+
+    This is the last one able to think on it own. 
+
+AI Chat
+
+    The most difficult for all games for making a good talk and interact with people and other AI Pals. Right now I am going to create a simple version for talking. Then later advance the code for a bit. 
+

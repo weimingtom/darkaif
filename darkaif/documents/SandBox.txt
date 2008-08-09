@@ -1,0 +1,13 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+SandBox 
+ * Step one right click on your flash player
+ * Step two Click on settings
+ * Step 3 Click on Advanced this will pop in new window to access the internet
+ * Step 4 Click on the link that say "...Global Security Settings panel."
+ * Step 5 click Edit localtion >  add localtion.
+ * Step 5 Click "broswer for folder" for your current project location.
+This will not give you error in the security issues. Note this is from your settings for flash player.

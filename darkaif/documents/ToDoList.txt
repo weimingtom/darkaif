@@ -1,0 +1,143 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+
+Clean Up SVN:
+
+// NOTICE THIS AND OTHERS FILES CAN BE MOVE AROUND OR DELETE ON THE MOVE!
+Work on easy to understand words files and simple name issues need to be fix.
+
+To Do List:
+Legends:
+D = Done
+WP = Work in Porgress
+LD = Layout Done
+NS = Network Server
+NW = Not Working
+DD = Desgin In Develop
+CW = Current Working
+SP = Side Projects
+PD = Part Done
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// PROJECT SECTION
+///////////////////////////////////////////////////////////////////////////////////////////////////
+-Server Program
+-Client Program
+
+-Mail						[PD]
+-Credits
+-Video
+
+-Multi Key Event			[Part Done]
+-Create Button				[Done]
+-Create Register			[Part Done]
+-Create Login				[Part Done]
+-Loading Bar				[PD][CW]
+
+-Create Menu				[Part Done]
+-Create Skin				[CW]
+-Drag Menu					[Part Done][CW]
+-Moving Object				[PD]
+-Moving Image				[PD]
+-Database Update Real Time
+-Security
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ACTION SCRIPT SECTION
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//===============================================//
+// Audio
+//===============================================//
+-audio						[PD]
+-sound						[WP]
+-music
+--loop
+
+//===============================================//
+// - Map
+//===============================================//
+-tiles						[PD]
+-tile format				[WP]
+-loading tiles table		[PD]
+-loading tiles images		[PD]
+-array						[PD]
+
+//===============================================//
+// - Create DataBase
+//===============================================//
+-Array Code					[]
+-Character					[]
+--player					[PD][WP]
+--npc						[]
+--monster					[]
+-Item						[]
+-Shop						[]
+-Equipment					[]
+-object						[]
+-interact object			[]
+-Quest						[]
+
+//===============================================//
+// - XML Format
+//===============================================//
+-Basic under standing xml 	[PD]
+-Map Data					[PD][WP]
+
+//===============================================//
+// - Menu Design
+//===============================================//
+- Menu Build			[]
+- Menu Panel			[]
+- Menu Frame 			[]
+
+//===============================================//
+// - Image class
+//===============================================//
+-image render animation		[PD][WP]
+-tile render animtaion		[PD]
+-Image Format				[]
+-image render				[]
+
+//===============================================================================================//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// PHP SCRIPT
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//===============================================//
+// - Website interface
+//===============================================//
+-Login Page					[PD]
+-Register Page				[PD]
+-Activate Page				[PD]
+-Member Panel				[]
+
+//===============================================//
+// - MYSQL
+//===============================================//
+-Build database			[PD][WP]
+
+//===============================================//
+// - PHP
+//===============================================//
+-create database			[PD][WP]
+-create functons
+-Create season/cookies code [PD]
+-admin functions			[PD][WP]
+
+//===============================================//
+DATA MANAGENEMT:
+//===============================================//
+	Dealing with data information and image rendering on every code line that is fill with error that will not lag the game not very much. That depend on the test that will be making them.
+	
+First Step build the basic information and images. Create a Spread code that not interact it yet or with it.
+
+To Do list:
+-Position
+-Collision
+-Image size
+-actions
+
+Class build and parent inherit. Dealing with player, npc, monster, object, and etc. relation to the objects.

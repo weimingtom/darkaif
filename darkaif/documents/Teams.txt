@@ -1,0 +1,22 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+PROJECT NAME: DARKAIF
+
+LEADER: Darknet
+
+Story:
+
+Teams:
+
+Programer:
+
+Artist:
+
+Scripting:
+
+Beta Tester:
+-Jairm
+-h3xlas3r

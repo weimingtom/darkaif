@@ -1,0 +1,9 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+IF THE FILE ARE IN HERE.
+THEY MOVE WILL BE EITHER MOVE OR DELETE!
+
+THEY ARE WORK IN PORGRESS FILES!

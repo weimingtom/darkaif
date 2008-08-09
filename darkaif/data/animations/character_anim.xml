@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<character>
+	<name>Noob</name>
+	<job>Noive</job>
+	<action>
+		<framename></framename>
+		<imagesrc></imagesrc>
+		<imageheight>32</imageheight>
+		<imagewidth>32</imagewidth>
+		<framestart></framestart>
+		<frameend></frameend>
+	</action>
+</character>

@@ -1,0 +1,35 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Game Level Editor:
+
+	The map editor will be simple as it can be. Dealing with different objects in the game will be place able to be playable. Building stable map and the map format for export and import. The map editor will be enable in the game for public or private for current owner of the map or not show in the map. There will be a setting for player and the owner for map creation and finish settings. There you need to branch off the map that has to be connecting to each relation to the theme of the map that is next to it. But it is up to you build your own map. Object place map for monster, npc, and etc. will be support later on to the game.
+	
+	There will be offline editor and online editor that depend it is stable version of the game and the server side used. There will be some subscript if build to create basic build and tree tech branch codes support that it will take some time to finish.
+	
+	The map editor is build around fun and simple map. It will deal with layers of code that will support it.
+	
+	This will take some time to build a simple map and tree classes will support the game build and how will it act in the real world. There will be a lot of trouble shooting in the game and outside for code fix and error management in some part the game area builds.
+
+
+	
+These deals with map build and object place to interact or place there. This will be 2D plain field area. The format to read and write map will take time until all the codes are build and update to the latest version if it.
+	
+	There will be couple of stage need to be built upon competition.
+	First Animation and Image code setup
+	Next is the mapping code for load and save the map file.
+	Next refine the code map.
+	Map and Player Event Key. This will depend on the order of the map build function and other Support classes.
+		First move the map.
+		Or
+		Second Move the player and the map stay there and use port view only that location.
+	Next Add layers for images
+	Next Add Object in the map for building other things to work.
+	Next Add portal map or map system code.
+	Next add for trigger and events.
+	Next Add sub map functions.
+	Next item shop and inventory code.
+	Next Object place real time builds code.
+	Next sort out for button and menu other stuff relation to the build code.

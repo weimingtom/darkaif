@@ -1,0 +1,12 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+Multiplayer   
+This multiplayer support will be support later.
+
+Here another one dealing with server and client support for what ever there are more than one player involve in one map. That need to be image create image Multi Images. Well reaseching and learning at same will take time to finish. Plus register user iusses.
+
+Multiplayer Turn Base:
+	The game is turn base game. 

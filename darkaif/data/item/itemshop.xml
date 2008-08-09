@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<shopitem>
+				<item>
+					<shopname>default </shopname>
+					<itemname> bottle </itemname>
+					<buyprice> 1 </buyprice>
+					<sellprice> 1 </sellprice>
+				</item>
+				<item>
+					<shopname>default </shopname>
+					<itemname> Can </itemname>
+					<buyprice> 1 </buyprice>
+					<sellprice> 1 </sellprice>
+				</item>
+				<item>
+					<shopname>default </shopname>
+					<itemname> Paper </itemname>
+					<buyprice> 1 </buyprice>
+					<sellprice> 1 </sellprice>
+				</item>
+				<item>
+				<shopname>default </shopname>
+				<itemname> Letter </itemname>
+				<buyprice> 1 </buyprice>
+				<sellprice> 1 </sellprice>
+				</item >
+			</shopitem >

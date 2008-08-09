@@ -1,0 +1,46 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+		public function MenuName():void{
+			var moveposition_x:Number;
+			var moveposition_y:Number;
+			var MenuMove:Boolean = false;
+			var Button_drag:RectButton = new RectButton("Drag Me");
+			Button_drag.height = 20;
+			addChild(Button_drag);
+			//stage.
+			
+			//MOVE
+			Button_drag.addEventListener(MouseEvent.MOUSE_MOVE,buttondragmove);
+			function buttondragmove(event:MouseEvent):void{
+				if (MenuMove == true){
+				Button_drag.x = mouseX -5;// moveposition_x;
+				Button_drag.y = mouseY -5;// moveposition_y ;
+				FlashConnect.trace("move move:"+ MenuMove);
+				}
+			}
+			
+			//DRAG
+			Button_drag.addEventListener(MouseEvent.MOUSE_DOWN,buttondragupdate);
+			function buttondragupdate(event:MouseEvent):void{
+				moveposition_x = Button_drag.x - mouseX;
+				moveposition_y = Button_drag.y - mouseY;
+				//Button_drag.x = mouseX - 5; //(Button_drag.x - Button_drag.width) + mouseX;
+				//Button_drag.y = mouseY - 5; //(Button_drag.y - Button_drag.height) + mouseY;
+				if (MouseEvent.MOUSE_DOWN == "mouseDown"){
+					MenuMove = true;
+				} else {
+					MenuMove = false;	
+				}
+				
+				FlashConnect.trace("move update" + MouseEvent.MOUSE_DOWN);				
+			}
+			
+			//STOP
+			Button_drag.addEventListener(MouseEvent.MOUSE_UP,buttondragstop);
+			function buttondragstop(event:MouseEvent):void{
+				MenuMove = false;
+			}
+		}

@@ -1,0 +1,15 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+GAME CHARACTERS:
+
+You can customizing your character and build they way you wanted it. The game will have a clothing system in place making your own custom clothing’s for event stuff. That makes it fun and not the same ones. But it will have admin or game master approval of the image is approach age. When the system is build up for add on. There are layer of clothing would effect your game player and the world. The clothing that will effect would be holiday wear, season wear, armour, and etc.
+
+TO DO LIST:
+-Costume
+-arrmor
+-age
+-gender
+-game style

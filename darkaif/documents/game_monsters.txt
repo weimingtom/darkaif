@@ -1,0 +1,12 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+GAME MONSTER:
+
+TO DO LIST:
+-AI
+-Actions
+-Image
+-Skill

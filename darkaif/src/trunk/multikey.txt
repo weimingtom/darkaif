@@ -1,0 +1,39 @@
+/**
+* ...
+* @author Darknet
+* Copy Rights (c) http://darkaif.googlecode.com
+*/
+
+import com.Keyboard.*;
+import flash.events.*;
+
+// Key is used so we can test for a key being down, like we used to do in AS2
+Key.initialize(stage);              
+
+// Create your key detector and set up a few combinations to test for
+var keyDet = new KeyDetection(stage);
+keyDet.addCombination(“undo”, Keyboard.CONTROL, 90); // Control + Z
+keyDet.addCombination(“redo”, Keyboard.CONTROL, 89); // Control + Y
+keyDet.addCombination(“three keys”, Keyboard.CONTROL, Keyboard.SHIFT, 89); // Control + Shift + Y
+
+// Add a listener so we can respond to key combinations when they are pressed
+keyDet.addEventListener(KeyComboEvent.KEY_COMBINATION, keyCombo);
+
+function keyCombo(event:KeyComboEvent):void
+{
+    switch (event.label)
+    {
+        case “undo”:
+            trace(“Undo Combination Pressed”);
+            textArea.appendText(“Undo Combination Pressedn”);
+            break;
+        case “redo”:
+            trace(“Redo Combination Pressed”);
+            textArea.appendText(“Redo Combination Pressedn”);
+            break;
+        case “three keys”:
+            trace(“Our three-key Combination was Pressed”);
+            textArea.appendText(“Our three-key Combination Pressedn”);
+            break;
+    }
+}
