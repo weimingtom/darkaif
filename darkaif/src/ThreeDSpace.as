@@ -18,10 +18,12 @@ package
 	import sandy.materials.attributes.*;
 	import sandy.primitive.*;
 	import sandy.parser.*;
-	//import darkaif.core.model.*;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	import org.flashdevelop.utils.FlashConnect;
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
+	import sandy.core.data.Vector;
 
 	/**
 	* ...
@@ -35,11 +37,15 @@ package
 		private var pot:Shape3D;
 		private var player_model:Shape3D;
 		
-		public var move_left:Boolean = true;
-		public var move_right:Boolean = true;
-		public var move_up:Boolean = true;
-		public var move_down:Boolean = true;
+		public var move_left:Boolean = false;
+		public var move_right:Boolean = false;
+		public var move_up:Boolean = false;
+		public var move_down:Boolean = false;
+		public var move_forward:Boolean = false;
+		public var move_backward:Boolean = false;
+		public var keysDown:Array = new Array();
 		
+		public var gametick:Timer = new Timer(25);
 		
 		public function ThreeDSpace() 
 		{
@@ -60,108 +66,137 @@ package
 			// Listen to the heart beat and render the scene
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressedHandler);
+			
+			//game timer for keyboard
+			gametick.start();
+			gametick.addEventListener(TimerEvent.TIMER, tick, false, 0, true);
+			
+			//keyboard events
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, addKey, false, 0, true);
+			stage.addEventListener(KeyboardEvent.KEY_UP, removeKey, false, 0, true);
+		}
+		
+		public function addKey(e:KeyboardEvent):void {
+			keysDown[e.keyCode] = true;	
+			//FlashConnect.trace(String(e.keyCode));
+		}
+		public function removeKey(e:KeyboardEvent):void {
+			keysDown[e.keyCode] = false;
+		}
+		
+		private function tick(e:TimerEvent):void {
+			if (keysDown[Keyboard.SPACE]){
+				//FlashConnect.trace("Space key");
+				player_model.z = 0;
+				player_model.x = 0;
+				player_model.y = 18;
+				camera.x = 0;
+				camera.y = 100;
+				camera.z = -200;
+			}
+			if (keysDown[Keyboard.HOME])
+			{
+				FlashConnect.trace("LIST:");
+				for (var g:int = 0; g < scene.root.children.length; g++)
+				{
+					FlashConnect.trace(String(scene.root.children[g].name));
+				}
+				
+			}
+			if (keysDown[Keyboard.END])
+			{
+				FlashConnect.trace("LIST:");
+				for (var b:int = 0; b < scene.root.children.length; b++)
+				{
+					FlashConnect.trace(String(scene.root.children[b].name));
+					//if (scene.root.children[b].name == 'box' )
+					//{
+						scene.root.removeChildByName( "box" );
+					//}
+				}
+				
+			}
+			if (keysDown[Keyboard.SHIFT]){ //hold Shif key to move up and down
+				//FlashConnect.trace("Shift key");
+				if (keysDown[Keyboard.UP]){
+					move_up = true;
+					//FlashConnect.trace("forward");
+				}else{
+					move_up = false;
+				}
+				if (keysDown[Keyboard.DOWN]){
+					move_down = true;
+				}else{
+					move_down = false;
+				}
+				
+			}
+			else
+			{
+				if (keysDown[Keyboard.UP]){
+					move_forward = true;
+					//FlashConnect.trace("forward");
+				}else{
+					move_forward = false;
+				}
+				if (keysDown[Keyboard.DOWN]){
+					move_backward = true;
+				}else{
+					move_backward = false;
+				}
+			}
+			
+			
+			if (keysDown[Keyboard.LEFT]){
+				move_left = true;
+			}
+			else
+			{
+				move_left = false;
+			}
+			if (keysDown[Keyboard.RIGHT])
+			{
+				move_right = true;
+			}
+			else
+			{
+				move_right = false;
+			}
+			if ((move_forward)&& (!Shape3DCollision(0, 0, 1, player_model, pot)))
+			{
+				player_model.z += 2;
+				//camera.y -= 5;
+				//FlashConnect.trace("forward");
+			}
+			else if ((move_backward)&& (!Shape3DCollision(0, 0, -1, player_model, pot)))
+			{
+				player_model.z -= 2;
+				//camera.y += 5;
+			}
+			if ((move_up)&& (!Shape3DCollision(0, 1, 0, player_model, pot)))
+			{
+				player_model.y += 2;
+				//camera.y -= 5;
+			}
+			else if ((move_down)&& (!Shape3DCollision(0, -1, 0, player_model, pot)))
+			{
+				player_model.y -= 2;
+				//camera.y += 5;
+			}
+			if ((move_left)&& (!Shape3DCollision(-1, 0, 0, player_model, pot)))
+			{
+				player_model.x -= 2;
+				//camera.x += 5;
+			}
+			else if (move_right && (!Shape3DCollision(+1, 0, 0, player_model, pot)))
+			{
+				player_model.x += 2;
+				//camera.x -= 5;
+			}
 		}
 		
 		private function keyPressedHandler(event:flash.events.KeyboardEvent):void {
-			//FlashConnect.trace(String(player_model.boundingBox));
-			//FlashConnect.trace("Player");
-			//FlashConnect.trace(String("[" + player_model.x + "]:[" + player_model.y+ "]:[" + player_model.z+"]"));
-			//FlashConnect.trace(String(player_model.y));
-			//FlashConnect.trace("POT");
-			//FlashConnect.trace(String("["+ pot.x + "]:[" + pot.y+ "]:[" + pot.z+"]"));
-			//FlashConnect.trace(String(pot.y));
-			//FlashConnect.trace(String(pot.y));
-			
-			//FlashConnect.trace(String(player_model.boundingBox.transform(player_model.viewMatrix)));
-			//FlashConnect.trace("out:" + player_model.out.cross(pot.side) + " side:" + player_model.side + " up:" + player_model.up);
-			//FlashConnect.trace("Center:" + player_model.geometryCenter);
-			/*
-			if ((player_model.z + 8 >= (pot.z - 8)) && //z
-				(player_model.z - 8 <= (pot.z + 8)) &&
-				(player_model.x + 8 >= (pot.x - 8)) && 
-				(player_model.x - 8 <= (pot.x + 8))
-				){
-				//move_up = false;
-			}else{
-				//move_up = true;
-			}
-			
-			if ((player_model.x + 8 >= (pot.x - 8)) && //x
-				(player_model.x - 8 <= (pot.x + 8)) &&
-				(player_model.z + 8 >= (pot.z - 8)) && 
-				(player_model.z - 8 <= (pot.z + 8))
-				){
-				//move_left = false;
-			}else{
-				//move_left = true;
-				
-			}
-			
-			if ((player_model.y + 8 >= (pot.y - 8)) && //y
-				(player_model.y - 8 <= (pot.y + 8)) &&
-				(player_model.x + 8 >= (pot.x - 8)) && 
-				(player_model.x - 8 <= (pot.x + 8))
-				){
-				//move_down = false;
-			}else{
-				//move_down = true;
-				
-			}
-			*/
-			//FlashConnect.trace(String(player_model.side));
-			//FlashConnect.trace(String(player_model.up));
-			//FlashConnect.trace(String(player_model.out));
-			switch(event.keyCode) {
-				case Keyboard.SPACE:
-					FlashConnect.trace("Space key");
-					player_model.z = 0;
-					player_model.x = 0;
-					player_model.y = 18;
-					camera.x = 0;
-					camera.y = 100;
-					camera.z = -200;
-					break;
-				case Keyboard.UP:
-					if (!Shape3DCollision(0,-5,0,player_model,pot)){
-					player_model.y -= 5;
-					camera.y -= 5;
-					}else
-					{
-						player_model.y += 5;
-					camera.y += 5;
-					}
-					break;
-				case Keyboard.DOWN:
-					if (!Shape3DCollision(0,5,0,player_model,pot)){
-					player_model.y += 5;
-					camera.y += 5;
-					}else
-					{
-						player_model.y -= 5;
-						camera.y -= 5;
-					}
-					break;
-				case Keyboard.LEFT:
-					if (!Shape3DCollision(5,0,0,player_model,pot)){
-					player_model.x += 5;
-					camera.x += 5;
-					}else
-					{
-						player_model.x -= 5;
-						camera.x -= 5;
-					}
-					break;
-				case Keyboard.RIGHT:
-					if (!Shape3DCollision(-5,0,0,player_model,pot)){
-					player_model.x -= 5;
-					camera.x -= 5;
-					}else
-					{
-						player_model.x += 5;
-						camera.x += 5;
-					}
-					break;
-			}
+		
 		}
 		
 		private function Shape3DCollision(bx:Number,by:Number,bz:Number,box1:Shape3D, box2:Shape3D):Boolean
@@ -170,34 +205,17 @@ package
 			var tmp2:Shape3D;
 			tmp1 = box1;
 			tmp2 = box2;
-			/*
-			if (bx != 0)
-			{
-				tmp1.x = tmp1.x + bx;
-				FlashConnect.trace("There is no zero:x");
-			}
-			if (by != 0)
-			{
-				tmp1.y = tmp1.y + by;
-				FlashConnect.trace("There is no zero:y");
-			}
-			if (bz != 0)
-			{
-				tmp1.z = tmp1.z + bz;
-				FlashConnect.trace("There is no zero:z");
-			}
-			*/
-			FlashConnect.trace("Hello");
-			//FlashConnect.trace(String(box1.y));
-			//FlashConnect.trace(String(box2.y));
-			if ((box1.z + 8 >= (box2.z - 8)) &&
-				(box1.z - 8 <= (box2.z + 8)) &&
-				(box1.y + 8 >= (box2.y - 8)) &&
-				(box1.y - 8 <= (box2.y + 8)) &&
-				(box1.x + 8 >= (box2.x - 8)) && 
-				(box1.x - 8 <= (box2.x + 8))
+			//tmp1.x = tmp1.x + 1; //This will update the current object that it will return to the owner
+			//max is + from center
+			//min is - from center
+			if (((tmp1.z + bz) + tmp1.boundingBox.max.z >= (tmp2.z + tmp2.boundingBox.min.z)) &&
+				((tmp1.z + bz) + tmp1.boundingBox.min.z <= (tmp2.z + tmp2.boundingBox.max.z)) &&
+				((tmp1.y + by) + tmp1.boundingBox.max.y >= (tmp2.y + tmp2.boundingBox.min.y)) &&
+				((tmp1.y + by) + tmp1.boundingBox.min.y <= (tmp2.y + tmp2.boundingBox.max.y)) &&
+				((tmp1.x + bx) + tmp1.boundingBox.max.x >= (tmp2.x + tmp2.boundingBox.min.x)) && 
+				((tmp1.x + bx) + tmp1.boundingBox.min.x <= (tmp2.x + tmp2.boundingBox.max.x))
 				){
-				FlashConnect.trace("Collision");	
+				//FlashConnect.trace("Collision");	
 				return true; //there is colision
 			}else{
 				//FlashConnect.trace("No Collision");
@@ -217,13 +235,13 @@ package
 			material.lightingEnable = true;
 			var app:Appearance = new Appearance( material);
 			
-			pot = new Box("player_box", 16, 16, 16);
-			//pot.z = 64;
-			pot.y = 64;
+			pot = new Box("box", 16, 16, 16);
+			pot.z = 64;
+			pot.y = 0;
 			pot.appearance = app;
 			player_model = new Box("player_box", 16, 16, 16);
 			
-			player_model.y = 32;
+			player_model.y = 0;
 			material = new ColorMaterial( 0xadd8e6, 0.9, materialAttr);
 			material.lightingEnable = true;
 			app = new Appearance( material);
@@ -231,7 +249,6 @@ package
 			player_model.enableBackFaceCulling = false;
 			player_model.enableClipping = true;
 			player_model.appearance = app;
-			
 			
 			pot.enableBackFaceCulling = false;
 			pot.enableClipping = true;
