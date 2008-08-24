@@ -15,7 +15,7 @@
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\htdocs\darkaif\src\Main.as</path-element>
+    <path-element>C:\htdocs\darkaif\src\ThreeDSpace.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>21</default-frame-rate>

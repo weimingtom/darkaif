@@ -15,8 +15,6 @@ package
 	* @author Darknet
 	* Copy Rights (c) http://darkaif.googlecode.com
 	*/
-	
-	//{PACKAGES
 	import flash.display.Sprite;
 	import flash.events.*;
 	import sandy.core.Scene3D;
@@ -32,28 +30,18 @@ package
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import sandy.core.data.Vector;
-	
-	//}PACKAGES
-	public class ThreeDSpace extends Sprite 
+
+	/**
+	* ...
+	* @author Darknet
+	* Copy Rights (c) http://darkaif.googlecode.com
+	*/
+	public class ObjectCollisions extends Sprite 
 	{
 		private var scene:Scene3D;
 		private var camera:Camera3D;
 		private var pot:Shape3D;
-		private var map:Shape3D;
-		private var entity:Shape3D;
 		private var player_model:Shape3D;
-		public var g:Group = new Group("myGroup");
-		public var movex:int = 0;
-		public var movey:int = 0;
-		public var movez:int = 0;
-		
-		//player info
-		public var Playername:String = 'player';
-		public var playerasign:Boolean = false;
-		
-		//objects
-		public var DataObjects:Array = new Array();
-		public var ObjectID:int = 0;
 		
 		public var move_left:Boolean = false;
 		public var move_right:Boolean = false;
@@ -65,7 +53,7 @@ package
 		
 		public var gametick:Timer = new Timer(25);
 		
-		public function ThreeDSpace() 
+		public function ObjectCollisions() 
 		{
 			camera = new Camera3D(300, 300);
 			//camera.y = 224; //d
@@ -94,7 +82,6 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_UP, removeKey, false, 0, true);
 		}
 		
-		//{ KEYBOARD START
 		public function addKey(e:KeyboardEvent):void {
 			keysDown[e.keyCode] = true;	
 			//FlashConnect.trace(String(e.keyCode));
@@ -102,19 +89,8 @@ package
 		public function removeKey(e:KeyboardEvent):void {
 			keysDown[e.keyCode] = false;
 		}
-		//} KEYBOARD END
 		
-		//{GAME TIME START
 		private function tick(e:TimerEvent):void {
-			PlayerMove();
-			PlayerCollisionCheck();
-		}
-		//}GAME TIME END
-		
-		
-		//{GAME CONTROLS START
-		private function PlayerMove():void
-		{
 			if (keysDown[Keyboard.SPACE]){
 				//FlashConnect.trace("Space key");
 				player_model.z = 0;
@@ -124,39 +100,33 @@ package
 				camera.y = 100;
 				camera.z = -200;
 			}
-			
 			if (keysDown[Keyboard.HOME])
 			{
 				FlashConnect.trace("LIST:");
-				for (var o:int = 0; o < scene.root.children.length; o++)
+				for (var g:int = 0; g < scene.root.children.length; g++)
 				{
-					FlashConnect.trace( ">" + o + ":" + String(scene.root.children[o].name));
-					//FlashConnect.trace(String(scene.root.children[g].name));
+					FlashConnect.trace(String(scene.root.children[g].name));
 				}
-				var objectslist:Array = g.children
-				for (var i:int = 0; i < objectslist.length; i++) {
-				//	// Do what you want with objects[i];
-					FlashConnect.trace("Gourp:" + i +":"+objectslist[i].name);
-				}
+				
 			}
 			if (keysDown[Keyboard.END])
 			{
 				FlashConnect.trace("LIST:");
 				for (var b:int = 0; b < scene.root.children.length; b++)
 				{
-					FlashConnect.trace(String(b + ":" + scene.root.children[b].name));
+					FlashConnect.trace(String(scene.root.children[b].name));
 					//if (scene.root.children[b].name == 'box' )
 					//{
 						scene.root.removeChildByName( "box" );
-					//pot.destroy();
 					//}
 				}
+				
 			}
 			if (keysDown[Keyboard.SHIFT]){ //hold Shif key to move up and down
 				//FlashConnect.trace("Shift key");
 				if (keysDown[Keyboard.UP]){
 					move_up = true;
-					//FlashConnect.trace("up");
+					//FlashConnect.trace("forward");
 				}else{
 					move_up = false;
 				}
@@ -198,84 +168,43 @@ package
 			{
 				move_right = false;
 			}
-		}
-		
-		private function PlayerCollisionCheck():void
-		{
-			if (move_forward)
+			if ((move_forward)&& (!Shape3DCollision(0, 0, 1, player_model, pot)))
 			{
-				//FlashConnect.trace(String(scene.root.children[1].x));
-				movez = 2;
+				player_model.z += 2;
 				//camera.y -= 5;
 				//FlashConnect.trace("forward");
 			}
-			else if (move_backward)
+			else if ((move_backward)&& (!Shape3DCollision(0, 0, -1, player_model, pot)))
 			{
-				movez = -2;
+				player_model.z -= 2;
 				//camera.y += 5;
-			}else
-			{
-				movez = 0;
 			}
-			
-			if (move_up)
+			if ((move_up)&& (!Shape3DCollision(0, 1, 0, player_model, pot)))
 			{
-				movey = 2;
+				player_model.y += 2;
 				//camera.y -= 5;
 			}
-			else if (move_down)
+			else if ((move_down)&& (!Shape3DCollision(0, -1, 0, player_model, pot)))
 			{
-				movey = -2;
+				player_model.y -= 2;
 				//camera.y += 5;
-			}else
-			{
-				movey = 0;
 			}
-			
-			if (move_left)
+			if ((move_left)&& (!Shape3DCollision(-1, 0, 0, player_model, pot)))
 			{
-				movex = -2;
+				player_model.x -= 2;
 				//camera.x += 5;
 			}
-			else if (move_right)
+			else if (move_right && (!Shape3DCollision(+1, 0, 0, player_model, pot)))
 			{
-				movex = 2;
+				player_model.x += 2;
 				//camera.x -= 5;
-			}else
-			{
-				movex = 0;
 			}
-			//FlashConnect.trace(movex + ":" + movey + ":" + movez );
-			//player_model.x
-			//player_model.z
-			//player_model.y
-			var objectmove:Array = g.children
-			
-			objectmove[ObjectID].x += movex;
-			objectmove[ObjectID].y += movey;
-			objectmove[ObjectID].z += movez;
-			
 		}
 		
-		//}GAME CONTROLS END
 		private function keyPressedHandler(event:flash.events.KeyboardEvent):void {
-			if (event.keyCode ==Keyboard.TAB)
-			{
-				ObjectID++;
-				var objects:Array = g.children
-				if (ObjectID >= objects.length)
-				{
-					ObjectID = 0;
-				}
-				FlashConnect.trace("OBJECT:" + String(ObjectID));
-				//if ( objects.length)
-				//objects[ObjectID].x += movex;
-				//objects[ObjectID].y += movey;
-				//objects[ObjectID].z += movez;
-			}
+		
 		}
 		
-		//{ Collision Start
 		private function Shape3DCollision(bx:Number,by:Number,bz:Number,box1:Shape3D, box2:Shape3D):Boolean
 		{
 			var tmp1:Shape3D;
@@ -294,20 +223,19 @@ package
 				){
 				//FlashConnect.trace("Collision");	
 				return true; //there is colision
-			}
-			else
-			{
+			}else{
 				//FlashConnect.trace("No Collision");
 				return false;// there is no collision
+				
 			}
 		}
-		//} Collision End
 		
 		// Create the scene graph based on the root Group of the scene
 		private function createScene():Group
 		{
-			//var g:Group = new Group("myGroup");
-			
+			// Create the root Group
+			var g:Group = new Group("myGroup");
+		 
 			var materialAttr:MaterialAttributes = new MaterialAttributes(new LightAttributes( true, 0.2 ) );
 			var material:Material = new ColorMaterial( 0xE0F87E, 0.9, materialAttr);
 			material.lightingEnable = true;
@@ -317,7 +245,7 @@ package
 			pot.z = 64;
 			pot.y = 0;
 			pot.appearance = app;
-			player_model = new Box("player", 16, 16, 16);
+			player_model = new Box("player_box", 16, 16, 16);
 			
 			player_model.y = 0;
 			material = new ColorMaterial( 0xadd8e6, 0.9, materialAttr);
@@ -328,19 +256,16 @@ package
 			player_model.enableClipping = true;
 			player_model.appearance = app;
 			
-			//DataObjects['Hello'] = new Box("box", 16, 16, 16);
-			//g.addChild( DataObjects['player']);
-			
 			pot.enableBackFaceCulling = false;
 			pot.enableClipping = true;
 			g.addChild( pot );
 			g.addChild(player_model);
-			
+		 
 			// We need to add the pot to the group 
 			return g;
 		}
 		
-		// The Event.ENTER_FRAME event handler tells the world to render
+      // The Event.ENTER_FRAME event handler tells the world to render
 		private function enterFrameHandler( event : Event ) : void{
 			scene.render();
 		}
