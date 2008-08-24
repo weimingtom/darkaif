@@ -34,7 +34,7 @@ package
 	import sandy.core.data.Vector;
 	
 	//}PACKAGES
-	public class ThreeDSpace extends Sprite 
+	public class ControlObjectCollisions extends Sprite 
 	{
 		private var scene:Scene3D;
 		private var camera:Camera3D;
@@ -66,7 +66,7 @@ package
 		
 		public var gametick:Timer = new Timer(25);
 		
-		public function ThreeDSpace() 
+		public function ControlObjectCollisions() 
 		{
 			camera = new Camera3D(300, 300);
 			//camera.y = 224; //d
