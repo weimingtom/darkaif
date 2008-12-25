@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<capitalship>
+		<ship>
+			<class>carrier</class>
+			<faction>none</faction>
+			<healthpoint>100</healthpoint>
+			<healthmaxpoint>100</healthmaxpoint>
+			<shieldpoint>100</shieldpoint>
+			<shieldmaxpoint>100</shieldmaxpoint>
+			<armorpoint>100</armorpoint>
+			<armormaxpoint>100</armormaxpoint>
+			
+			<speed>100</speed>
+			<maxspeed>100</maxspeed>
+			<minspeed>100</minspeed>
+			<turnspeed>100</turnspeed>
+			<maxturnspeed>100</maxturnspeed>
+			
+			<object>
+				<mesh>data/models/spaceship_carrier_light.ase</mesh>
+			</object>
+			<materail>
+				<name>simple_carrier_1</name>
+				<texture>data/textures/spaceship_carrier_light_Cube.jpg</texture>
+			</materail>
+		</ship>
+	</capitalship>
+</data>
