@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<spaceship>
+		
+		<ship>
+			<name>simple_scout</name>
+			<class>fighter</class>
+			<faction>none</faction>
+			<healthpoint>100</healthpoint>
+			<healthmaxpoint>100</healthmaxpoint>
+			<shieldpoint>100</shieldpoint>
+			<shieldmaxpoint>100</shieldmaxpoint>
+			<armorpoint>100</armorpoint>
+			<armormaxpoint>100</armormaxpoint>
+			
+			<speed>100</speed>
+			<maxspeed>100</maxspeed>
+			<minspeed>100</minspeed>
+			<turnspeed>100</turnspeed>
+			<maxturnspeed>100</maxturnspeed>
+			
+			<object>
+				<type>ase</type>
+				<mesh>data/models/spaceship_twin_engine_hex.ase</mesh>
+			</object>
+			<materail>
+				<name>simple_scout_1</name>
+				<texture>data/models/spaceship_twin_engine_hex_ship.jpg</texture>
+			</materail>
+			
+			<collision>
+				<bpolygon>false</bpolygon>
+				<bbox>true</bbox>
+				<bsphere>false</bsphere>
+				<boxcollision>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+					<minx>-1</minx>
+					<maxx>1</maxx>
+					<miny>-1</miny>
+					<maxy>1</maxy>
+					<minz>-1</minz>
+					<maxz>1</maxz>
+				</boxcollision>
+				<spherecollision>
+					
+				</spherecollision>
+			</collision>
+			
+			<crew>1</crew>
+			<weaponslot>
+				<weapon>
+					<passager>1</passager>
+					<name>gun</name>
+					<id>0</id>
+				</weapon>
+			</weaponslot>
+			<turretslot>
+				<turret>
+					<name></name>
+					<id></id>
+				</turret>
+			</turretslot>
+		</ship>
+		
+		
+		
+		<ship>
+			<name>scout_longrange</name>
+			<class>fighter</class>
+			<faction>none</faction>
+			<healthpoint>100</healthpoint>
+			<healthmaxpoint>100</healthmaxpoint>
+			<shieldpoint>100</shieldpoint>
+			<shieldmaxpoint>100</shieldmaxpoint>
+			<armorpoint>100</armorpoint>
+			<armormaxpoint>100</armormaxpoint>
+			
+			<speed>100</speed>
+			<maxspeed>100</maxspeed>
+			<minspeed>100</minspeed>
+			<turnspeed>100</turnspeed>
+			<maxturnspeed>100</maxturnspeed>
+			
+			<object>
+				<type>ase</type>
+				<mesh>data/models/spaceship_scout_longrange.ase</mesh>
+			</object>
+			<materail>
+				<name>scout_longrange_1</name>
+				<texture>data/models/spaceship_scout_longrange_Cube.jpg</texture>
+				<name>scout_longrange_2</name>
+				<texture>data/models/spaceship_scout_longrange_Cube2.jpg</texture>
+			</materail>
+			
+			<collision>
+				<bpolygon>false</bpolygon>
+				<bbox>true</bbox>
+				<bsphere>false</bsphere>
+				<boxcollision>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+					<minx>-1</minx>
+					<maxx>1</maxx>
+					<miny>-1</miny>
+					<maxy>1</maxy>
+					<minz>-1</minz>
+					<maxz>1</maxz>
+				</boxcollision>
+				<spherecollision>
+					
+				</spherecollision>
+			</collision>
+			
+			<crew>1</crew>
+			<weaponslot>
+				<weapon>
+					<passager>1</passager>
+					<name>gun</name>
+					<id>0</id>
+				</weapon>
+			</weaponslot>
+			<turretslot>
+				<turret>
+					<name></name>
+					<id></id>
+				</turret>
+			</turretslot>
+		</ship>
+		
+	</spaceship>
+</data>
