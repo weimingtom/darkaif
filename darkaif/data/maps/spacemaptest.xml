@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<name>namemapdata</name>
+	<objectlist>
+		
+		<mesh>
+			<type>ase</type>
+			<name>customcube</name>
+			<localdir>data/models/cube32.ase</localdir>
+			<mat>
+
+				<tex>data/models/wheel.jpg</tex>
+				
+			</mat>
+		</mesh>
+		
+		<mesh>
+			<type>ase</type>
+			<name>spacegrid</name>
+			<localdir>data/models/spacegrid.ase</localdir>
+			<mat>
+				
+				<tex>data/models/grid.jpg</tex>
+				
+			</mat>
+		</mesh>
+		
+		
+		
+		<!--
+		<mesh>
+			<type>ase</type>
+			<name>player</name>
+			<localdir>data/models/spaceship_twin_engine_hex.ase</localdir>
+			<mat>
+				
+				<tex>data/models/spaceship_twin_engine_hex_ship.jpg</tex>
+				
+			</mat>
+		</mesh>
+		
+		<mesh>
+			
+			<type>ase</type>
+			<name>capcarrier</name>
+			<localdir>data/models/spaceship_capcarrier_fighters.ase</localdir>
+			<mat>
+				
+				<tex>data/textures/spaceship_capcarrier_fighters_Cube.jpg</tex>
+				
+			</mat>
+		</mesh>
+		
+		<mesh>
+			<type>ase</type>
+			<name>spacestation</name>
+			<localdir>data/models/spacestation_simplescube.ase</localdir>
+			<mat>
+				
+				<tex>data/textures/spacestation_simplescube_Cube.jpg</tex>
+				
+			</mat>
+		</mesh>
+		
+		
+		-->
+	</objectlist>
+	
+	<objects>
+		
+		<mesh>
+			<name>customcube</name>
+			<position>
+				<x>32</x>
+				<y>0</y>
+				<z>32</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<offset>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</offset>
+		</mesh>	
+		
+		<mesh>
+			<name>spacegrid</name>
+			<position>
+				<x>0</x>
+				<y>-128</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<offset>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</offset>
+		</mesh>
+		
+		
+		
+		<!--
+		<mesh>
+			<name>player</name>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<offset>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</offset>
+		</mesh>	
+		
+		<mesh>
+			<name>spacestation</name>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>128</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<offset>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</offset>
+		</mesh>
+		
+		<mesh>
+			<name>capcarrier</name>
+			<position>
+				<x>1024</x>
+				<y>0</y>
+				<z>512</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<offset>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</offset>
+		</mesh>
+		-->
+		
+	</objects>
+	
+	<entities>
+		<spawnpoint>
+			<spawn>
+				<event>none</event>
+				<tag>none</tag>
+				<team>0</team>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+				<rotatex>0</rotatex>
+				<rotatey>0</rotatey>
+				<rotatez>0</rotatez>
+			</spawn>
+		</spawnpoint>
+		
+	</entities>
+	
+	<characters>
+	</characters>
+</data>
