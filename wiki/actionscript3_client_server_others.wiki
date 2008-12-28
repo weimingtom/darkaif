@@ -1,0 +1,29 @@
+#summary actionscript3 client/server php/java/python mysql/sqlite.
+
+= Introduction =
+ I still learning about them. Using sockets in binary code to get a multi-player working will take some time. But your using socket xml that depend if simple game. That it would be easy to write. But it up to every one how to code it. I am writing the mixed stuff that can be use for the game. Although it required to learn those languages. But they are simple once you learn it. Learning how to build them is any is question. 
+
+Actionscript3 can't host to save data but it can use url request from php script. It has the security of the sandbox. You search about it.
+
+= php script =
+ php is easy don't need to learn a lot. But you do any way if you want save data or any thing else. Like role playing game and real time strategy. Basic use like buying items once it does a query, but you have to setup the interface.
+
+= server java/python =
+ Making server with those languages are going good thing but it depend if you want to use them or not. For this you can use with out any script once it connect to the socket to the server. It has the listen function. Meaning it can connect to more then one users. Make sure that client some simple tasks and server does it all to deal with hacking.
+
+== Java server ==
+Easy to use once you got one of the IDE for debugging. Compiling to execute jar file. If you want no one to steal it. Packaging is little easy once how to use packages for build class and how functions works. It may take a while to learn it.
+
+== Python server ==
+Easy and simple once you get the hang of it. Python is a script. It can be execute by it self. There are two ways and others. Building your Package is bit harder may take a while to get it working if you want to build a rpg or rts.
+
+ * One use create your python script server you made and then create a batch to able to create a server host.
+
+ * Two it required another learning from building the src of python and add support your own server and to have an execute script.
+
+= Security =
+ Well, this one I will tell this there are full of holes if you don't build security around it. For hack or steal files or data change. Just built a simple server and client before doing that or during your build. That is up to how to build it.
+
+= Tips =
+ * Build your script once at the time else you find your self lost in your code.
+ * Build your code one at the time then later added on.
