@@ -24,6 +24,28 @@ Easy and simple once you get the hang of it. Python is a script. It can be execu
 = Security =
  Well, this one I will tell this there are full of holes if you don't build security around it. For hack or steal files or data change. Just built a simple server and client before doing that or during your build. That is up to how to build it.
 
+ * Binary and XML sockets - You need to setup the access if you making a server. You have test if it connect to the server and allow access only your sites and ports.
+ * Area access it depend on the browser and the operation system. User will get an error if not setup.
+
+flashpolicy.xml
+{{{
+<?xml version="1.0"?>
+<!DOCTYPE cross-domain-policy SYSTEM "/xml/dtds/cross-domain-policy.dtd">
+
+<!-- Policy file for xmlsocket://socks.example.com -->
+<cross-domain-policy> 
+
+   <!-- This is a master socket policy file -->
+   <!-- No other socket policies on the host will be permitted -->
+   <site-control permitted-cross-domain-policies="all"/>
+   <allow-access-from domain="*"/>
+   <!-- Instead of setting to-ports="*", administrator's can use ranges and commas -->
+   <!-- This will allow access to ports 123, 456, 457 and 458 -->
+   <allow-access-from domain="*" to-ports="*" />
+
+</cross-domain-policy>
+}}}
+
 = Tips =
  * Build your script once at the time else you find your self lost in your code.
  * Build your code one at the time then later added on.
