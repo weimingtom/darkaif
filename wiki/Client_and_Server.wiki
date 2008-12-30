@@ -68,6 +68,7 @@ Con:
  * You have learn the other code to able to make a server.
  * If your using the flash engine be sure you know that you code it different.
  * Research does take time out you.
+ * Making multi client to connect to the server. Need to learn it but it can be simple some language code once you seen it.
 
 Tips: Read and research will save time in building the game. If you understand the language in basic code.
 
