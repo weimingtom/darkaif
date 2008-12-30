@@ -32,14 +32,18 @@ Con:
 =Flash Client (Actionscript3) and Server (Java):=
 
 Pro:
- * use the sockets
+ * use the sockets xml and binary.
  * both are almost same way it is package style but way to code.
  * There are easy IDE for quick build for display graphic menu and panels.
+ * socket xml is easy and light weight to for easy games.
+ * It can work both ways that depend how well is your java sockets and actionscript3.
 
 Con:
  * you have to learn java and Actionscript 3 at the same time.
  * database you need to setup
- * build application 
+ * build application
+ * socket binary might be bit harder to java server that you need to know how to code.
+ * If you have 3D engine stuff you got to have game engine that is same is that or equal to make the java server do the work.
 
 =Flash Client (Actionscript3) and Server (Python):=
 
@@ -47,10 +51,12 @@ Pro:
  * use the sockets
  * you can create sqlite simple built from python.
  * it easy to use once you know some basic if you read the stuff online.
+ * Python has it own GUI. Basic menus and buttons.
 
 Con:
  * you have to learn Python and Actionscript 3 at the same time.
  * spacing is important in python.
+ * If you have 3D engine stuff you got to have game engine that is same is that or equal to make the java server do the work.
 
 =Flash Client (Actionscript3) and Server (Other):=
 
