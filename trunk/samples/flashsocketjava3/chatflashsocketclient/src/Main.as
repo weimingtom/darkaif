@@ -28,8 +28,8 @@
 			port = 5555;
 			//flash.system.Security.loadPolicyFile("xmlsocket://" + host + ":" + policyPort)
 			flash.system.Security.allowDomain(host);
-			flash.system.Security.loadPolicyFile("*");
-			flash.system.Security.loadPolicyFile('flashpolicy.xml')
+			//flash.system.Security.loadPolicyFile("*");
+			//flash.system.Security.loadPolicyFile('flashpolicy.xml')
 			
 			
 			connect();
