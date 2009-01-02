@@ -9,4 +9,4 @@ chatflashsocketclient - actionscript3
 
 chatflashjavaserver -java
 
-Error on web page when try to connect.
+Need to work on policy.xml access.
