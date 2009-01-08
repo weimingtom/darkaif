@@ -1,7 +1,5 @@
-#labels todolist
-rpg_game
-
 #summary role playing game work in progress
+#labels todolist
 
 = Introduction =
 	Welcome to role playing game section. Coding and modeling will take a lot time to get it ready.
