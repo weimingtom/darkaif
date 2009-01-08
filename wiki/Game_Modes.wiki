@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary game play for game mode.
 
 =Game Modes:=
 	There will be different type of game play during the game develop phase. The game plays are depend on the author and the game design to be build on stand alone or multi players. There are games for earning points in exchange for an item or play for fun.
