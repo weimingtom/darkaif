@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary simple terrain height map.
 #labels terrain,sandy,heightmap
 
 = Terrain Height Map =
@@ -60,7 +60,7 @@ package
 			for (var i:int = 0; i < terrain.geometry.aVertex.length; i++) {
 				terrain.geometry.aVertex [i].y = 0xFF & hmap.getPixel (
 					UVCoord (terrain.geometry.aUVCoords [i]).u * (hmap.width -1),
-					UVCoord (terrain.geometry.aUVCoords [i]).v * (hmap.height -1*10)
+					UVCoord (terrain.geometry.aUVCoords [i]).v * (hmap.height -1)
 				);
 			}
 			
@@ -79,4 +79,3 @@ package
 	}
 }
 }}}
-
