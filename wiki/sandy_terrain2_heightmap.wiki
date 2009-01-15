@@ -1,7 +1,11 @@
 #summary terrain height map with cube moving.
+#labels sandy,terrain,heightmap
 
 = Introduction =
   This should be simple. This is to test out the terrain and use the cube to check if the cube is moving to ground matches to the height map.
+
+Credits to: 
+ * http://www.flashsandy.org/forum/ 
 
 {{{
 package  
@@ -35,7 +39,7 @@ package
 		private var HeightMap:Class;
 		
 		public var box:Box = new Box( "box", 16, 16, 16);
-		public var terrain:Shape3D = new Plane3D('bottom', 512, 512, 32, 32, Plane3D.ZX_ALIGNED, 'tri');// 512x512 is the size, 16x16 how much you want to divide
+		public var terrain:Shape3D = new Plane3D('bottom', 512, 512, 32, 32, Plane3D.ZX_ALIGNED, 'tri');// 512x512 is the size, 32x32 how much you want to divide
 		public var hmap:BitmapData = Bitmap (new HeightMap).bitmapData; //image hieghtmap in black and white scale
 		
 		public var camera:Camera3D;
