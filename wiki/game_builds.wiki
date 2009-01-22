@@ -1,0 +1,9 @@
+#summary Game Builds.
+#labels rpg
+
+= RPG game builds: =
+   They are work in progress where the game is being builded.
+ * [rpg_animation]
+ * [rpg_player]
+ * [rpg_monster]
+ * [rpg_npc]
