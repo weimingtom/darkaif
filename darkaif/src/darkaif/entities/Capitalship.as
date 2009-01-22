@@ -1,5 +1,6 @@
-﻿package darkaif.entities
+﻿package darkaif.entities 
 {
+	
 	import darkaif.core.collision.CollisionBox;
 	//import darkaif.core.math.Vector3D;
 	import flash.display.Sprite;
@@ -12,7 +13,7 @@
 	 * ...
 	 * @author DefaultUser (Tools -> Custom Arguments...)
 	 */
-	public class Spaceship extends Sprite
+	public class Capitalship extends Sprite
 	{
 		/*
 		 * This scetion will hold the ship data
@@ -25,6 +26,11 @@
 		public var modeltype:String = "ase"; //ase, dae, 3ds, md2 //this will check if error loop
 		public var balive:Boolean = false;
 		public var playername:String = "";
+		public var shipname:String = "";
+		public var shipid:String = "";
+		
+		public var spawnpoint:Array = new Array();
+		
 		//public var name:String = ""; //station name
 		
 		public var healthpoint:Number = 100;
@@ -71,7 +77,7 @@
 		//public var matrix:Array = Array([1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 0]);
 		
 		
-		public function Spaceship() 
+		public function Capitalship() 
 		{
 			var boxbound:CollisionBox = new CollisionBox();
 			boxcollision.push(boxbound);
@@ -145,4 +151,5 @@
 		}
 		//}
 	}
+	
 }

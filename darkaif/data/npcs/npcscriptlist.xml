@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<npcscript>
+		<name>npc</name>
+		<scriptlist>
+			<message>
+				<id>0</id>
+				<text>Hello!, My name is npc. This is just a simple message</text>
+			</message>
+			<message>
+				<id>0</id>
+				<text>This is my next message. Work in progress for npc text.</text>
+			</message>
+			
+		</scriptlist>
+	</npcscript>
+	
+	<npcscript>
+		<name>npc2</name>
+		<scriptlist>
+			<message>
+				<id>0</id>
+				<text>Hello!, My name is npc. This is just a simple message</text>
+			</message>
+		</scriptlist>
+	</npcscript>
+
+</data>
