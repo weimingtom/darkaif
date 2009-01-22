@@ -10,3 +10,6 @@ If you want to know about this game that is currently under development. Here th
  * [Game_Overview]
  * [Game_Interfaces]
  * [Game_Modes]
+
+Working in progress area and builds:
+ * [game_builds]
