@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Animation and frame stuff -->
+<data>
+	<character>
+		<name>player</name>
+		<gender>s</gender>
+		<animmesh>
+			<mesh>
+				<name>walk</name>
+				<file>data/models/simple_character_player_low.md2</file>
+				<!--<file>data/models/Demon.md2</file>-->
+				<framemin>0</framemin>
+				<framemax>20</framemax>
+				<frameset>
+					<action>
+						<name>stand</name>
+						<startframe>1</startframe>
+						<endframe>40</endframe>
+					</action>
+					<action>
+						<name>walk</name>
+						<startframe>40</startframe>
+						<endframe>43</endframe>
+					</action>
+					<action>
+						<name>attack</name>
+						<startframe>43</startframe>
+						<endframe>49</endframe>
+					</action>
+				</frameset>
+			</mesh>
+			<mesh>
+				<name>death</name>
+				<file>data/models/simple_character_player_low.md2</file>
+				<framemin>0</framemin>
+				<framemax>20</framemax>
+			</mesh>
+		</animmesh>
+		<collision>
+			<box>
+				<min>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</min>
+				<max>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</max>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<x>0</x>
+				</position>
+				<rotate>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</rotate>
+			</box>
+			<sphere>
+				
+			</sphere>
+			
+		</collision>
+	</character>
+</data>

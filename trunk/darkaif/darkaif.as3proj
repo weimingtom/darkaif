@@ -8,7 +8,7 @@
     <movie fps="21" />
     <movie width="300" />
     <movie height="300" />
-    <movie version="9" />
+    <movie version="10" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -36,7 +36,7 @@
     <option useResourceBundleMetadata="True" />
     <option warnings="True" />
     <option verboseStackTraces="False" />
-    <option additional="" />
+    <option additional="-use-network=false" />
     <option customSDK="" />
   </build>
   <!-- SWC Include Libraries -->
@@ -65,11 +65,76 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\ThreeDSpace.as" />
+    <compile path="src\RolePlayingGame.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="src\DataSheet.as" />
+    <hidden path="src\Away3DEditor.as" />
+    <hidden path="src\PaperVision3DEditor.as" />
+    <hidden path="src\TwoDLevelMap.as" />
+    <hidden path="src\ThreeDSpace.as" />
+    <hidden path="src\darkaif\core\audio" />
+    <hidden path="src\darkaif\classes" />
+    <hidden path="src\SpacePioneer.as" />
+    <hidden path="src\README.txt" />
+    <hidden path="src\timeline loader stuff.txt" />
+    <hidden path="data\maps\DM-spaceship.xml" />
+    <hidden path="data\maps\map_med.xml" />
+    <hidden path="data\maps\map_null.xml" />
+    <hidden path="data\maps\maplist.xml" />
+    <hidden path="data\maps\README.txt" />
+    <hidden path="data\maps\rifton_townmap.xml" />
+    <hidden path="data\ships\faction_class_type.xml" />
+    <hidden path="data\ships\federation_scout_protype.xml" />
+    <hidden path="documents" />
+    <hidden path="scripts" />
+    <hidden path="src\MenuBuilds.as" />
+    <hidden path="src\CustomPolygon.as" />
+    <hidden path="src\Customcollision.as" />
+    <hidden path="favicon.ico" />
+    <hidden path="index.html" />
+    <hidden path="index.php" />
+    <hidden path="README.TXT" />
+    <hidden path="src\MainGame.as" />
+    <hidden path="src\Main.as" />
+    <hidden path="src\SandyShape.as" />
+    <hidden path="src\PaperVisionSpace.as" />
+    <hidden path="src\LoadMeshASE3.as" />
+    <hidden path="src\LoadMeshASE2.as" />
+    <hidden path="src\LoadMeshASE.as" />
+    <hidden path="src\LoadASE.as" />
+    <hidden path="spaceship_scout_longrange.ase" />
+    <hidden path="spaceship_scout_longrange.obj" />
+    <hidden path="spaceship_scout_longrange_Cube2.jpg" />
+    <hidden path="Formats.txt" />
+    <hidden path="src\spaceship_scout_longrange_Cube.jpg" />
+    <hidden path="src\darkaif\core\database" />
+    <hidden path="src\darkaif\core\entity" />
+    <hidden path="src\darkaif\core\event" />
+    <hidden path="src\darkaif\core\data" />
+    <hidden path="src\darkaif\core\math" />
+    <hidden path="src\darkaif\core\network" />
+    <hidden path="src\darkaif\core\node" />
+    <hidden path="src\darkaif\core\script" />
+    <hidden path="src\darkaif\core\system" />
+    <hidden path="src\darkaif\core\ui" />
+    <hidden path="src\darkaif\core\Board.as" />
+    <hidden path="src\darkaif\core\CamView.as" />
+    <hidden path="src\darkaif\core\GameMode.as" />
+    <hidden path="data\audio" />
+    <hidden path="data\entity" />
+    <hidden path="data\item" />
+    <hidden path="data\library" />
+    <hidden path="data\physics" />
+    <hidden path="src\darkaif\core\ai" />
+    <hidden path="src\Example001.as" />
+    <hidden path="src\Anim02MD2.as" />
+    <hidden path="src\AnimMD2.as" />
+    <hidden path="src\SandyEditor.as" />
+    <hidden path="src\SandyEditor2.as" />
+    <hidden path="spaceship_scout_longrange_Cube.jpg" />
+    <hidden path="car.ase" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

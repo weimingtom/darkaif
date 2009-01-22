@@ -1,5 +1,6 @@
-﻿package darkaif.entities
+﻿package darkaif.entities 
 {
+	
 	import darkaif.core.collision.CollisionBox;
 	//import darkaif.core.math.Vector3D;
 	import flash.display.Sprite;
@@ -12,7 +13,7 @@
 	 * ...
 	 * @author DefaultUser (Tools -> Custom Arguments...)
 	 */
-	public class Spaceship extends Sprite
+	public class Spacestation extends Sprite
 	{
 		/*
 		 * This scetion will hold the ship data
@@ -26,6 +27,9 @@
 		public var balive:Boolean = false;
 		public var playername:String = "";
 		//public var name:String = ""; //station name
+		public var stationname:String = "";
+		public var stationid:String = "";
+		public var factionname:String = "";
 		
 		public var healthpoint:Number = 100;
 		public var healthmaxpoint:Number = 100;
@@ -41,6 +45,8 @@
 		
 		public var boxcollision:Array = new Array();
 		public var spherecollision:Array = new Array();
+		
+		public var spawnpoint:Array = new Array();
 		
 		public var model:Shape3D = null;
 		public var load:URLLoader;
@@ -71,11 +77,12 @@
 		//public var matrix:Array = Array([1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 1, 0],[0, 0, 0, 0]);
 		
 		
-		public function Spaceship() 
+		public function Spacestation() 
 		{
 			var boxbound:CollisionBox = new CollisionBox();
 			boxcollision.push(boxbound);
 		}
+		
 		
 		public function Update():void {
 			//check if health is below zero, make it not visible 
@@ -145,4 +152,5 @@
 		}
 		//}
 	}
+	
 }
