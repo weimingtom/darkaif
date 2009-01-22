@@ -10,4 +10,4 @@
 
 
 = SVN Basic: =
-[svn_builds]
+ * [svn_builds]
