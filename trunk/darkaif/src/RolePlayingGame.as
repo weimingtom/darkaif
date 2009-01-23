@@ -1123,9 +1123,9 @@ package
 							var miny3:Number = monstermodel[monno].boxcollision[monbox].miny + monstermodel[monno].posy;
 							var minz3:Number = monstermodel[monno].boxcollision[monbox].minz + monstermodel[monno].posz;
 							
-							var maxx3:Number = monstermodel[monno].boxcollision[monbox].minx + monstermodel[monno].posx;
-							var maxy3:Number = monstermodel[monno].boxcollision[monbox].miny + monstermodel[monno].posy;
-							var maxz3:Number = monstermodel[monno].boxcollision[monbox].minz + monstermodel[monno].posz;
+							var maxx3:Number = monstermodel[monno].boxcollision[monbox].maxx + monstermodel[monno].posx;
+							var maxy3:Number = monstermodel[monno].boxcollision[monbox].maxy + monstermodel[monno].posy;
+							var maxz3:Number = monstermodel[monno].boxcollision[monbox].maxz + monstermodel[monno].posz;
 							
 							
 							if ((maxz >= minz3) &&

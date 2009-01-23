@@ -1,4 +1,4 @@
-package darkaif.interact {
+package darkaif.interact{
 	/**
 	* ...
 	* @author Darknet
