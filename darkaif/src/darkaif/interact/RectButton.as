@@ -21,14 +21,15 @@ package darkaif.interact {
 	public class RectButton extends SimpleButton{
 		public var label_str:String;
 		public var text:String;
-		private var overColor_fill:uint = 0xEFEFEF;
-		private var overColor_line:uint = 0xBBCCAA;
-		private var downColor_fill:uint = 0xDFEFCF;
-		private var downColor_line:uint = 0xBBCCAA;
-		private var upColor_fill:uint = 0xEFEFEF;
-		private var upColor_line:uint = 0xAAAAAA;
-		private var _height:uint = 22;
-		private var _width:uint = 88;
+		private var overColor_fill:uint = 0x808080;
+		private var overColor_line:uint = 0x000000;
+		private var downColor_fill:uint = 0xa9a9a9;
+		private var downColor_line:uint = 0x000000;
+		private var upColor_fill:uint = 0x363430;
+		private var upColor_line:uint = 0x000000;
+		public var _height:uint = 13;
+		public var _width:uint = 88;
+		private var format:TextFormat = new TextFormat();
 		
 		public function RectButton(labelText:String = "Submit") {
 			label_str = labelText;
@@ -42,7 +43,7 @@ package darkaif.interact {
 		public function ButtonDisplayState(bgColor_fill:uint, bgColor_line:uint,_width:uint,_height:uint):Sprite{
 			var state:Sprite = new Sprite();
 			var upShape:Shape = new Shape();
-			upShape.graphics.lineStyle(2, bgColor_line);
+			upShape.graphics.lineStyle(1, bgColor_line);
 			upShape.graphics.beginFill(bgColor_fill);
 			upShape.graphics.drawRect(0,0, _width,_height);
 			var label_txt:TextField = createLabel();
@@ -67,8 +68,13 @@ package darkaif.interact {
 			label_txt.text = label_str;
 			//label_txt.border = true;
 			//label_txt.background = true;
-			var format:TextFormat = label_txt.getTextFormat();
-			format.font = "_sans";
+			var format:TextFormat = new TextFormat();
+			format.size = 10;
+			format.font = "OCR A Extended";
+			format.color = 0xF5F5F5;
+			
+			//var format:TextFormat = label_txt.getTextFormat();
+			//format.font = "_sans";
 			format.align = TextFormatAlign.CENTER;
 			label_txt.setTextFormat(format);
 			return label_txt;

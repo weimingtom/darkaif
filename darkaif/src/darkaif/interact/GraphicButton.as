@@ -1,7 +1,7 @@
 /** 
 * @mxmlc -source-path=C:\\Program Files\\FlashDevelop\\FirstRun\\Library\\AS3\\classes\\
 */
-package darkaif.interact {
+package darkaif.interact{
 	/**
 	* ...
 	* @author Darknet
