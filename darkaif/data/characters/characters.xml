@@ -16,16 +16,25 @@
 						<name>stand</name>
 						<startframe>1</startframe>
 						<endframe>40</endframe>
+						<framespeed>0.1</framespeed>
+						<attackstart>-1</attackstart>
+						<attackend>-1</attackend>
 					</action>
 					<action>
 						<name>walk</name>
 						<startframe>40</startframe>
 						<endframe>43</endframe>
+						<framespeed>0.1</framespeed>
+						<attackstart>-1</attackstart>
+						<attackend>-1</attackend>
 					</action>
 					<action>
 						<name>attack</name>
 						<startframe>43</startframe>
 						<endframe>49</endframe>
+						<framespeed>0.4</framespeed>
+						<attackstart>5</attackstart>
+						<attackend>-1</attackend>
 					</action>
 				</frameset>
 			</mesh>
@@ -34,6 +43,9 @@
 				<file>data/models/simple_character_player_low.md2</file>
 				<framemin>0</framemin>
 				<framemax>20</framemax>
+				<framespeed>0.1</framespeed>
+				<attackstart>-1</attackstart>
+				<attackend>-1</attackend>
 			</mesh>
 		</animmesh>
 		<collision>
