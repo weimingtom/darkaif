@@ -76,48 +76,52 @@ package
 		 */
 		
 		//{ Variables
-		//load data
+		//load data -sandy engine
 		private var queue:LoaderQueue;
 		public var parserstack:ParserStack;
 		
+		//sandy engine
 		private var scene:Scene3D; // just one scene or the world
 		private var camera:Camera3D; //basic one cam
-		private var rawobject:Shape3D; //any objects
-		
 		public var g:Group = new Group("myGroup");
 		
-		public var mapxmlurl:String = "data/maps/mapdata01.xml";
-		public var mapxml:XML = new XML();
-		
-		public var modelurlrequest:String = "data/models/";
-		public var textureurlrequest:String = "data/textures/";
-		
+		private var rawobject:Shape3D; //any objects -test
 		public var box:Box = new Box("box",1,1,1)
 		
-		public var characterxml:XML = new XML();
-		public var characterxmlurl:String = "data/characters/characters.xml";
+		public var modelurlrequest:String = "data/models/"; //model dir link
+		public var textureurlrequest:String = "data/textures/"; //texture dir link
 		
-		public var objectmesh:Array = new Array(); //map object data store
-		public var objectmap:Array = new Array(); //map data
+		//map
+		public var mapxmlurl:String = "data/maps/mapdata01.xml"; //map data xml site link
+		public var mapxml:XML = new XML(); // map list xml data and other function
+		public var objectmesh:Array = new Array(); // map object data store
+		public var objectmap:Array = new Array(); // map data
+		
+		//player
+		public var characterxml:XML = new XML();//character xml data list
+		public var characterxmlurl:String = "data/characters/characters.xml"; //character xml data url link
 		public var charactermesh:Array = new Array(); //to store character data
 		public var playermesh:Array = new Array(); //add player to the world
 		public var player:Array = new Array();//this update player go and out server stuff and cleint reduce lag stuff
 		
-		public var npcxml:XML = new XML(); //xml data
-		public var npcscriptxml:XML = new XML();
-		public var npcxmlurl:String = 'data/npcs/npcs.xml'; //site link
-		public var npcscriptxmlurl:String = 'data/npcs/npcscriptlist.xml';
+		//NPC
+		public var npcxmlurl:String = 'data/npcs/npcs.xml'; //npc object
+		public var npcscriptxmlurl:String = 'data/npcs/npcscriptlist.xml'; //npc script
+		public var npcxml:XML = new XML(); //npc xml data list
+		public var npcscriptxml:XML = new XML(); //npc script xml data
 		public var npcmesh:Array = new Array(); // object storage area
 		public var npcmodel:Array = new Array();//load in the map 
 		
-		public var monsterxml:XML = new XML();//xml data 
-		public var monsterxmlurl:String = 'data/monsters/monsters.xml'; //site link
+		//Monster
+		public var monsterxml:XML = new XML();//mosnter xml data object mesh list 
+		public var monsterxmlurl:String = 'data/monsters/monsters.xml'; //monster url link site
 		public var monstermesh:Array = new Array(); //object storage area
 		public var monstermodel:Array = new Array(); //map into the data
 		
-		public var playername:String = "player";
-		public var charactername:String = "player";
-		public var gender:String = "male";
+		//current player using this flash app
+		public var playername:String = "player"; //player name
+		public var charactername:String = "player"; //preset character mesh
+		public var gender:String = "male"; //gender for the player
 		
 		public var bbox:Box = new Box('cube', 16, 16, 16);
 		
@@ -278,6 +282,12 @@ package
 							tmpactionframe.min = characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].startframe;
 							//trace(characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].startframe);
 							tmpactionframe.max = characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].endframe;
+							tmpactionframe.speed = characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].framespeed;
+							tmpactionframe.attackstart = characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].attackstart;
+							tmpactionframe.attackend = characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].attackend;
+							
+							
+							
 							animset.actionframe.push(tmpactionframe);
 						}
 						//anim mesh with hold animation frame index custom
@@ -357,6 +367,8 @@ package
 							//trace("monster"+monsterxml.monster[charno].animmesh.mesh[animno].frameset.action[frameno].startframe);
 							tmpactionframe.max = monsterxml.monster[charno].animmesh.mesh[animno].frameset.action[frameno].endframe;
 							tmpactionframe.speed =  monsterxml.monster[charno].animmesh.mesh[animno].frameset.action[frameno].framespeed;
+							tmpactionframe.attackstart =  monsterxml.monster[charno].animmesh.mesh[animno].frameset.action[frameno].attackstart;
+							tmpactionframe.attackend =  monsterxml.monster[charno].animmesh.mesh[animno].frameset.action[frameno].attackend;
 							animset.actionframe.push(tmpactionframe);
 						}
 						//animset.animmesh.visible = false;
@@ -823,9 +835,9 @@ package
 				//playerchar.cam(camera);
 				//playerchar.animmesh.x +=  10;
 				//playerchar.bdetectcollision
-					var oldx:Number = playermesh[playerno].posx;
-					var oldy:Number = playermesh[playerno].posy;
-					var oldz:Number = playermesh[playerno].posz;
+				//var oldx:Number = playermesh[playerno].posx;
+				//var oldy:Number = playermesh[playerno].posy;
+				//var oldz:Number = playermesh[playerno].posz;
 					
 				if (BAttack) {
 					playermesh[playerno].battack = true;
@@ -834,51 +846,43 @@ package
 				}
 					
 				if (Downarrow) {
-					playermesh[playerno].dirz = -1;
-					playermesh[playerno].dirx = 0;
-					
-					playermesh[playerno].posz -= 5; //this one
+					//playermesh[playerno].dirx = 0;
+					playermesh[playerno].dirz = - playermesh[playerno].movespeed; //this one
 					playermesh[playerno].action = 'walk';
 					playermesh[playerno].actionframe = 'walk';
-					playermesh[playerno].roty = 90;
-				}else if (Uparrow) {
-					playermesh[playerno].dirz = 1;
-					playermesh[playerno].dirx = 0;
-					
-					playermesh[playerno].posz += 5; //this one
+					playermesh[playerno].roty = -90;
+				}
+				else if (Uparrow) {
+					//playermesh[playerno].dirx = 0;
+					playermesh[playerno].dirz = playermesh[playerno].movespeed; //this one
 					playermesh[playerno].action  = 'walk';
 					playermesh[playerno].actionframe = 'walk';
-					playermesh[playerno].roty = -90;
+					playermesh[playerno].roty = 90;
 				}else {
-					playermesh[playerno].posz += 0;
+					playermesh[playerno].dirz = 0;
 				}
 				
 				if (Rightarrow) {
-					playermesh[playerno].dirx = 1;
-					playermesh[playerno].dirz = 0;
-					
-					playermesh[playerno].posx += 5; //this one
+					playermesh[playerno].dirx = playermesh[playerno].movespeed; //this one
 					playermesh[playerno].action  = 'walk';
 					playermesh[playerno].actionframe = 'walk';
 					playermesh[playerno].roty = 0;
-				}else if (Leftarrow) {
-					playermesh[playerno].dirx = -1;
-					playermesh[playerno].dirz = 0;
-					
-					playermesh[playerno].posx -= 5; //this one
+				}
+				else if (Leftarrow) {
+					playermesh[playerno].dirx = -playermesh[playerno].movespeed; //this one
 					playermesh[playerno].action = 'walk';
 					playermesh[playerno].actionframe = 'walk';
 					playermesh[playerno].roty = 180;
 				}else {
-					playermesh[playerno].posx += 0;
+					playermesh[playerno].dirx = 0;
 				}
 				
 				//trace("x:"+playermesh[playerno].dirx +" z: "+playermesh[playerno].dirz);
 				//playerchar.addChild(camera);
 				//trace("x:"+playermesh[playerno].posx+ " z:"+playermesh[playerno].posz);
-				playermesh[playerno].diffx = oldx - playermesh[playerno].posx;
-				playermesh[playerno].diffy = oldy - playermesh[playerno].posy;
-				playermesh[playerno].diffz = oldz - playermesh[playerno].posz;
+				//playermesh[playerno].diffx = oldx - playermesh[playerno].posx;
+				//playermesh[playerno].diffy = oldy - playermesh[playerno].posy;
+				//playermesh[playerno].diffz = oldz - playermesh[playerno].posz;
 				
 				bbox.x = playermesh[playerno].posx;
 				bbox.y = playermesh[playerno].posy;
@@ -938,7 +942,8 @@ package
 			text_log.text = "log...";
 			showentities();
 			ObjectUpdate();
-			ObjectCollision();
+			PlayerCollisions();
+			MonsterCollisions();
 			PlayerAttackMonster();
 			MonsterAttackPlayer();
 			PlayerControl(); 
@@ -1046,131 +1051,103 @@ package
 		
 		//} END OBJECTS ACTIONS
 		
-		public function ObjectCollision():void {
+		public function PlayerCollisions():void {
 			
 			//loop collisions
 			for ( var playerno:int = 0; playerno < playermesh.length ; playerno++) {
-				for (var boxno:int = 0; boxno < playermesh[playerno].boxcollision.length ; boxno++ ) {
-					//playermesh[playerno].boxcollision[boxno]
-					//custom positon due to anim set
-					var minx:Number = playermesh[playerno].boxcollision[boxno].minx + playermesh[playerno].posx;
-					var miny:Number = playermesh[playerno].boxcollision[boxno].miny + playermesh[playerno].posy;
-					var minz:Number = playermesh[playerno].boxcollision[boxno].minz + playermesh[playerno].posz;
-					var maxx:Number = playermesh[playerno].boxcollision[boxno].maxx + playermesh[playerno].posx;
-					var maxy:Number = playermesh[playerno].boxcollision[boxno].maxy + playermesh[playerno].posy;
-					var maxz:Number = playermesh[playerno].boxcollision[boxno].maxz + playermesh[playerno].posz;
-					
-					//object mesh collision
-					for (var meshno:int = 0; meshno < objectmap.length; meshno++) {
-					//trace(String(objectmap.length));
-						for (var meshbox:int = 0; meshbox < objectmap[meshno].boxcollision.length; meshbox++ ) {
-							//trace("Hello");
-							//objectmap[meshno].boxcollision[meshbox]
-							var minx2:Number = objectmap[meshno].boxcollision[meshbox].minx + objectmap[meshno].model.x;
-							var miny2:Number = objectmap[meshno].boxcollision[meshbox].miny + objectmap[meshno].model.y;
-							var minz2:Number = objectmap[meshno].boxcollision[meshbox].minz + objectmap[meshno].model.z;
-							var maxx2:Number = objectmap[meshno].boxcollision[meshbox].maxx + objectmap[meshno].model.x;
-							var maxy2:Number = objectmap[meshno].boxcollision[meshbox].maxy + objectmap[meshno].model.y;
-							var maxz2:Number = objectmap[meshno].boxcollision[meshbox].maxz + objectmap[meshno].model.z;
-							
-							if ((maxz >= minz2) &&
-								(minz <= maxz2) &&
-								(maxy >= miny2) &&
-								(miny <= maxy2) &&
-								(maxx >= minx2) && 
-								(minx <= maxx2)
-								){
-								//FlashConnect.trace("Collision");	
-								//return true; //there is colision
-								playermesh[playerno].bdetectcollision = true;
-								
-								if(playermesh[playerno].diffx < 0){
-									playermesh[playerno].posx += playermesh[playerno].diffx;
-								}else if (playermesh[playerno].diffx > 0){
-									playermesh[playerno].posx += playermesh[playerno].diffx;
-								}
-								
-								if(playermesh[playerno].diffy < 0){
-									playermesh[playerno].posy += playermesh[playerno].diffy;
-								}else if (playermesh[playerno].diffy > 0){
-									playermesh[playerno].posy += playermesh[playerno].diffy;
-								}
-								
-								if(playermesh[playerno].diffz < 0){
-									playermesh[playerno].posz += playermesh[playerno].diffz;
-									//trace("hello z");
-								}else if (playermesh[playerno].diffz > 0){
-									playermesh[playerno].posz += playermesh[playerno].diffz;
-									//trace("hello z");
-								}
-								//trace("x:"+diffx +"y:"+diffy +"z:"+diffz);
-								//break;
-								//trace("collision-" + meshno);
-								//break;
-							}else{
-								playermesh[playerno].bdetectcollision = false;
-								//FlashConnect.trace("No Collision");
-								//return false;// there is no collision
-							}
-						}
+				
+				//object mesh collision
+				for (var objectmeshno:int = 0; objectmeshno < objectmap.length; objectmeshno++) {
+					if (playermesh[playerno].objectbox(objectmap[objectmeshno], playermesh[playerno].dirx, 0, 0)) {
+						playermesh[playerno].posx += playermesh[playerno].diffx;
+						playermesh[playerno].bcollisionx = true;
+						//trace("collision");
+					}else {
+						playermesh[playerno].bcollisionx = false;
 					}
 					
-					//monster collision
-					for (var monno:int = 0; monno < monstermodel.length; monno++) {
-						for (var monbox:int = 0; monbox < monstermodel[monno].boxcollision.length; monbox++ ) {
-							
-							var minx3:Number = monstermodel[monno].boxcollision[monbox].minx + monstermodel[monno].posx;
-							var miny3:Number = monstermodel[monno].boxcollision[monbox].miny + monstermodel[monno].posy;
-							var minz3:Number = monstermodel[monno].boxcollision[monbox].minz + monstermodel[monno].posz;
-							
-							var maxx3:Number = monstermodel[monno].boxcollision[monbox].maxx + monstermodel[monno].posx;
-							var maxy3:Number = monstermodel[monno].boxcollision[monbox].maxy + monstermodel[monno].posy;
-							var maxz3:Number = monstermodel[monno].boxcollision[monbox].maxz + monstermodel[monno].posz;
-							
-							
-							if ((maxz >= minz3) &&
-								(minz <= maxz3) &&
-								(maxy >= miny3) &&
-								(miny <= maxy3) &&
-								(maxx >= minx3) && 
-								(minx <= maxx3)
-								){
-								//FlashConnect.trace("Collision");	
-								//return true; //there is colision
-								playermesh[playerno].bdetectcollision = true;
-								
-								if(playermesh[playerno].diffx < 0){
-									playermesh[playerno].posx += playermesh[playerno].diffx;
-								}else if (playermesh[playerno].diffx > 0){
-									playermesh[playerno].posx += playermesh[playerno].diffx;
-								}
-								
-								if(playermesh[playerno].diffy < 0){
-									playermesh[playerno].posy += playermesh[playerno].diffy;
-								}else if (playermesh[playerno].diffy > 0){
-									playermesh[playerno].posy += playermesh[playerno].diffy;
-								}
-								
-								if(playermesh[playerno].diffz < 0){
-									playermesh[playerno].posz += playermesh[playerno].diffz;
-									//trace("hello z");
-								}else if (playermesh[playerno].diffz > 0){
-									playermesh[playerno].posz += playermesh[playerno].diffz;
-									//trace("hello z");
-								}
-								//trace("x:"+diffx +"y:"+diffy +"z:"+diffz);
-								//break;
-								//trace("collision-" + meshno);
-								//break;
-							}else{
-								playermesh[playerno].bdetectcollision = false;
-								//FlashConnect.trace("No Collision");
-								//return false;// there is no collision
-							}
-						}
+					if (playermesh[playerno].objectbox(objectmap[objectmeshno], 0, 0, playermesh[playerno].dirz)) {
+						playermesh[playerno].posz += playermesh[playerno].diffz;
+						playermesh[playerno].bcollisionz = true;
+						
+					}else {
+						playermesh[playerno].bcollisionz = false;
+					}
+					
+					if ((playermesh[playerno].bcollisionx == true) || (playermesh[playerno].bcollisiony == true) || (playermesh[playerno].bcollisionz == true) ) {
+						//break;//remove this does not work
+					}
+				}
+				
+				//monster mesh collision if alive
+				for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++) {
+					if (((playermesh[playerno].monsterbox(monstermodel[monsterno], 0, 0, playermesh[playerno].dirz))== true)&&(monstermodel[monsterno].balive == true)) {
+						//playermesh[playerno].posz += playermesh[playerno].diffz;
+						playermesh[playerno].bcollisionz = true;
+						
+					}else {
+						playermesh[playerno].bcollisionz = false;
+					}
+					
+					if ((playermesh[playerno].monsterbox(monstermodel[monsterno], playermesh[playerno].dirx, 0, 0) == true)&&(monstermodel[monsterno].balive == true)) {
+						//playermesh[playerno].posx += playermesh[playerno].diffx;
+						playermesh[playerno].bcollisionx = true;
+						//trace("collision");
+					}else {
+						playermesh[playerno].bcollisionx = false;
 					}
 				}
 			}
+			
+		}
+		
+		public function MonsterCollisions():void {
+			for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++ ) {
+				
+				//object mesh
+				for (var objectmeshno:int = 0; objectmeshno < objectmap.length; objectmeshno++) {
+					if (monstermodel[monsterno].objectbox(objectmap[objectmeshno], monstermodel[monsterno].dirx, 0, 0)) {
+						monstermodel[monsterno].posx -= monstermodel[monsterno].dirx;
+						monstermodel[monsterno].bcollisionx = true;
+						//trace("-mon and obj collision");
+					}else {
+						monstermodel[monsterno].bcollisionx = false;
+					}
+					
+					if (monstermodel[monsterno].objectbox(objectmap[objectmeshno], 0, 0, monstermodel[monsterno].dirz)) {
+						monstermodel[monsterno].posz -= monstermodel[monsterno].dirz;
+						monstermodel[monsterno].bcollisionz = true;
+						//trace("-mon and obj collision");
+					}else {
+						monstermodel[monsterno].bcollisionz = false;
+					}
+					/*
+					if ((monstermodel[monsterno].bcollisionx == true)&&(monstermodel[monsterno].bcollisionz)) {
+						break;
+					}
+					*/
+				}
+				
+				//player collision
+				for (var playerno:int = 0; playerno < playermesh.length; playerno++) {
+					if (monstermodel[monsterno].playerbox(playermesh[playerno], monstermodel[monsterno].dirx, 0, 0)) {
+						monstermodel[monsterno].posx -= monstermodel[monsterno].diffx;
+						monstermodel[monsterno].bcollisionx = true;
+						//trace("mon and obj collision");
+					}else {
+						monstermodel[monsterno].bcollisionx = false;
+					}
+					
+					if (monstermodel[monsterno].playerbox(playermesh[playerno], 0, 0, monstermodel[monsterno].dirz)) {
+						monstermodel[monsterno].posz -= monstermodel[monsterno].diffz;
+						monstermodel[monsterno].bcollisionz = true;
+						//trace("mon and obj collision");
+					}else {
+						monstermodel[monsterno].bcollisionz = false;
+					}
+				}
+			}
+			
 		}
 		
 		//This is when the keyboard is pressed.
