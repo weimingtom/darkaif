@@ -1,0 +1,13 @@
+#summary AI Build and plan.
+#labels AI
+
+= Artificial Intelligence =
+Currently working on AI build test.
+
+Following actions for AI think and do work:(may not be in order)
+ * Check objects
+ * If enemy attack conditions [random, AI will attack automatic, line of sight,etc]
+ * If objects are collision recalculate the new point.
+ * Follow and attack or give support.
+ * Check query actions. Check do list that is important.
+ * Check path is has path else error on give no action and check query.
