@@ -11,3 +11,9 @@ Following actions for AI think and do work:(may not be in order)
  * Follow and attack or give support.
  * Check query actions. Check do list that is important.
  * Check path is has path else error on give no action and check query.
+
+Query Array:
+ * Move to point
+ * Attack Object(hate level)
+ * Search pattern (look around attack if true)
+ * Support other objects(jobs and duties)
