@@ -1,4 +1,4 @@
-#summary One-sentence Client and Server - as3,python,php,java.
+#summary Client and Server - as3,python,php,java.
 #labels Client,Server,Actionscript3,python,php,Java
 Client and Server
 
