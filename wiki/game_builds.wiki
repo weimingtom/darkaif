@@ -1,5 +1,5 @@
 #summary Game Builds.
-#labels rpg
+#labels rpg,svn
 
 = RPG game builds: =
    They are work in progress where the game is being builded.
@@ -7,7 +7,7 @@
  * [rpg_player]
  * [rpg_monster]
  * [rpg_npc]
-
+ * [rpg_map]
 
 = SVN Basic: =
  * [svn_builds]
