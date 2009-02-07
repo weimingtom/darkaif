@@ -1,9 +1,11 @@
 ﻿package darkaif.entities 
 {
+	//{
 	import sandy.core.scenegraph.Camera3D;
 	import sandy.core.scenegraph.Shape3D;
 	import sandy.primitive.MD2;
 	import darkaif.core.collision.CollisionBox;
+	//}
 	
 	/**
 	 * ...
@@ -58,7 +60,7 @@
 		public var bcollision:Boolean = false; //this to make the object to have collision 
 		public var balive:Boolean = false; //if the object is alive do something
 		public var bdetectcollision:Boolean = false; //this check if the object is collision to other
-		public var detectrange:Number = 128; //64;
+		public var detectrange:Number = 0;//128; //64;
 		//public var playerrange:Number = 32;
 		
 		//collision
@@ -111,8 +113,8 @@
 		
 		public function Monster() {
 			//default for now
-			var boxbound:CollisionBox = new CollisionBox();
-			boxcollision.push(boxbound);
+			//var boxbound:CollisionBox = new CollisionBox();
+			//boxcollision.push(boxbound);
 		}
 		
 		//target object distance
@@ -138,6 +140,7 @@
 		}
 		//} end set position
 		
+		//update object
 		public function update():void {
 			//trace("update");
 			//trace("x:"+targetx+" y:"+targety+" z:"+targetz);
@@ -155,41 +158,42 @@
 			if (balive == true) {
 				//monster detect player ranage
 				if ( targetrange <  detectrange){
-					if ((posx <= targetx)) {
+					if ((posx < targetx)) {
 						dirx = movespeed;
-						roty = 0;
+						//roty = 0;
 					}else if ((posx > targetx)) {
 						dirx = -movespeed;
-						roty = 180;
+						//roty = 180;
 					}else {
 						dirx = 0;
 					}
 					
 					if ((posz < targetz)) {
 						dirz = movespeed;
-						roty = 90;
+						//roty = 90;
 					}else if ((posz > targetz)) {
 						dirz = -movespeed;
-						roty = -90;
+						//roty = -90;
 					}else {
 						dirz = 0;
 					}
 					
+					monsterdirectionrotation();
+					
 					if (!bcollisionx) {
-						
 						posx += dirx;
 					}else {
-						posz -= dirz;
+						//posx -= dirx;
 					}
 					if(!bcollisiony){
 						posy += diry;
 					}else {
-						posz -= dirz;
+						//posy -= diry;
 					}
 					if(!bcollisionz){
 						posz += dirz;
 					}else {
-						posz -= dirz;
+						//posz -= dirz;
 					}
 					
 					if ((dirx != 0) || (diry != 0) || (dirz != 0)) {
@@ -197,12 +201,11 @@
 						olddiry = diry;
 						olddirz = dirz;
 					}
+					
 					actionframe = "walk";
 				}else {
 					actionframe = "stand";
 				}
-				
-				
 				
 				//if monster move do not attack else attack when not moving
 				if ((battackx == true)&&(battackz == true)) {
@@ -214,7 +217,10 @@
 					//actionframe = "walk";
 				}
 				
-				if ((bcollisionx == true) && (bcollisiony == true) && (bcollisionz == true)) {
+				//if monster collision player attack
+				if ((bcollisionx == true) || (bcollisiony == true) || (bcollisionz == true)) {
+					//trace('collision mosnter');
+					actionframe = "attack";
 					battack = true;
 				}
 				
@@ -334,6 +340,27 @@
 				}
 		}
 		
+		// Monster rotation
+		public function monsterdirectionrotation():void {
+			if ((dirz > 0) && (dirx == 0)) {//north
+				roty = 90;
+			}else if((dirz > 0) && (dirx > 0)){//northeast
+				roty = 45;
+			}else if((dirz == 0) && (dirx > 0)){//east
+				roty = 0;
+			}else if((dirz < 0) && (dirx > 0)){//southeast
+				roty = -45;
+			}else if((dirz < 0) && (dirx == 0)){//south
+				roty = -90;
+			}else if((dirz < 0) && (dirx <= 0)){//southwest
+				roty = -135;
+			}else if((dirz == 0) && (dirx < 0)){//west
+				roty = 180;
+			}else if((dirz > 0) && (dirx < 0)){//northwest
+				roty = 135;
+			}
+		}
+		
 		//object mesh collision
 		public function objectbox(objectmesh:Objectmesh, mx:Number, my:Number, mz:Number):Boolean {
 			var bcollision:Boolean = false;
@@ -393,9 +420,9 @@
 					var maxx2:Number = objectmesh.boxcollision[objectboxno].maxx + objectmesh.posx;
 					var maxy2:Number = objectmesh.boxcollision[objectboxno].maxy + objectmesh.posy;
 					var maxz2:Number = objectmesh.boxcollision[objectboxno].maxz + objectmesh.posz;
-					if ((maxz >= minz2) &&(minz <= maxz2) &&
-						(maxy >= miny2) &&(miny <= maxy2) &&
-						(maxx >= minx2) && (minx <= maxx2)){
+					if ((maxz > minz2) &&(minz < maxz2) &&
+						(maxy > miny2) &&(miny < maxy2) &&
+						(maxx > minx2) && (minx < maxx2)){
 						//trace("mesh collision");	
 						bcollision = true;
 						break;

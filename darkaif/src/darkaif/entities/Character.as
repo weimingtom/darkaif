@@ -1,9 +1,11 @@
 ﻿package darkaif.entities 
 {
+	//{ packages
 	import sandy.core.scenegraph.Camera3D;
 	import sandy.core.scenegraph.Shape3D;
 	import sandy.primitive.MD2;
 	import darkaif.core.collision.CollisionBox;
+	//}
 	
 	/**
 	 * ...
@@ -13,8 +15,7 @@
 	 * Information: rpg character stats base.
 	 * TODO:build a converter from xml
 	 */
-	public class Character 
-	{
+	public class Character {
 		//{ variables
 		public var charactername:String = ""; //character name for portrait
 		public var modelid:String = ""; //character mesh
@@ -71,6 +72,10 @@
 		public var bbackward:Boolean = false;
 			
 		//{ start direction
+		public var gravityx:Number = 0;
+		public var gravityy:Number = 0;
+		public var gravityz:Number = 0;
+		
 		public var movespeed:Number = 5;
 		
 		public var diffx:Number = 0;//it depend where it direction		
@@ -80,6 +85,10 @@
 		public var dirx:Number = 0; //direction
 		public var diry:Number = 0; //direction
 		public var dirz:Number = 0; //direction
+		
+		public var oldx:Number = 0;
+		public var oldy:Number = 0;
+		public var oldz:Number = 0;
 		
 		public var posx:Number = 0; //position
 		public var posy:Number = 0; //position
@@ -95,28 +104,20 @@
 		//} end variables
 		
 		public function Character(){
-			var boxbound:CollisionBox = new CollisionBox();
-			boxcollision.push(boxbound);
+			//var boxbound:CollisionBox = new CollisionBox();
+			//boxcollision.push(boxbound);
 		}
 		
 		public function update():void {
 			//trace("x:"+bcollisionx+" z:"+bcollisionz);
 			//trace("update");
 			//trace("action frame:"+actionframe)
-			var oldx:Number = posx;
-			var oldy:Number = posy;
-			var oldz:Number = posz;
 			
-			if (!bcollisionx){
-				posx += dirx;
+			if (healthpoint < 0) {
+				healthpoint = 0;
 			}
-			posy += diry;
-			if (!bcollisionz){
-				posz += dirz;
-			}
-			diffx = oldx - posx;
-			diffy = oldy - posy;
-			diffz = oldz - posz;
+			
+			objectpositionupdate();
 			
 			if ((battack == true) && (btriggeraction == false)){
 				btriggeraction = true;// this will turn the animation action set to it.
@@ -127,10 +128,44 @@
 			if (btriggeraction) {
 				actionframe = 'attack';
 			}else {
-				actionframe = 'stand';
+				if ((diffx !=0)||(diffy !=0)||(diffz !=0)){
+					actionframe = 'walk';
+				}else {
+					actionframe = 'stand';
+				}
 			}
-			//trace(actionframe + ":"+bstartattack+":"+battack);
-			//animation set
+			
+			characteranimations();
+		}
+		
+		//update position and collision boolean
+		public function objectpositionupdate():void {
+			oldx = posx;
+			oldy = posy;
+			oldz = posz;
+			
+			if (!bcollisionx){
+				posx += dirx;
+				posx += gravityx;
+			}
+			if (!bcollisiony){
+				posy += diry;
+				posy += gravityy;
+				//trace("gravityy");
+			}else {
+				posy -= diry;
+			}
+			if (!bcollisionz){
+				posz += dirz;
+				posz += gravityz;
+			}
+			diffx = oldx - posx;
+			diffy = oldy - posy;
+			diffz = oldz - posz;
+		}
+		
+		//character animation
+		public function characteranimations():void {
 			for (var animno:int = 0; animno < animset.length; animno++ ) {	
 				//animset[animno].animmesh.visible = false;
 				if (animset[animno].actionname == action) {
@@ -149,6 +184,7 @@
 					//mesh.moveForward(moveforward);
 					var framemin:Number = 0;
 					var framemax:Number = 0;
+					//trace("hello char:"+actionframe);
 					for (var actionframeno:int = 0; actionframeno <  animset[animno].actionframe.length; actionframeno++ ){
 						if (animset[animno].actionframe[actionframeno].actionname == actionframe) {
 							//trace("There is action frame in here!");
@@ -231,6 +267,7 @@
 						(maxy >= miny2) &&(miny <= maxy2) &&
 						(maxx >= minx2) && (minx <= maxx2)){
 						//trace("mesh collision");	
+						//posy -= diry;
 						bcollision = true;
 						break;
 					}

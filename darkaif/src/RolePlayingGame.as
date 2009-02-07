@@ -4,9 +4,11 @@
 package  
 {
 	//{PACKAGE
-	
+	import darkaif.core.collision.CollisionBox;
 	import darkaif.entities.*;
+	import darkaif.frame.Button;
 	import darkaif.interact.RectButton;
+	import darkaif.interact.NPCMessageBox;
 	
 	import flash.display.Sprite;
 	import flash.events.*;
@@ -18,6 +20,7 @@ package
 	import flash.ui.*;
 	import flash.utils.Timer;
 	import flash.system.*;
+	import flash.events.IOErrorEvent;
 	
 	import sandy.core.Scene3D;
 	import sandy.core.data.*;
@@ -77,25 +80,35 @@ package
 		
 		//{ Variables
 		//load data -sandy engine
-		private var queue:LoaderQueue;
+		public var queue:LoaderQueue;
 		public var parserstack:ParserStack;
 		
 		//sandy engine
-		private var scene:Scene3D; // just one scene or the world
-		private var camera:Camera3D; //basic one cam
+		public var scene:Scene3D; // just one scene or the world
+		public var camera:Camera3D; //basic one cam
 		public var g:Group = new Group("myGroup");
 		
-		private var rawobject:Shape3D; //any objects -test
-		public var box:Box = new Box("box",1,1,1)
+		public var rawobject:Shape3D; //any objects -test
+		//public var box:Box = new Box("box",1,1,1)
 		
 		public var modelurlrequest:String = "data/models/"; //model dir link
 		public var textureurlrequest:String = "data/textures/"; //texture dir link
+		
+		//world effects
+		public var gravityx:Number = 0;
+		public var gravityy:Number = 1; //this makes player is on the ground
+		public var gravityz:Number = 0;
+		public var gametime:Number = 1;
 		
 		//map
 		public var mapxmlurl:String = "data/maps/mapdata01.xml"; //map data xml site link
 		public var mapxml:XML = new XML(); // map list xml data and other function
 		public var objectmesh:Array = new Array(); // map object data store
 		public var objectmap:Array = new Array(); // map data
+		
+		//terrain
+		public var terrainmesh:Array = new Array();//temp store
+		public var terrainmodel:Array = new Array();//for map
 		
 		//player
 		public var characterxml:XML = new XML();//character xml data list
@@ -123,7 +136,7 @@ package
 		public var charactername:String = "player"; //preset character mesh
 		public var gender:String = "male"; //gender for the player
 		
-		public var bbox:Box = new Box('cube', 16, 16, 16);
+		//public var bbox:Box = new Box('cube', 16, 16, 16);
 		
 		//{ CONTROLS
 		
@@ -131,6 +144,7 @@ package
 		public var Downarrow:Boolean = false;
 		public var Rightarrow:Boolean = false;
 		public var Leftarrow:Boolean = false;
+		public var Spacebar:Boolean = false;
 		
 		public var BAttack:Boolean = false;
 		
@@ -138,6 +152,7 @@ package
 		public var Keydownarrow:int = 40;
 		public var Keyrightarrow:int = 39;
 		public var Keyleftarrow:int = 37;
+		public var Keyspacebar:int = 32;
 		
 		public var keycode_b:int = 66;
 		public var keycode_c:int = 67;
@@ -155,6 +170,12 @@ package
 		
 		public var text_log:TextField = new TextField();
 		
+		public var loadtest1map:Button = new Button('Map 1');
+		public var loadtest2map:Button = new Button('Map 2');
+		
+		public var buttonclearmap:Button = new Button('Clear Map');
+		public var npcmessageboxpanel:NPCMessageBox =  new NPCMessageBox();
+		
 		//}
 		
 		public function RolePlayingGame() {
@@ -163,9 +184,9 @@ package
 			var tmpplayer:RPGPlayer = new RPGPlayer();
 			tmpplayer.playername = "player";
 			tmpplayer.charactername = "player";
-			player.push(tmpplayer);
+			player.push(tmpplayer);//player user control object when place
 			
-			g.addChild(bbox);
+			//g.addChild(bbox);
 			//player.push();
 			
 			//{ Scene world
@@ -182,32 +203,97 @@ package
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressedHandler);
 			//}	
-			initCharacterxml();
+			
+			//load map data and others
+			//initCharacterxml();
+			
+			//initmapxml("data/maps/mapdata00.xml");
+			initmapxml(mapxmlurl);
+			loadtest1map.addEventListener(MouseEvent.CLICK, map01);
+			addChild(loadtest1map);
+			loadtest2map.x = 50;
+			loadtest2map.addEventListener(MouseEvent.CLICK, map02);
+			addChild(loadtest2map);
+			
+			buttonclearmap.x = 90;
+			buttonclearmap.addEventListener(MouseEvent.CLICK, clickclearmap);
+			addChild(buttonclearmap);
+			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, addKey, false, 0, true);
 			stage.addEventListener(KeyboardEvent.KEY_UP, removeKey, false, 0, true);
 			
 		}
 		
-		//{ Start log display
-		
-		public function addlog():void {
-			text_log.text = "log";
-			text_log.y = 300;
-			text_log.border = true;
-			text_log.width = 500;
-			addChild(text_log);
+		public function map01(event:MouseEvent):void {
+			g = new Group("myGroup");
+			initmapxml("data/maps/mapdata01.xml");
 		}
 		
-		public function removelog():void {
-			removeChild(text_log);
+		public function map02(event:MouseEvent):void {
+			g = new Group("myGroup");
+			initmapxml("data/maps/mapdata02.xml");
 		}
 		
-		
-		//} End log
+		public function clickclearmap(event:MouseEvent):void {
+			//g = new Group("myGroup");
+			var objectmove:Array = g.children
+			trace('//========================================================//');
+			for (var c:int = 0; c < objectmove.length; c++) {
+				trace('object:' + objectmove[c].name);
+			}
+			trace('-[data]-');
+			
+			//remove objects from map
+			for (var objmeshno:int = 0; objmeshno < objectmap.length; objmeshno++) {
+				//trace('map object:' + objectmap[objmeshno].model.name);
+				g.removeChildByName(objectmap[objmeshno].model.name);
+			}
+			objectmap = new Array();
+			
+			for (var playermeshno:int = 0; playermeshno < playermesh.length; playermeshno++) {
+				//playermesh
+				//trace('player:---');
+				for (var panimsetno:int = 0; panimsetno < playermesh[playermeshno].animset.length; panimsetno++) {
+					//trace('player anim set:' + playermesh[playermeshno].animset[panimsetno].animmesh.name);
+					g.removeChildByName(playermesh[playermeshno].animset[panimsetno].animmesh.name);
+				}
+			}
+			playermesh = new Array();
+			
+			//remove monster
+			for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++) {
+				//playermesh
+				trace('monster:---');
+				for (var manimsetno:int = 0; manimsetno < monstermodel[monsterno].animset.length; manimsetno++) {
+					trace('monster anim set:' + monstermodel[monsterno].animset[manimsetno].animmesh.name);
+					//g.removeChildByName(monstermodel[monsterno].animset[manimsetno].animmesh.name);
+					g.removeChildByName(monstermodel[monsterno].animset[manimsetno].meshid);
+					//monstermodel[monsterno].animset[manimsetno].animmesh.remove();
+				}
+			}
+			monstermodel = new Array();
+			
+			//remove npc
+			for (var npcno:int = 0; npcno < npcmodel.length; npcno++) {
+				//playermesh
+				//trace('npc:---');
+				for (var nanimsetno:int = 0; nanimsetno < npcmodel[npcno].animset.length; nanimsetno++) {
+					//trace('npc anim set:' + npcmodel[npcno].animset[nanimsetno].animmesh.name);
+					g.removeChildByName(npcmodel[npcno].animset[nanimsetno].animmesh.name);
+					npcmodel[npcno].animset[nanimsetno].animmesh.remove();
+				}
+			}
+			npcmodel = new Array();
+			//trace('object://===//');
+			for (var cL:int = 0; cL < objectmove.length; cL++) {
+				trace('OBJ LIST:' + objectmove[cL].name);
+				//g.removeChildByName(objectmove[cL].name);
+			}
+			
+		}
 		
 		//=======================================
-		// -Player
-		// -Monster
+		// [Update function] -Player, Monster
 		public function ObjectUpdate():void {
 			for (var playerno:int = 0; playerno < playermesh.length; playerno++ ) {
 				playermesh[playerno].update();
@@ -227,8 +313,221 @@ package
 			
 		}
 		
-		//{ START CHARACTER OBJECT DATA BLOCK
+		//{ START MAP DATA BLOCK (OBJECT /MONSTER / NPC / TERRAIN)
+		//map start first incase the frame speed is on - MAP DATA BLOCK
 		
+		//map get url
+		public function initmapxml(mapname:String):void {
+			//mapname
+			//var urlrequest:URLRequest = new URLRequest(mapxmlurl);
+			
+			var urlrequest:URLRequest = new URLRequest(mapname);
+			var urlloader:URLLoader = new URLLoader(urlrequest);
+			
+			urlloader.addEventListener("complete", initdata)
+			urlloader.addEventListener(IOErrorEvent.IO_ERROR, maperror);
+			
+			function maperror(event:IOErrorEvent):void {
+				trace('fail load map url map');
+			}
+			
+			function initdata(event:Event):void {
+				//trace(event.target.data);
+				mapxml = new XML(event.target.data);
+				maploaddata();
+			}
+		}
+		
+		//map xml data -ase loading...
+		public function maploaddata():void {
+			//mapxml.objectlist.mesh
+			parserstack = new ParserStack();
+			
+			for (var meshno:int = 0; meshno < mapxml.objectlist.mesh.length(); meshno++)
+			{
+				var parser:IParser = Parser.create(String(mapxml.objectlist.mesh[meshno].localdir), Parser.ASE );
+				parserstack.add(String(mapxml.objectlist.mesh[meshno].name), parser);
+			}
+			parserstack.addEventListener(ParserStack.COMPLETE,loadASEmapcomplete);
+			parserstack.start();
+		}
+		
+		// Store ASE mesh object
+		public function loadASEmapcomplete(pEvt:Event):void {
+			//trace("Hello ASE");
+			for (var meshno:int = 0; meshno < mapxml.objectlist.mesh.length(); meshno++)
+			{
+				//mapxml.objectlist.mesh[meshno].
+				
+				//var parser:IParser = Parser.create(String(mapxml.objectlist.mesh[meshno].localdir), Parser.ASE );
+				//parserstack.add(String(mapxml.objectlist.mesh[meshno].name), parser);
+				var tmpshape:Shape3D;
+				tmpshape = parserstack.getGroupByName(String(mapxml.objectlist.mesh[meshno].name)).children[0] as Shape3D; 
+				//tmpshape.useSingleContainer = true;
+				tmpshape.name = String(mapxml.objectlist.mesh[meshno].name);
+				//trace(tmpshape.name);
+				objectmesh.push(tmpshape);
+				//g.addChild(tmpshape);
+			}	
+			initbuildmap();
+		}
+		
+		// texture?
+		public function loadmapComplete():void {
+			//mapxml.objects.mesh
+			/*
+			for (var meshno:int = 0; meshno <  mapxml.objects.mesh.length(); meshno) {
+				var meshname:String = mapxml.objects.mesh[meshno].name;
+				//var tmpshape:Shape3D = queue.data['cube32'];
+				trace(queue.data['cube32']);
+				//var shape:Shape3D = new Shape3D();
+				//g.addChild(tmpshape);
+			}
+			*/
+			var meshname:String = 'cube32';
+			//var tmpshape:Shape3D = Shape3D("test", queue.data[meshname],null,true);
+		}
+		
+		// Build object from object mesh and texture from data map
+		public function initbuildmap():void {
+			//trace("===INIT MAP BUILD===");
+			
+			//loop mesh currently in the list map
+			for (var meshno:int = 0; meshno < mapxml.objects.mesh.length(); meshno++){
+				//MESH
+				//trace(mapxml.objects.mesh[meshno].name);
+				for (var objmeshno:int = 0; objmeshno < objectmesh.length ; objmeshno++) {
+					//if mesh matches the map mesh object create it list
+					if (mapxml.objects.mesh[meshno].name == objectmesh[objmeshno].name) {
+						var tmpobjectmesh:Objectmesh = new Objectmesh();
+						var shape:Shape3D = objectmesh[objmeshno].clone();
+						//trace("name:" + objectmesh[objmeshno].name);
+						//shape.
+						//shape.clone();
+						shape.x = mapxml.objects.mesh[meshno].position.x;
+						shape.y = mapxml.objects.mesh[meshno].position.y;
+						shape.z = mapxml.objects.mesh[meshno].position.z;
+						
+						shape.rotateX = mapxml.objects.mesh[meshno].rotation.x;
+						shape.rotateY = mapxml.objects.mesh[meshno].rotation.y;
+						shape.rotateZ = mapxml.objects.mesh[meshno].rotation.z;
+						tmpobjectmesh.model = shape;
+						//mesh name
+						tmpobjectmesh.meshname = objectmesh[objmeshno].name;
+						//mesh name id
+						tmpobjectmesh.meshid = shape.name;
+						//mapxml.objects.mesh[meshno]
+						
+						//this to added collision box
+						for (var objlistno:int = 0;objlistno < mapxml.objectlist.mesh.length(); objlistno++) {
+							if (mapxml.objectlist.mesh[objlistno].name == objectmesh[objmeshno].name) {
+								//trace("found!");
+								for (var boxno:int = 0; boxno < mapxml.objectlist.mesh[objlistno].collision.box.length() ; boxno++ ) {
+									var tmpbox:CollisionBox = new CollisionBox();
+									tmpbox.minx = mapxml.objectlist.mesh[objlistno].collision.box[boxno].min.x;
+									tmpbox.miny = mapxml.objectlist.mesh[objlistno].collision.box[boxno].min.y;
+									tmpbox.minz = mapxml.objectlist.mesh[objlistno].collision.box[boxno].min.z;
+									
+									tmpbox.maxx = mapxml.objectlist.mesh[objlistno].collision.box[boxno].max.x;
+									tmpbox.maxy = mapxml.objectlist.mesh[objlistno].collision.box[boxno].max.y;
+									tmpbox.maxz = mapxml.objectlist.mesh[objlistno].collision.box[boxno].max.z;
+									
+									tmpbox.posx = mapxml.objectlist.mesh[objlistno].collision.box[boxno].position.x;
+									tmpbox.posy = mapxml.objectlist.mesh[objlistno].collision.box[boxno].position.y;
+									tmpbox.posz = mapxml.objectlist.mesh[objlistno].collision.box[boxno].position.z;
+									
+									//trace(mapxml.objectlist.mesh[objlistno].collision.box[boxno].position.z + "--")
+									//trace(mapxml.objectlist.mesh[objlistno].collision.box[boxno].min.x + "---")
+									tmpobjectmesh.boxcollision.push(tmpbox);
+								}
+							}
+						}
+						//shape
+						tmpobjectmesh.model.useSingleContainer = false;
+						objectmap.push(tmpobjectmesh);
+						g.addChild(tmpobjectmesh.model);
+						//trace("FOUND!");
+					}
+				}
+			}
+			
+			//initbuildmonstermap();
+			initterrainsetup();
+		}
+		
+		//build terrain and add to the map
+		public function initterrainsetup():void {
+			//mapxml.terrain.layer
+			//texture layer
+			var queuetex:LoaderQueue = new LoaderQueue();
+			
+			for (var texturehmno:int = 0; texturehmno < mapxml.terrain.layer.length() ; texturehmno++) {
+				//trace("height map: " + mapxml.terrain.layer[texturehmno].name);
+				//trace("height text: " + mapxml.terrain.layer[texturehmno].heightmap);
+				queuetex.add(String(mapxml.terrain.layer[texturehmno].name),new URLRequest(String(mapxml.terrain.layer[texturehmno].heightmap)), "IMG" );
+			}
+			
+			queuetex.addEventListener(SandyEvent.QUEUE_COMPLETE,HeightTerrainLoaded);
+            queuetex.start();
+			
+			function HeightTerrainLoaded():void {
+				for (var texturehmno:int = 0; texturehmno < mapxml.terrain.layer.length() ; texturehmno++) {
+					trace('build terrain...' );
+					
+					var materialattr:MaterialAttributes = new MaterialAttributes(new LineAttributes( 0.5, 0x2111BB, 0.4 ),new LightAttributes( true, 0.1));
+					var material:Material = new ColorMaterial(0xFFCC33,1,materialattr);
+					var app:Appearance = new Appearance(material);
+					var terrainbuild:TerrainSandy = new TerrainSandy();
+					
+					terrainbuild.terrainname = mapxml.terrain.layer[texturehmno].name
+					var layername:String = mapxml.terrain.layer[texturehmno].name;
+					//var terrainlayerMaterial:BitmapMaterial = new BitmapMaterial( queue.data[layername].bitmapData);
+					var hmap:BitmapData = queuetex.data[layername].bitmapData;
+					var height:Number = mapxml.terrain.layer[texturehmno].height;
+					var width:Number = mapxml.terrain.layer[texturehmno].width;
+					var gridx:Number = mapxml.terrain.layer[texturehmno].gridx;
+					var gridy:Number = mapxml.terrain.layer[texturehmno].gridy;
+					
+					terrainbuild.heightmap = queuetex.data[layername].bitmapData;
+					terrainbuild.height = height;
+					terrainbuild.width = width;
+					terrainbuild.gridx = gridx;
+					terrainbuild.gridy = gridy;
+					var terrain:Shape3D = new Plane3D(layername, height, width, gridx, gridy, Plane3D.ZX_ALIGNED, 'tri');
+					terrain.x = mapxml.terrain.layer[texturehmno].position.x;
+					terrain.y = mapxml.terrain.layer[texturehmno].position.y;
+					terrain.z = mapxml.terrain.layer[texturehmno].position.z;
+					terrainbuild.posx = mapxml.terrain.layer[texturehmno].position.x;
+					terrainbuild.posy = mapxml.terrain.layer[texturehmno].position.y;
+					terrainbuild.posz = mapxml.terrain.layer[texturehmno].position.z;
+					
+					terrainbuild.terrainlayer = terrain;
+					terrainbuild.updateheightmap();
+					
+					//for (var i:int = 0; i < terrain.geometry.aVertex.length; i++) {
+					//	//adjust the height of the y point base on the image height gray scale
+					//	terrain.geometry.aVertex [i].y = 0xFF & hmap.getPixel (
+					//	UVCoord (terrain.geometry.aUVCoords [i]).u * (hmap.width -1),
+					//	UVCoord (terrain.geometry.aUVCoords [i]).v * (hmap.height -1)
+					///	);
+					///}
+					
+					terrainbuild.terrainlayer.appearance = app;
+					terrainmodel.push(terrainbuild);//save data for player and terrain interacting
+					terrainbuild.terrainlayer.useSingleContainer = false;
+					g.addChild(terrainbuild.terrainlayer);
+				}
+			}
+			
+			//this function will fire off where stuff are finish
+			initCharacterxml();
+			//trace('init..');
+		}
+		
+		//=================================================
+		//} END MAP DATA BLOCK
+		
+		//{ START CHARACTER OBJECT DATA BLOCK
 		public function initCharacterxml():void {
 			var urlrequest:URLRequest = new URLRequest(characterxmlurl);
 			var urlloader:URLLoader = new URLLoader(urlrequest);
@@ -262,6 +561,26 @@ package
 				for (var charno:int = 0; charno < characterxml.character.length(); charno++) {
 					var tmpcharacter:Character = new Character();
 					tmpcharacter.charactername = characterxml.character[charno].name;
+					//build collision
+					for (var boxno:int = 0; boxno < characterxml.character[charno].collision.box.length(); boxno++) {
+						var tmpbox:CollisionBox = new CollisionBox();
+						tmpbox.minx = characterxml.character[charno].collision.box[boxno].min.x;
+						tmpbox.miny = characterxml.character[charno].collision.box[boxno].min.y;
+						tmpbox.minz = characterxml.character[charno].collision.box[boxno].min.z;
+						
+						tmpbox.maxx = characterxml.character[charno].collision.box[boxno].max.x;
+						tmpbox.maxy = characterxml.character[charno].collision.box[boxno].max.y;
+						tmpbox.maxz = characterxml.character[charno].collision.box[boxno].max.z;
+						
+						tmpbox.posx = characterxml.character[charno].collision.box[boxno].position.x;
+						tmpbox.posy = characterxml.character[charno].collision.box[boxno].position.y;
+						tmpbox.posz = characterxml.character[charno].collision.box[boxno].position.z;
+						
+						//trace("max:" + characterxml.character[charno].collision.box[boxno].max.x);
+						tmpcharacter.boxcollision.push(tmpbox);
+					}
+					
+					//tmpcharacter.boxcollision
 					for (var animno:int = 0; animno < characterxml.character[charno].animmesh.mesh.length() ; animno++ ) {
 						var animset:AnimationSet = new AnimationSet();
 						//trace("[]:" + characterxml.character[charno].animmesh.mesh[animno].name);
@@ -273,7 +592,7 @@ package
 						//animmd2.
 						animset.actionname = characterxml.character[charno].animmesh.mesh[animno].name;
 						animset.animmesh = animmd2;
-						animset.animmesh.visible = false;
+						//animset.animmesh.visible = false;
 						//frame name index from min to max
 						for (var frameno:int = 0; frameno < characterxml.character[charno].animmesh.mesh[animno].frameset.action.length(); frameno++ ) {
 							var tmpactionframe:ActionFrame = new ActionFrame();
@@ -286,8 +605,6 @@ package
 							tmpactionframe.attackstart = characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].attackstart;
 							tmpactionframe.attackend = characterxml.character[charno].animmesh.mesh[animno].frameset.action[frameno].attackend;
 							
-							
-							
 							animset.actionframe.push(tmpactionframe);
 						}
 						//anim mesh with hold animation frame index custom
@@ -299,7 +616,18 @@ package
 						tmpcharacter.animset.push(animset);
 						//g.addChild(animmd2);
 					}
-					charactermesh.push(tmpcharacter);
+					
+					var bcharfound:Boolean = false;
+					for (var countcharno:int = 0; countcharno < charactermesh.length; countcharno++ ) {
+						if (charactermesh[countcharno].charactername == characterxml.character[charno].name) {
+							bcharfound = true;
+						}
+					}
+					
+					//if character found
+					if(!bcharfound){
+						charactermesh.push(tmpcharacter);
+					}
 					/*
 					for (var charnoa:int = 0; charnoa < charactermesh.length; charnoa++) {
 						for (var animnoa:int = 0; animnoa < charactermesh[charnoa].animset.length ; animnoa++ ) {
@@ -315,6 +643,7 @@ package
 				//animmd2  = new MD2 ( "default", queue.data["demon"], 0.5 );
 			}
 			initMonsterxml();
+			//trace("init...")
 			//initNpcxml();
 			//initmapxml();
 		}
@@ -327,6 +656,7 @@ package
 		public function initMonsterxml():void {
 			var urlrequest:URLRequest = new URLRequest(monsterxmlurl);
 			var urlloader:URLLoader = new URLLoader(urlrequest);
+			//trace('complete');
 			urlloader.addEventListener("complete", initdata)
 			
 			function initdata(event:Event):void {
@@ -336,6 +666,7 @@ package
 			}
 		}
 		
+		//loading and storing mesh object and class
 		public function MonsterLoadData():void {
 			//start build file query
 			queue = new LoaderQueue();
@@ -349,9 +680,30 @@ package
 			
 			//once files are loaded begin build for monster and storage data.
 			function loadcharactercomplete():void {
+				
 				for (var charno:int = 0; charno < monsterxml.monster.length(); charno++) {
 					var tmpcharacter:Monster = new Monster();
 					tmpcharacter.charactername = monsterxml.monster[charno].name;
+					//tmpcharacter
+					
+					for (var boxno:int = 0; boxno < monsterxml.monster[charno].collision.box.length(); boxno++) {
+						var tmpbox:CollisionBox = new CollisionBox();
+						tmpbox.minx = monsterxml.monster[charno].collision.box[boxno].min.x;
+						tmpbox.miny = monsterxml.monster[charno].collision.box[boxno].min.y;
+						tmpbox.minz = monsterxml.monster[charno].collision.box[boxno].min.z;
+						
+						tmpbox.maxx = monsterxml.monster[charno].collision.box[boxno].max.x;
+						tmpbox.maxy = monsterxml.monster[charno].collision.box[boxno].max.y;
+						tmpbox.maxz = monsterxml.monster[charno].collision.box[boxno].max.z;
+						
+						tmpbox.posx = monsterxml.monster[charno].collision.box[boxno].position.x;
+						tmpbox.posy = monsterxml.monster[charno].collision.box[boxno].position.y;
+						tmpbox.posz = monsterxml.monster[charno].collision.box[boxno].position.z;
+						
+						//trace("max:" + characterxml.character[charno].collision.box[boxno].max.x);
+						tmpcharacter.boxcollision.push(tmpbox);
+					}
+					
 					for (var animno:int = 0; animno < monsterxml.monster[charno].animmesh.mesh.length() ; animno++ ) {
 						var animset:AnimationSet = new AnimationSet();
 						var animname:String = monsterxml.monster[charno].animmesh.mesh[animno].name;
@@ -378,16 +730,94 @@ package
 						//tmpcharacter.posx = -50;
 						//g.addChild(animmd2);
 					}
-					monstermesh.push(tmpcharacter);
+					
+					var bcharfound:Boolean = false;
+					//trace("mosnter number:"+monstermesh.length);
+					for (var countcharno:int = 0; countcharno < monstermesh.length ; countcharno++ ) {
+						if (monstermesh[countcharno].charactername == monsterxml.monster[charno].name) {
+							bcharfound = true;
+							//trace('found');
+						}
+					}	
+					
+					if(!bcharfound){
+						monstermesh.push(tmpcharacter);
+					}
 				}
 			}
 			initNpcxml();
 		}
 		
+		// adding MONSTER into the map
+		public function initbuildmonstermap():void {
+			//mapxml
+			for (var monlist:int = 0; monlist < mapxml.monsterlist.monster.length(); monlist++) {
+				//trace('number mosnter:'+monlist)
+				//trace(mapxml.monsterlist.monster[monlist].name);
+				//monstermesh //storage
+				var id:int = 0;
+				id += monlist;
+				for (var monmeshno:int = 0; monmeshno < monstermesh.length; monmeshno++) {
+					id += monmeshno;
+					//trace("monster mesh:"+monstermesh[monmeshno].charactername);
+					//match if monster name is the same
+					if (mapxml.monsterlist.monster[monlist].name == monstermesh[monmeshno].charactername) {
+						//trace("FOUND! " + monstermesh[monmeshno].charactername);
+						var tmpmonster:Monster = new Monster();
+						//tmpmonster =  monstermesh[monmeshno];
+						tmpmonster.boxcollision = monstermesh[monmeshno].boxcollision;
+						tmpmonster.charactername = monstermesh[monmeshno].charactername;
+						tmpmonster.setx = mapxml.monsterlist.monster[monlist].position.x;
+						tmpmonster.sety = mapxml.monsterlist.monster[monlist].position.y;
+						tmpmonster.setz = mapxml.monsterlist.monster[monlist].position.z;
+						
+						//trace("x:" + mapxml.monsterlist.monster[monlist].position.x +"y:" + mapxml.monsterlist.monster[monlist].position.y +"z:" + mapxml.monsterlist.monster[monlist].position.z);
+						
+						tmpmonster.rotx = mapxml.monsterlist.monster[monlist].rotation.x;
+						tmpmonster.roty = mapxml.monsterlist.monster[monlist].rotation.y;
+						tmpmonster.rotz = mapxml.monsterlist.monster[monlist].rotation.z;
+						tmpmonster.balive = true;
+						
+						for (var animno:int = 0; animno < monstermesh[monmeshno].animset.length ; animno++ ) {
+							var tmpanimset:AnimationSet =  new AnimationSet();
+							tmpanimset = monstermesh[monmeshno].animset[animno];
+							tmpanimset.animmesh = monstermesh[monmeshno].animset[animno].animmesh.clone();
+							var clonename:String = tmpanimset.animmesh.name;
+							
+							//trace("ID object:"+tmpanimset.animmesh.id)
+							
+							tmpanimset.animmesh.name = clonename + "_" + String(id) + "_" + monstermesh[monmeshno].charactername;
+							//trace("ID tmp monster:" + tmpanimset.animmesh.name);
+							//tmpanimset.animmesh
+							tmpanimset.meshid = tmpanimset.animmesh.name;
+							//trace("ID monster:" + String(id));
+							tmpanimset.animmesh.x = mapxml.monsterlist.monster[monlist].position.x;
+							tmpanimset.animmesh.y = mapxml.monsterlist.monster[monlist].position.y;
+							tmpanimset.animmesh.z = mapxml.monsterlist.monster[monlist].position.z;
+							g.addChild(tmpanimset.animmesh);
+							tmpmonster.animset.push(tmpanimset);
+						}
+						monstermodel.push(tmpmonster);
+					}
+				}
+				//monstermodel //add to map
+			}
+			
+			/*
+			for (var monmeshlist:int = 0; monmeshlist < monstermodel.length; monmeshlist++) {
+				for (var animlist:int = 0; animlist < monstermodel[monmeshlist].animset.length; animlist++ ) {
+					trace("actionname:"+monstermodel[monmeshlist].animset[animlist].actionname);
+				}
+			}
+			*/
+			
+			initbuildnpcmap();
+		}
+		
 		//} END MONSTER BLOCK OBJECT DATA
 		
 		//{ START NPC BLOCK OBJECT DATA
-		
+		//TODO: need to fix text box
 		//NPC XML DATA
 		public function initNpcxml():void {
 			var urlrequest:URLRequest = new URLRequest(npcxmlurl);
@@ -425,6 +855,7 @@ package
 						var animmd2:MD2  = new MD2 (String(npcxml.npc[charno].animmesh.mesh[animno].name), queue.data[animname], 0.5 );
 						animset.actionname = npcxml.npc[charno].animmesh.mesh[animno].name;
 						animset.animmesh = animmd2;
+						//trace('anim npc:'+animset.animmesh.name);
 						//animset.animmesh.visible = false;
 						//default mesh assign
 						//tmpcharacter.animmesh = new MD2 (String(characterxml.character[charno].animmesh.mesh[animno].name), queue.data[animname], 0.5 );
@@ -432,7 +863,21 @@ package
 						tmpcharacter.posx = 50;
 						//g.addChild(animmd2);
 					}
-					npcmesh.push(tmpcharacter);
+					
+					var bcharfound:Boolean = false;
+					//trace("npcmesh number:"+npcmesh.length);
+					for (var countcharno:int = 0; countcharno < npcmesh.length ; countcharno++ ) {
+						if (npcmesh[countcharno].charactername == npcxml.npc[charno].name) {
+							bcharfound = true;
+							//trace('found');
+						}
+					}	
+					
+					if(!bcharfound){
+						npcmesh.push(tmpcharacter);
+					}
+					
+					
 				}
 			}
 			initNpcScript();
@@ -453,7 +898,10 @@ package
 		
 		//NPC SCRIPT DATA
 		public function NpcscriptLoadData():void {
-			initmapxml();
+			//initmapxml();
+			
+			//when all that data finish loading start build the maps
+			initbuildmonstermap();
 		}
 		
 		//NPC BOX MESSAGE
@@ -461,9 +909,16 @@ package
 			//trace("NPC:" + npcname +" ID:"+npcid);
 			for (var nonpctext:int = 0; nonpctext < npcscriptxml.npcscript.length(); nonpctext++ ) {
 				if (npcscriptxml.npcscript[nonpctext].name == npcname) {
+					trace("npc input data...");
+					npcmessageboxpanel =  new NPCMessageBox();
+					//npc message box -needs to add area
+					addChild(npcmessageboxpanel);
+					
 					//npcscriptxml.npcscript[nonpctext].scriptlist.message.text
 					//panel_npcmessage
 					
+					
+					/*
 					panel_npcmessage = new Sprite();
 					panel_npcmessage.graphics.beginFill(0xEFEFEF);
 					panel_npcmessage.graphics.drawRect(0, 0, 128, 64);
@@ -486,173 +941,15 @@ package
 					function removenpcmessage(event:MouseEvent):void {
 						panel_game.removeChild(panel_npcmessage);
 					}
+					*/
 					
 				}
 				//trace("scriptlst:"+npcscriptxml.npcscript[nonpctext].name)
 			}
+			//initbuildmonstermap();
 		}
 		
-		//} END NPC BLOCK OBCJECT DATA
-		
-		//{ START MAP DATA BLOCK
-		//=======================================
-		//MAP BLOCK
-		public function initmapxml():void {
-			var urlrequest:URLRequest = new URLRequest(mapxmlurl);
-			var urlloader:URLLoader = new URLLoader(urlrequest);
-			urlloader.addEventListener("complete", initdata)
-			
-			function initdata(event:Event):void {
-				//trace(event.target.data);
-				mapxml = new XML(event.target.data);
-				maploaddata();
-			}
-		}
-		
-		public function maploaddata():void {
-			//mapxml.objectlist.mesh
-			
-			parserstack = new ParserStack();
-			
-			for (var meshno:int = 0; meshno < mapxml.objectlist.mesh.length(); meshno++)
-			{
-				var parser:IParser = Parser.create(String(mapxml.objectlist.mesh[meshno].localdir), Parser.ASE );
-				parserstack.add(String(mapxml.objectlist.mesh[meshno].name), parser);
-			}
-			parserstack.addEventListener(ParserStack.COMPLETE,loadASEmapcomplete);
-			parserstack.start();
-		}
-		
-		//=======================================
-		// ASE DATA MESH
-		// This to store object mesh tmp for reuse data
-		public function loadASEmapcomplete(pEvt:Event):void {
-			//trace("Hello ASE");
-			for (var meshno:int = 0; meshno < mapxml.objectlist.mesh.length(); meshno++)
-			{
-				//var parser:IParser = Parser.create(String(mapxml.objectlist.mesh[meshno].localdir), Parser.ASE );
-				//parserstack.add(String(mapxml.objectlist.mesh[meshno].name), parser);
-				var tmpshape:Shape3D;
-				tmpshape = parserstack.getGroupByName(String(mapxml.objectlist.mesh[meshno].name)).children[0] as Shape3D; 
-				tmpshape.name = String(mapxml.objectlist.mesh[meshno].name);
-				//trace(tmpshape.name);
-				objectmesh.push(tmpshape);
-				//g.addChild(tmpshape);
-			}	
-			initbuildmap();
-		}
-		
-		public function loadmapComplete():void {
-			//mapxml.objects.mesh
-			/*
-			for (var meshno:int = 0; meshno <  mapxml.objects.mesh.length(); meshno) {
-				var meshname:String = mapxml.objects.mesh[meshno].name;
-				//var tmpshape:Shape3D = queue.data['cube32'];
-				trace(queue.data['cube32']);
-				//var shape:Shape3D = new Shape3D();
-				//g.addChild(tmpshape);
-			}
-			*/
-			var meshname:String = 'cube32';
-			//var tmpshape:Shape3D = Shape3D("test", queue.data[meshname],null,true);
-		}
-		
-		//=======================================
-		// Build object from object mesh and texture from data map
-		public function initbuildmap():void {
-			//trace("===INIT MAP BUILD===");
-			
-			//loop mesh currently in the list map
-			for (var meshno:int = 0; meshno < mapxml.objects.mesh.length(); meshno++){
-				//MESH
-				//trace(mapxml.objects.mesh[meshno].name);
-				for (var objmeshno:int = 0; objmeshno < objectmesh.length ; objmeshno++) {
-					//if mesh matches the map mesh object create it list
-					if (mapxml.objects.mesh[meshno].name == objectmesh[objmeshno].name) {
-						var tmpobjectmesh:Objectmesh = new Objectmesh();
-						var shape:Shape3D = objectmesh[objmeshno].clone();
-						//shape.
-						//shape.clone();
-						shape.x = mapxml.objects.mesh[meshno].position.x;
-						shape.y = mapxml.objects.mesh[meshno].position.y;
-						shape.z = mapxml.objects.mesh[meshno].position.z;
-						
-						shape.rotateX = mapxml.objects.mesh[meshno].rotation.x;
-						shape.rotateY = mapxml.objects.mesh[meshno].rotation.y;
-						shape.rotateZ = mapxml.objects.mesh[meshno].rotation.z;
-						tmpobjectmesh.model = shape;
-						//mesh name
-						tmpobjectmesh.meshname = objectmesh[objmeshno].name;
-						//mesh name id
-						tmpobjectmesh.meshid = shape.name;
-						objectmap.push(tmpobjectmesh);
-						g.addChild(shape);
-						//trace("FOUND!");
-					}
-				}
-			}
-			
-			initbuildmonstermap();
-		}
-		
-		//=======================================
-		// adding MONSTER into the map
-		public function initbuildmonstermap():void {
-			//mapxml
-			for (var monlist:int = 0; monlist < mapxml.monsterlist.monster.length(); monlist++) {
-				//trace(mapxml.monsterlist.monster[monlist].name);
-				//monstermesh //storage
-				for (var monmeshno:int = 0; monmeshno < monstermesh.length; monmeshno++) { 
-					//trace("monster mesh:"+monstermesh[monmeshno].charactername);
-					//match if monster name is the same
-					if (mapxml.monsterlist.monster[monlist].name == monstermesh[monmeshno].charactername) {
-						//trace("FOUND! " + monstermesh[monmeshno].charactername);
-						var tmpmonster:Monster = new Monster();
-						//tmpmonster =  monstermesh[monmeshno];
-						tmpmonster.boxcollision = monstermesh[monmeshno].boxcollision;
-						tmpmonster.charactername = monstermesh[monmeshno].charactername;
-						tmpmonster.setx = mapxml.monsterlist.monster[monlist].position.x;
-						tmpmonster.sety = mapxml.monsterlist.monster[monlist].position.y;
-						tmpmonster.setz = mapxml.monsterlist.monster[monlist].position.z;
-						
-						//trace("x:" + mapxml.monsterlist.monster[monlist].position.x +"y:" + mapxml.monsterlist.monster[monlist].position.y +"z:" + mapxml.monsterlist.monster[monlist].position.z);
-						
-						tmpmonster.rotx = mapxml.monsterlist.monster[monlist].rotation.x;
-						tmpmonster.roty = mapxml.monsterlist.monster[monlist].rotation.y;
-						tmpmonster.rotz = mapxml.monsterlist.monster[monlist].rotation.z;
-						tmpmonster.balive = true;
-						
-						for (var animno:int = 0; animno < monstermesh[monmeshno].animset.length ; animno++ ) {
-							var tmpanimset:AnimationSet =  new AnimationSet();
-							tmpanimset = monstermesh[monmeshno].animset[animno];
-							tmpanimset.animmesh = monstermesh[monmeshno].animset[animno].animmesh.clone();
-							tmpanimset.animmesh.x = mapxml.monsterlist.monster[monlist].position.x;
-							tmpanimset.animmesh.y = mapxml.monsterlist.monster[monlist].position.y;
-							tmpanimset.animmesh.z = mapxml.monsterlist.monster[monlist].position.z;
-							g.addChild(tmpanimset.animmesh);
-							tmpmonster.animset.push(tmpanimset);
-						}
-						monstermodel.push(tmpmonster);
-					}
-				}
-				//monstermodel //add to map
-			}
-			
-			/*
-			for (var monmeshlist:int = 0; monmeshlist < monstermodel.length; monmeshlist++) {
-				for (var animlist:int = 0; animlist < monstermodel[monmeshlist].animset.length; animlist++ ) {
-					trace("actionname:"+monstermodel[monmeshlist].animset[animlist].actionname);
-				}
-			}
-			*/
-			
-			initbuildnpcmap();
-			
-		}
-		
-		//=======================================
-		// adding NPC into the map
-		// added addEventListener for user click on npc object
+		// adding NPC into the map and added addEventListener for user click on npc object
 		public function initbuildnpcmap():void {
 			//mapxml
 			for (var npclist:int = 0; npclist < mapxml.npclist.npc.length(); npclist++) {
@@ -680,8 +977,9 @@ package
 							var tmpanimset:AnimationSet =  new AnimationSet();
 							tmpanimset = npcmesh[npcmeshno].animset[animno];
 							tmpanimset.animmesh = npcmesh[npcmeshno].animset[animno].animmesh.clone();
+							//trace('npc add id:'+tmpanimset.animmesh.name);
 							//trace(tmpanimset.animmesh.name);
-							
+							tmpanimset.animmesh.name = tmpanimset.animmesh.name + "_" + npcmesh[npcmeshno].charactername;
 							//tmpanimset.animmesh.name = '<npc>' +'<name>'+  npcmesh[npcmeshno].charactername +'</name>' +'<meshid>'+ tmpanimset.animmesh.id  +'</meshid>' +'</npc>';
 							
 							tmpanimset.animmesh.container.name = '<npc>' +
@@ -719,9 +1017,10 @@ package
 				}
 			}
 			*/
+			
 		}
 		
-		//} END MAP DATA BLOCK
+		//} END NPC BLOCK OBCJECT DATA
 		
 		//{ START HEAD UP DISPLAY
 		
@@ -774,7 +1073,7 @@ package
 		
 		//} END HEAD UP DISPLAY
 		
-		//{ Player BUILDs
+		//{ Player BUILDs (controls and functions)
 		public function CheckPlayer():void {
 			for (var playerno:int = 0; playerno < player.length; playerno++ ) {
 				//trace(player[playerno].playername);
@@ -797,7 +1096,20 @@ package
 							var tmpcharacter:Character = new Character();
 							tmpcharacter.playername = player[playerno].playername;
 							//tmpcharacter.animmesh = charactermesh[characterno].animmesh.clone();
-							tmpcharacter.animset = charactermesh[characterno].animset;
+							//tmpcharacter.animset = charactermesh[characterno].animset;
+							
+							for (var animno:int = 0; animno < charactermesh[characterno].animset.length ; animno++ ) {
+								//trace('anim set build...');
+								var tmpanimset:AnimationSet =  new AnimationSet();
+								tmpanimset = charactermesh[characterno].animset[animno];//class mesh assign action frame and mesh
+								tmpanimset.animmesh = charactermesh[characterno].animset[animno].animmesh.clone();
+								var clonename:String = tmpanimset.animmesh.name;
+								tmpanimset.meshid = tmpanimset.animmesh.name;
+								//g.addChild(tmpanimset.animmesh);
+								tmpcharacter.animset.push(tmpanimset);//push anim set
+							}
+							
+							tmpcharacter.boxcollision = charactermesh[characterno].boxcollision;
 							//tmpcharacter.modelid = tmpcharacter.animmesh.name;
 							//tmpcharacter.animmesh.x = -50;
 							playermesh.push(tmpcharacter);
@@ -814,14 +1126,12 @@ package
 									//g.addChild(playermesh[playermadd].animmesh);
 								}
 							}
-							
 							//trace("PUSH ARRAY:>");
 							//charactermesh
 							break;
 						}
 					}
 				}
-				
 			}
 		}
 		
@@ -877,6 +1187,12 @@ package
 					playermesh[playerno].dirx = 0;
 				}
 				
+				if (Spacebar) {
+					playermesh[playerno].diry  = 1;
+					//trace('hello');
+				}else {
+					playermesh[playerno].diry  = -1;
+				}
 				//trace("x:"+playermesh[playerno].dirx +" z: "+playermesh[playerno].dirz);
 				//playerchar.addChild(camera);
 				//trace("x:"+playermesh[playerno].posx+ " z:"+playermesh[playerno].posz);
@@ -884,9 +1200,9 @@ package
 				//playermesh[playerno].diffy = oldy - playermesh[playerno].posy;
 				//playermesh[playerno].diffz = oldz - playermesh[playerno].posz;
 				
-				bbox.x = playermesh[playerno].posx;
-				bbox.y = playermesh[playerno].posy;
-				bbox.z = playermesh[playerno].posz;
+				//bbox.x = playermesh[playerno].posx;
+				//bbox.y = playermesh[playerno].posy;
+				//bbox.z = playermesh[playerno].posz;
 				camera.x = playermesh[playerno].posx;
 				camera.y = playermesh[playerno].posy + 200;
 				camera.z = playermesh[playerno].posz - 150;
@@ -934,10 +1250,22 @@ package
 			}
 		}
 		
+		public function addlog():void {
+			text_log.text = "log";
+			text_log.y = 300;
+			text_log.border = true;
+			text_log.width = 500;
+			addChild(text_log);
+		}
+		
+		public function removelog():void {
+			removeChild(text_log);
+		}
+		
 		//} END DEBUG SECTION
 		
-		//this will render the mesh and other objects data
-		// This is an update code function when every frame is render
+		// This render the mesh, objects data, and other funtions by frame speed
+		// This update the code and the function when every frame count is pass
 		private function enterFrameHandler( event : Event ) : void {
 			text_log.text = "log...";
 			showentities();
@@ -955,6 +1283,7 @@ package
 		
 		//{ START OBJECTS ACTIONS
 		
+		//monster attak player
 		public function MonsterAttackPlayer():void {
 			for (var nomonster:int = 0; nomonster < monstermodel.length; nomonster++) {
 				//playermesh[noplayer].boxcollision.length
@@ -1051,6 +1380,7 @@ package
 		
 		//} END OBJECTS ACTIONS
 		
+		//{ OBJECTS COLLISION BY CLASS
 		public function PlayerCollisions():void {
 			
 			//loop collisions
@@ -1066,16 +1396,21 @@ package
 						playermesh[playerno].bcollisionx = false;
 					}
 					
+					if (playermesh[playerno].objectbox(objectmap[objectmeshno], 0, playermesh[playerno].diry-5, 0)) {
+						playermesh[playerno].posy += (playermesh[playerno].diffy);
+						playermesh[playerno].bcollisiony = true;
+						//trace("collision y t");
+					}else {
+						playermesh[playerno].bcollisiony = false;
+						//trace("collision y f");
+					}
+					
 					if (playermesh[playerno].objectbox(objectmap[objectmeshno], 0, 0, playermesh[playerno].dirz)) {
 						playermesh[playerno].posz += playermesh[playerno].diffz;
 						playermesh[playerno].bcollisionz = true;
 						
 					}else {
 						playermesh[playerno].bcollisionz = false;
-					}
-					
-					if ((playermesh[playerno].bcollisionx == true) || (playermesh[playerno].bcollisiony == true) || (playermesh[playerno].bcollisionz == true) ) {
-						//break;//remove this does not work
 					}
 				}
 				
@@ -1097,8 +1432,24 @@ package
 						playermesh[playerno].bcollisionx = false;
 					}
 				}
+				
+				//terrain collision
+				for (var terrainno:int = 0; terrainno < terrainmodel.length;terrainno++ ) {
+					//trace( terrainmodel[terrainno].uvposition(playermesh[playerno].posx, playermesh[playerno].posz));
+					if ((playermesh[playerno].posx > terrainmodel[terrainno].minx()) &&(playermesh[playerno].posx < terrainmodel[terrainno].maxx())&&
+					   (playermesh[playerno].posz > terrainmodel[terrainno].minz()) && (playermesh[playerno].posz < terrainmodel[terrainno].maxz())) {
+						//trace('terrain area');
+						//terrain check collision
+						//if ()
+						var terrainy:Number = terrainmodel[terrainno].uvposition(playermesh[playerno].posx, playermesh[playerno].posz);
+						if ((playermesh[playerno].posy <  terrainy)&&(playermesh[playerno].posy > terrainy -20) ){
+							//playermesh[playerno].posy = terrainy + terrainmodel[terrainno].posy;
+							playermesh[playerno].posy = terrainy;
+							//trace("terrain collision");
+						}
+					}
+				}
 			}
-			
 		}
 		
 		public function MonsterCollisions():void {
@@ -1121,15 +1472,11 @@ package
 					}else {
 						monstermodel[monsterno].bcollisionz = false;
 					}
-					/*
-					if ((monstermodel[monsterno].bcollisionx == true)&&(monstermodel[monsterno].bcollisionz)) {
-						break;
-					}
-					*/
 				}
 				
 				//player collision
 				for (var playerno:int = 0; playerno < playermesh.length; playerno++) {
+					
 					if (monstermodel[monsterno].playerbox(playermesh[playerno], monstermodel[monsterno].dirx, 0, 0)) {
 						monstermodel[monsterno].posx -= monstermodel[monsterno].diffx;
 						monstermodel[monsterno].bcollisionx = true;
@@ -1137,6 +1484,7 @@ package
 					}else {
 						monstermodel[monsterno].bcollisionx = false;
 					}
+					
 					
 					if (monstermodel[monsterno].playerbox(playermesh[playerno], 0, 0, monstermodel[monsterno].dirz)) {
 						monstermodel[monsterno].posz -= monstermodel[monsterno].diffz;
@@ -1147,9 +1495,11 @@ package
 					}
 				}
 			}
-			
 		}
 		
+		//} end object collision
+		
+		//{ KeyBoard Events and Controls
 		//This is when the keyboard is pressed.
 		private function keyPressedHandler(event:flash.events.KeyboardEvent):void{
 			//FlashConnect.trace("Hello");
@@ -1168,7 +1518,9 @@ package
 			
 		}
 		
+		//keyboard press down
 		public function addKey(e:KeyboardEvent):void {
+			//trace(e.keyCode);
 			//keysDown[e.keyCode] = true;
 			//if (e.keyCode == 38) {
 			//	upspeed = true;
@@ -1189,8 +1541,13 @@ package
 			if (e.keyCode == keycode_c) {
 				BAttack = true;
 			}
+			
+			if (e.keyCode == Keyspacebar) {
+				Spacebar = true;
+			}
 		}
 		
+		//keyboard release up
 		public function removeKey(e:KeyboardEvent):void {
 			//keysDown[e.keyCode] = false;
 			//trace(e.keyCode);
@@ -1214,14 +1571,19 @@ package
 				BAttack = false;
 			}
 			
+			if (e.keyCode == Keyspacebar) {
+				Spacebar = false;
+			}
+			
 		}
+		//} end Keyboard
 		
+		//Scene test build
 		private function createScene():Group{
 			//var g:Group = new Group("myGroup");
-			g.addChild(box);
+			//g.addChild(box);
 			return g;
 		}
 		
 	}
-	
 }
