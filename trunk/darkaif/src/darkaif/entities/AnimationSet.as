@@ -11,6 +11,7 @@
 	{
 		public var actionname:String = "";
 		public var animmesh:MD2 = null;
+		public var meshid:String = '';
 		public var framemin:Number = 0;
 		public var framemax:Number = 0;
 		public var actionframe:Array = new Array();

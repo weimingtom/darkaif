@@ -17,8 +17,8 @@
 		
 		public function Objectmesh() 
 		{
-			var boxbound:CollisionBox = new CollisionBox();
-			boxcollision.push(boxbound);
+			//var boxbound:CollisionBox = new CollisionBox();
+			//boxcollision.push(boxbound);
 		}
 		
 	}

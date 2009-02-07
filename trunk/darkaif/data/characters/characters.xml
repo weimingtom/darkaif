@@ -38,6 +38,7 @@
 					</action>
 				</frameset>
 			</mesh>
+			<!--
 			<mesh>
 				<name>death</name>
 				<file>data/models/simple_character_player_low.md2</file>
@@ -47,18 +48,19 @@
 				<attackstart>-1</attackstart>
 				<attackend>-1</attackend>
 			</mesh>
+			-->
 		</animmesh>
 		<collision>
 			<box>
 				<min>
-					<x>0</x>
-					<y>0</y>
-					<z>0</z>
+					<x>-10</x>
+					<y>-10</y>
+					<z>-10</z>
 				</min>
 				<max>
-					<x>0</x>
-					<y>0</y>
-					<z>0</z>
+					<x>10</x>
+					<y>10</y>
+					<z>10</z>
 				</max>
 				<position>
 					<x>0</x>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	Note this will be the example map list xml from php output to read it. 
+	This will be the map data that will query map data to php from mysql.
+	It will depend on the level of access and the php if access correctly else it will denied
+	the user for accessing the map.
+	-->
+<data>
+	<map>
+		<name>threesube</name>
+		<dir>data/maps/threesube.xml</dir>
+	</map>
+	<map>
+		<name>threebythree</name>
+		<dir>data/maps/threebythree.xml</dir>
+	</map>
+	<map>
+		<name>rifton_townmap</name>
+		<dir>data/maps/rifton_townmap.xml</dir>
+	</map>
+</data>

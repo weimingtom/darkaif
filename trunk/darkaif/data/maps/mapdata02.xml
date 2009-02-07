@@ -108,245 +108,6 @@
 		</mesh>
 	</objectlist>
 	<objects>
-		<!--
-		<mesh>
-			<name>ShipCargo</name>
-			<position>
-				<x>0</x>
-				<y>-64</y>
-				<z>0</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		-->
-		
-		<!--
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>0</x>
-				<y>0</y>
-				<z>160</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>32</x>
-				<y>0</y>
-				<z>160</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>64</x>
-				<y>0</y>
-				<z>160</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>96</x>
-				<y>0</y>
-				<z>160</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-32</x>
-				<y>0</y>
-				<z>160</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-64</x>
-				<y>0</y>
-				<z>160</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-96</x>
-				<y>0</y>
-				<z>160</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-96</x>
-				<y>0</y>
-				<z>128</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-96</x>
-				<y>0</y>
-				<z>96</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-96</x>
-				<y>0</y>
-				<z>64</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-96</x>
-				<y>0</y>
-				<z>32</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		<mesh>
-			<name>cube32</name>
-			<position>
-				<x>-96</x>
-				<y>0</y>
-				<z>0</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-			<offset>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</offset>
-		</mesh>
-		-->
 		<mesh>
 			<name>platfloat</name>
 			<position>
@@ -455,7 +216,6 @@
 				<z>0</z>
 			</rotation>
 		</npc>
-		<!--
 		<npc>
 			<name>npc</name>
 			<position>
@@ -469,7 +229,7 @@
 				<z>0</z>
 			</rotation>
 		</npc>
-		-->
+		
 	</npclist>
 	<monsterlist>
 		<monster>
@@ -485,39 +245,8 @@
 				<z>0</z>
 			</rotation>
 		</monster>
-		<!--
-		<monster>
-			<name>monster</name>
-			<position>
-				<x>-128</x>
-				<y>0</y>
-				<z>0</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-		</monster>
-		-->
 	</monsterlist>
 	<terrain>
-		<!--
-		<layer>
-			<name>layer_1</name>
-			<height>512</height>
-			<width>512</width>
-			<gridx>16</gridx>
-			<gridy>16</gridy>
-			<heightmap>data/textures/island_heightmap3.jpg</heightmap>
-			<texture></texture>
-			<position>
-				<x>256</x>
-				<y>-128</y>
-				<z>0</z>
-			</position>
-		</layer>
-		-->
 	</terrain>
 	
 </data>
