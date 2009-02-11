@@ -13,6 +13,7 @@ To do List:
 --objects               [part done]
 --monsters              [part done]
 --map zones             [part done]
+--Terrain               [part done]
 -Menus
 --settings
 --Skills
@@ -27,12 +28,15 @@ This is on going build for making the stable map.
 {{{
 To do List:
  * load map             [part done]
+ * Save map             []
  * Load objects format  [part done]
  * load textures        [part done]
- * Save map             []
+ * Load Terrains         [part done]
  * Collisions           [part done]
  * Gravity              [part done]
  * npcs                 [part done]
+   -Quest
+   -Shop
  * monsters             [part done]
  * players              [part done]
  * portal               []
