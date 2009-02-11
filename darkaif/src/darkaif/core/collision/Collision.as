@@ -10,6 +10,7 @@
 	{
 		public var box:Array = new Array(); //CollisionBox class;
 		public var sphere:Array = new Array(); //CollisionSphere class;
+		public var cylinder:Array = new Array();
 		
 		public function Collision() 
 		{
