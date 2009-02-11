@@ -1,7 +1,25 @@
 #summary status of current build and work in progress.
+#labels rpg,status,builds
 
 = Player Builds =
 Working and under testing functions.
+
+{{{
+To do List:
+-Animation              [WIP]
+--skills
+--actions               [WIP]
+-Collision              [part done]
+--objects               [part done]
+--monsters              [part done]
+--map zones             [part done]
+-Menus
+--settings
+--Skills
+--Items
+--Quest
+--stats
+}}}
 
 = Map builds =
 This is on going build for making the stable map.
@@ -18,7 +36,7 @@ To do List:
  * monsters             [part done]
  * players              [part done]
  * portal               []
- * zone                 []
+ * zone                 [part done]
 }}}
 
 = Monster builds =
@@ -28,30 +46,31 @@ Detail:
  * AI
 The AI will do the following actions.
 {{{
-Follow
-Attack
+Follow               [part done]
+Attack               [part done]-need to be refine a bit more.
 }}}
 
 {{{
- Animations
- Item Drop
- Respawn
- experience points 
+ Animations          [part done]
+ Item Drop           []
+ Respawn             [part done]
+ experience points   []
 }}}
 
- = NPC Builds =
+= NPC Builds =
 I am currently leave this to the last part that deal with items, status, and etc. To deal player interacting with the npc.
 
 TODOLIST:
 {{{
 -Items
 -Stats
--Animation
+-Animation        [part done]
 -Quest
 -Events
 --Stories
 --Holidays
--Menus
+-Menus            [part done]
 -Shop
 }}}
 
+= Item Builds =
