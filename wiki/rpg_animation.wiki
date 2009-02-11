@@ -1,3 +1,2 @@
 #summary rpg animation.
-#labels animation
-
+#labels animation,Deprecated
