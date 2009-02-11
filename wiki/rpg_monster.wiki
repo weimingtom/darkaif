@@ -1,4 +1,5 @@
 #summary rpg monster builds.
+#labels Deprecated,rpg
 
 = Monster builds =
 Working on the monster can be hard to do. But simple if you work each function one at the time.
