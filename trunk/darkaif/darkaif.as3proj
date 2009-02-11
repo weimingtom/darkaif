@@ -13,11 +13,11 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="..\..\svn\flashengine" />
     <class path="src" />
     <class path="3Dengine_papervision3d" />
     <class path="3Dengine_sandy" />
     <class path="2DEngine" />
+    <class path="..\..\..\flashengine" />
   </classpaths>
   <!-- Build options -->
   <build>

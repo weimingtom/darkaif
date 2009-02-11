@@ -21,6 +21,7 @@
 		public var modelid:String = ""; //character mesh
 		public var playername:String = ""; //player name and id
 		public var mesh:Shape3D = null; //mesh
+		public var mapzoneid:Number = -1;
 		
 		//{ start status
 		public var healthpoint:Number = 100;
@@ -317,6 +318,44 @@
 				return false;
 			}
 			//return false;
+		}
+		
+		//check collision
+		public function checkzonemap(box:MapZone):Boolean {
+			//trace('--');
+			var bcollision:Boolean = false;
+			//trace("test class object");
+			for (var boxno:int = 0; boxno < boxcollision.length; boxno++ ) {
+				var minx:Number = boxcollision[boxno].minx + posx;
+				var miny:Number = boxcollision[boxno].miny + posy;
+				var minz:Number = boxcollision[boxno].minz + posz;
+				
+				var maxx:Number = boxcollision[boxno].maxx + posx;
+				var maxy:Number = boxcollision[boxno].maxy + posy;
+				var maxz:Number = boxcollision[boxno].maxz + posz;
+				
+				//for (var objectboxno:Number = 0; objectboxno < objectmesh.boxcollision.length; objectboxno++) {
+					var minx2:Number = box.box.minx + box.posx;
+					var miny2:Number = box.box.miny + box.posy;
+					var minz2:Number = box.box.minz + box.posz;
+					
+					var maxx2:Number = box.box.maxx + box.posx;
+					var maxy2:Number = box.box.maxy + box.posy;
+					var maxz2:Number = box.box.maxz + box.posz;
+					if ((maxz >= minz2) &&(minz <= maxz2) &&
+						(maxy >= miny2) &&(miny <= maxy2) &&
+						(maxx >= minx2) && (minx <= maxx2)){
+						//trace("mesh collision");	
+						bcollision = true;
+						break;
+					}
+				///}
+			}
+			if (bcollision) {
+				return true;
+			}else {
+				return false;
+			}
 		}
 	}
 }

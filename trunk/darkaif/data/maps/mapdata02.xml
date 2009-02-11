@@ -181,6 +181,7 @@
 				<z>0</z>
 			</offset>
 		</mesh>
+		<!--
 		<mesh>
 			<name>platfloat</name>
 			<position>
@@ -199,6 +200,7 @@
 				<z>0</z>
 			</offset>
 		</mesh>
+		-->
 
 				
 	</objects>
@@ -232,21 +234,39 @@
 		
 	</npclist>
 	<monsterlist>
-		<monster>
-			<name>monster</name>
-			<position>
-				<x>-64</x>
-				<y>0</y>
-				<z>0</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-			</rotation>
-		</monster>
+		
 	</monsterlist>
 	<terrain>
 	</terrain>
-	
+	<mapzone>
+		<zone>
+			<mapname>mapdata01</mapname>
+			<mapzoneid>0</mapzoneid>
+			<mapurl>data/maps/mapdata01.xml</mapurl>
+			<position>
+				<x>220</x>
+				<y>-32</y>
+				<z>0</z>
+			</position>
+			<exit>
+				<position>
+					<x>180</x>
+					<y>16</y>
+					<z>0</z>
+				</position>
+			</exit>
+			<box>
+				<min>
+					<x>-16</x>
+					<y>-16</y>
+					<z>-16</z>
+				</min>
+				<max>
+					<x>16</x>
+					<y>16</y>
+					<z>16</z>
+				</max>
+			</box>
+		</zone>
+	</mapzone>
 </data>
