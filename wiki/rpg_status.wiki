@@ -2,6 +2,11 @@
 #labels rpg,status,builds
 #sidebar Map builds
  * [rpg_status#Map_Builds Map_builds]
+ * [rpg_status#Player_Builds Player_Builds]
+ * [rpg_status#Monster_builds Monster_builds]
+ * [rpg_status#NPC_Builds NPC_Builds]
+ * [rpg_status#Item_Builds Item_Builds]
+
 
 
 
