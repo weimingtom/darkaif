@@ -7,9 +7,20 @@
  * [rpg_status#NPC_Builds NPC_Builds]
  * [rpg_status#Item_Builds Item_Builds]
 
+= Map Start up =
+{{{
+-default map load
+-load objects
+--check object mesh is store matches else add in.
+-load terrain
+-load character
+--check object mesh is store matches else add in.
+-load monster
+--check object mesh is store matches else add in.
+-load npc
+--check object mesh is store matches else add in.
 
-
-
+}}}
 = Map builds =
 This is on going build for making the stable map.
 
@@ -19,12 +30,12 @@ To do List:
  * Save map             []
  * Load objects format  [part done]
  * load textures        [part done]
- * Load Terrains         [part done]
+ * Load Terrains        [part done]
  * Collisions           [part done]
  * Gravity              [part done]
  * npcs                 [part done]
-   -Quest
-   -Shop
+   -Quest               []
+   -Shop                []
  * monsters             [part done]
  * players              [part done]
  * portal               []
@@ -38,19 +49,19 @@ Working and under testing functions.
 {{{
 To do List:
 -Animation              [WIP]
---skills
+--skills                []
 --actions               [WIP]
 -Collision              [part done]
 --objects               [part done]
 --monsters              [part done]
 --map zones             [part done]
 --Terrain               [part done]
--Menus
---settings
---Skills
---Items
---Quest
---stats
+-Menus                  []
+--settings              []
+--Skills                []
+--Items                 []
+--Quest                 []
+--stats                 []
 }}}
 
 = Monster builds =
@@ -76,15 +87,15 @@ I am currently leave this to the last part that deal with items, status, and etc
 
 TODOLIST:
 {{{
--Items
--Stats
--Animation        [part done]
--Quest
--Events
---Stories
---Holidays
--Menus            [part done]
--Shop
+-Items             []
+-Stats             []
+-Animation         [part done]
+-Quest             []
+-Events            []
+--Stories          []
+--Holidays         []
+-Menus             [part done]
+-Shop              []
 }}}
 
 = Item Builds =
