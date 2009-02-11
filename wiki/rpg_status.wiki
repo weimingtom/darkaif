@@ -1,26 +1,9 @@
 #summary status of current build and work in progress.
 #labels rpg,status,builds
 
-= Player Builds =
-Working and under testing functions.
+#sidebar TableOfContents
+ * [rpg_status ]
 
-{{{
-To do List:
--Animation              [WIP]
---skills
---actions               [WIP]
--Collision              [part done]
---objects               [part done]
---monsters              [part done]
---map zones             [part done]
---Terrain               [part done]
--Menus
---settings
---Skills
---Items
---Quest
---stats
-}}}
 
 = Map builds =
 This is on going build for making the stable map.
@@ -41,6 +24,28 @@ To do List:
  * players              [part done]
  * portal               []
  * zone                 [part done]
+}}}
+
+
+= Player Builds =
+Working and under testing functions.
+
+{{{
+To do List:
+-Animation              [WIP]
+--skills
+--actions               [WIP]
+-Collision              [part done]
+--objects               [part done]
+--monsters              [part done]
+--map zones             [part done]
+--Terrain               [part done]
+-Menus
+--settings
+--Skills
+--Items
+--Quest
+--stats
 }}}
 
 = Monster builds =
