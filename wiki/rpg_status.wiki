@@ -1,7 +1,7 @@
 #summary status of current build and work in progress.
 #labels rpg,status,builds
 
- * [rpg_status HOWTO articles]
+ * [rpg_status HTML reference]
 
 
 
