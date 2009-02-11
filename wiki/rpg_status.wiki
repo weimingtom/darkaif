@@ -1,8 +1,8 @@
 #summary status of current build and work in progress.
 #labels rpg,status,builds
 
-#sidebar TableOfContents
- * [rpg_status ]
+ * [Articles HOWTO articles]
+
 
 
 = Map builds =
