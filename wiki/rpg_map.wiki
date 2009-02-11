@@ -1,5 +1,5 @@
 #summary rpg map build.
-#labels rpg,map
+#labels rpg,map,Deprecated
 
 
 = Map builds =
