@@ -1,4 +1,5 @@
 #summary Player Builds.
+#labels Deprecated,rpg
 
 = Player Builds =
 Working and under testing functions.
