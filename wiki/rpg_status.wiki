@@ -1,6 +1,6 @@
 #summary status of current build and work in progress.
 #labels rpg,status,builds
-#sidebar rpg_status
+#sidebar Map builds
  * [rpg_status HTML reference]
 
 
