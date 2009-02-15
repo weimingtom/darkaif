@@ -1,4 +1,5 @@
 #summary actionscript3 client/server php/java/python mysql/sqlite.
+#labels Phase-Design
 
 = Introduction =
  I still learning about them. Using sockets in binary code to get a multi-player working will take some time. But your using socket xml that depend if simple game. That it would be easy to write. But it up to every one how to code it. I am writing the mixed stuff that can be use for the game. Although it required to learn those languages. But they are simple once you learn it. Learning how to build them is any is question. 
