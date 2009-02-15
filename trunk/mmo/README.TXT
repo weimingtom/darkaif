@@ -9,3 +9,7 @@ Respect people works.
 
 mmoas3 -actionscript 3 -FlashDevelop
 mmoj   -java           -Eclipse
+
+Working files:
+-main.as                -client program
+-ObjectMoveServer.java  -server program
