@@ -4,6 +4,7 @@
 = RPG game builds: =
    They are work in progress where the game is being builded.
  * [rpg_status]
+   [client_and_server_builds client/server builds]
 
 = SVN Basic: =
  * [svn_builds]
