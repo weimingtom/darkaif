@@ -1,5 +1,8 @@
-#summary Player infaces.
-#labels menus,controls,settings,theme
+#summary Player interfaces.
+#labels menus,controls,settings,theme,Phase-Design
+
+=Game Interfaces:=
+   Player will be using the web browser to able to access the game. The game interface will depend on the setting that was input from the setting to simple to hard. Player can custom the controls for skills, items and others use on the keyboard once it build for it. Player can solo on their own or join the server. Player doing solo it will not will be server but in script query access that will be build.
 
 =Camera:=
 	The camera will be first and third person that depend on the game modes. The default will be third person view, so that you can see your avatar in the game. The camera will be translate smoothing.
