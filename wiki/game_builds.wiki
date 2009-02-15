@@ -1,6 +1,13 @@
 #summary Game Builds.
 #labels rpg,svn
 
+= Game Builds =
+ * Game_Overview 
+ * Game_Information
+ * Game_Modes
+ * Game_Interfaces
+ 	 
+
 = RPG game builds: =
    They are work in progress where the game is being builded.
  * [rpg_status]
