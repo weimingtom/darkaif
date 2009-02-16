@@ -13,17 +13,18 @@ public class ObjectMoveServer {
 
 	public static void main(String[] args) throws Exception {
 		ServerSocket listener = new ServerSocket(5555);
-        System.out.println("starting server");
+        System.out.println("starting server...");
         try {
         	int id = 0;
+        	Game game = new Game();
+        	game.start();
+        	game.sleep(100);
             while (true) {
-                Game game = new Game();
+                //game.
+            	
                 Game.Player playerX = game.new Player(listener.accept(),id++);
-                //Game.Player playerO = game.new Player(listener.accept(), 'O');
-                //playerX.setOpponent(playerO);
-                //playerO.setOpponent(playerX);
-                //game.currentPlayer = playerX;
                 playerX.start();
+                Game.list.add(playerX);
                 //playerO.start();
             }
         } finally {
