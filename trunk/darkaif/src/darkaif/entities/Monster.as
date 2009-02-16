@@ -145,8 +145,8 @@
 			//trace("update");
 			//trace("x:"+targetx+" y:"+targety+" z:"+targetz);
 			// x,z
-			
 			targetdistance();
+			//posx++;
 			
 			//if monster health is gone, do not render
 			if (healthpoint <= 0) {

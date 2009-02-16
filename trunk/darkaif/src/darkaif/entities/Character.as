@@ -51,19 +51,19 @@
 		public var frameattackend:Number = 0; // when trigger event end from the action frame
 		//public var count:int = 0;
 		//public var countmax:int = 100;
-		
-		public var bcollision:Boolean = false; //to be able collision
 		public var balive:Boolean = false; //check what ever the object is alive or dead
-		public var bdetectcollision:Boolean = false;
 		
 		public var bclosecombat:Boolean = false; //close combar
 		public var branagecombat:Boolean = false; //long combat
 		
+		//collision
 		public var boxcollision:Array = new Array(); //box collision
 		public var spherecollision:Array = new Array(); //sphere collision
+		public var bcollision:Boolean = false; //to be able collision
 		public var bcollisionx:Boolean = false;
 		public var bcollisiony:Boolean = false;
 		public var bcollisionz:Boolean = false;
+		public var bdetectcollision:Boolean = false;
 		
 		public var bup:Boolean = false;
 		public var bdown:Boolean = false;
@@ -72,13 +72,26 @@
 		public var bforward:Boolean = false;
 		public var bbackward:Boolean = false;
 			
-		//{ start direction
+		
 		public var gravityx:Number = 0;
 		public var gravityy:Number = 0;
 		public var gravityz:Number = 0;
 		
+		//jump controls
+		public var jumptime:Number = 0;
+		public var jumptimemax:Number = 15;
+		public var jumpcountmax:Number = 1;
+		public var jumpcount:Number = 0;
+		public var bfall:Boolean = false;
+		public var falltime:Number = 0;
+		public var falltimemax:Number = 15;
+		public var bkeyjump:Boolean = false;
+		public var bjump:Boolean = false;
+		public var bground:Boolean = false;
+		
 		public var movespeed:Number = 5;
 		
+		//{ start direction and rotation
 		public var diffx:Number = 0;//it depend where it direction		
 		public var diffy:Number = 0;//it depend where it direction
 		public var diffz:Number = 0;//it depend where it direction
@@ -113,6 +126,31 @@
 			//trace("x:"+bcollisionx+" z:"+bcollisionz);
 			//trace("update");
 			//trace("action frame:"+actionframe)
+			
+			if ((bkeyjump == true)&&(bjump == false)&&(bfall == false)) {
+				//diry = 1;
+				bjump = true;
+			}
+			if ((bjump == true)){
+				jumptime++;
+				diry = 1;
+				if (jumptime > jumptimemax) {
+					jumptime = 0;
+					bjump = false;
+					bfall = true;
+				}
+			}else {
+				diry = -1;
+			}
+			
+			if (bfall) {
+				falltime++;
+				if (falltime > falltimemax) {
+					falltime = 0;
+					bfall = false;
+				}
+			}
+			
 			
 			if (healthpoint < 0) {
 				healthpoint = 0;
