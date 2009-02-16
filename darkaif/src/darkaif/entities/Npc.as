@@ -12,6 +12,7 @@
 	 */
 	public class Npc
 	{
+		//{variables
 		public var charactername:String = "";
 		public var modelid:String = "";
 		public var playername:String = "";
@@ -24,7 +25,7 @@
 		public var countmax:int = 100;
 		
 		public var bcollision:Boolean = false;
-		public var balive:Boolean = false;
+		public var balive:Boolean = true;
 		public var bdetectcollision:Boolean = false;
 		
 		public var boxcollision:Array = new Array();
@@ -43,15 +44,15 @@
 		public var rotz:Number = 0;
 		
 		public var moveforward:Number = 0;
-		
+		//}
 		public function Npc(){
 			var boxbound:CollisionBox = new CollisionBox();
 			boxcollision.push(boxbound);
 		}
-		
-		
+			
 		public function update():void {
 			//trace("update");
+			//posx++;
 			for (var animno:int = 0; animno < animset.length; animno++ ) {	
 				//animset[animno].animmesh.visible = false;
 				if (animset[animno].actionname == action) {

@@ -245,13 +245,13 @@
 			<mapurl>data/maps/mapdata01.xml</mapurl>
 			<position>
 				<x>220</x>
-				<y>-32</y>
+				<y>-31</y>
 				<z>0</z>
 			</position>
 			<exit>
 				<position>
 					<x>180</x>
-					<y>16</y>
+					<y>-31</y>
 					<z>0</z>
 				</position>
 			</exit>

@@ -517,8 +517,7 @@
 			</position>
 		</layer>
 		-->
-	</terrain>
-	
+	</terrain>	
 	<mapzone>
 		<zone>
 			<mapname>mapdata02</mapname>
@@ -532,7 +531,7 @@
 			<exit>
 				<position>
 					<x>-180</x>
-					<y>16</y>
+					<y>-31</y>
 					<z>0</z>
 				</position>
 			</exit>
@@ -562,7 +561,7 @@
 			<exit>
 				<position>
 					<x>0</x>
-					<y>16</y>
+					<y>-31</y>
 					<z>-180</z>
 				</position>
 			</exit>
@@ -591,7 +590,7 @@
 			<exit>
 				<position>
 					<x>0</x>
-					<y>16</y>
+					<y>-31</y>
 					<z>180</z>
 				</position>
 			</exit>
