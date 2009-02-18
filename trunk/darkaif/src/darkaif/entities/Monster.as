@@ -58,17 +58,24 @@
 		public var spawntime:Number = 0; // start time to respawn for the monster in frame count
 		public var spawntimemax:Number = 100; // max frame count to trigger spawn or create or show the monster
 		public var bcollision:Boolean = false; //this to make the object to have collision 
-		public var balive:Boolean = false; //if the object is alive do something
+		public var balive:Boolean = true; //if the object is alive do something
 		public var bdetectcollision:Boolean = false; //this check if the object is collision to other
-		public var detectrange:Number = 0;//128; //64;
+		public var detectrange:Number = 64;//128; //64;
 		//public var playerrange:Number = 32;
 		
 		//collision
 		public var boxcollision:Array = new Array(); //box collision array
 		public var spherecollision:Array = new Array(); //sphere collision array
+		
 		public var bcollisionx:Boolean = false;
 		public var bcollisiony:Boolean = false;
 		public var bcollisionz:Boolean = false;
+		
+		public var bgoundcollision:Boolean = false;
+		
+		public var gravityx:Number = 0;
+		public var gravityy:Number = -1;
+		public var gravityz:Number = 0;
 		
 		//{ start position and rotation
 		public var diffx:Number = 0;//it depend where it direction		
@@ -156,6 +163,21 @@
 			
 			//if mosnter is alive start thinking
 			if (balive == true) {
+				//trace('update');
+				//trace('bcollision');
+				//trace(String(bcollisiony));
+				if (!bgoundcollision) {
+					
+					//posy += diry;
+					posy += gravityy;
+				//trace("gravityy");
+				}else {
+					//trace('collision');
+					//trace('collision');
+					posy -= gravityy;
+					//posy -= diry;
+				}
+				
 				//monster detect player ranage
 				if ( targetrange <  detectrange){
 					if ((posx < targetx)) {
