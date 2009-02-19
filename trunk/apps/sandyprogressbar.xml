@@ -3,7 +3,9 @@
   <ModulePrefs title="hello world example" /> 
   <Content type="html">
      <![CDATA[ 
-	 <embed src="ttp://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" width="300" height="300"></embed>
+	 <object classid="" width="300" height="300">
+        <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" />
+      </object>
      ]]>
   </Content> 
 </Module>
