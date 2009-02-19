@@ -5,4 +5,4 @@ This is the simple loading bar in the 3D View.
 
 http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf
 
-<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/Helloworld.xml" width="800" height="600" />
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/Helloworld.xml" width="300" height="300" />
