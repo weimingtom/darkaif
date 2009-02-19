@@ -3,5 +3,6 @@
 = Information: =
 This is the simple loading bar in the 3D View.
 
+http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/Helloworld.xml" width="640" height="480" />
