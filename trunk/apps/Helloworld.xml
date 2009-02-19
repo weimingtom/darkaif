@@ -5,5 +5,6 @@
      <![CDATA[ 
        Hello, world!
      ]]>
+	 <embed src="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" width="640" height="480"></embed>
   </Content> 
 </Module>
