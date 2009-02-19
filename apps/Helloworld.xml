@@ -6,8 +6,6 @@
 	   <object classid="" width="300" height="300">
         <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" />
       </object>
-
      ]]>
-	 
   </Content> 
 </Module>
