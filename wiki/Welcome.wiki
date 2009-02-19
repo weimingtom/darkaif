@@ -13,3 +13,6 @@ If you want to know about this game that is currently under development. Here th
 
 Working in progress area and builds:
  * [game_builds]
+
+Downloads:
+  Check the download section that there few demos and work in progress files for some what a game or client and server demo for flash app.
