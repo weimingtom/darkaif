@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="hello world example" /> 
+  <Content type="html">
+     <![CDATA[ 
+	 <embed src="ttp://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" width="300" height="300"></embed>
+     ]]>
+  </Content> 
+</Module>
