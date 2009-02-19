@@ -1,0 +1,5 @@
+#summary Simple 3D Plane Progress Loading Bar.
+
+= Information: =
+This is the simple loading bar in the 3D View.
+
