@@ -1,4 +1,5 @@
 #summary Simple 3D Plane Progress Loading Bar.
+#labels sandy
 
 = Information: =
 This is the simple loading bar in the 3D View.
@@ -6,3 +7,5 @@ This is the simple loading bar in the 3D View.
 http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.xml" width="800" height="600" />
+
+Note: Some browser will act differently.
