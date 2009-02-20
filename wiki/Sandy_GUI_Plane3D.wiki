@@ -14,4 +14,4 @@ Required src:
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.xml" width="300" height="300" />
 
-On the top Left corner, those are normal sprite class. In the center, there is a 3d plane apply to the texture.
+On the top Left corner, those are normal sprite class. In the center, there is a 3d plane apply to the texture. This is the simple version I made.
