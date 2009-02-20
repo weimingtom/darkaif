@@ -1,0 +1,15 @@
+#summary Plane 3D GUI.
+#labels sandy,gui,Featured
+
+= Sandy GUI =
+   This the simple code build that can be use for any kind of purpose.
+
+File:http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.swf
+
+Src:http://darkaif.googlecode.com/svn/trunk/darkaif/src/SandyGUI.as
+
+Required src:
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/src/darkaif/frame/Button.as
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/src/darkaif/frame/GraphicLoadingBar.as
+
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.xml" width="300" height="300" />
