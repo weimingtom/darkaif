@@ -13,7 +13,7 @@ Pro:
  * use socket binary and xml.
 
 Con:
- * Can’t save anything.
+ * Can’t save anything.(sand box)
  * It has no listen to allow multi connection.(You need be better at coding to know how to do multi connection)
 
 =Flash Client (Actionscript3) and Server (php):=
@@ -42,8 +42,10 @@ Con:
  * you have to learn java and Actionscript 3 at the same time.
  * database you need to setup
  * build application
- * socket binary might be bit harder to java server that you need to know how to code.
+ * socket binary might be bit harder to java server that you need to know how to code. Java is bit easy than C++. Java is easy to code and able to build quickly but takes time.
+ * You have to learn how to thread to able to use a server.
  * If you have 3D engine stuff you got to have game engine that is same is that or equal to make the java server do the work.
+ * Convert physic to as3 to java that depend on the coding.
 
 =Flash Client (Actionscript3) and Server (Python):=
 
@@ -56,7 +58,9 @@ Pro:
 Con:
  * you have to learn Python and Actionscript 3 at the same time.
  * spacing is important in python.
+ * Learn to packages files in python it is bit hard to understand a bit. Even for the noobs. This part you have to read it carefully about how to make packages and classes.
  * If you have 3D engine stuff you got to have game engine that is same is that or equal to make the java server do the work.
+ * Convert AS3 to python for physic and other code might be easy and hard same time.
 
 =Flash Client (Actionscript3) and Server (Other):=
 
@@ -65,11 +69,13 @@ Pro:
  * Custom making your own can improve the server status or not that depend how well code it.
 
 Con:
+ * You have to write policy access to the flash when it goes live. If your testing it just the swf file or local network it will not show up. That depends what program are you using.
  * You have learn the other code to able to make a server.
  * If your using the flash engine be sure you know that you code it different.
  * Research does take time out you.
  * Making multi client to connect to the server. Need to learn it but it can be simple some language code once you seen it.
- * If you have 3D or Physic engine on flash you need those part in the java too for server work load. ( But there are many ways to code.) 
+ * If you have 3D or Physic engine on flash you need those part in the java too for server work load. ( But there are many ways to code.)
+ * If your using for multilayer with heavy build use binary coding not xml. It will increase your byte size that will lag. 
 
 Tips: Read and research will save time in building the game. If you understand the language in basic code.
 
