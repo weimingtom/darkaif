@@ -4,10 +4,10 @@
   <Content type="html">
      <![CDATA[ 
 	 Sandy Progress Bar 3D Plane Demo
-	 <object classid="" width="300" height="300">
+	 <object classid="" width="100" height="100">
         <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" />
         <!--[if !IE]>-->
-        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" width="300" height="300">
+        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" width="100" height="100">
         <!--<![endif]-->
           <p>Alternative content</p>
         <!--[if !IE]>-->
