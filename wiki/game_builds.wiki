@@ -15,8 +15,8 @@
  * [client_and_server_builds client/server builds]
 
 = Sandy Engine Demo: =
- * Sandy_Progress_Bar_Plane3D
- * Sandy_GUI_Plane3D
+ * [Sandy_Progress_Bar_Plane3D]
+ * [Sandy_GUI_Plane3D]
 
 = SVN Basic: =
  * [svn_builds]
