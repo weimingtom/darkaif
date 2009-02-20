@@ -58,10 +58,10 @@ package darkaif.frame {
 			//this.Height = text_label.height + Space;
 			this.Width = text_label.width + Space;
 			
-			spritebutton.graphics.beginFill(bbcolor);
-			spritebutton.graphics.lineStyle(1);
-			spritebutton.graphics.beginFill(0x363430);
-			spritebutton.graphics.drawRect(0, 0,this.Width, this.Height);
+			graphics.beginFill(bbcolor);
+			graphics.lineStyle(1);
+			graphics.beginFill(0x363430);
+			graphics.drawRect(0, 0,this.Width, this.Height);
 			
 			// Create a up state for the button.
 			//var up:Sprite = new Sprite();
@@ -83,14 +83,14 @@ package darkaif.frame {
 			//addChild(up);
 			//addChild(over);
 			//addChild(text_label);	
-			spritebutton.addChild(text_label);	
+			addChild(text_label);	
 			
 			//EVENT
-			spritebutton.addEventListener(MouseEvent.MOUSE_OVER, displayOverState);
-			spritebutton.addEventListener(MouseEvent.MOUSE_OUT, displayOutState);
-			spritebutton.addEventListener(MouseEvent.MOUSE_DOWN, displayDownState);
-			spritebutton.addEventListener(MouseEvent.MOUSE_UP ,displayUpState);
-			spritebutton.addEventListener(MouseEvent.CLICK, displayMessage);
+			addEventListener(MouseEvent.MOUSE_OVER, displayOverState);
+			addEventListener(MouseEvent.MOUSE_OUT, displayOutState);
+			addEventListener(MouseEvent.MOUSE_DOWN, displayDownState);
+			addEventListener(MouseEvent.MOUSE_UP ,displayUpState);
+			addEventListener(MouseEvent.CLICK, displayMessage);
 			
 			addChild(spritebutton);
 		}
@@ -103,11 +103,11 @@ package darkaif.frame {
 		}
 		public function set _height(num:Number):void {
 			this.Height = num;
-			spritebutton.graphics.clear();
-			spritebutton.graphics.beginFill(bbcolor);
-			spritebutton.graphics.lineStyle(1);
-			spritebutton.graphics.beginFill(bcolorout);
-			spritebutton.graphics.drawRect(0, 0,this.Width, this.Height);
+			graphics.clear();
+			graphics.beginFill(bbcolor);
+			graphics.lineStyle(1);
+			graphics.beginFill(bcolorout);
+			graphics.drawRect(0, 0,this.Width, this.Height);
 		}
 		public function get _height():Number {
 			return this.Height;
@@ -115,11 +115,11 @@ package darkaif.frame {
 		
 		public function set _width(num:Number):void {
 			this.Width = num;
-			spritebutton.graphics.clear();
-			spritebutton.graphics.beginFill(bbcolor);
-			spritebutton.graphics.lineStyle(1);
-			spritebutton.graphics.beginFill(bcolorout);
-			spritebutton.graphics.drawRect(0, 0,this.Width, this.Height);
+			graphics.clear();
+			graphics.beginFill(bbcolor);
+			graphics.lineStyle(1);
+			graphics.beginFill(bcolorout);
+			graphics.drawRect(0, 0,this.Width, this.Height);
 		}
 		
 		public function get _width():Number {
@@ -129,31 +129,31 @@ package darkaif.frame {
 		private function displayDownState(event:MouseEvent):void {
 			//event.currentTarget.getChildByName("over").alpha = 50;
 			//event.target.startDrag();
-			spritebutton.graphics.clear();
-			spritebutton.graphics.beginFill(bbcolor);
-			spritebutton.graphics.lineStyle(1);
-			spritebutton.graphics.beginFill(bcolordown);
-			spritebutton.graphics.drawRect(0, 0,this.Width, this.Height);
+			graphics.clear();
+			graphics.beginFill(bbcolor);
+			graphics.lineStyle(1);
+			graphics.beginFill(bcolordown);
+			graphics.drawRect(0, 0,this.Width, this.Height);
 		}
 		
 		private function displayUpState(event:MouseEvent):void {
 			//event.target.stopDrag();
-			spritebutton.graphics.clear();
-			spritebutton.graphics.beginFill(bbcolor);
-			spritebutton.graphics.lineStyle(1);
-			spritebutton.graphics.beginFill(bcolorup);
-			spritebutton.graphics.drawRect(0, 0,this.Width, this.Height);
+			graphics.clear();
+			graphics.beginFill(bbcolor);
+			graphics.lineStyle(1);
+			graphics.beginFill(bcolorup);
+			graphics.drawRect(0, 0,this.Width, this.Height);
 		}
 		
 		// Show the active state of the button. 
 		private function displayOverState(event:MouseEvent):void {
 			// Hide the over state of the button.
 			//event.currentTarget.getChildByName("over").alpha = 100;
-			spritebutton.graphics.clear();
-			spritebutton.graphics.beginFill(bbcolor);
-			spritebutton.graphics.lineStyle(1);
-			spritebutton.graphics.beginFill(bcolorover);
-			spritebutton.graphics.drawRect(0, 0,this.Width, this.Height);
+			graphics.clear();
+			graphics.beginFill(bbcolor);
+			graphics.lineStyle(1);
+			graphics.beginFill(bcolorover);
+			graphics.drawRect(0, 0,this.Width, this.Height);
 			
 		}
 		
@@ -162,11 +162,11 @@ package darkaif.frame {
 			// Show the over state of the button.
 			//event.currentTarget.getChildByName("over").alpha = 0;
 			//event.target.stopDrag();
-			spritebutton.graphics.clear();
-			spritebutton.graphics.beginFill(bbcolor);
-			spritebutton.graphics.lineStyle(1);
-			spritebutton.graphics.beginFill(bcolorout);
-			spritebutton.graphics.drawRect(0, 0,this.Width, this.Height);
+			graphics.clear();
+			graphics.beginFill(bbcolor);
+			graphics.lineStyle(1);
+			graphics.beginFill(bcolorout);
+			graphics.drawRect(0, 0,this.Width, this.Height);
 		}
 		
 		//Display a message in the Output window. 

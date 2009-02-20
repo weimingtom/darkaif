@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Sandy GUI Demo" /> 
+  <Content type="html">
+     <![CDATA[ 
+	 SandyGUIDemo.swf
+	 <object classid="" width="200" height="200">
+        <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.swf" />
+        <!--[if !IE]>-->
+        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.swf" width="200" height="200">
+        <!--<![endif]-->
+          <p>Alternative content</p>
+        <!--[if !IE]>-->
+        </object>
+        <!--<![endif]-->
+      </object>
+     ]]>
+  </Content> 
+</Module>
