@@ -37,6 +37,7 @@ What you need to build a game server over web browser:
  * Think small and then add on if you have skills.
  * Think big it will take longer if your noob and might required a team.
  * What skills level are you at? (coding languages,art,3D model,story,plot,etc...)
+ * Are you using MYSQL for site? (support from php,java,etc... as long it has plug-in or ext.)
 
 
 =Flash Client and Server Actionscript3:=
