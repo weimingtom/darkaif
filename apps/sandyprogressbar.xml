@@ -4,7 +4,7 @@
   <Content type="html">
      <![CDATA[ 
 	 Sandy Progress Bar 3D Plane Demo
-	 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="300" height="300">
+	 <object classid="" width="300" height="300">
         <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" />
         <!--[if !IE]>-->
         <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/sandyprogressbar.swf" width="300" height="300">
