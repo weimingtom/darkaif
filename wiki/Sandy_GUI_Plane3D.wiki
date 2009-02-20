@@ -13,3 +13,5 @@ Required src:
  * http://darkaif.googlecode.com/svn/trunk/darkaif/src/darkaif/frame/GraphicLoadingBar.as
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.xml" width="300" height="300" />
+
+On the top Left corner, those are normal sprite class. In the center, there is a 3d plane apply to the texture.
