@@ -1,9 +1,42 @@
-#summary Client and Server - as3,python,php,java.
+#summary Client and Server - as3,python,php,java understanding the pro and con coding.
 #labels Client,Server,Actionscript3,python,php,Java,Phase-Implementation
-Client and Server
+
 
 =Information:=
-	There are pros and cons for making flash games for online. Going to talk about the basic about them. I done some research from reading forums and looking at some example. There are some simple language code and easy for user who want o create a simple game.
+	There are pros and cons for making flash games for online. Going to talk about the basic about them. I done some research from reading forums and looking at some example. There are some simple language code and easy for user who want to create a simple game. But keep it simple and your goal else you go off topic.
+
+Which is easy to code for server build?
+
+Well it depend on your skills. I would chose the most simple language code to build. I would chose java script.
+
+List of code:
+ * Java (easy to build [Free IDE easy to work with])
+ * Python (easy base)
+ * C# (not sure [Free IDE easy to work with])
+ * C/C++ (not easy/ heavy setup)
+ * etc(it depends on language code)
+
+You have to chose what method to code and what support what code to able to build. Doing the research is important. There different coding and different method and layer complex support.
+
+What you need to build a game server over web browser:
+ * what your target people? (kids, teens, adults)
+ * Is this social club chat?
+ * Free/ premium / month fees /ads? (note server maintains and host cost)
+ * What your goals? (skills,fun,learning,etc...)?
+ * Quick build? (This part you should not rush it your project it will come back to haunt you.)
+ * web page and design flow?
+ * Theme of game or communicates.
+ * Do you have time to build this? Alone or with the group (free or pay)?
+ * Plan ahead and what your time to finish peace of your code or content build?
+ * Are you going to able to use php,as3, java, html, tags,etc.
+ * Is your site easy to understand?
+ * User custom build work (This take a lot time from coders a bit).
+ * Are you using Forums or Custom forums to add on from flash game credits.
+ * Are you using wiki for this site?
+ * Think small and then add on if you have skills.
+ * Think big it will take longer if your noob and might required a team.
+ * What skills level are you at? (coding languages,art,3D model,story,plot,etc...)
+
 
 =Flash Client and Server Actionscript3:=
 	It is possible to make a client and server. But you can’t save data. It the sandbox.
