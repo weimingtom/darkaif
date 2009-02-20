@@ -1,6 +1,7 @@
 #summary Client and Server - as3,python,php,java understanding the pro and con coding.
 #labels Client,Server,Actionscript3,python,php,Java,Phase-Implementation
 
+*need to rework it >.< *
 
 =Information:=
 	There are pros and cons for making flash games for online. Going to talk about the basic about them. I done some research from reading forums and looking at some example. There are some simple language code and easy for user who want to create a simple game. But keep it simple and your goal else you go off topic.
