@@ -24,7 +24,7 @@ package darkaif.frame {
 		public var NumberPercent:Number = 0;
 		public var bar_bg_fill:uint = 0xEFEFEF; //BackGround Color
 		public var bar_fg_fill:uint = 0xadd8e6; //ForeGround Color
-		public var bar_color:uint = 0x00008b;	//Draw Loading Bar Color
+		public var bar_color:uint = 0x7ed44b;	//Draw Loading Bar Color
 		
 		
 		public function GraphicLoadingBar() {
@@ -47,7 +47,7 @@ package darkaif.frame {
 			graphics.clear(); //This will clear all the data from the object
 			graphics.beginFill(bar_bg_fill); //Fill the first Layer
 			graphics.drawRect(0,0,(Width),Height); //First Image Layer
-			graphics.beginFill(bar_fg_fill); //Fill Second Layer
+			graphics.beginFill(bar_color); //Fill Second Layer
 			graphics.drawRect((SpaceX/2),(SpaceY/2),Math.floor((BWidth - SpaceX)*(NumberPercent/100)),(BHeight - SpaceY)); //Image Second Layer
 		}		
 	}

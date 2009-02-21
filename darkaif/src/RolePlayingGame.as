@@ -214,6 +214,9 @@ package
 			var root:Group = createScene();
 			// We create a Scene and we add the camera and the objects tree 
 			scene = new Scene3D( "scene", this, camera, root );
+			
+			
+			
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressedHandler);
 			//}	
@@ -360,12 +363,14 @@ package
 			for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++) {
 				//playermodel
 				//trace('monster:---');
+				//monstermodel[monsterno].healthbarimage.visible = false;
 				for (var manimsetno:int = 0; manimsetno < monstermodel[monsterno].animset.length; manimsetno++) {
 					//trace('monster anim set:' + monstermodel[monsterno].animset[manimsetno].animmesh.name);
 					//g.removeChildByName(monstermodel[monsterno].animset[manimsetno].animmesh.name);
-					g.removeChildByName(monstermodel[monsterno].animset[manimsetno].meshid);
+					g.removeChildByName(monstermodel[monsterno].animset[manimsetno].animmesh.name);
 					//monstermodel[monsterno].animset[manimsetno].animmesh.remove();
 				}
+				g.removeChildByName(monstermodel[monsterno].healthbarimage.name);
 			}
 			monstermodel = new Array();
 			
@@ -387,6 +392,16 @@ package
 			///}
 			//trace('DATA LIST:');
 			//trace('mesh object:' + objectmesh.length + ' player mesh:' + charactermesh.length + ' monster mesh:' + monstermesh.length);
+			
+			//var objectmove:Array = g.children
+			//trace('//========================================================//');
+			for (var c:int = 0; c < objectmove.length; c++) {
+				//trace('object:' + objectmove[c].name);
+				if (objectmove[c].name != '1') {//default there should be a camera (It should be number one (1) and not a letter l ='L')
+					//trace('object remove-:' + objectmove[c].name);
+					g.removeChildByName(objectmove[c].name);
+				}
+			}
 		}
 		
 		public function clearmap():void {
@@ -419,12 +434,15 @@ package
 			for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++) {
 				//playermodel
 				//trace('monster:---');
+				//monstermodel[monsterno].healthbarimage.visible = false;
 				for (var manimsetno:int = 0; manimsetno < monstermodel[monsterno].animset.length; manimsetno++) {
 					//trace('monster anim set:' + monstermodel[monsterno].animset[manimsetno].animmesh.name);
 					//g.removeChildByName(monstermodel[monsterno].animset[manimsetno].animmesh.name);
+					g.removeChildByName(monstermodel[monsterno].healthbarimage);
 					g.removeChildByName(monstermodel[monsterno].animset[manimsetno].meshid);
 					//monstermodel[monsterno].animset[manimsetno].animmesh.remove();
 				}
+				g.removeChildByName(monstermodel[monsterno].healthbarimage.name);
 			}
 			monstermodel = new Array();
 			
@@ -593,6 +611,9 @@ package
 						tmpobjectmesh.model = shape;
 						tmpobjectmesh.model.useSingleContainer = false;
 						tmpobjectmesh.model.enableBackFaceCulling = true;
+						//tmpobjectmesh.model.swapCulling();
+						//tmpobjectmesh.model.enableNearClipping = true;
+						//.enableNearClipping = true;
 						//mesh name
 						tmpobjectmesh.meshname = objectmesh[objmeshno].name;
 						//mesh name id
@@ -1101,6 +1122,7 @@ package
 						tmpchar.rotx = mapxml.monsterlist.monster[monlist].rotation.x;
 						tmpchar.roty = mapxml.monsterlist.monster[monlist].rotation.y;
 						tmpchar.rotz = mapxml.monsterlist.monster[monlist].rotation.z;
+						g.addChild(tmpchar.healthbarimage);
 						
 						for (var animno:int = 0; animno < monstermesh[monmeshno].animset.length ; animno++) {
 							var tmpanimset:AnimationSet =  new AnimationSet();
@@ -1272,15 +1294,33 @@ package
 							tmpanimset.animmesh.x = mapxml.npclist.npc[npclist].position.x;
 							tmpanimset.animmesh.y = mapxml.npclist.npc[npclist].position.y;
 							tmpanimset.animmesh.z = mapxml.npclist.npc[npclist].position.z;
+							
+							tmpanimset.animmesh.container.name = '<npc>' +
+							'<name>'+  npcmesh[npcmeshno].charactername +'</name>' +
+							'<meshid>'+ tmpanimset.animmesh.id  +'</meshid>' +
+							'</npc>';
+							tmpanimset.animmesh.container.addEventListener(MouseEvent.CLICK, clickHandler);
+							
 							//add to map dara
 							//trace('added to npc to map');
 							g.addChild(tmpanimset.animmesh);
 							tmpchar.animset.push(tmpanimset);
+							
+							//show npc message box id
+							function clickHandler(event:MouseEvent):void {
+								//trace("name:->" + event.target.name);
+								var npcid:XML = new XML(event.target.name);
+								//trace("Hello npc!" + animno);
+								Shownpcmessage(npcid.name,npcid.meshid);
+							}
 						}
 						npcmodel.push(tmpchar);
 					}
 				}
 			}
+			
+			//init message box
+			initNpcScript();
 		}
 		
 		// NPC SCRIPT XML
@@ -1292,17 +1332,7 @@ package
 			function initdata(event:Event):void {
 				//trace(event.target.data);
 				npcscriptxml = new XML(event.target.data);
-				NpcscriptLoadData();
 			}
-		}
-		
-		//NPC SCRIPT DATA
-		public function NpcscriptLoadData():void {
-			//initmapxml();
-			
-			//when all that data finish loading start build the maps
-			//initbuildmonstermap();
-			//initbuildnpcmap();
 		}
 		
 		//NPC BOX MESSAGE
@@ -1314,46 +1344,10 @@ package
 					npcmessageboxpanel =  new NPCMessageBox();
 					//npc message box -needs to add area
 					addChild(npcmessageboxpanel);
-					
-					//npcscriptxml.npcscript[nonpctext].scriptlist.message.text
-					//panel_npcmessage
-					
-					
-					/*
-					panel_npcmessage = new Sprite();
-					panel_npcmessage.graphics.beginFill(0xEFEFEF);
-					panel_npcmessage.graphics.drawRect(0, 0, 128, 64);
-					
-					text_npcmessage.text = npcscriptxml.npcscript[nonpctext].scriptlist.message.text;
-					text_npcmessage.border = true;
-					text_npcmessage.height =  50;
-					text_npcmessage.wordWrap = true;
-					
-					
-					var closebutton:RectButton = new RectButton("End Chat.");
-					closebutton.y = 50;
-					closebutton.addEventListener(MouseEvent.CLICK,removenpcmessage);
-					panel_npcmessage.addChild(text_npcmessage);
-					panel_npcmessage.addChild(closebutton);
-					//panel_npcmessage.multiline = true;
-					
-					panel_game.addChild(panel_npcmessage);
-					
-					function removenpcmessage(event:MouseEvent):void {
-						panel_game.removeChild(panel_npcmessage);
-					}
-					*/
-					
 				}
-				//trace("scriptlst:"+npcscriptxml.npcscript[nonpctext].name)
 			}
-			//initbuildmonstermap();
 		}
-		
 		//} END NPC BLOCK OBCJECT DATA
-		
-		
-		
 		
 		//=========================================================================================
 		//{ START HEAD UP DISPLAY
@@ -1577,7 +1571,7 @@ package
 								(minx <= maxx2) //&& (monstermodel[nomonster].balive == true)
 								){
 									//trace("player hit!");
-									//playermodel[noplayer].healthpoint -= monstermesh[nomonster].attack;
+									playermodel[noplayer].healthpoint -= monstermodel[nomonster].attack;
 									//TODO:need to fixed this
 								}
 								monstermodel[nomonster].bstartdamage = false;
@@ -1685,7 +1679,7 @@ package
 					if ((playermodel[playerno].monsterbox(monstermodel[monsterno], playermodel[playerno].dirx, 0, 0) == true)&&(monstermodel[monsterno].balive == true)) {
 						//playermodel[playerno].posx += playermodel[playerno].diffx;
 						playermodel[playerno].bcollisionx = true;
-						//trace("collision");
+						trace("collision:"+monsterno);
 					}else {
 						playermodel[playerno].bcollisionx = false;
 					}

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<board>
+		<id>0</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>First</title>
+		<tag>None</tag>
+		<content>Hello world. This is the simple information.</content>
+	</board>
+	<board>
+		<id>1</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world2!</title>
+		<tag>None</tag>
+		<content>Hello world. This is the simple information Second body.</content>
+	</board>
+	<board>
+		<id>2</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world 3</title>
+		<tag>None</tag>
+		<content> There is much testing. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test.</content>
+	</board>
+	
+	<board>
+		<id>2</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world 3</title>
+		<tag>None</tag>
+		<content> There is much testing. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test.</content>
+	</board>
+	
+	<board>
+		<id>2</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world 3</title>
+		<tag>None</tag>
+		<content> There is much testing. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test.</content>
+	</board>
+	<board>
+		<id>0</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world!</title>
+		<tag>None</tag>
+		<content>Hello world. This is the simple information.</content>
+	</board>
+	<board>
+		<id>1</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world2!</title>
+		<tag>None</tag>
+		<content>Hello world. This is the simple information Second body.</content>
+	</board>
+	<board>
+		<id>2</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world 3</title>
+		<tag>None</tag>
+		<content> There is much testing. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test.</content>
+	</board>
+	
+	<board>
+		<id>2</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world 3</title>
+		<tag>None</tag>
+		<content> There is much testing. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test.</content>
+	</board>
+	
+	<board>
+		<id>2</id>
+		<type>News</type>
+		<date>2009.02.19</date>
+		<title>Hello world 3</title>
+		<tag>None</tag>
+		<content> There is much testing. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test. Test.</content>
+	</board>
+</data>

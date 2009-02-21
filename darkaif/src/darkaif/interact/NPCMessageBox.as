@@ -51,10 +51,9 @@
 		
 		public function NPCMessageBox() {
 			initnpcscriptxml();
-			
 			var talkbutton:Button = new Button("Chat Me");
 			talkbutton.addEventListener(MouseEvent.CLICK, shownpcbox);
-			addChild(talkbutton);
+			//addChild(talkbutton);
 		}
 		
 		public function shownpcbox(event:MouseEvent):void {

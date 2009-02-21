@@ -446,7 +446,7 @@
 			<name>npc</name>
 			<position>
 				<x>64</x>
-				<y>0</y>
+				<y>-30</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -455,12 +455,12 @@
 				<z>0</z>
 			</rotation>
 		</npc>
-		<!--
+		
 		<npc>
 			<name>npc</name>
 			<position>
 				<x>128</x>
-				<y>0</y>
+				<y>-30</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -469,14 +469,14 @@
 				<z>0</z>
 			</rotation>
 		</npc>
-		-->
+		
 	</npclist>
 	<monsterlist>
 		<monster>
 			<name>monster</name>
 			<position>
 				<x>-64</x>
-				<y>0</y>
+				<y>-30</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -490,6 +490,20 @@
 			<name>monster</name>
 			<position>
 				<x>-128</x>
+				<y>-30</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+		</monster>
+		<!--
+		<monster>
+			<name>monster</name>
+			<position>
+				<x>-128</x>
 				<y>0</y>
 				<z>0</z>
 			</position>
@@ -499,6 +513,7 @@
 				<z>0</z>
 			</rotation>
 		</monster>
+		-->
 	</monsterlist>
 	<terrain>
 		<!--

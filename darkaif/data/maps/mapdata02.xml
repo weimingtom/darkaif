@@ -205,11 +205,12 @@
 				
 	</objects>
 	<npclist>
+		
 		<npc>
 			<name>npc</name>
 			<position>
 				<x>64</x>
-				<y>0</y>
+				<y>-30</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -218,6 +219,7 @@
 				<z>0</z>
 			</rotation>
 		</npc>
+		<!--
 		<npc>
 			<name>npc</name>
 			<position>
@@ -231,7 +233,7 @@
 				<z>0</z>
 			</rotation>
 		</npc>
-		
+		-->
 	</npclist>
 	<monsterlist>
 		
