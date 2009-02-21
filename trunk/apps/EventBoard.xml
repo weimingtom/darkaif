@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <Module>
-  <ModulePrefs title="Sandy GUI Demo" /> 
+  <ModulePrefs title="EventBoard" /> 
   <Content type="html">
      <![CDATA[ 
 	 <object classid="" width="200" height="200">
-        <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.swf" />
+        <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.swf" />
         <!--[if !IE]>-->
-        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.swf" width="200" height="200">
+        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.swf" width="200" height="200">
         <!--<![endif]-->
           <p>Alternative content</p>
         <!--[if !IE]>-->
