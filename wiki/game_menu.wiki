@@ -2,6 +2,6 @@
 #labels as3
 
 
-<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.xml" width="300" height="300" />
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.xml" width="350" height="350" />
 
 Currently working on menu design, layout and the functions.
