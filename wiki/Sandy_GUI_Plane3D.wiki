@@ -1,5 +1,5 @@
 #summary Plane 3D GUI.
-#labels sandy,gui,Featured
+#labels sandy,gui
 
 = Sandy GUI =
    This the simple code build that can be use for any kind of purpose.
