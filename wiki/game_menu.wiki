@@ -2,7 +2,6 @@
 #labels as3
 
 
-<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyGUIDemo.xml" width="300" height="300" />
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.xml" width="300" height="300" />
 
 Currently working on menu design, layout and the functions.
-
