@@ -2,12 +2,10 @@
 
 = Introduction =
 
-Add your content here.
+= Object files: =
+   You can replace the name files. It should work.
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/ASEMesh.as -ASE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/DAEMesh.as -DAE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/OBJMesh.as -OBJ
+ * * It required two files.
