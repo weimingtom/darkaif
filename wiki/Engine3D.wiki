@@ -1,8 +1,8 @@
 #summary About 3D Flash Enginse Supports.
+#labels sandy,papervision,away3D
 
 = Introduction =
-   There are many other engine and support for them.
-
+   There are many other engine and support for them. There are many way to build a game.
 
 = Engine 3D Support: =
  * [Sandy_Lesson]
