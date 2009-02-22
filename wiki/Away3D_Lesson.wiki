@@ -2,7 +2,7 @@
 
 = Introduction =
 
-= Object files: =
+Object files:
    You can replace the name files. It should work.
 
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/ASEMesh.as -ASE
