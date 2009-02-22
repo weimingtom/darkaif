@@ -8,4 +8,4 @@
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/ASEMesh.as -ASE
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/DAEMesh.as -DAE
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/OBJMesh.as -OBJ
- *  -- It required two files from .obj.
+ *  -- It required two files from .obj, .mtl.
