@@ -3,7 +3,10 @@
 
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.xml" width="350" height="350" />
+Menu Panel Needs work on.
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/dropbox.xml" width="350" height="256" />
+DropBox Is partly working.
+
 
 Currently working on menu design, layout and the functions. There are a lot of bugs that need work on.
