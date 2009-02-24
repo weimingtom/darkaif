@@ -3,10 +3,10 @@
   <ModulePrefs title="dropbox" /> 
   <Content type="html">
      <![CDATA[ 
-	 <object classid="" width="320" height="240">
+	 <object classid="" width="800" height="600">
         <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/dropbox.swf" />
         <!--[if !IE]>-->
-        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/dropbox.swf.swf" width="320" height="240">
+        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/dropbox.swf.swf" width="800" height="600">
         <!--<![endif]-->
           <p>Alternative content</p>
         <!--[if !IE]>-->
