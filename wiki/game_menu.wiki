@@ -1,6 +1,8 @@
 #summary Work in progress menu build.
 #labels as3,menu
 
+= Information: =
+   This is work in progress build. The packages will be relink and change to Display make it easy to know what is menu build.
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.xml" width="350" height="350" />
 Menu Panel Needs work on.
