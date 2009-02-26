@@ -2,7 +2,7 @@
 #labels as3,menu
 
 = Information: =
-   This is work in progress build. The packages will be relink and change to Display make it easy to know what is menu build.
+   This is work in progress build. The packages will be relink and change to Display make it easy to know what is menu build. *Note flash may not update correctly.*
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/EventBoard.xml" width="350" height="350" />
 
