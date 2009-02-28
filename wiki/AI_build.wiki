@@ -28,4 +28,33 @@ Stage 01:
    Build a point and click move to point.
 
 Stage 02:
-   Build A Path with collision mesh and update new path.
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyFollowPathArray.xml" width="830" height="630" />
+
+   Building the path with array to make follow in order. Testing out the sandy object if the path is correct it.
+
+example:
+{{{
+			newpath = new NodePoint3DVertex();
+			newpath.id = 0;
+			newpath.parentid = 0;
+			newpath.x = 100;
+			newpath.y = 0;
+			newpath.z = 100;
+			path.push(newpath);
+			
+			newpath = new NodePoint3DVertex();
+			newpath.id = 5;
+			newpath.parentid = 0;
+			newpath.x = -70;
+			newpath.y = 0;
+			newpath.z = -100;
+			path.push(newpath);
+			
+			newpath = new NodePoint3DVertex();
+			newpath.id = 2;
+			newpath.parentid = 0;
+			newpath.x = 100;
+			newpath.y = 0;
+			newpath.z = -50;
+			path.push(newpath);
+}}}
