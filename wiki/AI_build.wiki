@@ -18,3 +18,6 @@ Query Array:
  * Search pattern (look around attack if true)
  * Support other objects(jobs and duties)
  * Call help (help this object)
+
+= AI Path: =
+   Build a simple real time path. Class build self and add on to object and build collision.
