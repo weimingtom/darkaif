@@ -21,3 +21,9 @@ Query Array:
 
 = AI Path: =
    Build a simple real time path. Class build self and add on to object and build collision.
+
+Stage 01:
+   Build a point and click move to point.
+
+Stage 02:
+   Build A simple math and function with collision stuff.
