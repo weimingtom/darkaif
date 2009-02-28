@@ -58,3 +58,8 @@ example:
 			newpath.z = -50;
 			path.push(newpath);
 }}}
+
+Stage 03:
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyPointClickMoveArray.xml" width="830" height="630" />
+
+   This is point and click move array. The object will follow the path assign when user click on the plane mesh.
