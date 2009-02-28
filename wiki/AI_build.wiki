@@ -23,6 +23,8 @@ Query Array:
    Build a simple real time path. Class build self and add on to object and build collision.
 
 Stage 01:
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyPointClickMoveDemo.xml" width="830" height="630" />
+
    Build a point and click move to point.
 
 Stage 02:
