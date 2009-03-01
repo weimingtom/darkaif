@@ -49,6 +49,7 @@
 			marker.addEventListener(MouseEvent.MOUSE_DOWN, startdragmarker);
 			marker.addEventListener(MouseEvent.MOUSE_MOVE, scalecheck);
 			marker.addEventListener(MouseEvent.MOUSE_UP, stopdragmarker);
+			marker.addEventListener(MouseEvent.MOUSE_OUT, stopdragmarker);
 			addChild(marker);
 			addChild(buttondown);
 		}

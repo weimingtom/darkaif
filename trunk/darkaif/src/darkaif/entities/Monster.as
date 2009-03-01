@@ -1,8 +1,11 @@
 ﻿package darkaif.entities 
 {
 	//{
+	import darkaif.core.entity.GameObject;
+	import darkaif.frame.GraphicLoadingBar;
 	import sandy.core.scenegraph.Camera3D;
 	import sandy.core.scenegraph.Shape3D;
+	import sandy.core.scenegraph.Sprite2D;
 	import sandy.primitive.MD2;
 	import darkaif.core.collision.CollisionBox;
 	//}
@@ -17,105 +20,91 @@
 	 * collision
 	 * attack
 	 */ 
-	public class Monster
+	public class Monster extends SandyGameObject
 	{
 		//{ variable
-		public var charactername:String = ""; //monster name for portrait
 		public var modelid:String = "";
-		public var playername:String = "";
-		
-		//check if mosnter is moving to do not attack
+		public var healthprogressbar:GraphicLoadingBar = new GraphicLoadingBar();
+		public var healthbarimage:Sprite2D = new Sprite2D('healthbar', healthprogressbar, 0.3);;
 		public var battack:Boolean = false; //this will make the mosnter attak if condtion meet
 		public var battackx:Boolean = false; // move or attack when stop moving
 		public var battacky:Boolean = false; // move or attack when stop moving
 		public var battackz:Boolean = false; // move or attack when stop moving
-		
-		// action of attack or skill
 		public var btriggeraction:Boolean = false; //frame name for attack index from xml monster
 		public var bactionstart:Boolean = false; //action frame 
-		public var bstartdamage:Boolean = false; //monster will attack and will do damage
-		
-		//{start mosnter status
+		//public var bstartdamage:Boolean = false; //monster will attack and will do damage
 		public var healthpoint:Number = 100;
 		public var healthmaxpoint:Number = 100;
-		
 		public var attack:Number = 10;
-		//}end mosnter status
-		
-		public var mesh:Shape3D = null; //mesh object
-		//public var animmesh:MD2 = null; //code change different method
-		public var animset:Array = new Array();//md2 mesh -animation mesh
 		public var bmeshset:Boolean = false; //mesh or animation mesh
-		public var action:String = "walk"; //main mesh animation name -object mesh data
-		public var actionframe:String = "stand"; //index frame list (action name)
-		public var framespeed:Number = 0.1; // frame control speed from mosnter xml data
+		//public var action:String = "walk"; //main mesh animation name -object mesh data
+		//public var actionframe:String = "stand"; //index frame list (action name)
+		//public var framespeed:Number = 0.1; // frame control speed from mosnter xml data
 		public var frameattack:Number = 0; // mosnter action frame index xml data 
-		//public var count:int = 0;
-		//public var countmax:int = 100;
-		
-		// AI
-		//monster spawn
 		public var spawntime:Number = 0; // start time to respawn for the monster in frame count
 		public var spawntimemax:Number = 100; // max frame count to trigger spawn or create or show the monster
-		public var bcollision:Boolean = false; //this to make the object to have collision 
-		public var balive:Boolean = true; //if the object is alive do something
-		public var bdetectcollision:Boolean = false; //this check if the object is collision to other
-		public var detectrange:Number = 64;//128; //64;
-		//public var playerrange:Number = 32;
-		
-		//collision
-		public var boxcollision:Array = new Array(); //box collision array
-		public var spherecollision:Array = new Array(); //sphere collision array
-		
-		public var bcollisionx:Boolean = false;
-		public var bcollisiony:Boolean = false;
-		public var bcollisionz:Boolean = false;
-		
-		public var bgoundcollision:Boolean = false;
-		
-		public var gravityx:Number = 0;
-		public var gravityy:Number = -1;
-		public var gravityz:Number = 0;
-		
-		//{ start position and rotation
-		public var diffx:Number = 0;//it depend where it direction		
-		public var diffy:Number = 0;//it depend where it direction
-		public var diffz:Number = 0;//it depend where it direction
-		
-		public var dirx:Number = 0; //direction set follow
-		public var diry:Number = 0; //direction set follow
-		public var dirz:Number = 0; //direction set follow
-		
-		public var olddirx:Number = 0; //direction for the monster is facing
-		public var olddiry:Number = 0; //direction for the monster is facing
-		public var olddirz:Number = 0; //direction for the monster is facing
-		
-		//start where to spawn
-		public var spawnposx:Number = 0; //spawn where last set from map data
-		public var spawnposy:Number = 0; //spawn where last set from map data
-		public var spawnposz:Number = 0; //spawn where last set from map data
-		
-		//current position
+		public var detectrange:Number = 0;//128; //64;
 		public var movespeed:Number = 1;
-		
-		public var posx:Number = 0; //current position of the monster
-		public var posy:Number = 0; //current position of the monster
-		public var posz:Number = 0; //current position of the monster
-		
-		public var rotx:Number = 0; //current rotate of the monster
-		public var roty:Number = 0; //current rotate of the monster
-		public var rotz:Number = 0; //current rotate of the monster
-		
-		//}end position and rotation
-		
-		//{ target player
 		public var targetname:String = "player"; //target object name
 		public var targetx:Number = 0; //target object x
 		public var targety:Number = 0; //target object y
 		public var targetz:Number = 0; //target object z
 		public var targetrange:Number = 0; //target object distance
-		//}
 		public var moveforward:Number = 0;
+		
+		//{
+		//public var charactername:String = ""; //monster name for portrait
+		//public var playername:String = "";
+		//check if mosnter is moving to do not attack
+		// action of attack or skill
+		//start mosnter status
+		//end mosnter status
+		//public var mesh:Shape3D = null; //mesh object
+		//public var animmesh:MD2 = null; //code change different method
+		//public var animset:Array = new Array();//md2 mesh -animation mesh
+		//public var count:int = 0;
+		//public var countmax:int = 100;
+		// AI
+		//monster spawn
+		//public var bcollision:Boolean = false; //this to make the object to have collision 
+		//public var balive:Boolean = true; //if the object is alive do something
+		//public var bdetectcollision:Boolean = false; //this check if the object is collision to other
+		//public var playerrange:Number = 32;
+		//collision
+		//public var boxcollision:Array = new Array(); //box collision array
+		//public var spherecollision:Array = new Array(); //sphere collision array
+		//public var bcollisionx:Boolean = false;
+		//public var bcollisiony:Boolean = false;
+		//public var bcollisionz:Boolean = false;
+		//public var bgoundcollision:Boolean = false;
+		//public var gravityx:Number = 0;
+		//public var gravityy:Number = -1;
+		//public var gravityz:Number = 0;
+		// start position and rotation
+		//public var diffx:Number = 0;//it depend where it direction		
+		//public var diffy:Number = 0;//it depend where it direction
+		//public var diffz:Number = 0;//it depend where it direction
+		//public var dirx:Number = 0; //direction set follow
+		//public var diry:Number = 0; //direction set follow
+		//public var dirz:Number = 0; //direction set follow
+		//public var olddirx:Number = 0; //direction for the monster is facing
+		//public var olddiry:Number = 0; //direction for the monster is facing
+		//public var olddirz:Number = 0; //direction for the monster is facing
+		//start where to spawn
+		//public var spawnposx:Number = 0; //spawn where last set from map data
+		//public var spawnposy:Number = 0; //spawn where last set from map data
+		//public var spawnposz:Number = 0; //spawn where last set from map data
+		//current position
+		//public var posx:Number = 0; //current position of the monster
+		//public var posy:Number = 0; //current position of the monster
+		//public var posz:Number = 0; //current position of the monster
+		//public var rotx:Number = 0; //current rotate of the monster
+		//public var roty:Number = 0; //current rotate of the monster
+		//public var rotz:Number = 0; //current rotate of the monster
+		//end position and rotation
+		// target player
+		//}
+		
 		//}
 		
 		public function Monster() {
@@ -131,6 +120,7 @@
 		}
 		
 		//{ start set position
+		/*
 		public function set setx(px:Number):void {
 			spawnposx = px;
 			posx = px;
@@ -145,16 +135,31 @@
 			spawnposz = pz;
 			posz = pz;
 		}
+		
+		public function set(px:Number, py:Number, pz:Number):void {
+			spawnposx = px;
+			posx = px;
+			spawnposy = py;
+			posy = py;
+			spawnposz = pz;
+			posz = pz;
+		}
+		*/
 		//} end set position
 		
 		//update object
-		public function update():void {
+		public override function update():void {
+			super.update();
 			//trace("update");
 			//trace("x:"+targetx+" y:"+targety+" z:"+targetz);
 			// x,z
 			targetdistance();
 			//posx++;
+			healthbarimage.y = posy + 64;
+			healthbarimage.x = posx;
+			healthbarimage.z = posz;
 			
+			healthprogressbar.precent = ((healthpoint/healthmaxpoint)*100)
 			//if monster health is gone, do not render
 			if (healthpoint <= 0) {
 				balive = false;
@@ -163,10 +168,11 @@
 			
 			//if mosnter is alive start thinking
 			if (balive == true) {
+				healthbarimage.visible = true;
 				//trace('update');
 				//trace('bcollision');
 				//trace(String(bcollisiony));
-				if (!bgoundcollision) {
+				if (!bgroundcollision) {
 					
 					//posy += diry;
 					posy += gravityy;
@@ -267,6 +273,7 @@
 					posz = spawnposz;
 					balive = true;
 				}
+				healthbarimage.visible = false;
 			}
 				
 				for (var animno:int = 0; animno < animset.length; animno++ ) {	
@@ -383,6 +390,7 @@
 			}
 		}
 		
+		/*
 		//object mesh collision
 		public function objectbox(objectmesh:Objectmesh, mx:Number, my:Number, mz:Number):Boolean {
 			var bcollision:Boolean = false;
@@ -420,7 +428,7 @@
 			}
 			//return false;
 		}
-		
+		*/
 		//player collision
 		public function playerbox(objectmesh:Character,mx:Number,my:Number,mz:Number):Boolean {
 			var bcollision:Boolean = false;

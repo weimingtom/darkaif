@@ -19,7 +19,7 @@
 	import sandy.materials.*;
 	import sandy.materials.attributes.*;
 	import sandy.primitive.*;
-	import darkaif.frame.Button;
+	import darkaif.core.display.Button;
 
 	public class SandyGUI extends Sprite
 	{

@@ -1,5 +1,6 @@
 ﻿package darkaif.entities 
 {
+	import darkaif.core.entity.GameObject;
 	import sandy.core.scenegraph.Camera3D;
 	import sandy.core.scenegraph.Shape3D;
 	import sandy.primitive.MD2;
@@ -10,46 +11,49 @@
 	 * @author Darknet
 	 * Copy Rights (c) http://darkaif.googlecode.com
 	 */
-	public class Npc
+	public class Npc extends SandyGameObject
 	{
 		//{variables
-		public var charactername:String = "";
+		
 		public var modelid:String = "";
-		public var playername:String = "";
-		public var mesh:Shape3D = null;
-		//public var animmesh:MD2 = null; //code change different method
-		public var animset:Array = new Array();
 		public var bmeshset:Boolean = false;
-		public var action:String = "walk";
+		//public var action:String = "walk";
 		public var count:int = 0;
 		public var countmax:int = 100;
 		
-		public var bcollision:Boolean = false;
-		public var balive:Boolean = true;
-		public var bdetectcollision:Boolean = false;
-		public var bgoundcollision:Boolean = false;
-		public var boxcollision:Array = new Array();
-		public var spherecollision:Array = new Array();
+		//{
+		//public var charactername:String = "";
+		//public var playername:String = "";
+		//public var mesh:Shape3D = null;
+		//public var animmesh:MD2 = null; //code change different method
+		//public var animset:Array = new Array();
+		//public var bcollision:Boolean = false;
+		//public var balive:Boolean = true;
+		//public var bdetectcollision:Boolean = false;
+		//public var bgoundcollision:Boolean = false;
+		//public var boxcollision:Array = new Array();
+		//public var spherecollision:Array = new Array();
 		
-		public var gravityx:Number = 0;
-		public var gravityy:Number = -1;
-		public var gravityz:Number = 0;
+		//public var gravityx:Number = 0;
+		//public var gravityy:Number = -1;
+		//public var gravityz:Number = 0;
 		
-		public var dirx:Number = 0; //direction set follow
-		public var diry:Number = 0; //direction set follow
-		public var dirz:Number = 0; //direction set follow
+		//public var dirx:Number = 0; //direction set follow
+		//public var diry:Number = 0; //direction set follow
+		//public var dirz:Number = 0; //direction set follow
 		
-		public var diffx:Number = 0;//it depend where it direction		
-		public var diffy:Number = 0;//it depend where it direction
-		public var diffz:Number = 0;//it depend where it direction
+		//public var diffx:Number = 0;//it depend where it direction		
+		//public var diffy:Number = 0;//it depend where it direction
+		//public var diffz:Number = 0;//it depend where it direction
 		
-		public var posx:Number = 0;
-		public var posy:Number = 0;
-		public var posz:Number = 0;
+		//public var posx:Number = 0;
+		//public var posy:Number = 0;
+		//public var posz:Number = 0;
 		
-		public var rotx:Number = 0;
-		public var roty:Number = 0;
-		public var rotz:Number = 0;
+		//public var rotx:Number = 0;
+		//public var roty:Number = 0;
+		//public var rotz:Number = 0;
+		//}
 		
 		public var moveforward:Number = 0;
 		//}
@@ -58,12 +62,13 @@
 			boxcollision.push(boxbound);
 		}
 			
-		public function update():void {
+		public override function update():void{
+			super.update();
 			//trace("update");
 			//posx++;
 			
 			if (balive) {
-				if (bgoundcollision) {
+				if (bgroundcollision) {
 					//posy -= gravityy;
 				}else {
 					posy += gravityy;
@@ -100,8 +105,10 @@
 					animset[animno].animmesh.visible = false;
 				}
 			}
+			
 		}
-	
+		
+		/*
 		//object mesh collision
 		public function objectbox(objectmesh:Objectmesh, mx:Number, my:Number, mz:Number):Boolean {
 			var bcollision:Boolean = false;
@@ -139,6 +146,6 @@
 			}
 			//return false;
 		}
-		
+		*/
 	}
 }
