@@ -29,6 +29,7 @@
 		public var path:Array = new Array();
 		public var pathid:Array = new Array();
 		public var nodepointid:int = 0;
+		public var bpathupdate:Boolean = false;
 		
 		//public var bmovex:Boolean = false;
 		
@@ -64,6 +65,23 @@
 		
 		
 		public override function update():void {
+			//trace(nodepoint.startx+"[:]"+nodepoint.endx)
+			if ((nodepoint.startx != nodepoint.endx ) || (nodepoint.starty != nodepoint.endy )||(nodepoint.startz != nodepoint.endz )) {
+				nodepoint.update();
+				if (nodepoint.bpathbuildarray) {
+					path = nodepoint.pathbuild;
+					
+					/*
+					for (var pathno:int = 0; pathno < path.length; pathno++ ) {
+						trace("path id:"+path[pathno].id + "x:"+path[pathno].x +" :z" + path[pathno].z);
+					}
+					*/
+					
+					nodepoint.bpathbuildarray = false; //added to array when finish in case loop add mistake
+				}
+				//trace('start path update');
+			}
+			
 			super.update();
 			model.x = posx;
 			model.y = posy;
@@ -114,8 +132,8 @@
 			path.sortOn("id", Array.NUMERIC );
 			//var numberpath:int = path.length-1;
 			if (path.length > 0){
-				//nodepointid = path[path.length - 1].id; //high number
-				nodepointid = path[0].id; //low number
+				nodepointid = path[path.length - 1].id; //high number for going backward when 
+				//nodepointid = path[0].id; //low number
 			}
 			//trace("Hight:"+high);
 			for (var pathno:int = 0; pathno < path.length ; pathno++){
@@ -146,8 +164,9 @@
 						//trace("hello z");
 					}
 					
-					if ((posx == Math.floor(path[pathno].x)) &&(posy == Math.floor(path[pathno].y)) &&(posz == Math.floor(path[pathno].z))){
-						//trace("finish this node point"+ pathno);
+					if ((posx == Math.floor(path[pathno].x)) && (posy == Math.floor(path[pathno].y)) && (posz == Math.floor(path[pathno].z))) {
+						//trace(path[pathno].x+":"+path[pathno].y+":"+path[pathno].z)
+						//trace("finish this node point and remove: "+ pathno);
 						path.splice(pathno, 1);
 					}
 				}

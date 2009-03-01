@@ -22,6 +22,8 @@
 		 * h = horizontally and vertically -end point distance
 		 * 
 		 */
+		public var id:int = 0;
+		 
 		public var f:Number = 0;
 		public var g:Number = 0;
 		public var h:Number = 0;
