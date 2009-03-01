@@ -4,8 +4,6 @@
 package darkaif.core.display 
 {
 	//{ packages
-	import darkaif.frame.Scrollbar2;
-	import darkaif.frame.ScrollContent2;
 	import flash.display.Sprite;
 	import flash.display.Graphics;
 	import flash.events.Event;
