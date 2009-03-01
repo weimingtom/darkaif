@@ -65,4 +65,6 @@ Stage 03:
    This is point and click move array. The object will follow the path assign when user click on the plane mesh. This will help what ever the path is following correctly.
 
 Stage 04:
-   Currently working on the star path and array path. Working on the code that need to run some test to be stable to add on the collision mesh once detected.
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyPathClickMoveArrayOrder.xml" width="830" height="630" />
+
+   Currently working on the star path and array path. It will follow the path in the array. It goes my square units. 32x32.
