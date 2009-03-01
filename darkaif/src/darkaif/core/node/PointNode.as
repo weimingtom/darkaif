@@ -10,9 +10,15 @@ package darkaif.core.node
 	* ...
 	* @author Darknet
 	* Copy Rights (c) http://darkaif.googlecode.com
+	* 
+	* Information: Build a path system base on star path code.
+	* 
+	* Need to clean build path and write a reuse code for path.
+	* 
 	*/
 	public class PointNode {	
-		//{var
+		
+		//{variables
 		
 		//start and end goal
 		//{
@@ -37,6 +43,8 @@ package darkaif.core.node
 		//}
 		
 		public var bpathfinish:Boolean = false;
+		public var bpathbuildarray:Boolean = false;
+		public var pathcount:int = 0;
 		
 		public var nodepath:Array = new Array();
 		//public var closepath:Array = new Array();
@@ -45,7 +53,7 @@ package darkaif.core.node
 		public var pathbuild:Array = new Array();
 		
 		public var time:Number = 0;
-		public var timemax:Number = 30;
+		public var timemax:Number = 1;
 		
 		//}
 		
@@ -56,7 +64,14 @@ package darkaif.core.node
 			goalstart.bvisited = true
 			goalstart.x = Math.floor (x/gridsizex);
 			goalstart.y = Math.floor (y/gridsizey);
-			goalstart.z = Math.floor (z/gridsizez);
+			goalstart.z = Math.floor (z / gridsizez);
+			
+			//clean path
+			nodepath = new Array();
+			pathbuild = new Array();
+			bpathfinish = false;
+			bpathbuildarray = false;
+			bstart = false;
 		}
 		
 		public function setend(x:Number, y:Number ,z:Number):void {
@@ -66,6 +81,11 @@ package darkaif.core.node
 			goalend.x = Math.floor (x / gridsizex);
 			goalend.y = Math.floor (y / gridsizey);
 			goalend.z = Math.floor (z / gridsizez);
+			bend = false;
+			nodepath = new Array();
+			pathbuild = new Array();
+			bpathfinish = false;
+			bpathbuildarray = false;
 		}
 		
 		public function PointNode() {
@@ -77,7 +97,8 @@ package darkaif.core.node
 			if (time > timemax) {
 				time = 0;
 				if(!bpathfinish){
-					trace("start: x:" + startx + " y:" + starty + " z:" + startz + " end: x:" + endx + " y:" + endy + " z:" + endz)
+					//trace("[start: x:" + startx + " y:" + starty + " z:" + startz + "] [end: x:" + endx + " y:" + endy + " z:" + endz+"]")
+					
 					buildpath();
 					//listnode();
 				}
@@ -102,12 +123,12 @@ package darkaif.core.node
 				}
 			}
 			if (!bstart) {
-				trace('added start');
+				//trace('added start');
 				nodepath.push(startposition);
 				neighbour(startposition);
 			}
 			if (!bend) {
-				trace('added end');
+				//trace('added end');
 				nodepath.push(endposition);
 			}
 			
@@ -128,11 +149,22 @@ package darkaif.core.node
 			
 			if ((node.x == goalend.x ) && (node.y == goalend.y ) && (node.z == goalend.z )) {
 				bpathfinish = true;
-				trace("nx:" + node.x +" gx:" + goalend.x  +" ny:" + node.y  +" gy:" +  goalend.y  +" nz:" + node.z  +" gz:" +  goalend.z);
+				//trace("nx:" + node.x +" gx:" + goalend.x  +" ny:" + node.y  +" gy:" +  goalend.y  +" nz:" + node.z  +" gz:" +  goalend.z);
 				//trace("parent:"+ node.);
 				//node.
-				buildpathnode(node.parent);
-				trace('finish!');
+				pathcount = 0;
+				//start from end to start(going backward being parent id)
+				var buildnode:PointNodePath = new PointNodePath();
+				//trace("order path coutn:"+pathcount);
+				buildnode.id = pathcount;
+				buildnode.x = endx;
+				buildnode.y = endy;
+				buildnode.z = endz;
+				//trace("LAST PATH:"+buildnode.x+":"+buildnode.y+":"+buildnode.z)
+				pathbuild.push(buildnode);
+				
+				buildpathnode(node);
+				//trace('finish!');
 			}
 			
 			if(!bpathfinish){
@@ -146,7 +178,7 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				
 				nodepath.push(pointnodepath);
@@ -163,7 +195,7 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				nodepath.push(pointnodepath);
 			}
@@ -179,7 +211,7 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				nodepath.push(pointnodepath);
 			}
@@ -195,7 +227,7 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				nodepath.push(pointnodepath);
 			}
@@ -211,7 +243,7 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				nodepath.push(pointnodepath);
 			}
@@ -227,7 +259,7 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				nodepath.push(pointnodepath);
 			}
@@ -243,7 +275,7 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				nodepath.push(pointnodepath);
 			}
@@ -259,14 +291,14 @@ package darkaif.core.node
 			pointnodepath.g = Math.abs(pointnodepath.x - goalstart.x) + Math.abs(pointnodepath.y - goalstart.y) + Math.abs(pointnodepath.z - goalstart.z);
 			pointnodepath.h = Math.abs(pointnodepath.x - goalend.x) + Math.abs(pointnodepath.y - goalend.y) + Math.abs(pointnodepath.z - goalend.z);
 			pointnodepath.f = pointnodepath.g + pointnodepath.h;
-			trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
+			//trace('f:'+pointnodepath.f + ' g:' + pointnodepath.g + ' h:' + pointnodepath.h);
 			if (!checknode(pointnodepath.x, pointnodepath.y, pointnodepath.z)) {
 				nodepath.push(pointnodepath);
 			}
 			//}
 			
 			//trace('--' + minvalue);
-			nodepath.sortOn("f", Array.NUMERIC);
+			//nodepath.sortOn("f", Array.NUMERIC);
 			var arrrayvalue:Array = new Array();
 			for (var nonodevalue:int = 0; nonodevalue < nodepath.length; nonodevalue++) {
 				if (nodepath[nonodevalue].f != 0){
@@ -275,8 +307,7 @@ package darkaif.core.node
 			}
 			
 			var minValue:Number = Math.min.apply(null, arrrayvalue);
-			trace('--'+minValue);
-			
+			//trace('--'+minValue);
 			
 			for (var nonode:int = 0; nonode < nodepath.length; nonode++) {
 				if ((nodepath[nonode].f == minValue)&&(nodepath[nonode].bvisited == false)) {
@@ -302,19 +333,37 @@ package darkaif.core.node
 		
 		public function buildpathnode(node:PointNodePath):void {
 			
-			trace("[=====]");
-			trace("path: x:"+node.x + ":" + node.y +":"+node.z)
-			if ((node.x == startx)&& (node.y == starty)&&(node.z == startz)) {
-				trace("..PATH FINISH...");
-			}else {
+			//trace("[=====]");
+			//trace("path: x:"+node.x + ":" + node.y +":"+node.z)
+			//if ((node.x == startx)&& (node.y == starty)&&(node.z == startz)) {
+				//trace("..PATH FINISH...");
+			pathcount++;
+			
+			//trace("order path coutn:"+pathcount);
+			//if(node != null){
+			
+			var buildnode:PointNodePath = new PointNodePath();
+			
+			buildnode.id = pathcount;
+			buildnode.x = node.x * gridsizex;//32uni pixel
+			buildnode.y = node.y * gridsizey;
+			buildnode.z = node.z * gridsizez;
+			//trace(buildnode.x+":"+buildnode.y+":"+buildnode.z)
+			pathbuild.push(buildnode);
+			
+			//}else {
 				if(node.parent != null){
 					buildpathnode(node.parent);
-					pathbuild.push(node);
+				}else {
+					bpathbuildarray = true;
+					//trace("finish...?");
 				}
 				//pathbuild.push();
-			}
+			///}
+			///}
 		}
 		
+		/*
 		public function distance():void {
 			
 		}
@@ -322,6 +371,6 @@ package darkaif.core.node
 		public function nodedistance():void {
 			
 		}
-		
+		*/
 	}
 }
