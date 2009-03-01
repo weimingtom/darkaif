@@ -1,5 +1,5 @@
-#summary AI Build and plan.
-#labels AI
+#summary AI/Path Build and plan.
+#labels AI,path
 
 = Artificial Intelligence =
 Currently working on AI build test.
@@ -63,3 +63,6 @@ Stage 03:
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/SandyPointClickMoveArray.xml" width="830" height="630" />
 
    This is point and click move array. The object will follow the path assign when user click on the plane mesh. This will help what ever the path is following correctly.
+
+Stage 04:
+   Currently working on the star path and array path. Working on the code that need to run some test to be stable to add on the collision mesh once detected.
