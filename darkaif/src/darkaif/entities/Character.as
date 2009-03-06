@@ -30,89 +30,7 @@
 		public var bactionend:Boolean = false;  //end action when finish(attack or skill)
 		public var btriggeraction:Boolean = false; //if there is other actions else default 'stand'
 		
-		//public var bstartdamage:Boolean = false; //trigger attack to do damage
-		
-		//control object attack
-		//public var attacktime:Number = 0;
-		//public var attacktimemax:Number = 10;
-		//public var attackdelaytime:Number = 0;
-		//public var attackdelaytimemax:Number = 10;
-		//public var battackstart:Boolean = false;
-		//public var battackend:Boolean = false;
-		
 		public var movespeed:Number = 5;
-		//{ class from extend
-		//public var banimationaction:Boolean = false; //unknown
-		//public var bmeshset:Boolean = false; //check if it mesh or animation mesh
-		//public var action:String = "walk"; //name of the animation mesh
-		//public var actionframe:String = "walk"; //name of the frame count index in xml
-		//public var framespeed:Number = 0.1; //how fast the frame rate
-		//public var frameattackstart:Number = -1; //trigger what frame to action (attack) from the start
-		//public var frameattackend:Number = 0; // when trigger event end from the action frame
-		//public var JumpF:Number = 0;
-		//public var Mass:Number = 100;
-		//public var V:Number = 0;
-		//public var a:Number;
-		//public var G:Number = 5;
-		//public var Friction:Number = .5;
-		//public var Maxfall:Number = -20;
-		//public var jumpmax:Number = 5;
-		//public var jumptime:Number = 0;
-		//public var jumptimemax:Number = 15;
-		//public var jumpcountmax:Number = 1;
-		//public var jumpcount:Number = 0;
-		//public var bfall:Boolean = false;
-		//public var falltime:Number = 0;
-		//public var falltimemax:Number = 15;
-		//public var bkeyjump:Boolean = false;
-		//public var bjump:Boolean = false;
-		//public var bground:Boolean = false;
-		//public var charactername:String = ""; //character name for portrait
-		//public var playername:String = ""; //player name and id
-		//public var mesh:Shape3D = null; //mesh
-		//public var animmesh:MD2 = null; //code change different method
-		//public var animset:Array = new Array(); //animation mesh
-		//public var count:int = 0;
-		//public var countmax:int = 100;
-		//public var balive:Boolean = false; //check what ever the object is alive or dead
-		//public var bclosecombat:Boolean = false; //close combar
-		//public var branagecombat:Boolean = false; //long combat
-		//collision
-		//public var boxcollision:Array = new Array(); //box collision
-		//public var spherecollision:Array = new Array(); //sphere collision
-		//public var bcollision:Boolean = false; //to be able collision
-		//public var bcollisionx:Boolean = false;
-		//public var bcollisiony:Boolean = false;
-		//public var bcollisionz:Boolean = false;
-		//public var bdetectcollision:Boolean = false;
-		//public var bup:Boolean = false;
-		//public var bdown:Boolean = false;
-		//public var bright:Boolean = false;
-		//public var bleft:Boolean = false;
-		//public var bforward:Boolean = false;
-		//public var bbackward:Boolean = false;
-		//public var gravityx:Number = 0;
-		//public var gravityy:Number = 0;
-		//public var gravityz:Number = 0;
-		// start direction and rotation
-		//public var diffx:Number = 0;//it depend where it direction		
-		//public var diffy:Number = 0;//it depend where it direction
-		//public var diffz:Number = 0;//it depend where it direction
-		//public var dirx:Number = 0; //direction
-		//public var diry:Number = 0; //direction
-		//public var dirz:Number = 0; //direction
-		//public var oldx:Number = 0;
-		//public var oldy:Number = 0;
-		//public var oldz:Number = 0;
-		//public var posx:Number = 0; //position
-		//public var posy:Number = 0; //position
-		//public var posz:Number = 0; //position
-		//public var rotx:Number = 0; //rotation
-		//public var roty:Number = 0; //rotation
-		//public var rotz:Number = 0; //rotation
-		//public var moveforward:Number = 0; //move object
-		// end direction
-		//}
 		
 		//} end variables
 		
@@ -133,7 +51,7 @@
 			
 			
 			if (bjump) {
-				trace("jump")
+				//trace("jump")
 				jumptime++;
 				diry = 5;
 				if (jumptime > jumptimemax) {
@@ -144,7 +62,7 @@
 			}
 			
 			if (bfall) {
-				trace("fall");
+				//trace("fall");
 				falltime++;
 				diry = 0;
 				if(falltime > falltimemax){
