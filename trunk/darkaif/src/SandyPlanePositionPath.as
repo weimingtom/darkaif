@@ -79,8 +79,8 @@
 				var app01:Appearance = new Appearance( material01 );
 				
 				mesh.model = new Box("collisionbox", 16, 16, 16);
-				mesh.model.x = Math.floor(Math.random() * -200  + Math.random() * 200);
-				mesh.model.z = Math.floor(Math.random() * -200  + Math.random() * 200);
+				mesh.model.x = 100 - Math.floor(Math.random() * 200);
+				mesh.model.z = 100 - Math.floor(Math.random() * 200);
 				mesh.model.appearance = app01;
 				var collisiomesh:CollisionBox = new CollisionBox();
 				mesh.boxcollision.push(collisiomesh);

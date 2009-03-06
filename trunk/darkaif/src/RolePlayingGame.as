@@ -86,6 +86,7 @@ package
 		public var scene:Scene3D; // just one scene or the world
 		public var camera:Camera3D; //basic one cam
 		public var g:Group = new Group("myGroup");
+		//public var sbox:Box = new Box('testdir', 32, 32, 32);
 		
 		public var rawobject:Shape3D; //any objects -test
 		//public var box:Box = new Box("box",1,1,1)
@@ -614,9 +615,11 @@ package
 						shape.rotateX = mapxml.objects.mesh[meshno].rotation.x;
 						shape.rotateY = mapxml.objects.mesh[meshno].rotation.y;
 						shape.rotateZ = mapxml.objects.mesh[meshno].rotation.z;
+						//shape.depth = 1;
 						tmpobjectmesh.model = shape;
 						tmpobjectmesh.model.useSingleContainer = false;
-						tmpobjectmesh.model.enableBackFaceCulling = true;
+						tmpobjectmesh.model.enableBackFaceCulling = false;
+						//tmpobjectmesh.model.depth = -1;
 						//tmpobjectmesh.model.swapCulling();
 						//tmpobjectmesh.model.enableNearClipping = true;
 						//.enableNearClipping = true;
@@ -954,7 +957,7 @@ package
 								var charactershape:MD2 = charactermesh[characterno].animset[animno].animmesh.clone("character_clone");//animmesh.clone("character_clone")
 								tmpanimset.animmesh = charactershape;
 								tmpanimset.animmesh.useSingleContainer = false;
-								tmpanimset.animmesh.enableBackFaceCulling = true;
+								tmpanimset.animmesh.enableBackFaceCulling = false;
 								var clonename:String = tmpanimset.animmesh.name;
 								tmpanimset.meshid = tmpanimset.animmesh.name;
 								//g.addChild(tmpanimset.animmesh);
@@ -1607,12 +1610,12 @@ package
 				}
 				
 				if (Spacebar) {
-					//playermodel[playerno].diry  = 1;
-					playermodel[playerno].bkeyjump = true;
+					playermodel[playerno].diry  = 5;
+					//playermodel[playerno].bkeyjump = true;
 					//trace('hello');
 				}else {
-					//playermodel[playerno].diry  = -1;
-					playermodel[playerno].bkeyjump = false;
+					playermodel[playerno].diry  = -5;
+					//playermodel[playerno].bkeyjump = false;
 				}
 				//trace("x:"+playermodel[playerno].dirx +" z: "+playermodel[playerno].dirz);
 				//playerchar.addChild(camera);
@@ -1625,8 +1628,11 @@ package
 				//bbox.y = playermodel[playerno].posy;
 				//bbox.z = playermodel[playerno].posz;
 				camera.x = playermodel[playerno].posx;
+				//camera.y = playermodel[playerno].posy + 200;
+				//camera.z = playermodel[playerno].posz - 150;
 				camera.y = playermodel[playerno].posy + 200;
-				camera.z = playermodel[playerno].posz - 150;
+				camera.z = playermodel[playerno].posz - 90;
+				camera.x = playermodel[playerno].posx - 60;
 				camera.rotateX = +45;
 				//trace("move");
 			}
@@ -1793,6 +1799,7 @@ package
 				
 				//object mesh collision
 				for (var objectmeshno:int = 0; objectmeshno < objectmap.length; objectmeshno++) {
+					/*
 					if (playermodel[playerno].objectbox(objectmap[objectmeshno], playermodel[playerno].dirx, 0, 0)) {
 						playermodel[playerno].posx += playermodel[playerno].diffx;
 						playermodel[playerno].bcollisionx = true;
@@ -1800,7 +1807,8 @@ package
 					}else {
 						playermodel[playerno].bcollisionx = false;
 					}
-					
+					*/
+					/*
 					if (playermodel[playerno].objectbox(objectmap[objectmeshno], 0, playermodel[playerno].diry-5, 0)) {
 						playermodel[playerno].posy += (playermodel[playerno].diffy);
 						playermodel[playerno].bcollisiony = true;
@@ -1811,7 +1819,13 @@ package
 						playermodel[playerno].bcollisiony = false;
 						//trace("collision y f");
 					}
-					
+					*/
+					//playermodel[playerno].hitbox(objectmap[objectmeshno]);
+					//playermodel[playerno].hitbox_z(objectmap[objectmeshno]);
+					//playermodel[playerno].hitbox_x(objectmap[objectmeshno]);
+					playermodel[playerno].hitbox(objectmap[objectmeshno]);
+					playermodel[playerno].intersetbox(objectmap[objectmeshno]);
+					/*
 					if (playermodel[playerno].objectbox(objectmap[objectmeshno], 0, 0, playermodel[playerno].dirz)) {
 						playermodel[playerno].posz += playermodel[playerno].diffz;
 						playermodel[playerno].bcollisionz = true;
@@ -1819,13 +1833,16 @@ package
 					}else {
 						playermodel[playerno].bcollisionz = false;
 					}
+					*/
 				}
 				
 				//monster mesh collision if alive
 				for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++) {
 					if (((playermodel[playerno].monsterbox(monstermodel[monsterno], 0, 0, playermodel[playerno].dirz))== true)&&(monstermodel[monsterno].balive == true)) {
 						//playermodel[playerno].posz += playermodel[playerno].diffz;
+						trace('collision');
 						playermodel[playerno].bcollisionz = true;
+						break;//need to break if other objects are in collision
 						
 					}else {
 						playermodel[playerno].bcollisionz = false;
@@ -1834,7 +1851,8 @@ package
 					if ((playermodel[playerno].monsterbox(monstermodel[monsterno], playermodel[playerno].dirx, 0, 0) == true)&&(monstermodel[monsterno].balive == true)) {
 						//playermodel[playerno].posx += playermodel[playerno].diffx;
 						playermodel[playerno].bcollisionx = true;
-						trace("collision:"+monsterno);
+						break;//need to break if other objects are in collision
+						//trace("collision:"+monsterno);
 					}else {
 						playermodel[playerno].bcollisionx = false;
 					}
@@ -1902,6 +1920,7 @@ package
 			for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++ ) {
 				//object mesh
 				for (var objectmeshno:int = 0; objectmeshno < objectmap.length; objectmeshno++) {
+					/*
 					if (monstermodel[monsterno].objectbox(objectmap[objectmeshno], monstermodel[monsterno].dirx, 0, 0)) {
 						monstermodel[monsterno].posx -= monstermodel[monsterno].dirx;
 						monstermodel[monsterno].bcollisionx = true;
@@ -1917,7 +1936,21 @@ package
 					}else {
 						monstermodel[monsterno].bcollisionz = false;
 					}
+					*/
+					if (monstermodel[monsterno].intersetbox(objectmap[objectmeshno])) {
+						monstermodel[monsterno].posy += monstermodel[monsterno].diry;
+						monstermodel[monsterno].bgroundcollision = true;
+						//trace("-mon and obj collision");
+						//break; //it does break to make character touch the ground
+					}else {
+						//trace("-mon and obj =========");
+						monstermodel[monsterno].bgroundcollision = false;
+					}
 					
+					//monstermodel[monsterno].objectbox(objectmap[objectmeshno], 0, 0, monstermodel[monsterno].dirz)
+					//monstermodel[playerno].intersetbox(objectmap[objectmeshno]);
+					
+					/*
 					if (monstermodel[monsterno].objectbox(objectmap[objectmeshno], 0, monstermodel[monsterno].diry-5, 0)) {
 						monstermodel[monsterno].posy += monstermodel[monsterno].diry;
 						monstermodel[monsterno].bgroundcollision = true;
@@ -1927,6 +1960,7 @@ package
 						//trace("-mon and obj =========");
 						monstermodel[monsterno].bgroundcollision = false;
 					}
+					*/
 				}
 				
 				//player collision
