@@ -1,0 +1,18 @@
+#summary loading flash from different url location.
+
+= Basic: =
+   This is the simple loading file using php script and it load different location file that use the header from php script.
+
+
+{{{
+<?php
+$filename = 'main.swf';
+header("Content-Type:application/x-shockwave-flash");
+#header("Content-Disposition: attachment;filename=$filename");
+header('Pragma: no-cache');
+header('Expires: 0');
+readfile($filename);
+?>
+}}}
+
+
