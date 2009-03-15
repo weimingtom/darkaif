@@ -19,4 +19,4 @@ var objectmove:Array = g.children
 			}
 }}}
 
-This type of code is for game stuff style for making maps and clearing the map from the scene. since it objects are created in clone from loaded objects it increase by counter number and name as that.
+This type of code is for game stuff style for making maps and clearing the map from the scene. Since it objects are created in clone from loaded objects it increase by counter number and name as that. That all depends on the coding.
