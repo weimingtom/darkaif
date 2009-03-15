@@ -1,8 +1,8 @@
 #summary loading flash from different url location.
+#labels php
 
 = Basic: =
-   This is the simple loading file using php script and it load different location file that use the header from php script.
-
+   This is a simple php script that download the files from a different location folder or directory. This php script use header that make it easy to download the file. Flash (actionscript3) will able to read the data once the data is finish downloaded.
 
 {{{
 <?php
