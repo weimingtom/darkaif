@@ -1,4 +1,8 @@
 #summary Basic building code block.
+#labels sandy
 
 = Information =
    There is the main site that give tutorial lesson that should be simple.
+
+Basic:
+ * [sandy_remove_object_from_scene]
