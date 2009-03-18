@@ -6,7 +6,7 @@
     import away3d.primitives.Sphere;
     import flash.display.Sprite;
 	import flash.events.Event;
-	import away3d.loaders.Collada;
+	import away3d.loaders.Obj;
 	
 	/**
 	 * ...
@@ -15,9 +15,9 @@
 	* 
 	* Working:away3d 2.3.0
 	* 
-	 */
+	*/
 	[SWF(width="640", height="480", backgroundColor="#FFFFFF", frameRate="30")]
-	public class DAEMesh extends Sprite
+	public class Away3DMeshOBJ extends Sprite
 	{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
@@ -25,11 +25,11 @@
 		public var sphere:Sphere = new Sphere();
 		public var objfile:Object3DLoader;
 		
-		public function DAEMesh() 
+		public function Away3DMeshOBJ() 
 		{
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
-			objfile = Collada.load("cubeobj.dae",{material:material} );
+			objfile = Obj.load("data/models/cubeobj.obj",{material:material} );
 			objfile.addOnSuccess(objOnSuccess);
 			
 			function objOnSuccess(e:Event):void {
