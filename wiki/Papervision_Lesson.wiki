@@ -6,6 +6,8 @@
 = Object files: =
    You can replace the object files. It should work.
 
- * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/ASEMesh.as -ASE
- * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/DAEMesh.as -DAE
- * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/MD2Mesh.as -MD2
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshASE.as -ASE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshDAE.as -DAE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshMD2.as -MD2
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMesh3DS.as -3DS
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshKMZ.as -KMZ
