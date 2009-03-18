@@ -5,7 +5,7 @@
 Object files:
    You can replace the name files. It should work.
 
- * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/ASEMesh.as -ASE
- * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/DAEMesh.as -DAE
- * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/OBJMesh.as -OBJ
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshASE.as -ASE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshDAE.as -DAE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshOBJ.as -OBJ
     *  -- It required two files from .obj, .mtl.
