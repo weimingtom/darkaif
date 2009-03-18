@@ -10,15 +10,16 @@
 	
 	/*
 	 * Works
+	 * papervision3d 2.0
 	 */
  
 	[SWF(width="640", height="480", backgroundColor="#000000", frameRate="60")]
-	public class DAEMesh extends BasicView
+	public class Papervision3DMeshDAE extends BasicView
 	{
 		public var triangleMesh3d:DAE = new DAE(false,"mesh", false);
-		public function DAEMesh()
+		public function Papervision3DMeshDAE()
 		{	
-			triangleMesh3d.load("cubeobj.dae");
+			triangleMesh3d.load("data/models/cubeobj.dae");
 			triangleMesh3d.scale = 100;
 			
 			scene.addChild(triangleMesh3d);
