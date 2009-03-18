@@ -6,7 +6,7 @@
     import away3d.primitives.Sphere;
     import flash.display.Sprite;
 	import flash.events.Event;
-	import away3d.loaders.Ase;
+	import away3d.loaders.Collada;
 	
 	/**
 	 * ...
@@ -17,7 +17,7 @@
 	* 
 	 */
 	[SWF(width="640", height="480", backgroundColor="#FFFFFF", frameRate="30")]
-	public class ASEMesh extends Sprite
+	public class Away3DMeshDAE extends Sprite
 	{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
@@ -25,11 +25,11 @@
 		public var sphere:Sphere = new Sphere();
 		public var objfile:Object3DLoader;
 		
-		public function ASEMesh() 
+		public function Away3DMeshDAE() 
 		{
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
-			objfile = Ase.load("cubeobj.ase",{material:material});
+			objfile = Collada.load("data/models/cubeobj.dae",{material:material} );
 			objfile.addOnSuccess(objOnSuccess);
 			
 			function objOnSuccess(e:Event):void {
@@ -44,11 +44,12 @@
 		public function update(e:Event):void
 		{
 			objfile.rotationY += 1;
-			objfile.rotationZ += 1;
 			sphere.rotationY += 1;
 			// render the view
 			view.render();
 		}
 		
+		
 	}
+	
 }
