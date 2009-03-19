@@ -1,8 +1,6 @@
 #summary Basic building code block.
 #labels away3d
 
-= Introduction =
-
 Object files:
    You can replace the name files. It should work.
 
