@@ -32,6 +32,18 @@ objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
 //}
 }}}
 
+{{{
+var material:ColorMaterial = new ColorMaterial(0xFF0000);
+//objfile = Ase.load("data/models/cubeobj.ase", { material:material } );
+objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
+//objfile.scale(10);
+//objfile.addOnSuccess(objOnSuccess);
+view.scene.addChild(objfile);			
+//function objOnSuccess(e:Event):void {
+        trace("SUCCESS");
+//}
+}}}
+
 Display info on file size.
 {{{
 var material:ColorMaterial = new ColorMaterial(0xFF0000);
