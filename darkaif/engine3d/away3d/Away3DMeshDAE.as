@@ -24,16 +24,20 @@
 		// create a sphere and put it on the 3D stage
 		public var sphere:Sphere = new Sphere();
 		public var objfile:Object3DLoader;
+		public var roll:Number = 0;
 		
 		public function Away3DMeshDAE() 
 		{
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
-			objfile = Collada.load("data/models/cubeobj.dae",{material:material} );
+			//objfile = Collada.load("data/models/cubeobj.dae",{material:material} );
+			objfile = Collada.load("data/models/cubestar.dae", { material:material } );
+			view.scene.addChild(objfile);
 			objfile.addOnSuccess(objOnSuccess);
+			//objfile.rotationY += 10;
 			
 			function objOnSuccess(e:Event):void {
-				view.scene.addChild(objfile);
+				//view.scene.addChild(objfile);
                 trace("SUCCESS");
             }
 			
@@ -43,13 +47,15 @@
 		
 		public function update(e:Event):void
 		{
+			roll++;
 			objfile.rotationY += 1;
+			//objfile.roll(roll);
+			objfile.moveLeft(roll);
 			sphere.rotationY += 1;
+			view.scene.updateTime();
 			// render the view
+			//view.scene.renderer();
 			view.render();
 		}
-		
-		
 	}
-	
 }
