@@ -9,4 +9,22 @@ Object files:
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshASE.as -ASE
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshDAE.as -DAE
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshOBJ.as -OBJ
-    *  -- It required two files from .obj, .mtl.
+   *  -- It required two files from .obj, .mtl.
+
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMesh3DS.as -3DS
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshKMZ.as -KMZ
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshMD2.as -MD2
+
+Note:They are working just the files not working.
+
+{{{
+var material:ColorMaterial = new ColorMaterial(0xFF0000);
+			objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
+			objfile.scale(10);
+			//objfile.addOnSuccess(objOnSuccess);
+			
+			//function objOnSuccess(e:Event):void {
+				view.scene.addChild(objfile);
+                trace("SUCCESS");
+            //}
+}}}
