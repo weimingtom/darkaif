@@ -1,4 +1,5 @@
 #summary Basic building code block.
+#labels away3d
 
 = Introduction =
 
