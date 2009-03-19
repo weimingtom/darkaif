@@ -1,6 +1,7 @@
 ﻿package  
 {
 	import away3d.containers.View3D;
+	import away3d.loaders.Max3DS;
 	import away3d.loaders.Object3DLoader;
 	import away3d.materials.ColorMaterial;
     import away3d.primitives.Sphere;
@@ -14,10 +15,11 @@
 	* Copy Rights (c) http://darkaif.googlecode.com
 	* 
 	* Working:away3d 2.3.0
+	* not working
 	* 
 	*/
 	[SWF(width="640", height="480", backgroundColor="#FFFFFF", frameRate="30")]
-	public class Away3DMeshOBJ extends Sprite
+	public class Away3DMesh3DS extends Sprite
 	{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
@@ -25,12 +27,12 @@
 		public var sphere:Sphere = new Sphere();
 		public var objfile:Object3DLoader;
 		
-		public function Away3DMeshOBJ() 
+		public function Away3DMesh3DS() 
 		{
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
-			objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
-			objfile.scale(10);
+			objfile = Max3DS.load("data/models/cubestar.3ds", { material:material, autoLoadTextures:false } );
+			objfile.scale(50);
 			//objfile.addOnSuccess(objOnSuccess);
 			
 			//function objOnSuccess(e:Event):void {

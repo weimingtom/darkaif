@@ -15,7 +15,8 @@
 	* 
 	* Working:away3d 2.3.0
 	* 
-	 */
+	*/
+	
 	[SWF(width="640", height="480", backgroundColor="#FFFFFF", frameRate="30")]
 	public class Away3DMeshASE extends Sprite
 	{
@@ -45,6 +46,7 @@
 		{
 			objfile.rotationY += 1;
 			objfile.rotationZ += 1;
+			//objfile.x += 10;
 			sphere.rotationY += 1;
 			// render the view
 			view.render();
