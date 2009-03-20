@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Away3DXmlObject" /> 
+  <Content type="html">
+     <![CDATA[ 
+	 <object classid="" width="800" height="600">
+        <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Away3DXmlObject.swf" />
+        <!--[if !IE]>-->
+        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Away3DXmlObject.swf" width="600" height="600">
+        <!--<![endif]-->
+          <p>Alternative content</p>
+        <!--[if !IE]>-->
+        </object>
+        <!--<![endif]-->
+      </object>
+
+     ]]>
+  </Content> 
+</Module>
