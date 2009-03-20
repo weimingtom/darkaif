@@ -14,4 +14,5 @@ Object files:
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Away3DXmlObject.xml" width="830" height="630" />
 
+This load multiples mesh file for preview the object in the scene.
  * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/src/programs/Away3DXmlObject.as
