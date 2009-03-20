@@ -1,0 +1,16 @@
+#summary loading mesh file.
+#labels Papervision3D
+
+= Object files: =
+   You can replace the object files. It should work.
+
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshASE.as -ASE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshDAE.as -DAE
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshMD2.as -MD2
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMesh3DS.as -3DS
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshKMZ.as -KMZ
+
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Papervision3DXMLObject.xml" width="830" height="630" />
+
+This load multiples mesh file type for preview one object at the time in the scene.
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/src/programs/Papervision3DXMLObject.as
