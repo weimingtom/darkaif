@@ -12,45 +12,6 @@ Object files:
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshKMZ.as -KMZ
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshMD2.as -MD2
 
-Note:They are working just the files not working.
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Away3DXmlObject.xml" width="830" height="630" />
 
-public var objfile:Object3DLoader;
-
-Load Object mesh
-{{{
-var material:ColorMaterial = new ColorMaterial(0xFF0000);
-//objfile = Ase.load("data/models/cubeobj.ase", { material:material } );
-objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
-//objfile.scale(10);
-//objfile.addOnSuccess(objOnSuccess);
-			
-//function objOnSuccess(e:Event):void {
-	view.scene.addChild(objfile);
-        trace("SUCCESS");
-//}
-}}}
-
-{{{
-var material:ColorMaterial = new ColorMaterial(0xFF0000);
-//objfile = Ase.load("data/models/cubeobj.ase", { material:material } );
-objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
-//objfile.scale(10);
-//objfile.addOnSuccess(objOnSuccess);
-view.scene.addChild(objfile);			
-//function objOnSuccess(e:Event):void {
-        trace("SUCCESS");
-//}
-}}}
-
-Display info on file size.
-{{{
-var material:ColorMaterial = new ColorMaterial(0xFF0000);
-objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
-//objfile.scale(10);
-objfile.addOnSuccess(objOnSuccess);
-			
-function objOnSuccess(e:Event):void {
-	view.scene.addChild(objfile);
-        trace("SUCCESS");
-}
-}}}
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/src/programs/Away3DXmlObject.as
