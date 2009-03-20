@@ -1,5 +1,5 @@
 #summary loading mesh file.
-#labels Papervision3D
+#labels Papervision3D,ase,dae,md2,3ds,kmz
 
 = Object files: =
    You can replace the object files. It should work.
