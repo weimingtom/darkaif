@@ -1,5 +1,5 @@
 #summary loading mesh file.
-#labels away3d
+#labels away3d,ase,dae,3ds,kmz,md2,obj
 
 Object files:
    You can replace the name files. It should work.
