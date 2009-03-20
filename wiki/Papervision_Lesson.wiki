@@ -15,5 +15,5 @@
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Papervision3DXMLObject.xml" width="830" height="630" />
 
-This load multiples mesh file for preview the object in the scene.
+This load multiples mesh file type for preview one object at the time in the scene.
  * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/src/programs/Papervision3DXMLObject.as
