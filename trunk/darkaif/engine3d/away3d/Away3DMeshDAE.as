@@ -21,10 +21,8 @@
 	{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
-		// create a sphere and put it on the 3D stage
-		public var sphere:Sphere = new Sphere();
+		// load an object and put it on the 3D stage
 		public var objfile:Object3DLoader;
-		public var roll:Number = 0;
 		
 		public function Away3DMeshDAE() 
 		{
@@ -34,10 +32,8 @@
 			objfile = Collada.load("data/models/cubestar.dae", { material:material } );
 			view.scene.addChild(objfile);
 			objfile.addOnSuccess(objOnSuccess);
-			//objfile.rotationY += 10;
 			
 			function objOnSuccess(e:Event):void {
-				//view.scene.addChild(objfile);
                 trace("SUCCESS");
             }
 			
@@ -47,14 +43,15 @@
 		
 		public function update(e:Event):void
 		{
-			roll++;
-			objfile.rotationY += 1;
-			//objfile.roll(roll);
-			objfile.moveLeft(roll);
-			sphere.rotationY += 1;
+			var objectmesh:Array = view.scene.children;
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				//trace('object:' + objectmesh[c].name);
+				objectmesh[c].rotationY += 1;
+				objectmesh[c].rotationZ += 1;
+				//objectmesh[c].scale(10);
+			}
 			view.scene.updateTime();
 			// render the view
-			//view.scene.renderer();
 			view.render();
 		}
 	}
