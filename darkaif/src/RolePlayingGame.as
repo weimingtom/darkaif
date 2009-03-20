@@ -52,8 +52,8 @@ package
 		 * -Character 		(part done)
 		 * -Monster 		(part done)
 		 * --ai
-		 * ---follow
-		 * ---attack
+		 * ---follow        (part done)
+		 * ---attack        (part done)
 		 * -NPC 			(part done)
 		 * -object loading medoth need to reduce load times.
 		 * 
@@ -212,9 +212,11 @@ package
 			
 			//{ Scene world
 			// camera
-			camera = new Camera3D(300, 300);
+			camera = new Camera3D(640,480);
 			//camera.z = -50;
+			camera.far = 1000;
 			camera.near = 0;
+			//camera.
 			camera.y = 90;
 			//camera.lookAt(0, 0, 0);
 			// We create the "group" that is the tree of all the visible objects
@@ -615,11 +617,14 @@ package
 						shape.rotateX = mapxml.objects.mesh[meshno].rotation.x;
 						shape.rotateY = mapxml.objects.mesh[meshno].rotation.y;
 						shape.rotateZ = mapxml.objects.mesh[meshno].rotation.z;
+						
 						//shape.depth = 1;
 						tmpobjectmesh.model = shape;
 						tmpobjectmesh.model.useSingleContainer = false;
 						tmpobjectmesh.model.enableBackFaceCulling = false;
-						//tmpobjectmesh.model.depth = -1;
+						//tmpobjectmesh.model.enableForcedDepth = true;
+						//tmpobjectmesh.model.forcedDepth = 100;
+						//tmpobjectmesh.model.depth = -100;
 						//tmpobjectmesh.model.swapCulling();
 						//tmpobjectmesh.model.enableNearClipping = true;
 						//.enableNearClipping = true;
@@ -746,6 +751,7 @@ package
 				var zmz:Number = mapxml.mapzone.zone[zoneno].position.z;
 				var shapezone:Box = new Box('mapzone' + zoneno, 16, 16, 16);
 				shapezone.useSingleContainer = false;
+				shapezone.enableBackFaceCulling = false;
 				shapezone.x = zmx;
 				shapezone.y = zmy;
 				shapezone.z = zmz;
@@ -1363,7 +1369,7 @@ package
 		
 		public function HUD():void {
 			addChild(panel_game);
-			rpgmenupanel();
+			//rpgmenupanel();
 			//rpginventorymenupanel();
 		}
 		
@@ -1630,9 +1636,9 @@ package
 				camera.x = playermodel[playerno].posx;
 				//camera.y = playermodel[playerno].posy + 200;
 				//camera.z = playermodel[playerno].posz - 150;
-				camera.y = playermodel[playerno].posy + 200;
-				camera.z = playermodel[playerno].posz - 90;
-				camera.x = playermodel[playerno].posx - 60;
+				//camera.y = playermodel[playerno].posy + 200;
+				camera.z = playermodel[playerno].posz - 150;
+				//camera.x = playermodel[playerno].posx - 10;
 				camera.rotateX = +45;
 				//trace("move");
 			}
@@ -1743,20 +1749,44 @@ package
 		
 		//player attack monster
 		public function PlayerAttackMonster():void {
+			
 			for (var noplayer:int = 0; noplayer < playermodel.length; noplayer++) {
 				//playermodel[noplayer].boxcollision.length
 				//playermodel
+				//trace(playermodel[noplayer].bstartdamage);
 				if (playermodel[noplayer].bstartdamage) {
-					//trace("check... attack");
+					trace("check... attack"+playermodel[noplayer].dirx);
+					
 					for (var noplayerbox:int = 0; noplayerbox < playermodel[noplayer].boxcollision.length; noplayerbox++) {
 						//playermodel[noplayer].boxcollision[noplayerbox]
-						var minx:Number = playermodel[noplayer].boxcollision[noplayerbox].minx + playermodel[noplayer].posx + playermodel[noplayer].dirx * 16;
-						var miny:Number = playermodel[noplayer].boxcollision[noplayerbox].miny + playermodel[noplayer].posy + playermodel[noplayer].diry * 16;
-						var minz:Number = playermodel[noplayer].boxcollision[noplayerbox].minz + playermodel[noplayer].posz + playermodel[noplayer].dirz * 16;
+						//trace("dir"+playermodel[noplayer].dirx);
+						var facedirx:Number = 0;
+						var facedirz:Number = 0;
 						
-						var maxx:Number = playermodel[noplayer].boxcollision[noplayerbox].maxx + playermodel[noplayer].posx + playermodel[noplayer].dirx * 16;
-						var maxy:Number = playermodel[noplayer].boxcollision[noplayerbox].maxy + playermodel[noplayer].posy + playermodel[noplayer].diry * 16;
-						var maxz:Number = playermodel[noplayer].boxcollision[noplayerbox].maxz + playermodel[noplayer].posz + playermodel[noplayer].dirz * 16;
+						//player face direction to attack
+						if (playermodel[noplayer].dirx > 0) {
+							facedirx = 1;
+						}else if (playermodel[noplayer].dirx < 0) {
+							facedirx = -1;
+						}else {
+							facedirx = 0;
+						}
+						
+						if (playermodel[noplayer].dirz > 0) {
+							facedirz = 1;
+						}else if (playermodel[noplayer].dirz < 0) {
+							facedirz = -1;
+						}else {
+							facedirz = 0;
+						}
+						
+						var minx:Number = playermodel[noplayer].boxcollision[noplayerbox].minx + playermodel[noplayer].posx + facedirx * 16;
+						var miny:Number = playermodel[noplayer].boxcollision[noplayerbox].miny + playermodel[noplayer].posy;
+						var minz:Number = playermodel[noplayer].boxcollision[noplayerbox].minz + playermodel[noplayer].posz + facedirz * 16;
+						
+						var maxx:Number = playermodel[noplayer].boxcollision[noplayerbox].maxx + playermodel[noplayer].posx + facedirx * 16;
+						var maxy:Number = playermodel[noplayer].boxcollision[noplayerbox].maxy + playermodel[noplayer].posy;
+						var maxz:Number = playermodel[noplayer].boxcollision[noplayerbox].maxz + playermodel[noplayer].posz + facedirz * 16;
 						
 						for (var nomonster:int = 0; nomonster < monstermodel.length; nomonster++ ) {
 							for (var nomonsterbox:int = 0; nomonsterbox < monstermodel[nomonster].boxcollision.length;nomonsterbox++ ) {
@@ -1775,10 +1805,11 @@ package
 								(maxy >= miny2) &&
 								(miny <= maxy2) &&
 								(maxx >= minx2) && 
-								(minx <= maxx2) && (monstermodel[nomonster].balive == true)
+								(minx <= maxx2)// && (monstermodel[nomonster].balive == true)
 								){
-									//trace("monster hit!");
+									trace("monster hit!");
 									monstermodel[nomonster].healthpoint -= playermodel[noplayer].attack;
+									//monstermodel[nomonster].healthpoint = 0;
 								}
 								//this will finish damage check
 								playermodel[noplayer].bstartdamage = false;
@@ -1840,7 +1871,7 @@ package
 				for (var monsterno:int = 0; monsterno < monstermodel.length; monsterno++) {
 					if (((playermodel[playerno].monsterbox(monstermodel[monsterno], 0, 0, playermodel[playerno].dirz))== true)&&(monstermodel[monsterno].balive == true)) {
 						//playermodel[playerno].posz += playermodel[playerno].diffz;
-						trace('collision');
+						//trace('collision');
 						playermodel[playerno].bcollisionz = true;
 						break;//need to break if other objects are in collision
 						
@@ -1938,7 +1969,7 @@ package
 					}
 					*/
 					if (monstermodel[monsterno].intersetbox(objectmap[objectmeshno])) {
-						monstermodel[monsterno].posy += monstermodel[monsterno].diry;
+						//monstermodel[monsterno].posy += monstermodel[monsterno].diry;
 						monstermodel[monsterno].bgroundcollision = true;
 						//trace("-mon and obj collision");
 						//break; //it does break to make character touch the ground
@@ -1989,6 +2020,12 @@ package
 		public function NPCCollisions():void {
 			for (var npcno:int = 0; npcno < npcmodel.length; npcno++) {
 				for (var objectmeshno:int = 0; objectmeshno < objectmap.length; objectmeshno++) {
+					if (npcmodel[npcno].intersetbox(objectmap[objectmeshno])) {
+					
+					}
+				}
+				/*
+				for (var objectmeshno:int = 0; objectmeshno < objectmap.length; objectmeshno++) {
 					if (npcmodel[npcno].objectbox(objectmap[objectmeshno], 0, npcmodel[npcno].diry - 5, 0)) {
 						npcmodel[npcno].bgroundcollision = true;
 						break;
@@ -1996,6 +2033,7 @@ package
 						npcmodel[npcno].bgroundcollision = false;
 					}
 				}
+				*/
 				
 			}
 		}

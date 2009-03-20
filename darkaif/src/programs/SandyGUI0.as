@@ -9,7 +9,7 @@
 	* 
 	*/ 
 	import darkaif.core.display.DropBox;
-	import darkaif.frame.GraphicLoadingBar;
+	import darkaif.core.display.GraphicLoadingBar;
 	import flash.display.Sprite; 
 	import flash.events.*;
 	import flash.display.BitmapData;

@@ -41,6 +41,8 @@
 		public var bvisited:Boolean = false;
 		public var bpath:Boolean = true;
 		public var diagonal:Number = 1.414;
+		public var bblock:Boolean = false;
+		public var bwalkable:Boolean = true;
 		
 		public function PointNodePath() 
 		{

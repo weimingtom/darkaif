@@ -8,7 +8,7 @@ package programs{
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.geom.Rectangle;
-	import darkaif.frame.*;
+	import darkaif.core.display.*;
 
     public class ScrollbarExample extends Sprite
     {

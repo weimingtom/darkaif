@@ -7,6 +7,7 @@
 	*/
     import flash.display.Sprite;
     import flash.geom.Rectangle;
+	import darkaif.core.event.SliderEvent;
 	import org.flashdevelop.utils.FlashConnect;
 
     public class ScrollContent extends Sprite

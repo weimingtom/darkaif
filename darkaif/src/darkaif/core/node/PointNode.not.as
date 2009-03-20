@@ -3,15 +3,12 @@
 */
 package darkaif.core.node
 {
-	
-	//{
+	//faslh devolop
 	import darkaif.core.math.Vertex3DPoint;
 	import flash.geom.Point;
 	import org.flashdevelop.utils.FlashConnect;
-	//}
-	
 	/**
-	* ..
+	* ...
 	* @author Darknet
 	* Copy Rights (c) http://darkaif.googlecode.com
 	* 
@@ -23,34 +20,61 @@ package darkaif.core.node
 	public class PointNode {	
 		
 		//{variables
+		
+		//start and end goal
+		//{
 		public var bstart:Boolean = false;
+		public var startx:Number = 0;
+		public var starty:Number = 0;
+		public var startz:Number = 0;
+		
 		public var bend:Boolean = false;
-		public var start:PointNodePath = new PointNodePath();
-		public var end:PointNodePath = new PointNodePath();
+		public var endx:Number = 0;
+		public var endy:Number = 0;
+		public var endz:Number = 0;
+		
 		public var goalstart:PointNodePath = new PointNodePath();
 		public var goalend:PointNodePath = new PointNodePath();
-		public var gridsize:Vertex3DPoint = new Vertex3DPoint(32,32,32);
+		//}
+		
+		//{
+		public var gridsize:Vertex3DPoint = new Vertex3DPoint(16,16,16);
+		
+		//}
 		
 		public var bpathfinish:Boolean = false;
 		public var bpathbuildarray:Boolean = false;
 		public var pathcount:int = 0;
-		public var nodepath:Array = new Array();
 		public var blockmesh:Array = new Array();
+		public var nodepath:Array = new Array();
 		public var pathbuild:Array = new Array();
+		public var openpath:Array = new Array();
+		
+		public var nodepoint:PointNodePath = new PointNodePath();
 		
 		public var time:Number = 0;
 		public var timemax:Number = 1;
 		
 		//}
 		
+		//main class
 		public function PointNode() {
 			
 		}
 		
+		public function setblockpath(_x:Number, _y:Number, _z:Number):void {
+			//convert position
+			var blockpoint:PointNodePath = new PointNodePath();
+			blockpoint.x = Math.floor (_x / gridsize.x);
+			blockpoint.y = Math.floor (_y / gridsize.y);
+			blockpoint.z = Math.floor (_z / gridsize.z);
+			blockpoint.bvisited = true;
+		}
+		
 		public function setstart(x:Number, y:Number ,z:Number):void {
-			start.x = x;
-			start.y = y;
-			start.z = z;
+			startx = x;
+			starty = y;
+			startz = z;
 			goalstart.bvisited = true
 			goalstart.x = Math.floor (x/gridsize.x);
 			goalstart.y = Math.floor (y/gridsize.y);
@@ -65,9 +89,9 @@ package darkaif.core.node
 		}
 		
 		public function setend(x:Number, y:Number ,z:Number):void {
-			end.x = x;
-			end.y = y;
-			end.z = z;
+			endx = x;
+			endy = y;
+			endz = z;
 			goalend.x = Math.floor (x / gridsize.x);
 			goalend.y = Math.floor (y / gridsize.y);
 			goalend.z = Math.floor (z / gridsize.z);
@@ -83,7 +107,7 @@ package darkaif.core.node
 			if (time > timemax) {
 				time = 0;
 				if(!bpathfinish){
-					//trace("[start.: x:" + start.x + " y:" + start.y + " z:" + start.z + "] [end.: x:" + end.x + " y:" + end.y + " z:" + end.z+"]")
+					//trace("[start: x:" + startx + " y:" + starty + " z:" + startz + "] [end: x:" + endx + " y:" + endy + " z:" + endz+"]")
 					buildpath();
 					//listnode();
 				}
@@ -92,13 +116,13 @@ package darkaif.core.node
 		
 		public function buildpath():void {
 			var startposition:PointNodePath =  new PointNodePath();
-			startposition.x = Math.floor(start.x / gridsize.x);
-			startposition.y = Math.floor(start.y / gridsize.y);
-			startposition.z = Math.floor(start.z / gridsize.z);
+			startposition.x = Math.floor(startx / gridsize.x);
+			startposition.y = Math.floor(starty / gridsize.y);
+			startposition.z = Math.floor(startz / gridsize.z);
 			var endposition:PointNodePath =  new PointNodePath();
-			endposition.x = Math.floor(end.x / gridsize.x);
-			endposition.y = Math.floor(end.y / gridsize.y);
-			endposition.z = Math.floor(end.z / gridsize.z);
+			endposition.x = Math.floor(endx / gridsize.x);
+			endposition.y = Math.floor(endy / gridsize.y);
+			endposition.z = Math.floor(endz / gridsize.z);
 			for (var nodeno:int = 0; nodeno < nodepath.length; nodeno++) {
 				if ((nodepath[nodeno].x == startposition.x) && (nodepath[nodeno].y == startposition.y) && (nodepath[nodeno].z == startposition.z)) {
 					bstart = true;
@@ -108,18 +132,14 @@ package darkaif.core.node
 				}
 			}
 			if (!bstart) {
-				//trace('added start.');
+				//trace('added start');
 				nodepath.push(startposition);
 				neighbour(startposition);
 			}
 			if (!bend) {
-				//trace('added end.');
+				//trace('added end');
 				nodepath.push(endposition);
 			}
-			
-			//trace (Math.floor(start.x / gridsize.x));
-			//trace (start.y / gridsize.y);
-			//trace (start.z / gridsize.z);
 		}
 		
 		//list node
@@ -129,56 +149,76 @@ package darkaif.core.node
 			}
 		}
 		
-		//check node
+		//add node
 		public function neighbour(node:PointNodePath):void {
-			
+			//if found exit exit the loop
 			if ((node.x == goalend.x ) && (node.y == goalend.y ) && (node.z == goalend.z )) {
 				bpathfinish = true;
 				//trace("nx:" + node.x +" gx:" + goalend.x  +" ny:" + node.y  +" gy:" +  goalend.y  +" nz:" + node.z  +" gz:" +  goalend.z);
 				//trace("parent:"+ node.);
 				//node.
 				pathcount = 0;
-				//start. from end. to start.(going backward being parent id)
+				//start from end to start(going backward being parent id)
 				var buildnode:PointNodePath = new PointNodePath();
-				//trace("order path coutn:"+pathcount);
-				buildnode.id = pathcount;
-				buildnode.x = end.x;
-				buildnode.y = end.y;
-				buildnode.z = end.z;
-				//trace("LAST PATH:"+buildnode.x+":"+buildnode.y+":"+buildnode.z)
-				pathbuild.push(buildnode);
 				
+				buildnode.id = pathcount;
+				buildnode.x = endx;
+				buildnode.y = endy;
+				buildnode.z = endz;
+				
+				//pathbuild.push(buildnode); //start from the end first
 				buildpathnode(node);
-				//trace('finish!');
+				//trace("order path count:"+pathcount);
+				//trace("LAST PATH:"+buildnode.x+":"+buildnode.y+":"+buildnode.z)
+				trace('finish! node');
 			}
 			
-			if(!bpathfinish){
-				buildnodeneighbour(node);
-			
-			//trace('--' + minvalue);
-			//nodepath.sortOn("f", Array.NUMERIC);
-			var arrrayvalue:Array = new Array();
-			for (var nonodevalue:int = 0; nonodevalue < nodepath.length; nonodevalue++) {
-				//if ((nodepath[nonodevalue].f != 0) || (nodepath[nonodevalue].bblock == false)) {
-				if ((nodepath[nonodevalue].f != 0)){
-					arrrayvalue.push(nodepath[nonodevalue].f);
+			if (nodepath.length > 200) {
+				bpathfinish = true;
+				for (var nodelist:int = 0; nodelist < nodepath.length ;nodelist++ ) {
+					//trace("x: " + nodepath[nodelist].x +" y:" + nodepath[nodelist].y + " :z" + nodepath[nodelist].z);
+					if ((nodepath[nodelist].x == goalend.x ) && (nodepath[nodelist].y == goalend.y ) && (nodepath[nodelist].z == goalend.z )) {
+						trace("MATCHES...........");
+					}
 				}
+				trace("--------------------------------------------------------");
+				trace("start x: " + goalstart.x +" y:" + goalstart.y + " :z" + goalstart.z);
+				trace("end x: " + goalend.x +" y:" + goalend.y + " :z" + goalend.z);
 			}
 			
-			var minValue:Number = Math.min.apply(null, arrrayvalue);
-			//trace('--'+minValue);
-			
-			for (var nonode:int = 0; nonode < nodepath.length; nonode++) {
-				if ((nodepath[nonode].f == minValue)&&(nodepath[nonode].bvisited == false)) {
-					nodepath[nonode].bvisited = true;
-					neighbour(nodepath[nonode]);
+			//{ //PATH NODE BUILD
+			if (!bpathfinish) {
+				openpath = new Array();
+				openpath = buildnodeneighbour(node);
+				
+				var arrrayvalue:Array = new Array();
+				for (var nonodevalue:int = 0; nonodevalue < openpath.length; nonodevalue++) {
+					//if ((openpath[nonodevalue].f != 0)&&(openpath[nonodevalue].bblock == false)){
+					if ((openpath[nonodevalue].f != 0)){
+						arrrayvalue.push(openpath[nonodevalue].f);
+						//trace('add node f');
+					}else {
+						//trace('didnt add node f');
+					}
 				}
-			}
+				arrrayvalue.sortOn("f", Array.NUMERIC);
+				var minValue:Number = arrrayvalue[0];
+				
+				for (var nonode:int = 0; nonode < nodepath.length; nonode++) {
+					//if ((nodepath[nonode].f == minValue) && (nodepath[nonode].bvisited == false) && (nodepath[nonode].bblock == false)) {
+					if ((nodepath[nonode].f == minValue) && (nodepath[nonode].bvisited == false)) {
+						nodepath[nonode].bvisited = true;
+						trace( "ID:"+ nodepath[nonode].id + "F:found: " + nodepath[nonode].f + " x:" + nodepath[nonode].x + " z:" + nodepath[nonode].z);
+						neighbour(nodepath[nonode]);
+						//break;
+					}else {
+						
+					}
+				}
 			}
 			//listnode();
 		}
 		
-		//build node 8 paths
 		public function buildnodeneighbour(node:PointNodePath):Array {
 			var path8:Array = new Array();
 			path8.push(buildnodepoint(node,0,0,1));
@@ -391,6 +431,39 @@ package darkaif.core.node
 			return bmatches;
 		}
 		
+		//build path from backward order for path to follow
+		public function buildpathnode(node:PointNodePath):void {
+			pathcount++;
+			var buildnode:PointNodePath = new PointNodePath();
+			
+			buildnode.id = pathcount;
+			buildnode.x = node.x * gridsize.x;//32uni pixel
+			buildnode.y = node.y * gridsize.y;
+			buildnode.z = node.z * gridsize.z;
+			//trace(buildnode.x+":"+buildnode.y+":"+buildnode.z);
+			pathbuild.push(buildnode);
+			//trace("block:" + node.bblock);
+			
+			if(node.parent != null){
+				buildpathnode(node.parent);
+			}else {
+				bpathbuildarray = true;
+				//trace("finish...?");
+			}
+			
+			//trace("[=====]");
+			//trace("path: x:"+node.x + ":" + node.y +":"+node.z)
+			//if ((node.x == startx)&& (node.y == starty)&&(node.z == startz)) {
+				//trace("..PATH FINISH...");
+			//trace("order path coutn:"+pathcount);
+			//if(node != null){
+			///}else {
+				
+				//pathbuild.push();
+			///}
+			///}
+		}
+		
 		//check collision for mesh object values
 		public function checkcollision(node:PointNodePath):void {
 			//trace('collision mesh for node');
@@ -417,33 +490,12 @@ package darkaif.core.node
 						(maxy >= miny2) &&(miny <= maxy2) &&
 						(maxx >= minx2) && (minx <= maxx2)){
 						node.bblock = true;
-						trace("--path collision");	
+						//trace("--path collision");	
 						//bcollision = true;
 						break;
 					}
 					
 				}
-			}
-		}
-		
-		//build path from backward order for path to follow
-		public function buildpathnode(node:PointNodePath):void {
-			pathcount++;
-			var buildnode:PointNodePath = new PointNodePath();
-			
-			buildnode.id = pathcount;
-			buildnode.x = node.x * gridsize.x;//32uni pixel
-			buildnode.y = node.y * gridsize.y;
-			buildnode.z = node.z * gridsize.z;
-			//trace(buildnode.x+":"+buildnode.y+":"+buildnode.z);
-			pathbuild.push(buildnode);
-			//trace("block:" + node.bblock);
-			
-			if(node.parent != null){
-				buildpathnode(node.parent);
-			}else {
-				bpathbuildarray = true;
-				//trace("finish...?");
 			}
 		}
 		

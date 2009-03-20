@@ -72,6 +72,7 @@
 			animmd2.x = 0;
 			animmd2.y = 0;
 			animmd2.x = -100;
+			//animmd2.boundingBox.
 			//animmd2.
 			//animmd2.
 			

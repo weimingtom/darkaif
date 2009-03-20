@@ -23,6 +23,7 @@ package darkaif.core.display {
 		public var label_name:String = 'Button';
 		public var text_label:TextField = new TextField();
 		public var Height:int = 13;
+		public var datastring:String = '';
 		public var Width:int = 0;
 		public var Space:int = 2;
 		public var spritebutton:Sprite = new Sprite();
@@ -35,12 +36,9 @@ package darkaif.core.display {
 		public var bbcolor:uint = 0xFFFFFF;
 		//}
 		
-		public function Button(stringname:String) {
-			//Text Field
-			if (stringname == null)
-			{
-				stringname = 'Labal Button';
-			}
+		public function Button(stringname:String = 'button') {
+			this.name = stringname;
+			
 			//text format
 			var format:TextFormat = new TextFormat();
 			format.size = 10;
