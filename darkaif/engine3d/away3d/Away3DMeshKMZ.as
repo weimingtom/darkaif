@@ -23,8 +23,7 @@
 	{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
-		// create a sphere and put it on the 3D stage
-		public var sphere:Sphere = new Sphere();
+		// load an object and put it on the 3D stage
 		public var objfile:Object3DLoader;
 		
 		public function Away3DMeshKMZ() 
@@ -32,29 +31,27 @@
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
 			objfile = Kmz.load("data/models/test.kmz", { material:material } );
-			objfile.scale(0.5);
+			view.scene.addChild(objfile);
 			objfile.addOnSuccess(objOnSuccess);
 			
 			function objOnSuccess(e:Event):void {
-				view.scene.addChild(objfile);
                 trace("SUCCESS");
             }
 			
-            //view.scene.addChild(sphere);
 			this.addEventListener(Event.ENTER_FRAME, update);
 		}
 		
 		public function update(e:Event):void
 		{
-			objfile.y = -50;
-			objfile.rotationY += 1;
-			objfile.rotationX += 1;
-			sphere.rotationY += 1;
+			var objectmesh:Array = view.scene.children;
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				//trace('object:' + objectmesh[c].name);
+				objectmesh[c].rotationY += 1;
+				objectmesh[c].rotationZ += 1;
+				objectmesh[c].scale(0.5);
+			}
 			// render the view
 			view.render();
 		}
-		
-		
 	}
-	
 }

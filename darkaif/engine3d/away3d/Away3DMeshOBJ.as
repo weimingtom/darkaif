@@ -21,35 +21,37 @@
 	{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
-		// create a sphere and put it on the 3D stage
-		public var sphere:Sphere = new Sphere();
+		// load an object and put it on the 3D stage
 		public var objfile:Object3DLoader;
 		
 		public function Away3DMeshOBJ() 
 		{
             addChild(view);
-			var material:ColorMaterial = new ColorMaterial(0xFF0000);
+			var material:ColorMaterial = new ColorMaterial(0xFF0FFF);
 			objfile = Obj.load("data/models/cubeobj.obj", { material:material } );
 			objfile.scale(10);
-			//objfile.addOnSuccess(objOnSuccess);
+			objfile.addOnSuccess(objOnSuccess);
+			view.scene.addChild(objfile);
 			
-			//function objOnSuccess(e:Event):void {
-				view.scene.addChild(objfile);
+			function objOnSuccess(e:Event):void {
                 trace("SUCCESS");
-            //}
+            }
 			
-            //view.scene.addChild(sphere);
 			this.addEventListener(Event.ENTER_FRAME, update);
 		}
 		
 		public function update(e:Event):void
 		{
-			objfile.rotationY += 1;
-			sphere.rotationY += 1;
+			var objectmesh:Array = view.scene.children;
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				//trace('object:' + objectmesh[c].name);
+				objectmesh[c].rotationY += 1;
+				objectmesh[c].rotationZ += 1;
+				objectmesh[c].scale(10);
+			}
 			// render the view
 			view.render();
 		}
-		
 		
 	}
 	
