@@ -9,14 +9,13 @@ public var scene:Scene3D;
 public var camera:Camera3D;
 public var g:Group = new Group("myGroup");
 
-var objectmove:Array = g.children
-			for (var c:int = 0; c < objectmove.length; c++) {
-				//trace('object:' + objectmove[c].name);
-				if (objectmove[c].name != '1') {//default there should be a camera (It should be number one (1) and not a letter l ='L')
-					//trace('object remove-:' + objectmove[c].name);
-					g.removeChildByName(objectmove[c].name);
-				}
-			}
+var objectmesh:Array = g.children
+for (var c:int = 0; c < objectmesh.length; c++) {
+   //default there should be a camera (It should be number one (1) and not a letter l ='L'
+   if (objectmove[c].name != '1') {)
+      g.removeChildByName(objectmove[c].name);
+   }
+}
 }}}
 
 This type of code is for game stuff style for making maps and clearing the map from the scene. Since it objects are created in clone from loaded objects it increase by counter number and name as that. That all depends on the coding.
