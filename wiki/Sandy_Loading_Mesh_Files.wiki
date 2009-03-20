@@ -1,4 +1,5 @@
 #summary loading mesh file.
+#labels sandy,ase,3ds,md2,dae
 
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/SandyXMLObject.xml" width="830" height="630" />
