@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<file>
+		<idobject>test.kmz</idobject>
+		<name>test1</name>
+		<type>.kmz</type>
+	</file>
+	<file>
+		<idobject>boxanimation.md2</idobject>
+		<name>test2</name>
+		<type>.md2</type>
+	</file>
+	<file>
+		<idobject>cubestar.dae</idobject>
+		<name>test3</name>
+		<type>.dae</type>
+	</file>
+	<file>
+		<idobject>twotexcube.ase</idobject>
+		<name>test4</name>
+		<type>.ase</type>
+	</file>
+	<file>
+		<idobject>cubestar.3ds</idobject>
+		<name>test5</name>
+		<type>.3ds</type>
+	</file>
+	<file>
+		<idobject>cube.obj</idobject>
+		<name>test6</name>
+		<type>.obj</type>
+	</file>
+</data>
