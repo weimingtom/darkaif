@@ -6,8 +6,4 @@
 
 Basic:
  * [sandy_remove_object_from_scene]
-
-<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/SandyXMLObject.xml" width="830" height="630" />
-
-This load multiples mesh file type for preview one object at the time in the scene.
- * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/src/programs/SandyXMLObject.as
+ * [Sandy_Loading_Mesh_Files]
