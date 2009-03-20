@@ -1,8 +1,8 @@
 ﻿package  programs
 {
 	//{
-	import darkaif.frame.Button;
-	import darkaif.interact.RectButton;
+	import darkaif.core.display.Button;
+	//import darkaif.interact.RectButton;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.display.Graphics;

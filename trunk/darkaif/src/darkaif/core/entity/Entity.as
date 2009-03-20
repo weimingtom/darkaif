@@ -38,6 +38,10 @@
 		public var gravityy:Number = -1;
 		public var gravityz:Number = 0;
 		
+		public var velocityx:Number = 0;
+		public var velocityy:Number = 0;
+		public var velocityz:Number = 0;
+		
 		public function Entity() 
 		{
 			

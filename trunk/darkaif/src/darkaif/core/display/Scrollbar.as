@@ -7,6 +7,7 @@
 	*/
     import flash.display.Sprite;
     import flash.events.MouseEvent;
+	import darkaif.core.event.SliderEvent;
 
     public class Scrollbar extends Sprite{
         // elements

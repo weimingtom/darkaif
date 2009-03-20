@@ -8,6 +8,7 @@
 	 */
 	public class GameObject extends Entity
 	{
+		//{
 		public var charactername:String = "";
 		public var playername:String = ""; //player name and id
 		
@@ -38,6 +39,13 @@
 		public var bcollisionz:Boolean = false;
 		public var bdetectcollision:Boolean = false;
 		
+		public var bxmax:Boolean = false;
+		public var bxmin:Boolean = false;
+		public var bymax:Boolean = false;
+		public var bymin:Boolean = false;
+		public var bzmax:Boolean = false;
+		public var bzmin:Boolean = false;
+		
 		public var bgroundcollision:Boolean = false;
 		
 		//JUMP Variables
@@ -62,7 +70,7 @@
 		public var battackend:Boolean = false;
 		
 		public var bstartdamage:Boolean = false;
-		
+		//}
 		public function GameObject() 
 		{
 			
@@ -99,33 +107,7 @@
 			//objectpositionupdate();
 		}
 		
-		//update position and collision boolean
-		/*
-		public function objectpositionupdate():void {
-			olddirx = posx;
-			olddiry = posy;
-			olddirz = posz;
-			
-			if (!bcollisionx){
-				posx += dirx;
-				posx += gravityx;
-			}
-			if (!bcollisiony){
-				posy += diry;
-				posy += gravityy;
-				//trace("gravityy");
-			}else {
-				posy -= diry;
-			}
-			if (!bcollisionz){
-				posz += dirz;
-				posz += gravityz;
-			}
-			diffx = olddirx - posx;
-			diffy = olddiry - posy;
-			diffz = olddirz - posz;
-		}
-		*/
+		
 		//{ set position 
 		public function set setx(px:Number):void {
 			spawnposx = px;

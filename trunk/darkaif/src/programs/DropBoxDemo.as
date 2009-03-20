@@ -14,7 +14,7 @@ package programs {
 	*/
 	
 	//{PACKAGE
-	import darkaif.frame.*;
+	//import darkaif.frame.*;
 	import darkaif.core.node.*;
 	import darkaif.core.display.*;
 	import darkaif.interact.*;

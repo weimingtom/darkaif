@@ -11,6 +11,7 @@
     import flash.display.Sprite;
     import flash.events.MouseEvent;
     import flash.geom.Rectangle;
+	import darkaif.core.event.SliderEvent;
 	//}
 	
     /**

@@ -1,8 +1,8 @@
 package darkaif.core.display {
 	
 	//{packages
-	import darkaif.frame.Scrollbar;
-	import darkaif.frame.ScrollContent;
+	import darkaif.core.display.Scrollbar;
+	import darkaif.core.display.ScrollContent;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -48,15 +48,17 @@ package darkaif.core.display {
 			format.size = 10;
 			format.font = "OCR A Extended";
 			
-			fieldname.autoSize = TextFieldAutoSize.LEFT;
-			if (fieldname.width > setwidth) {
-				fieldname.width = setwidth;
-			}
+			//fieldname.autoSize = TextFieldAutoSize.LEFT;
+			//if (fieldname.width > setwidth) {
+			//	fieldname.width = setwidth;
+			///}
+			fieldname.width = setwidth;
+			
 			fieldname.selectable = false;
 			fieldname.alwaysShowSelection = false;
 			fieldname.setTextFormat(format);
 			
-			fieldname.width = 64;
+			//fieldname.width = 64;
 			fieldname.height = 14;
 			//fieldname.border = true;
 			
@@ -113,8 +115,9 @@ package darkaif.core.display {
 			for (var buttonno:int = 0; buttonno < boxlist.length;buttonno++ ) {
 				var buildbutton:Button = new Button(boxlist[buttonno]);
 				buildbutton.name = String(boxlist[buttonno]);
-				//trace(boxlist[buttonno]);
-				buildbutton.addEventListener(MouseEvent.CLICK, setfieldname );
+				//trace("--"+boxlist[buttonno]);
+				buildbutton.datastring = String(boxlist[buttonno]);
+				buildbutton.addEventListener(MouseEvent.CLICK, setfieldname);
 				buildbutton.addEventListener(MouseEvent.CLICK, togglebuttonclick);
 				buildbutton.y = buttonno * 14;
 				buildbutton._width = setwidth;
@@ -144,19 +147,27 @@ package darkaif.core.display {
 		
 		public function setfieldname(event:Event):void {
 			//trace("target name:" + event.target.name);
-			fieldname.text = event.target.text_label.text;
+			//fieldname.text = event.target.text_label.text;
+			fieldname.text = event.currentTarget.name;
+			//trace(event.target.name);
+			//fieldname.text = String(event.target.datastring);
 			
 			var format:TextFormat = new TextFormat();
 			format.size = 10;
 			format.font = "OCR A Extended";
 			
-			fieldname.autoSize = TextFieldAutoSize.LEFT;
-			if (fieldname.width > setwidth) {
-				fieldname.width = setwidth;
-			}
+			//fieldname.autoSize = TextFieldAutoSize.LEFT;
+			
 			fieldname.selectable = false;
 			fieldname.alwaysShowSelection = false;
 			fieldname.setTextFormat(format);
+			
+			if (fieldname.width > setwidth) {
+				fieldname.width = setwidth;
+			}
+			fieldname.height = 14;
+			fieldname.border = true;
+			//fieldname.
 		}
 		
 		public function getboxname():String {

@@ -13,7 +13,7 @@ package darkaif.core.display
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFieldAutoSize;
-	import darkaif.frame.SliderEvent;
+	import darkaif.core.event.SliderEvent;
 	
 	import org.flashdevelop.utils.FlashConnect;
 	

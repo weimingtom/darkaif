@@ -10,7 +10,8 @@
 	*/ 
 	
 	//{
-	import darkaif.frame.GraphicLoadingBar;
+	import darkaif.core.display.GraphicLoadingBar;
+	import darkaif.core.display.VideoPlayerPanel;
 	import flash.display.Sprite; 
 	import flash.events.*;
 	import flash.display.BitmapData;
@@ -21,7 +22,7 @@
 	import sandy.materials.*;
 	import sandy.materials.attributes.*;
 	import sandy.primitive.*;
-	import darkaif.frame.Button;
+	import darkaif.core.display.Button;
 	//}
 	
 	public class SandyVideoPlane extends Sprite
@@ -35,7 +36,7 @@
 		public var bData:BitmapData;
 		public var buttonclearmap:Button = new Button('Clear Map');
 		public var g:Group = new Group();
-		public var videobuild:VideoPlayer = new VideoPlayer();
+		public var videobuild:VideoPlayerPanel = new VideoPlayerPanel();
 		
 		public function SandyVideoPlane() 
 		{

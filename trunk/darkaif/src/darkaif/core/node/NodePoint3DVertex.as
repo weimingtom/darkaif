@@ -10,6 +10,8 @@
 	{
 		public var id:int = 0;
 		public var parentid:int = 0;
+		public var bblock:Boolean = false;
+		public var bwalkable:Boolean = true;
 		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;
