@@ -11,7 +11,7 @@ public var g:Group = new Group("myGroup");
 
 var objectmesh:Array = g.children
 for (var c:int = 0; c < objectmesh.length; c++) {
-   //default there should be a camera (It should be number one (1) and not a letter l ='L'
+   //default there should be a camera (It should be number one (1) and not a letter l ='L')
    if (objectmove[c].name != '1') {)
       g.removeChildByName(objectmove[c].name);
    }
