@@ -1,4 +1,4 @@
-#summary removing objects from the scene.
+#summary removing all objects from the scene.
 #labels sandy
 
 = Methods: =
