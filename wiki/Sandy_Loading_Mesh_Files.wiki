@@ -1,6 +1,11 @@
 #summary loading mesh file.
 #labels sandy,ase,3ds,md2,dae
 
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/sandy/SandyMesh3DS.as
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/sandy/SandyMeshASE.as
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/sandy/SandyMeshDAE.as
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/sandy/SandyMeshMD2.as
+ * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/sandy/SandyMeshMD2_Still.as
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/SandyXMLObject.xml" width="830" height="630" />
 
