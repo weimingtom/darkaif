@@ -19,7 +19,7 @@
  * [rpg_status]
  * [client_and_server_builds client/server builds]
 
- * Notice: Game build will web site page build using php script for access to the game with flash and mysql database. *
+ * Notice: Game build will web site interface and page build using php script for access to the game with flash and mysql database. *
 
 = Sandy Engine Demo: =
  * [Sandy_Progress_Bar_Plane3D]
