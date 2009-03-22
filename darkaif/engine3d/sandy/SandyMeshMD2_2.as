@@ -13,6 +13,8 @@
 	import sandy.parser.Parser;
 	import sandy.parser.ParserStack;
 	import sandy.parser.IParser;
+	import sandy.events.SandyEvent;
+	import sandy.primitive.MD2;
 	
 	import org.flashdevelop.utils.FlashConnect;
 	//}
@@ -22,7 +24,7 @@
 	 * @author Darknet
 	 */
 	
-	public class SandyMesh3DS extends Sprite {
+	public class SandyMeshMD2_2 extends Sprite {
 		
 		//{
 		//sandy engine
@@ -31,7 +33,11 @@
 		public var g:Group = new Group("myGroup");
 		//}
 		
-		public function SandyMesh3DS(){
+		public function SandyMeshMD2_2() {
+			var mesh:Shape3D = new Shape3D();
+			//mesh.f
+			//mesh.rotateY
+			
 			//{ Scene world
 			// camera
 			camera = new Camera3D(300,300);
@@ -51,23 +57,32 @@
 		
 		// This update the code and the function when every frame count is pass
 		private function enterFrameHandler( event : Event ) : void {
+			var objectmesh:Array = g.children;
+			for (var meshno:int = 0; meshno < objectmesh.length; meshno++ ) {
+				if(objectmesh[meshno].name == 'md2'){
+				objectmesh[meshno].rotateY += 1;
+				objectmesh[meshno].rotateY += 1;
+				objectmesh[meshno].frame +=0.01;
+				}
+			}
 			scene.render();
 		}
 		
 		private function createScene():Group {
 			var parserstack:ParserStack = new ParserStack();
-			var objectname:String = '3ds';
-			var datafilename:String = 'data/models/cubestar.3ds';
+			var objectname:String = 'md2';
+			var datafilename:String = 'data/models/simple_monster_low.md2';
 			//var datafilename:String = 'data/models/bbasic_entrance01.ase';
-			var parser:IParser = Parser.create(String(datafilename),Parser.MAX_3DS);
+			var parser:IParser = Parser.create(String(datafilename), Parser.MD2);
 			parserstack.add(String(objectname), parser);
 			parserstack.addEventListener(ParserStack.COMPLETE,loaddatafile);
 			parserstack.start();
 			
 			function loaddatafile():void {
 				//trace('---');
-				var tmpshape:Shape3D;
-				tmpshape = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				var tmpshape:MD2;
+				tmpshape = parserstack.getGroupByName(String(objectname)).children[0] as MD2; 
+				tmpshape.name = 'md2';
 				g.addChild(tmpshape);
 			}
 			

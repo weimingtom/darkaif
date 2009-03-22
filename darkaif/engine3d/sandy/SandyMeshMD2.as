@@ -2,30 +2,20 @@
 {
 	//{
 	import flash.display.Sprite;
-	
-	import flash.display.Sprite;
-	import flash.events.*;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.display.*; 
-	import flash.events.*;
-	import flash.text.TextField;
-	import flash.ui.*;
-	import flash.utils.Timer;
-	import flash.system.*;
-	import flash.events.IOErrorEvent;
+	import flash.events.Event;
 	
 	import sandy.core.Scene3D;
-	import sandy.core.data.*;
-	import sandy.core.scenegraph.*;
-	import sandy.materials.*;
-	import sandy.materials.attributes.*;
-	import sandy.primitive.*;
-	import sandy.parser.*;
-	import sandy.util.*;
-	import sandy.events.*;
-	import sandy.view.*;
-
+	import sandy.core.scenegraph.Camera3D;
+	import sandy.core.scenegraph.Group;
+	import sandy.core.scenegraph.Shape3D;
+	
+	import sandy.events.QueueEvent;
+	import sandy.util.LoaderQueue;
+	import sandy.events.SandyEvent;
+	import sandy.primitive.MD2;
+	
 	import org.flashdevelop.utils.FlashConnect;
 	//}
 	

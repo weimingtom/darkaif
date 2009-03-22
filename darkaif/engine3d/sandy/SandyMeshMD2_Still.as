@@ -2,30 +2,20 @@
 {
 	//{
 	import flash.display.Sprite;
-	
-	import flash.display.Sprite;
-	import flash.events.*;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.display.*; 
-	import flash.events.*;
-	import flash.text.TextField;
-	import flash.ui.*;
-	import flash.utils.Timer;
-	import flash.system.*;
-	import flash.events.IOErrorEvent;
+	import flash.events.Event;
 	
 	import sandy.core.Scene3D;
-	import sandy.core.data.*;
-	import sandy.core.scenegraph.*;
-	import sandy.materials.*;
-	import sandy.materials.attributes.*;
-	import sandy.primitive.*;
-	import sandy.parser.*;
-	import sandy.util.*;
-	import sandy.events.*;
-	import sandy.view.*;
-
+	import sandy.core.scenegraph.Camera3D;
+	import sandy.core.scenegraph.Group;
+	import sandy.core.scenegraph.Shape3D;
+	import sandy.parser.Parser;
+	import sandy.parser.ParserStack;
+	import sandy.parser.IParser;
+	import sandy.events.SandyEvent;
+	import sandy.primitive.MD2;
+	
 	import org.flashdevelop.utils.FlashConnect;
 	//}
 	
@@ -69,8 +59,11 @@
 		private function enterFrameHandler( event : Event ) : void {
 			var objectmesh:Array = g.children;
 			for (var meshno:int = 0; meshno < objectmesh.length; meshno++ ) {
+				if(objectmesh[meshno].name == 'md2'){
 				objectmesh[meshno].rotateY += 1;
 				objectmesh[meshno].rotateY += 1;
+				objectmesh[meshno].frame +=0.01;
+				}
 			}
 			scene.render();
 		}
@@ -89,6 +82,7 @@
 				//trace('---');
 				var tmpshape:Shape3D;
 				tmpshape = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				tmpshape.name = 'md2';
 				g.addChild(tmpshape);
 			}
 			
