@@ -33,3 +33,5 @@ It required server hosting program to run this game. That data will base on xml 
 //===============================================================================================//
 // THIS "AS IS" PRODUCT AND CAN NOT BE SHARE UNLESS THERE IS THE LICENCES SAY SO!
 //===============================================================================================//
+
+This section is outdated. Check the htdocs

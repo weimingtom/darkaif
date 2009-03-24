@@ -1,0 +1,4 @@
+<?php
+  $MainContent .= '[Game News]';
+
+?>
