@@ -2,7 +2,7 @@
 #labels as3
 
 =Information:=
-   This depends on the methods.
+   This depends on the methods. This method help clean up some menu reuse code for sprite.
 
 {{{
 package  
@@ -33,4 +33,3 @@ package
 }
 
 }}}
-
