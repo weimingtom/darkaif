@@ -1,0 +1,36 @@
+#summary sprite remove child.
+#labels as3
+
+=Information:=
+   This depends on the methods.
+
+{{{
+package  
+{
+	import flash.display.Sprite;
+	
+	public class spritechild extends Sprite
+	{
+		public var bodypanel:Sprite = new Sprite();
+		
+		public function spritechild() 
+		{
+			var tmpsprite:Sprite = new Sprite();
+			bodypanel.addChild(tmpsprite);
+			
+			trace(bodypanel.numChildren); //show number of sprite added
+			
+			for (var i:int = 0; i < bodypanel.numChildren; i++) {
+				bodypanel.removeChildAt(i);
+			}
+			
+			trace(bodypanel.numChildren); //show number of sprite when remove
+			
+		}
+		
+	}
+	
+}
+
+}}}
+
