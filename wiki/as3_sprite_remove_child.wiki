@@ -18,13 +18,13 @@ package
 			var tmpsprite:Sprite = new Sprite();
 			bodypanel.addChild(tmpsprite);
 			
-			trace(bodypanel.numChildren); //show number of sprite added
+			trace(bodypanel.numChildren); //show number of sprite added //1
 			
 			for (var i:int = 0; i < bodypanel.numChildren; i++) {
 				bodypanel.removeChildAt(i);
 			}
 			
-			trace(bodypanel.numChildren); //show number of sprite when remove
+			trace(bodypanel.numChildren); //show number of sprite when remove //0
 			
 		}
 		
