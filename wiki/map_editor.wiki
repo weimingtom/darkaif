@@ -10,6 +10,8 @@ Basic function:
    * New Map
   * Load
    * Map List
+ * Load Object
+  * Get Site Object File.
  * Object
   * Mesh (Store Data)
    * Add Scene
