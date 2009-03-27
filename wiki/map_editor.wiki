@@ -1,0 +1,16 @@
+#summary basic build and work in progress.
+#labels as3,sandy,editor
+
+Basic function:
+ * Map
+  * New
+  * Save
+  * Load
+ * Object
+  * Mesh
+   * Add Scene
+   * Collisions
+   * Textures
+ * Model
+  * Move
+  * Delete
