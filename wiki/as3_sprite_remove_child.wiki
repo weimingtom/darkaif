@@ -19,10 +19,11 @@ package
 			bodypanel.addChild(tmpsprite);
 			
 			trace(bodypanel.numChildren); //show number of sprite added //1
-			
-			for (var i:int = 0; i < bodypanel.numChildren; i++) {
+			while(bodypanel.numChildren){//make sure it all clean
+			   for (var i:int = 0; i < bodypanel.numChildren; i++) {
 				bodypanel.removeChildAt(i);
-			}
+			   }
+                        }
 			
 			trace(bodypanel.numChildren); //show number of sprite when remove //0
 			
