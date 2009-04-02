@@ -29,7 +29,10 @@ if(($_GET == null)&&($_POST == null)){
 	$xml_output = '<data>';
 	while ($row = mysql_fetch_array($result)) { //
 	//echo 
-	$xml_output .= '<mapname>' . $row['name'] .'</mapname>';
+	$xml_output .= '<map>';
+	$xml_output .= '<name>' . $row['name'] .'</name>';
+	$xml_output .= '<id>' . $row['idhash'] .'</id>';
+	$xml_output .= '</map>';
 	
 	}
 	$xml_output .= '</data>';
@@ -46,10 +49,10 @@ else if ($action == 'check') {
 	if ($num_rows) {
 		//echo 'FOUND!';
 		//$xml_output .= 1;
-		$xml_output .= '<message>1</message>';
+		$xml_output .= '<message>existmap</message>';
 	}else {
 		//echo 'Do Not Exist!';
-		$xml_output .= '<message>0</message>';
+		$xml_output .= '<message>newmap</message>';
 	}
 	$xml_output .= '</data>';
 	echo $xml_output;
@@ -74,7 +77,8 @@ else if ($_POST['action'] == 'save') {
 	echo $xml_output;
 	//echo $_POST['mapdata'];
 	//echo $dataxmlmap;
-}else if ($_POST['action'] == 'update') {
+}
+else if ($_POST['action'] == 'update') {
 	$mapname =  $_POST['mapname'];
 	$dataxmlmap = $_POST['mapdata'];
 	$db_table = $prefix."mapdata";
@@ -84,10 +88,21 @@ else if ($_POST['action'] == 'save') {
 	$xml_output = '<data>';
 	$xml_output .= 'done';
 	$xml_output .= '</data>';
-	echo $xml_output;
-	
+	echo $xml_output;	
 }
-
-
+else if ($_POST['action'] == 'load') {
+	$mapid = $_POST['mapid'];
+	$db_table = $prefix."mapdata";
+	$query = "SELECT * FROM $db_table WHERE authorname='$membername' AND idhash='{$mapid}'";
+	$result = mysql_query($query) or die(mysql_error());
+	#$row = mysql_fetch_array($result);
+	#$bodycontent .= '[-]';
+	header ("content-type: text/xml");
+	while ($row = mysql_fetch_array($result)) {
+	$xml_output .= $row['mapdata'];
+	
+	}
+	echo $xml_output;
+}
 //echo '[MAP]';
 ?>
