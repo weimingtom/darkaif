@@ -45,7 +45,8 @@
 	public class Papervision3DXMLObject extends BasicView {
 		
 		//{ //variables
-		public var urlobjectfile:String = 'objectfile.xml'; //file id
+		//public var urlobjectfile:String = 'objectfile.xml'; //file id
+		public var urlobjectfile:String = 'http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/objectfile.xml'; //file id
 		public var objectfilexml:XML = new XML();
 		
 		public var datafile_dropbox:DropBox = new DropBox();
@@ -175,7 +176,7 @@
 		//list object file from the scene
 		public function listobjects():void {
 			var objectmesh:Array = scene.objects;
-			//trace('[]-[]'+objectmove.length);
+			//trace('[]-[]'+objectmesh.length);
 			for (var c:int = 0; c < objectmesh.length; c++) {
 				trace('[object]:Count:'+c +":"+ objectmesh[c].name);
 			}

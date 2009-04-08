@@ -25,8 +25,14 @@
 	//}
 	
 	/*
-	* Works
-	* load file:
+	 * Information: This will check if there any object in the scene and remove it for next file to load. 
+	 * This will load the object mesh base on engine support format. 
+	 * This will load the mesh that all to test out if the code is working. 
+	 * Note if you can't see any thing use the scale. Do not use word will give error.
+	 * -This is url base load using xml format to load.
+	 * 
+	 * Works
+	 * load file:
 	 * -ase
 	 * -md2
 	 * -dae
@@ -55,38 +61,38 @@
 		
 		public function Papervision3DUrlObject() {
 			
-			//var material:ColorMaterial = new ColorMaterial(0xcc0000);
-			//material.doubleSided = true;
-			//triangleMesh3d.load("data/models/simple_monster_low2.md2",material);
-			//triangleMesh3d.scale = 10;
-			//scene.addChild(triangleMesh3d);
-			
+			//button
 			buttonloadfile.x = 128;
 			buttonloadfile.addEventListener(MouseEvent.CLICK, displaydatafile);
 			addChild(buttonloadfile);
-			loadobjectfilexml();
+			
 			buttonscale.x = 300;
+			buttonscale.addEventListener(MouseEvent.CLICK, scalemesh);
 			addChild(buttonscale);
+			
+			//input
 			textscale.x = 200;
 			textscale.border = true;
 			textscale.type = TextFieldType.INPUT; 
 			textscale.height = 20;
-			buttonscale.addEventListener(MouseEvent.CLICK, scalemesh);
 			addChild(textscale);
 			
+			//build list object
+			loadobjectfilexml();
 			startRendering();
 		}
 		
 		//scale mesh
 		public function scalemesh(event:Event):void {
 			//textscale.text;
-			var objectmove:Array = scene.objects;
-			for (var c:int = 0; c < objectmove.length; c++) {
-				objectmove[c].scale = textscale.text;
+			//This will scale all the mesh
+			var objectmesh:Array = scene.objects;
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				objectmesh[c].scale = textscale.text;
 			}
 		}
 		
-		//load object file
+		//load object file this for xmllist
 		public function loadobjectfilexml():void {
 			var request:URLRequest = new URLRequest(urlobjectlist);
 			var load:URLLoader = new URLLoader();
@@ -105,11 +111,6 @@
 				//trace(objectfilexml.file[fileno].idobject);
 				var namestring:String = objectfilexml.file[fileno].idobject;
 				datafile_dropbox.boxlist.push(namestring);
-				var objectfilebutton:Button = new Button(namestring);
-				objectfilebutton.name = namestring;
-				//trace("--]"+objectfilebutton.name);
-				objectfilebutton.y = 14 * fileno;
-				objectfilebutton.addEventListener(MouseEvent.CLICK, displaydatafile);
 			}
 			addChild(datafile_dropbox);
 		}
@@ -125,63 +126,40 @@
 					removeobjects();//clear the scene
 					//trace('found!');
 					//trace('type:' + objectfilexml.file[fileno].type);
-					var material:ColorMaterial = new ColorMaterial(0xcc0000);
+					var material:ColorMaterial = new ColorMaterial(0xcc0FFF);
 					
 					if (objectfilexml.file[fileno].type == '.md2') {
 						trace('file type match. md2 file');
-						//objfile = Md2.load(String(urlobjectfile + filename), { material:material, name:objectname } );
-						//view.scene.addChild(objfile);
 						var triangleMesh3d_md2:MD2 = new MD2(true);
-						//triangleMesh3d_md2.scale = 10;
-						//triangleMesh3d_md2.load("data/models/simple_monster_low2.md2", material);
 						triangleMesh3d_md2.load(String(urlobjectfile + filename), material);
 						scene.addChild(triangleMesh3d_md2);
-						
 					}
 					
 					if (objectfilexml.file[fileno].type == '.ase') {
 						trace('file type match. ase file');
-						//objfile = Ase.load(String(urlobjectfile + filename), { material:material, name:objectname } );
-						//view.scene.addChild(objfile);
 						var triangleMesh3d_ase:TriangleMesh3D;
-						//triangleMesh3d_ase = new Ase(null, "data/models/cubeobj.ase", 0.5);
 						triangleMesh3d_ase = new Ase(null, (urlobjectfile + filename), 1);
-						//triangleMesh3d_ase.scale
 						scene.addChild(triangleMesh3d_ase);
 					}
 					
 					if (objectfilexml.file[fileno].type == '.dae') {
 						trace('file type match. dae file');
-						//objfile = Collada.load(String(urlobjectfile + filename), { material:material, name:objectname } );
-						//view.scene.addChild(objfile);
-						//var triangleMesh3d:DAE = new DAE(false, "mesh", false);
 						var triangleMesh3d_dae:DAE = new DAE(false, "mesh", false);
 						triangleMesh3d_dae.load(urlobjectfile + filename);
-						//triangleMesh3d_dae.scale
-						//triangleMesh3d.scale = 100;
 						scene.addChild(triangleMesh3d_dae);
 					}
 					
 					if (objectfilexml.file[fileno].type == '.3ds') {
 						trace('file type match. 3ds file');
-						//objfile = Max3DS.load(String(urlobjectfile + filename), { material:material, name:objectname } );
-						//view.scene.addChild(objfile);
-						
 						var triangleMesh3d_3ds:Max3DS = new Max3DS();
-						//triangleMesh3d_3ds.scale
-						//triangleMesh3d.load("data/models/cubestar.3ds");
 						triangleMesh3d_3ds.load(urlobjectfile + filename);
 						scene.addChild(triangleMesh3d_3ds);
 					}
 					
 					if (objectfilexml.file[fileno].type == '.kmz') {
 						trace('file type match. kmz file');
-						//objfile = Max3DS.load(String(urlobjectfile + filename), { material:material, name:objectname } );
-						//view.scene.addChild(objfile);
-						
 						var triangleMesh3d_kmz:KMZ = new KMZ();
-						//triangleMesh3d_3ds.scale
-						//triangleMesh3d.load("data/models/cubestar.3ds");
+						//triangleMesh3d_kmz.rotationX
 						triangleMesh3d_kmz.load(urlobjectfile + filename);
 						scene.addChild(triangleMesh3d_kmz);
 					}
@@ -193,37 +171,31 @@
 		public function removeobjects():void {
 			var objectmesh:Array = scene.objects;
 			//trace('[]-[]'+objectmove.length);
-			
 			for (var c:int = 0; c < objectmesh.length; c++) {
 				//trace('[object]:Count:' + c +":" + objectmesh[c].name);
 				scene.removeChildByName(objectmesh[c].name);
-				//if (objectmove[c].name != '1') {//default there should be a camera (It should be number one (1) and not a letter l ='L')
-					//trace('object remove-:' + objectmove[c].name);
-					//g.removeChildByName(objectmove[c].name);
-				///}
 			}
-			
 		}
 		
 		//list object file from the scene
 		public function listobjects():void {
-			
-			var objectmove:Array = scene.objects;
+			var objectmesh:Array = scene.objects;
 			//trace('[]-[]'+objectmove.length);
-			
-			for (var c:int = 0; c < objectmove.length; c++) {
-				//trace('[object]:Count:'+c +":"+ objectmove[c].name);
-				//if (objectmove[c].name != '1') {//default there should be a camera (It should be number one (1) and not a letter l ='L')
-					//trace('object remove-:' + objectmove[c].name);
-					//g.removeChildByName(objectmove[c].name);
-				///}
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				trace('[object]:Count:'+c +":"+ objectmesh[c].name);
 			}
-			
 		}
 		
 		//render
 		override protected function onRenderTick(event:Event = null):void {
+			var objectmesh:Array = scene.objects;
+			//trace('[]-[]'+objectmove.length);
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				objectmesh[c].rotationY += 1;
+				//trace('[object]:Count:'+c +":"+ objectmesh[c].rotationX);
+			}
 			
+			//triangleMesh3d_kmz.rotationX
 			//triangleMesh3d.rotationY = -viewport.containerSprite.mouseX / 2;
 			super.onRenderTick(event);
 		}
