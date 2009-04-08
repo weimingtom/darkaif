@@ -1,5 +1,6 @@
 ﻿package darknet.core.display 
 {
+	//{
 	import darknet.core.event.NumericUpDownEvent;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -8,11 +9,13 @@
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFieldType;
+	//}
 	
 	/**
 	 * ...
 	 * @author Darknet
 	 */
+	
 	public class NumericUpDown extends Sprite {
 		
 		public var pheight:Number = 14;
@@ -146,7 +149,7 @@
 			textnumber.text = String(p_num);
 			var format:TextFormat = defaulttextformat();
 			textnumber.setTextFormat(format);
-			dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.CHANGE,currentnumber));
+			dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.VALUE,currentnumber));
 		}
 		
 		public function get valuenumber():Number {
@@ -167,7 +170,7 @@
 			textnumber.text = String(currentnumber);
 			var format:TextFormat = defaulttextformat();
 			textnumber.setTextFormat(format);
-			dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.CHANGE,currentnumber));
+			dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.VALUE,currentnumber));
 		}
 		public function minusnumber():void {
 			//trace('minusnumber');
@@ -181,21 +184,22 @@
 			textnumber.text = String(currentnumber);
 			var format:TextFormat = defaulttextformat();
 			textnumber.setTextFormat(format);
-			dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.CHANGE,currentnumber));
+			dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.VALUE,currentnumber));
 		}
 		public function enterkey(event:KeyboardEvent):void {
 			if (event.keyCode == 13) {
+				trace('update enter...');
 				var num:Number = Number(textnumber.text);
 				if (num) {
 					//trace('good');
 					currentnumber = num;
 				}else {
 					//trace('bad');
-					currentnumber++;
+					currentnumber;
 				}
 				//trace('enter');
 				textnumber.text = String(currentnumber);
-				dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.CHANGE,currentnumber));
+				dispatchEvent(new NumericUpDownEvent(NumericUpDownEvent.ENTER,Number(currentnumber)));
 			}
 		}
 		

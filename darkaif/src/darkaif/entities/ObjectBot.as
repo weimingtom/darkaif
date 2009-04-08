@@ -14,8 +14,7 @@
 	 * Copy Rights (c) http://darkaif.googlecode.com
 	 */
 	
-	public class ObjectBot extends SandyGameObject
-	{
+	public class ObjectBot extends EntitlyCharacter{
 		//{ variables
 		public var bpathcollision:Boolean = false;
 		public var model:Shape3D = null;
@@ -30,6 +29,11 @@
 		public var pathid:Array = new Array();
 		public var nodepointid:int = 0;
 		public var bpathupdate:Boolean = false;
+		
+		public var openpath:Array = new Array();
+		public var closepath:Array = new Array();
+		public var blockpath:Array = new Array();
+		
 		
 		//public var bmovex:Boolean = false;
 		
@@ -66,7 +70,7 @@
 		
 		public override function update():void {
 			//trace(nodepoint.startx+"[:]"+nodepoint.endx)
-			if ((nodepoint.startx != nodepoint.endx ) || (nodepoint.starty != nodepoint.endy )||(nodepoint.startz != nodepoint.endz )) {
+			if ((nodepoint.start.x != nodepoint.end.x ) || (nodepoint.start.y != nodepoint.end.y )||(nodepoint.start.z != nodepoint.end.z )) {
 				nodepoint.update();
 				if (nodepoint.bpathbuildarray) {
 					path = nodepoint.pathbuild;
@@ -88,35 +92,6 @@
 			model.z = posz;
 			
 			movepath();
-			
-			
-			//trace(bpathcollision + "--");
-			/*
-			if (posx < Math.floor(targetposition.x)) {
-				posx ++;
-			}else if (posx > Math.floor(targetposition.x)) {
-				posx --;
-			}else {
-				
-			}
-			
-			if (posy < Math.floor(targetposition.y)) {
-				posy ++;
-			}else if (posy > targetposition.y) {
-				posy --;
-			}else {
-				//trace("hello y");
-			}
-			
-			if (posz < Math.floor(targetposition.z)) {
-				posz ++;
-			}else if (posz > Math.floor(targetposition.z)) {
-				posz --;
-			}else {
-				//trace("hello z");
-			}
-			*/
-			
 		}
 		
 		public function movepath():void {
@@ -125,7 +100,7 @@
 			//for (var pathidno:int = 0; pathidno < path.length ; pathidno++){
 			//	trace("id path:" + path[pathidno].id);
 			//	pathid.push(path[pathidno].id);
-			//}
+			///}
 			
 			//pathid.sort();
 			
@@ -166,7 +141,7 @@
 					
 					if ((posx == Math.floor(path[pathno].x)) && (posy == Math.floor(path[pathno].y)) && (posz == Math.floor(path[pathno].z))) {
 						//trace(path[pathno].x+":"+path[pathno].y+":"+path[pathno].z)
-						//trace("finish this node point and remove: "+ pathno);
+						trace("finish this node point and remove: "+ pathno);
 						path.splice(pathno, 1);
 					}
 				}

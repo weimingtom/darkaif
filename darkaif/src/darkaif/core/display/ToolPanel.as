@@ -139,7 +139,7 @@ package darkaif.core.display
 			
 			addEventListener(Event.ENTER_FRAME, drawtoolpanel);
 			
-			rect = new Rectangle(0,0,pwidth,pheight);
+			rect = new Rectangle(0, 0, pwidth, pheight);
 		}
 		
 		public function content(panel:Sprite):void {
@@ -304,6 +304,7 @@ package darkaif.core.display
 			scrollbar._pheight = pheight - (buttonheight * 2);
 			bottomrightsize.x = pwidth - bottomrightsize.width;
 			bottomrightsize.y = pheight -bottomrightsize.height;
+			drawtoolpanel();
 		}
 	}
 	

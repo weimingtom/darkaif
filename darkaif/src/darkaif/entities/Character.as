@@ -16,7 +16,7 @@
 	 * Information: rpg character stats base.
 	 * TODO:build a converter from xml
 	 */
-	public class Character extends SandyGameObject {
+	public class Character extends EntitlyCharacter {
 		
 		//{ variables
 		
@@ -29,7 +29,6 @@
 		public var bactionstart:Boolean = false; //start action doing something (attack or skill)
 		public var bactionend:Boolean = false;  //end action when finish(attack or skill)
 		public var btriggeraction:Boolean = false; //if there is other actions else default 'stand'
-		
 		public var movespeed:Number = 5;
 		
 		//} end variables
@@ -45,41 +44,18 @@
 			//trace("x:"+bcollisionx+" z:"+bcollisionz);
 			//trace("update");
 			//trace("action frame:"+actionframe)
-			if ((bkeyjump == true)&&(bjump == false)&&(bfall == false)) {
-				bjump = true;
-			}
-			
-			
-			if (bjump) {
-				//trace("jump")
-				jumptime++;
-				diry = 5;
-				if (jumptime > jumptimemax) {
-					jumptime = 0;
-					bjump = false;
-					bfall = true;
-				}
-			}
-			
-			if (bfall) {
-				//trace("fall");
-				falltime++;
-				diry = 0;
-				if(falltime > falltimemax){
-					falltime = 0;
-					bfall = false;
-				}
-			}
 			
 			if (healthpoint < 0) {
 				healthpoint = 0;
 			}
 			
+			
 			objectpositionupdate();
 			
 			if ((battack == true) && (btriggeraction == false)){
 				btriggeraction = true;// this will turn the animation action set to it.
-				//battack = false;//bstartdamage = true;
+				//battack = false;
+				//bstartdamage = true;
 				battackstart = true;
 			}
 			
@@ -99,7 +75,6 @@
 		}
 		
 		//update position and collision boolean
-		
 		public function objectpositionupdate():void {
 			olddirx = posx;
 			olddiry = posy;
@@ -120,6 +95,7 @@
 				posz += dirz;
 				posz += gravityz;
 			}
+			
 			diffx = olddirx - posx;
 			diffy = olddiry - posy;
 			diffz = olddirz - posz;
@@ -281,7 +257,7 @@
 			//return false;
 		}
 		
-		//check collision
+		//check collision map zone portal
 		public function checkzonemap(box:MapZone):Boolean {
 			//trace('--');
 			var bcollision:Boolean = false;

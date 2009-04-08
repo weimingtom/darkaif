@@ -8,7 +8,7 @@
 	 * @author Darknet
 	 * Copy Rights (c) http://darkaif.googlecode.com
 	 */
-	public class Objectmesh extends SandyGameObject
+	public class Objectmesh extends EntitlyCharacter
 	{
 		public var model:Shape3D = null;
 		public var meshname:String = "";

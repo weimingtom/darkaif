@@ -228,5 +228,21 @@ package darknet.core.display {
 			//trace("name:"+fieldname.text);
 			return String(id);
 		}
+		
+		public function clearlist():void {
+			boxlist = new Array();
+		}
+		
+		public function addlist(data:*):void {
+			boxlist.push(data);
+		}
+		
+		public function get _textname():String {
+			return String(fieldname.text);
+		}
+		
+		public function get _idname():String {
+			return String(id);
+		}
 	}
 }

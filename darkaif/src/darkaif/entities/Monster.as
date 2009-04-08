@@ -20,7 +20,7 @@
 	 * collision
 	 * attack
 	 */ 
-	public class Monster extends SandyGameObject
+	public class Monster extends EntitlyCharacter
 	{
 		//{ variable
 		public var modelid:String = "";
@@ -93,16 +93,17 @@
 		//update object
 		public override function update():void {
 			super.update();
-			//trace("update");
-			//trace("x:"+targetx+" y:"+targety+" z:"+targetz);
-			// x,z
-			targetdistance();
-			//posx++;
-			healthbarimage.y = posy + 64;
-			healthbarimage.x = posx;
-			healthbarimage.z = posz;
 			
-			healthprogressbar.precent = ((healthpoint/healthmaxpoint)*100)
+			targetdistance();
+			updatehealthbar();
+			
+			//set gravity
+			if (!bgroundcollision) {
+				posy += gravityy;
+			}else {
+				posy -= gravityy;
+			}
+			
 			//if monster health is gone, do not render
 			if (healthpoint <= 0) {
 				balive = false;
@@ -112,23 +113,9 @@
 			//if mosnter is alive start thinking
 			if (balive == true) {
 				healthbarimage.visible = true;
-				//trace('update');
-				//trace('bcollision');
-				//trace(String(bcollisiony));
-				if (!bgroundcollision) {
-					
-					//posy += diry;
-					posy += gravityy;
-				//trace("gravityy");
-				}else {
-					//trace('collision');
-					//trace('collision');
-					posy -= gravityy;
-					//posy -= diry;
-				}
-				//trace("p x: " + posx + " z:" + posz);
-				//trace("t x: "+ targetx+" z:"+targetz);
+				
 				//monster detect player ranage
+				//walk or stand
 				if ( targetrange <  detectrange){
 					if ((posx < targetx)) {
 						dirx = movespeed;
@@ -150,17 +137,13 @@
 						dirz = 0;
 					}
 					
+					//this automate to look for player position
 					monsterdirectionrotation();
 					
 					if (!bcollisionx) {
 						posx += dirx;
 					}else {
 						//posx -= dirx;
-					}
-					if(!bcollisiony){
-						posy += diry;
-					}else {
-						//posy -= diry;
 					}
 					if(!bcollisionz){
 						posz += dirz;
@@ -186,7 +169,6 @@
 					actionframe = "attack";
 				}else {
 					battack = false;
-					//actionframe = "walk";
 				}
 				
 				//if monster collision player attack
@@ -199,8 +181,6 @@
 				//check if monster is attacking with animation not over lapping
 				if ((battack == true) && (btriggeraction == false)) {
 					btriggeraction = true;
-					//bactionstart = true;
-					//trace("attack");
 				}
 				
 				//trace("dir x:" + olddirx +" y:" + olddiry + " z:" + olddirz);
@@ -209,6 +189,7 @@
 			//if monster is dead start respawn timer by frame speed
 			if (balive == false) {
 				spawntime++;
+				healthbarimage.visible = false;
 				if (spawntime > spawntimemax) {
 					spawntime = 0;
 					healthpoint = healthmaxpoint;
@@ -216,17 +197,28 @@
 					posy = spawnposy;
 					posz = spawnposz;
 					balive = true;
-				}
-				healthbarimage.visible = false;
+				}				
 			}
-				
-				for (var animno:int = 0; animno < animset.length; animno++ ) {	
+			
+			updateanimation();
+		}
+		
+		
+		//update health bar
+		public function updatehealthbar():void {
+			healthbarimage.y = posy + 64;
+			healthbarimage.x = posx;
+			healthbarimage.z = posz;
+			healthprogressbar.precent = ((healthpoint / healthmaxpoint) * 100);
+		}
+		
+		//update Animation
+		public function updateanimation():void {
+			for (var animno:int = 0; animno < animset.length; animno++ ) {	
 					//animset[animno].animmesh.visible = false;
-					
 					if (animset[animno].actionname == action) {
 						//make monster show render
 						animset[animno].animmesh.visible = true;
-						//trace("hello animation monster");
 						//make animation run
 						animset[animno].animmesh.x += 0.001;
 						
@@ -334,45 +326,6 @@
 			}
 		}
 		
-		/*
-		//object mesh collision
-		public function objectbox(objectmesh:Objectmesh, mx:Number, my:Number, mz:Number):Boolean {
-			var bcollision:Boolean = false;
-			//trace("test class object");
-			for (var boxno:int = 0; boxno < boxcollision.length; boxno++ ) {
-				var minx:Number = boxcollision[boxno].minx + posx + mx;
-				var miny:Number = boxcollision[boxno].miny + posy + my;
-				var minz:Number = boxcollision[boxno].minz + posz + mz;
-				
-				var maxx:Number = boxcollision[boxno].maxx + posx + mx;
-				var maxy:Number = boxcollision[boxno].maxy + posy + my;
-				var maxz:Number = boxcollision[boxno].maxz + posz + mz;
-				
-				for (var objectboxno:Number = 0; objectboxno < objectmesh.boxcollision.length; objectboxno++) {
-					var minx2:Number = objectmesh.boxcollision[objectboxno].minx + objectmesh.model.x;
-					var miny2:Number = objectmesh.boxcollision[objectboxno].miny + objectmesh.model.y;
-					var minz2:Number = objectmesh.boxcollision[objectboxno].minz + objectmesh.model.z;
-					
-					var maxx2:Number = objectmesh.boxcollision[objectboxno].maxx + objectmesh.model.x;
-					var maxy2:Number = objectmesh.boxcollision[objectboxno].maxy + objectmesh.model.y;
-					var maxz2:Number = objectmesh.boxcollision[objectboxno].maxz + objectmesh.model.z;
-					if ((maxz >= minz2) &&(minz <= maxz2) &&
-						(maxy >= miny2) &&(miny <= maxy2) &&
-						(maxx >= minx2) && (minx <= maxx2)){
-						//trace("mesh collision");	
-						bcollision = true;
-						break;
-					}
-				}
-			}
-			if (bcollision) {
-				return true;
-			}else {
-				return false;
-			}
-			//return false;
-		}
-		*/
 		//player collision
 		public function playerbox(objectmesh:Character,mx:Number,my:Number,mz:Number):Boolean {
 			var bcollision:Boolean = false;
