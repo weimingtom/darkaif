@@ -1,7 +1,7 @@
 /**
 * @mxmlc -source-path=C:\\Program Files\\FlashDevelop\\FirstRun\\Library\\AS3\\classes\\
 */
-package darkaif.display {
+package darkaif.frame {
 	/**
 	* ...
 	* @author Darknet
@@ -23,10 +23,18 @@ package darkaif.display {
 	import flash.events.TimerEvent;
 	import org.flashdevelop.utils.FlashConnect;
 
-	public class flvvideo {
+	public class flvvideo extends Sprite{
+		public var Flv_Url:String = "http://purecodeas3.googlecode.com/svn/trunk/videos/flashtest.flv";
+		//public var Flv_Url:String = "http://localhost/flashtest.flv";
+		public var Flv_TotalTime:Number = 0;
+		public var Flv_DefaultSeek:Number = 5;
+		public var Flv_LoadPercent:Number = 0;
+		public var Flv_toggle:Boolean = false;
+		public var t:Timer = new Timer(100);
+		public var LoadPercent:Number = 0;
 		
 		public function flvvideo() {
-			
+			SimpleFlv();
 		}
 		
 		public function SimpleFlv():void{
@@ -93,14 +101,14 @@ package darkaif.display {
 			//}TEXT
 			
 			//{LABEL
-			var Button_Pause:RectButton = new RectButton("||");
+			var Button_Pause:Button = new Button("||");
 			Button_Pause.y = myVideo.height + 2*22;
 			Button_Pause.x = 1*16;
 			Button_Pause.height = 16;
 			Button_Pause.width = 16;
 			addChild(Button_Pause);
 			
-			var Button_Play:RectButton = new RectButton(">");
+			var Button_Play:Button = new Button(">");
 			Button_Play.y = myVideo.height + 2*22;
 			Button_Play.height = 16;
 			Button_Play.width = 16;

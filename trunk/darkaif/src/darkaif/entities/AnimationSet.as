@@ -9,6 +9,7 @@
 	 */
 	public class AnimationSet
 	{
+		public var idhash:String = '';
 		public var actionname:String = "";
 		public var animmesh:MD2 = null;
 		public var meshid:String = '';

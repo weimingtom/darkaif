@@ -9,18 +9,22 @@
 	
 	public class NumericUpDownEvent extends Event
 	{
-		public static const CHANGE:String = "change";
+		public static const VALUE:String = "value";
+		public static const ENTER:String = "enter";
 		
 		public var numberchange:Number;
+		public var enternumberchange:Number;
 		
 		public function get number():Number {
-			return numberchange
+			return numberchange;
 		}
 		
 		public function NumericUpDownEvent(type:String, number:Number )
 		{
 			super(type);
+			//trace("event:" + type);
 			numberchange = number;
+			
 		}
 		
 	}

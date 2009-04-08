@@ -55,8 +55,8 @@
         // ends the sliding session
         protected function stopSliding( e:MouseEvent ):void{
             marker.stopDrag();
-            stage.removeEventListener( MouseEvent.MOUSE_MOVE, updatePercent );
-            stage.removeEventListener( MouseEvent.MOUSE_UP, stopSliding );
+            removeEventListener( MouseEvent.MOUSE_MOVE, updatePercent );
+            removeEventListener( MouseEvent.MOUSE_UP, stopSliding );
         }
 		
         // updates the data to reflect the visuals
@@ -70,8 +70,8 @@
         protected function markerPress( e:MouseEvent ):void {
 			//trace("markter");
             marker.startDrag( false, new Rectangle( 0, 0, 0, track.height - marker.height ) );
-            stage.addEventListener( MouseEvent.MOUSE_MOVE, updatePercent );
-            stage.addEventListener( MouseEvent.MOUSE_UP, stopSliding );
+            addEventListener( MouseEvent.MOUSE_MOVE, updatePercent );
+            addEventListener( MouseEvent.MOUSE_UP, stopSliding );
         }
        
         /**

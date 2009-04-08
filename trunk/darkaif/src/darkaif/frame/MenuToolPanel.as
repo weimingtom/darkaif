@@ -180,31 +180,36 @@ package darkaif.frame
 			content_panel.addChild(contentholder);
 		}
 		
-		public function drawmenupanel():void{
+		public function drawmenupanel():void {
+			//container_panel = new Sprite();
 			container_panel.graphics.clear();
 			container_panel.graphics.beginFill(panelfgcolor);
 			container_panel.graphics.lineStyle(1);
 			container_panel.graphics.beginFill(panelbgcolor);
 			container_panel.graphics.drawRect(0, 0, pwidth, this.pheight);
 			
+			//menu_panel = new Sprite();
 			menu_panel.graphics.clear();
 			menu_panel.graphics.beginFill(panelfgcolor);
 			menu_panel.graphics.lineStyle(1);
 			menu_panel.graphics.beginFill(menuout);
 			menu_panel.graphics.drawRect(0, 0, pwidth - 32, 13);
 			
+			//menu_automize_panel = new Sprite();
 			menu_automize_panel.graphics.clear();
 			menu_automize_panel.graphics.beginFill(panelfgcolor);
 			menu_automize_panel.graphics.lineStyle(1);
 			menu_automize_panel.graphics.beginFill(buttontoggleout);
 			menu_automize_panel.graphics.drawRect(pwidth - 32, 0, 32, 13);
 			
+			//content_panel = new Sprite();
 			content_panel.graphics.clear();
 			content_panel.graphics.beginFill(0xEEEEEE);
 			content_panel.graphics.beginFill(panelfgcolor);
 			content_panel.graphics.lineStyle(1);
 			content_panel.graphics.drawRect(0, 13, pwidth, pheight - 13*2);//main body
 			
+			//status_panel = new Sprite();
 			status_panel.graphics.clear();
 			status_panel.graphics.beginFill(panelfgcolor);
 			status_panel.graphics.lineStyle(1);

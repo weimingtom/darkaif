@@ -13,6 +13,7 @@
 	
 	public class SandyGameObject extends GameObject
 	{
+		
 		//{ variables
 		public var mesh:Shape3D = null;
 		public var animset:Array = new Array();
@@ -39,7 +40,7 @@
 					bstartdamage = true;
 					battackend = true;
 					battackstart = false;
-					//trace("attack");
+					//trace("player attack...");
 				}
 			}
 			
