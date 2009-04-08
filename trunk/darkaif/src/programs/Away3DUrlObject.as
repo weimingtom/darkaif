@@ -28,7 +28,11 @@
 	* @author @author Darknet
 	* Copy Rights (c) http://darkaif.googlecode.com
 	* 
-	* Information: Not stable and not enough information on build.
+	* Information: This will check if there any object in the scene and remove it for next file to load. 
+	* This will load the object mesh base on engine support format. 
+	* This will load the mesh that all to test out if the code is working. 
+	* Note if you can't see any thing use the scale. Do not use word will give error.
+	* -This is url base load using xml format to load.
 	* 
 	* -load mesh file:
 	* -ase
@@ -44,8 +48,6 @@
 		//{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
-		// create a sphere and put it on the 3D stage
-		public var sphere:Sphere = new Sphere();
 		public var objfile:Object3DLoader;
 		
 		public var siteaccess:String = 'http://localhost/darkaif/'; //need full address
@@ -61,24 +63,27 @@
 		//}
 		
 		public function Away3DUrlObject() {
+			//add scene
             addChild(view);
-			/*
-			var material:ColorMaterial = new ColorMaterial(0xFF0000);
-			objfile = Ase.load("data/models/cubeobj.ase", { material:material, name:'hello' });
-			objfile.name = 'cube';
-			objfile.addOnSuccess(objOnSuccess);
-			view.scene.addChild(objfile);
-			function objOnSuccess(e:Event):void {	
-                trace("SUCCESS");
-            }
-			*/
-            //view.scene.addChild(sphere);
-			
+			//button
 			buttonloadfile.x = 128;
 			buttonloadfile.addEventListener(MouseEvent.CLICK, displaydatafile);
 			addChild(buttonloadfile);
-			loadobjectfilexml();
 			
+			buttonscale.x = 300;
+			buttonscale.addEventListener(MouseEvent.CLICK, scalemesh);
+			addChild(buttonscale);
+			
+			//scale input
+			textscale.x = 200;
+			textscale.border = true;
+			textscale.type = TextFieldType.INPUT; 
+			textscale.height = 20;
+			addChild(textscale);
+			
+			//load object file xml
+			loadobjectfilexml();
+			//render event frame
 			this.addEventListener(Event.ENTER_FRAME, update);
 		}
 		
@@ -101,29 +106,15 @@
 				//trace(objectfilexml.file[fileno].idobject);
 				var namestring:String = objectfilexml.file[fileno].idobject;
 				datafile_dropbox.boxlist.push(namestring);
-				//var objectfilebutton:Button = new Button(namestring);
-				//var objectfilebutton:Button = new Button(namestring);
-				//objectfilebutton.name = namestring;
-				//trace("--]"+objectfilebutton.name);
-				//objectfilebutton.y = 14 * fileno;
-				//objectfilebutton.addEventListener(MouseEvent.CLICK, displaydatafile);
 			}
 			addChild(datafile_dropbox);
-			buttonscale.x = 300;
-			addChild(buttonscale);
-			textscale.x = 200;
-			textscale.border = true;
-			textscale.type = TextFieldType.INPUT; 
-			textscale.height = 20;
-			buttonscale.addEventListener(MouseEvent.CLICK, scalemesh);
-			addChild(textscale);
 		}
 		
 		public function scalemesh(event:Event):void {
 			//textscale.text;
-			var objectmove:Array = view.scene.children;
-			for (var c:int = 0; c < objectmove.length; c++) {
-				objectmove[c]..scale(textscale.text);
+			var objectmesh:Array = view.scene.children;
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				objectmesh[c].scale(textscale.text);
 			}
 		}
 		
@@ -170,43 +161,37 @@
 						objfile = Kmz.load(String(urlobjectfile + filename), { material:material, name:objectname } );
 						view.scene.addChild(objfile);
 					}
-					
 				}
 			}
 		}
 		
 		//remove object file from the scene
 		public function removeobjects():void {
-			var objectmove:Array = view.scene.children;
+			var objectmesh:Array = view.scene.children;
 			//trace('[]-[]'+objectmove.length);
-			for (var c:int = 0; c < objectmove.length; c++) {
+			for (var c:int = 0; c < objectmesh.length; c++) {
 				//trace('object:' + objectmove[c].name);
-				view.scene.removeChildByName(objectmove[c].name);
+				view.scene.removeChildByName(objectmesh[c].name);
 			}
 		}
 		
 		//list object file from the scene
 		public function listobjects():void {
-			
-			var objectmove:Array = view.scene.children;
-			trace('[]-[]'+objectmove.length);
-			
-			for (var c:int = 0; c < objectmove.length; c++) {
-				trace('object:' + objectmove[c].name);
-				//if (objectmove[c].name != '1') {//default there should be a camera (It should be number one (1) and not a letter l ='L')
-					//trace('object remove-:' + objectmove[c].name);
-					//g.removeChildByName(objectmove[c].name);
-				///}
+			var objectmesh:Array = view.scene.children;
+			//trace('[]-[]'+objectmesh.length);
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				trace('object:' + objectmesh[c].name);
 			}
 		}
 		
 		//object update render
 		public function update(e:Event):void {
-			if (objfile != null){ //check if object is null in case error
-				objfile.rotationY += 1;
-				objfile.rotationZ += 1;
+			var objectmesh:Array = view.scene.children;
+			for (var c:int = 0; c < objectmesh.length; c++) {
+				//trace('object:' + objectmesh[c].name);
+				objectmesh[c].rotationY += 1;
 			}
-			sphere.rotationY += 1;
+			
 			// render the view
 			view.render();
 		}

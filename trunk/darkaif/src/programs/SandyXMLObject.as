@@ -60,7 +60,8 @@ package programs
 		public var camera:Camera3D;
 		public var g:Group = new Group("myGroup");
 		
-		public var urlobjectfile:String = 'objectfile.xml'; //file id
+		//public var urlobjectfile:String = 'objectfile.xml'; //file id
+		public var urlobjectfile:String = 'http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/objectfile.xml'; //file id
 		public var objectfilexml:XML = new XML();
 		
 		public var datafile_dropbox:DropBox = new DropBox();

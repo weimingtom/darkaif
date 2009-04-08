@@ -52,7 +52,8 @@
 		public var view:View3D = new View3D( { x:200, y:200 } );
 		public var objfile:Object3DLoader;
 		
-		public var urlobjectfile:String = 'objectfile.xml'; //file id
+		//public var urlobjectfile:String = 'objectfile.xml'; //file id
+		public var urlobjectfile:String = 'http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/objectfile.xml'; //file id
 		public var objectfilexml:XML = new XML();
 		
 		public var datafile_dropbox:DropBox = new DropBox();
