@@ -13,7 +13,7 @@ This is just the basic texture loading.
 
 This is just the basic texture loading.
 
-There are different methods of loading files. That you have to sreach around for better object file management.
+There are different methods of loading files. That you have to search around for better object file management.
 
  * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/away3d/Away3DPlaneSprite.as
 
