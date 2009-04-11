@@ -1,8 +1,10 @@
 ﻿package  
 {
 	import away3d.containers.View3D;
+	import away3d.core.base.Object3D;
 	import away3d.loaders.Object3DLoader;
 	import away3d.materials.ColorMaterial;
+	import away3d.primitives.AbstractPrimitive;
     import away3d.primitives.Sphere;
     import flash.display.Sprite;
 	import flash.events.Event;
@@ -14,11 +16,12 @@
 	* Copy Rights (c) http://darkaif.googlecode.com
 	* 
 	* Working:away3d 2.3.0
+	* clone working. 50/50 work and not work
 	* 
 	*/
 	
 	[SWF(width="640", height="480", backgroundColor="#FFFFFF", frameRate="30")]
-	public class Away3DMeshASE extends Sprite
+	public class Away3DMeshASEClone extends Sprite
 	{
 		// create a viewport
 		public var view:View3D = new View3D( { x:200, y:200 } );
@@ -26,18 +29,21 @@
 		public var sphere:Sphere = new Sphere();
 		public var objfile:Object3DLoader;
 		
-		public function Away3DMeshASE() 
+		public function Away3DMeshASEClone() 
 		{
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
-			objfile = Ase.load("data/models/cubeobj.ase", { material:material } );
-			view.scene.addChild(objfile);
+			//objfile = Ase.load("data/models/bbasic_entrance01.ase", { material:material, autoLoadTextures:false  } );//not working
+			objfile = Ase.load("data/models/bbasic_entrance01.ase", { material:material} );
 			objfile.addOnSuccess(objOnSuccess);
+			view.scene.addChild(objfile);
 			
 			function objOnSuccess(e:Event):void {
                 trace("SUCCESS");
-				objfile.scale(10);
-				
+				var objectmesh:Object3D = objfile.handle.clone() as Object3D;
+				objectmesh.x = 300;
+				//objectmesh.scale(10);
+				view.scene.addChild(objectmesh);
             }
 			
             //view.scene.addChild(sphere);
@@ -51,7 +57,7 @@
 				//trace('object:' + objectmesh[c].name);
 				objectmesh[c].rotationY += 1;
 				objectmesh[c].rotationZ += 1;
-				//objectmesh[c].scale(10);
+				objectmesh[c].scale(0.1);
 			}
 			// render the view
 			view.render();
