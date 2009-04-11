@@ -1,6 +1,5 @@
 ﻿package
 {
-	import darkaif.core.display.Button;
 	import flash.events.Event;
 	import org.papervision3d.objects.parsers.Ase;
 	import org.papervision3d.core.geom.TriangleMesh3D;
