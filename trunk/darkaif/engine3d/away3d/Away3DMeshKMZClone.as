@@ -4,6 +4,7 @@
 	//{
 	import away3d.containers.View3D;
 	import away3d.core.base.Object3D;
+	import away3d.events.LoaderEvent;
 	import away3d.loaders.Kmz;
 	import away3d.loaders.Object3DLoader;
 	import away3d.materials.ColorMaterial;
@@ -19,7 +20,7 @@
 	 * Copy Rights (c) http://darkaif.googlecode.com
 	 * 
 	 * Working:away3d 2.3.0
-	 * not working clone
+	 * working clone. You need the LoaderEvent to able to get the object loaded correctly
 	 * 
 	 */
 	
@@ -38,7 +39,8 @@
 			objfile = Kmz.load("data/models/test.kmz", { material:material, autoLoadTextures:false } );
 			//objfile = Kmz.load("data/models/test.kmz", { material:material } );
 			objfile.scale(10);
-			objfile.addOnSuccess(objOnSuccess);
+			//objfile.addOnSuccess(objOnSuccess);
+			objfile.addEventListener(LoaderEvent.LOAD_SUCCESS, objOnSuccess);
 			view.scene.addChild(objfile);
 			
 			function objOnSuccess(e:Event):void {

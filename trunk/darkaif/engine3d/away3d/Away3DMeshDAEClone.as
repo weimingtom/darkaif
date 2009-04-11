@@ -2,6 +2,7 @@
 {
 	import away3d.containers.View3D;
 	import away3d.core.base.Object3D;
+	import away3d.events.LoaderEvent;
 	import away3d.loaders.Object3DLoader;
 	import away3d.materials.ColorMaterial;
     import away3d.primitives.Sphere;
@@ -15,7 +16,7 @@
 	* Copy Rights (c) http://darkaif.googlecode.com
 	* 
 	* Working:away3d 2.3.0
-	* not working clone
+	* working clone. You need the LoaderEvent to able to get the object loaded correctly
 	* 
 	 */
 	[SWF(width="640", height="480", backgroundColor="#FFFFFF", frameRate="30")]
@@ -31,7 +32,8 @@
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
 			objfile = Collada.load("data/models/cubestar.dae", { material:material,autoLoadTextures:false } );
-			objfile.addOnSuccess(objOnSuccess);
+			//objfile.addOnSuccess(objOnSuccess);
+			objfile.addEventListener(LoaderEvent.LOAD_SUCCESS, objOnSuccess);
 			view.scene.addChild(objfile);
 			
 			function objOnSuccess(e:Event):void {
@@ -52,7 +54,7 @@
 				//trace('object:' + objectmesh[c].name);
 				objectmesh[c].rotationY += 1;
 				objectmesh[c].rotationZ += 1;
-				//objectmesh[c].scale(10);
+				objectmesh[c].scale(0.5);
 			}
 			view.scene.updateTime();
 			// render the view
