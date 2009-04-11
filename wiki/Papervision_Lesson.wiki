@@ -4,3 +4,4 @@
 = Introduction =
 
  * [Papervision3D_Loading_Mesh_Files]
+ * [Papervision3D_Materiel_Texture]
