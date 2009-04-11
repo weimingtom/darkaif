@@ -2,6 +2,7 @@
 {
 	import away3d.containers.View3D;
 	import away3d.core.base.Object3D;
+	import away3d.events.LoaderEvent;
 	import away3d.loaders.Object3DLoader;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.AbstractPrimitive;
@@ -16,7 +17,7 @@
 	* Copy Rights (c) http://darkaif.googlecode.com
 	* 
 	* Working:away3d 2.3.0
-	* clone working. 50/50 work and not work
+	* clone working. You need the LoaderEvent to able to get the object loaded correctly
 	* 
 	*/
 	
@@ -33,12 +34,12 @@
 		{
             addChild(view);
 			var material:ColorMaterial = new ColorMaterial(0xFF0000);
-			//objfile = Ase.load("data/models/bbasic_entrance01.ase", { material:material, autoLoadTextures:false  } );//not working
-			objfile = Ase.load("data/models/bbasic_entrance01.ase", { material:material} );
-			objfile.addOnSuccess(objOnSuccess);
+			objfile = Ase.load("data/models/bbasic_entrance01.ase", { material:material, autoLoadTextures:false  } );
+			//objfile = Ase.load("data/models/bbasic_entrance01.ase", { material:material} );
+			objfile.addEventListener(LoaderEvent.LOAD_SUCCESS, objOnSuccess);
 			view.scene.addChild(objfile);
 			
-			function objOnSuccess(e:Event):void {
+			function objOnSuccess(e:LoaderEvent):void {
                 trace("SUCCESS");
 				var objectmesh:Object3D = objfile.handle.clone() as Object3D;
 				objectmesh.x = 300;
@@ -46,7 +47,6 @@
 				view.scene.addChild(objectmesh);
             }
 			
-            //view.scene.addChild(sphere);
 			this.addEventListener(Event.ENTER_FRAME, update);
 		}
 		
