@@ -12,6 +12,17 @@ Object files:
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshKMZ.as -KMZ
  * http://darkaif.googlecode.com/svn/trunk/darkaif/engine3d/away3d/Away3DMeshMD2.as -MD2
 
+
+Clone Mesh:
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/away3d/Away3DMesh3DSClone.as 3DS (Working)
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/away3d/Away3DMeshASEClone.as ASE (Partly working 50/50 chance)
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/away3d/Away3DMeshDAEClone.as KMZ (Not Working)
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/away3d/Away3DMeshMD2Clone.as MD2 (Not working)
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/away3d/Away3DMeshOBJClone.as OBJ (Working)
+
+   Some Clone might not work. Working and testing area. You need even trigger when the object finish loading to able to clone them.
+
+
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Away3DXmlObject.xml" width="830" height="630" />
 
 This load multiples mesh file type for preview one object at the time in the scene.
