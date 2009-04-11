@@ -1,0 +1,23 @@
+#summary Papervision3D Basic Material and Texture.
+#labels papyervision3d,materail,texture
+
+= Introduction =
+   Here you will able to learn how to use image to apply to the polygon skin. I coded the simple parts to understand how code works. But each class object might be different. That depends on the object format. 
+
+Materials: 
+
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DPlaneTextureLoader.as
+
+This is just the basic texture loading. Easy Way.
+
+ * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DPlaneTextureUrlloader.as
+
+This is just the basic texture loading. 
+
+http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DPlaneSpriteButton.as
+
+This is a sprite apply to the polygon. Simple stuff to make. 
+
+http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DPlaneSpriteButton.as
+
+This is interacting button into the 3D plane. But it not working button that it is disable. You have to look it up to change some source code to make it work. To apply it as skin, convert into movie material class.
