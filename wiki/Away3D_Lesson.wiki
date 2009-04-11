@@ -2,3 +2,4 @@
 #labels away3d
 
  * [Away3D_Loading_Mesh_Files]
+ * [Away3D_Material_Texture]
