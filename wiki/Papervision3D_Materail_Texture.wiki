@@ -13,6 +13,7 @@ This is just the basic texture loading. Easy Way.
  * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DPlaneTextureUrlloader.as
 
 This is just the basic texture loading. 
+There are different methods of loading files. That you have to search around for better object file management. 
 
 http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DPlaneSpriteButton.as
 
