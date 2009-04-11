@@ -17,7 +17,7 @@ Clone Mesh:
  * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshKMZClone.as KMZ (Not Working)
  * http://code.google.com/p/darkaif/source/browse/trunk/darkaif/engine3d/papervision3d/Papervision3DMeshMD2Clone.as MD2 (Working)
 
-   Some Clone might not work. When the objects are finish loading, it need to know the mesh object is finish else it will get an error.
+   Some Clone might not work. Working and testing area. You need even trigger when the object finish loading to able to clone them.
 
 
 
