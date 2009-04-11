@@ -36,7 +36,7 @@ function objOnSuccess(e:Event):void {
    view.scene.addChild(objectmesh);
 }
 }}}
-This works on few object files.
+This works on few object files. The listener doesn't work most the time.
 
 Method 2:
 {{{
@@ -52,7 +52,7 @@ function objOnSuccess(e:Event):void {
    view.scene.addChild(objectmesh);
 }
 }}}
-This is more stable. For Listener to able to know when the file is loaded and then clone.
+This is more stable. For listener to able to know when the file is loaded and then clone.
 
 
 <wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/meshobjectloadfile/Away3DXmlObject.xml" width="830" height="630" />
