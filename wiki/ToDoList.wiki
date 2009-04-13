@@ -1,3 +1,27 @@
 #summary To Do List.
 #labels Phase-Design
 
+
+= RPG BUILD: =
+Builds:
+ * Map Save/Load [WIP]
+ * Map Editor [WIP]
+
+ * Character [WIP]
+  * Animation set [WIP]
+  * Custom Mesh [WIP]
+  * Control Movement [WIP]
+  * Player [WIP]
+  * Monster []
+  * NPC []
+
+= RTS SPACEWAR BUILD: =
+Builds:
+ * Map [WIP]
+  * Galaxy
+  * Solar System
+  * Planets
+ * Buildings []
+  * shipyard
+ * Technology []
+ * Fleet
