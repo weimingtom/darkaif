@@ -1,7 +1,6 @@
 #summary To Do List.
 #labels Phase-Design
 
-
 = RPG BUILD: =
 Builds:
  * Map Save/Load (WIP)
@@ -17,11 +16,27 @@ Builds:
 
 = RTS SPACEWAR BUILD: =
 Builds:
- * Map (WIP)
-  * Galaxy
-  * Solar System
-  * Planets
- * Buildings ()
+ * login (part done)
+  * access site (part done)
+  * flash (part done)
+ * layout design
+  * map
+   * galaxy
+   * solar system
+   * planet
+  * buildings
   * shipyard
- * Technology ()
- * Fleet
+ * Map (part done)
+  * Galaxy (part done)
+  * Solar System (part done)
+  * Planets (part done)
+ * Buildings (work in progress)
+  * query list (work in progress)
+  * Technology Tree (work in progress)
+ * Spaceship
+  * query
+  * tech tree
+  * sim battle
+ * research 
+  * query
+  * tech tree
