@@ -1,5 +1,6 @@
 ﻿package darknet.engine.sandy.entity 
 {
+	import darknet.core.collision.CollisionBox;
 	import darknet.core.geometry.Point3D;
 	import sandy.core.scenegraph.Shape3D;
 	
@@ -7,14 +8,13 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class SMesh extends SEntity
-	{
+	public class SMesh extends SEntity{
 		public var mesh:Shape3D = null;
 		public var spawnposition:Point3D = new Point3D();
 		public var spawnrotation:Point3D = new Point3D();
-		public var exttype:String = '.ase';
-		public var filename:String = 'none';
-		public var filedir:String = 'none';
+		public var exttype:String;// = '.ase';
+		public var filename:String;// = '';
+		public var filedir:String;// = '';
 		public var texture:Vector.<STexture> = new Vector.<STexture>();
 		
 		public function SMesh() {
@@ -46,6 +46,7 @@
 			mesh.x = px;
 			mesh.y = py;
 			mesh.z = pz;
+			trace('set position:' + x + ':' + y + ':' + z);
 		}
 		
 		public function setrotation(px:Number, py:Number, pz:Number):void {
@@ -74,6 +75,7 @@
 			
 			var meshext:XML = <typeext/>;
 			meshext.appendChild(exttype);
+			//trace(exttype+":EXT");
 			objectxml.appendChild(meshext);
 			
 			var meshfiledir:XML = <localdir/>;
@@ -164,9 +166,71 @@
 			
 			objectxml.appendChild(meshcollision);
 			
-			//trace(objectxml);
+			trace(objectxml);
 			return objectxml;
 		}
+		
+		public function objxmlconvertdata(objxml:XML):void {
+			//objxml
+			//objxml.
+			
+			exttype = objxml.typeext;
+			trace("exttype:" + exttype);
+			filedir = objxml.localdir;
+			//TEXTURE
+			for (var matno:int = 0; matno < objxml.mat.tex.length() ;matno++ ) {
+				var tex:STexture = new STexture();
+				tex.matid = objxml.mat.tex[matno].matid;
+				tex.name = objxml.mat.tex[matno].name;
+				tex.idhash = objxml.mat.tex[matno].idhash;
+				tex.filedir = objxml.mat.tex[matno].filedir;
+				var strname:String = tex.idhash;
+				if (strname.length) {//make sure there is strname id else null class
+					texture.push(tex);
+					trace('added tex.');
+				}
+			}
+			
+			//COLLISION BOX
+			for (var boxno:int = 0; boxno < objxml.collision.box.length();boxno++ ){
+				var cbox:CollisionBox = new CollisionBox();
+				cbox.scale = objxml.collision.box[boxno].scale;
+				cbox.scalex = objxml.collision.box[boxno].scalex;
+				cbox.scaley = objxml.collision.box[boxno].scaley;
+				cbox.scalez = objxml.collision.box[boxno].scalez;
+				
+				cbox.height = objxml.collision.box[boxno].height;
+				cbox.length = objxml.collision.box[boxno].length;
+				cbox.width = objxml.collision.box[boxno].width;
+				
+				cbox.x = objxml.collision.box[boxno].position.x;
+				cbox.y = objxml.collision.box[boxno].position.y;
+				cbox.z = objxml.collision.box[boxno].position.z;
+				
+				cbox.rotation.x = objxml.collision.box[boxno].rotation.x;
+				cbox.rotation.y = objxml.collision.box[boxno].rotation.y;
+				cbox.rotation.z = objxml.collision.box[boxno].rotation.z;
+				//cbox
+				var strnamebox:String = objxml.collision.box[boxno].scale;
+				var bcboxfound:Boolean = false;
+				for (var ccboxno:int = 0;ccboxno < collison.box.length ; ccboxno++) {
+					if (collison.box[ccboxno] == cbox) {
+						trace('COLLISION FOUND!');
+						bcboxfound = true;
+						break;
+					}
+				}
+				
+				if ((strnamebox.length >0)){
+					trace('added box');
+					if((!bcboxfound) ){
+						collison.box.push(cbox);
+					}
+				}
+				
+			}
+		}
+		
 		
 		//this function is for map object save location
 		public function objectmapxml():XML {

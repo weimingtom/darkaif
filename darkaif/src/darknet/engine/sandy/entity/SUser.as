@@ -9,6 +9,7 @@
 	{
 		//public var playername:String = 'user';
 		public var charactermesh:String = 'player';
+		public var cahracteridhash:String = '';
 		//public var idhash:String = '';
 		public function SUser() 
 		{
