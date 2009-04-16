@@ -1,0 +1,11 @@
+/*	CSS for JavaScript status bar	*/
+.statusBar	{
+	background: url(progress-bar.gif) no-repeat;
+	width: 200px;
+	height: 19px;
+	border:1px solid silver; 
+	}
+.whiteOverlay {
+	float:right;
+	height:19px;
+	}

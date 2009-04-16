@@ -19,11 +19,11 @@
 			numericupdown.addEventListener(NumericUpDownEvent.ENTER, valuesetchange);
 			
 			function valuechange(event:NumericUpDownEvent):void {
-				trace(numericupdown.valuenumber);
+				trace(event.number);
 			}
 			
 			function valuesetchange(event:NumericUpDownEvent):void {
-				trace(event.enternumber);
+				trace(event.number);
 			}
 			
 			

@@ -41,10 +41,7 @@
 			//addEventListener(PanelCloseEvent.CHANGE, closeeventpanel);
 			closepanelbutton.addEventListener(MouseEvent.MOUSE_DOWN, closeeventbutton);
 			
-			var format:TextFormat = new TextFormat();
-			format.size = 10;
-			format.font = "OCR A Extended";
-			//format.color = 0xF5F5F5;
+			var format:TextFormat = defaulttextformat();
 			
 			Label_Menu.text = 'Dialog';
 			//Label_Menu.border = true;
@@ -100,7 +97,6 @@
 		public function dragdown_main(event:Event):void {
 			this.startDrag();
 		}
-		
 		//mouse up 
 		public function dragup_main(event:Event = null):void {
 			this.stopDrag();
@@ -123,6 +119,23 @@
 			//trace("[[" + bodypanel.numChildren);
 			//addChild(bodypanel);
 			//trace("[[" + numChildren);
+		}
+		
+		public function set textname(strname:String):void {
+			var format:TextFormat = defaulttextformat();
+			Label_Menu.text = strname;
+			Label_Menu.setTextFormat(format);
+		}
+		public function get textname():String {
+			return Label_Menu.text;
+		}
+		
+		public function defaulttextformat():TextFormat {
+			var format:TextFormat = new TextFormat();
+			format.size = 10;
+			format.font = "OCR A Extended";
+			//format.color = 0xF5F5F5;
+			return format;
 		}
 	}
 	

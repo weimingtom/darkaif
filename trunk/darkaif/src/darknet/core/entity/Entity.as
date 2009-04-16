@@ -27,6 +27,17 @@
 			
 		}
 		
+		public function get _x():Number {
+			return x;
+		}
+		
+		public function get _y():Number {
+			return y;
+		}
+		
+		public function get _z():Number {
+			return z;
+		}
 	}
 	
 }

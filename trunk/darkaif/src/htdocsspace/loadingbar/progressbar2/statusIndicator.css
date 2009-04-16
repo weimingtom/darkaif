@@ -1,0 +1,16 @@
+/*	CSS for JavaScript status bar	*/
+.statusBar	{
+	background: url(progressbar-orange.gif) no-repeat;
+	width: 300px;
+	left: 0px;
+	top: 0px;
+	height: 19px;
+	border:1px solid silver;
+	}
+.whiteOverlay {
+	float:right;
+	left: 0px;
+	top: 0px;
+	width: 300px;
+	height:19px;
+	}
