@@ -6,7 +6,7 @@ Builds:
  * Login
   * Access 
  * Map Save/Load (WIP)
- * Map List
+ * Map List (WIP)
  * Map Editor (WIP)
 
  * Character (part done)
@@ -19,7 +19,15 @@ Builds:
    * skills ()
   * Monster ()
   * NPC ()
+
  * Collision (WIP)
+  * Box (part done)
+  * Sphere (part done)
+  * Polygon ()
+
+ * Battle System
+
+ * Skill System
 
 = RTS SPACEWAR BUILD: =
 Builds:
