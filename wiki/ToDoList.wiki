@@ -3,16 +3,23 @@
 
 = RPG BUILD: =
 Builds:
+ * Login
+  * Access 
  * Map Save/Load (WIP)
+ * Map List
  * Map Editor (WIP)
 
- * Character (WIP)
-  * Animation set (WIP)
+ * Character (part done)
+  * Animation set (part done)
+   * Action set (part done)
   * Custom Mesh (WIP)
-  * Control Movement [WIP)
-  * Player (WIP)
+  * Control Movement [part done)
+  * Player (part done)
+   * action (wip)
+   * skills ()
   * Monster ()
   * NPC ()
+ * Collision (WIP)
 
 = RTS SPACEWAR BUILD: =
 Builds:
