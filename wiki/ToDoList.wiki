@@ -33,12 +33,36 @@ Builds:
   * Monster ()
   * NPC ()
 
+ * mesh 
+  * Collisions
+  * Textures
+
+ * Texture (part done)
+  * jpg (part done)
+  * gif (part done)
+  * png (part done)
+
+ * Video (wip)
+  * flv (wip)
+  * video player (wip)
+  * url video link ()
+  * Convert video flv into movie material for polygon assign (wip)
+
  * Collision (WIP)
   * Box (part done)
   * Sphere (part done)
   * Polygon ()
 
  * Battle System
+  * actions
+   * walk
+   * attack
+   * defense
+   * doge
+   * miss
+   * death
+   * injure
+   * hit
 
  * Skill System
 
