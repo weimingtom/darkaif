@@ -1,6 +1,8 @@
 #summary To Do List.
 #labels Phase-Design
 
+Note it may over lap since there is different coding in there.
+
 = RPG BUILD: =
 Builds:
  * Login
@@ -8,6 +10,17 @@ Builds:
  * Map Save/Load (WIP)
  * Map List (WIP)
  * Map Editor (WIP)
+  * Layout (part done)
+   * Load Objects (part done)
+   * Mesh (part done)
+    * Assign Textures
+    * Collisions
+   * Model (part done)
+    * Position
+    * Rotation
+   * Texture (part done)
+   * Animation Set (part done)
+   * Action Set (part done)
 
  * Character (part done)
   * Animation set (part done)
