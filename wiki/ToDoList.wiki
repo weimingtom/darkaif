@@ -4,6 +4,10 @@
 Note it may over lap since there is different coding in there.
 
 = RPG BUILD: =
+Map Build: Manage to build a basic map for load and saving the map data.
+
+Character Build: This will take time to deal with animation control and mesh control. There are id tag to manage data structures.
+
 Builds:
  * Login
   * Access 
