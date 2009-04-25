@@ -1,18 +1,19 @@
 <?php
-function install_objectfile(){
+function install_meshdata(){
 require('config.php');
 mysql_connect($host,$username,$password) or die(mysql_error());
 mysql_select_db($database) or die(mysql_error());
 
-$db_objectfile = $prefix."objectfile"; //$db_database_prefix."members";
+$db_objectfile = $prefix."meshdata"; //$db_database_prefix."members";
 mysql_query("CREATE TABLE $db_objectfile(
 id INT NOT NULL AUTO_INCREMENT,
 PRIMARY KEY(id),
 idhash TEXT,
 idobject TEXT,
 idobjecthash TEXT,
-idmeshdata TEXT,
-identityobject TEXT,
+idmap TEXT,
+idmesh TEXT,
+meshdata TEXT,
 version TEXT,
 name TEXT,
 namehash TEXT,
@@ -36,5 +37,3 @@ date TEXT
  or die(mysql_error());
 echo "Table Created!";
 }
-
-?>

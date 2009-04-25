@@ -27,6 +27,7 @@ $subnavmenu .= '| <a href="?accounts=members">Members</a> ';
 $subnavmenu .= '| <a href="?accounts=permissions">Permissions</a> ';
 $subnavmenu .= '| <a href="?accounts=bans">Bans</a> ';
 $subnavmenu .= '| <a href="?accounts=messages">Messages</a> ';
+$subnavmenu .= '| <a href="?accounts=registeruser">Register User</a> ';
 $subnavmenu .= '| <a href="?accounts=flags">Flags</a> ';
 }
 

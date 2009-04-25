@@ -16,6 +16,7 @@ package
 	import darkaif.frame.MenuToolPanel;
 	import darknet.core.display.Button;
 	import darknet.core.display.DialogBox;
+	import darknet.engine.sandy.entity.SActionFrame;
 	import darknet.engine.sandy.entity.SAnimationSet;
 	import darknet.engine.sandy.entity.SCharacter;
 	import darknet.engine.sandy.entity.SMesh;
@@ -211,6 +212,7 @@ package
 		
 		//MAIN CLASS
 		public function SandyGameEditor() {
+			stage.showDefaultContextMenu = false;
 			
 			splayer.playername = 'guest';
 			splayer.characteridhash = 'b34c2abb8b7d4b447cc2bfbaa5eb8c5f';
@@ -250,6 +252,11 @@ package
 			editortool();
 			
 			characterlisturl();
+			
+			tmplogin();
+			
+			//dialogboxlogin();
+			//trace('---------------'+dropbox_file.y);
 		}
 		
 		// This update the code and the function when every frame count is pass
@@ -305,6 +312,7 @@ package
 		
 		//=======================================
 		//{ START MAP DATA
+		//need to rework map saving function area
 		
 		//clean mesh from the scene
 		public function cleanmap():void {
@@ -509,7 +517,9 @@ package
 					for (var texno:int = 0; texno < texturemesh.length ; texno++ ) {
 						if(objectmesh[meshno].texture[meshmatno].idhash == texturemesh[texno].idhash) {
 							objectmesh[meshno].texture[meshmatno].bitimage = texturemesh[texno].bitimage;
-							objectmesh[meshno].mesh.appearance = new Appearance (new BitmapMaterial( objectmesh[meshno].texture[meshmatno].bitimage.bitmapData ));
+							var material:BitmapMaterial = new BitmapMaterial( objectmesh[meshno].texture[meshmatno].bitimage.bitmapData );
+							material.precision = 1;
+							objectmesh[meshno].mesh.appearance = new Appearance (material);
 						}
 					}
 				}
@@ -519,6 +529,7 @@ package
 		
 		//BUILD MESH LIST INTO MAP
 		//mesh build for map
+		//need map edit protporties.
 		public function buildmeshmap():void {
 			//cleanmapdata();
 			//trace('loading mesh...');
@@ -537,6 +548,9 @@ package
 						
 						datamesh.filedir = mapxml.objects.mesh[objectlistno].localdir;
 						datamesh.mesh = objectmesh[meshno].mesh.clone();
+						datamesh.mesh.enableClipping = true;
+						datamesh.mesh.useSingleContainer = false;
+						
 						datamesh.name = objectmesh[meshno].name;
 						datamesh.setposition(
 						mapxml.objects.mesh[objectlistno].position.x,
@@ -588,17 +602,17 @@ package
 				//dropbox_file.getidname();
 				//trace('selected:' + dropbox_file.getidname());
 				var id:String = dropbox_file.getidname();
-				if (id == 'savemap') {
-					checkmapnamedatabase();
-				}
+				
 				if (id == 'newmap') {
 					dialogbox_newmap();
 				}
 				if (id == 'loadmap') {
 					mapquerylist();
 				}
+				if (id == 'savemap') {
+					checkmapnamedatabase();
+				}
 				if (id == 'renamemap') {
-					//mapquerylist();
 					dialogboxrenamemap();
 				}
 			}
@@ -626,7 +640,12 @@ package
 			buttoncancel.x = 64;
 			buttoncancel.y = 30;
 			
-			buttoncancel.addEventListener(MouseEvent.CLICK, filemappanelclose);
+			buttoncancel.addEventListener(MouseEvent.CLICK, mapfilepaneleventclose);
+			function mapfilepaneleventclose(event:Event):void {
+				filemappanelclose();
+			}
+			
+			mapfilepanel.addEventListener(PanelEvent.CLOSE,filemappanelclose );
 			
 			newmapimage.addChild(textfieldinput);
 			newmapimage.addChild(buttoncreate);
@@ -655,9 +674,14 @@ package
 		//REQUEST MAP LIST
 		//get map list url from user
 		private function mapquerylist():void {
+			var variables:URLVariables = new URLVariables();
+			variables.action = 'maplist';
+			variables.session = session;
 			var requestmaplist:URLRequest = new URLRequest();
 			var loadermaplist:URLLoader = new URLLoader();
 			requestmaplist.url = siteaccess + mapscripturl;
+			requestmaplist.data = variables;
+			requestmaplist.method = URLRequestMethod.POST;
 			//trace(requestmaplist.url);
 			loadermaplist.load(requestmaplist);
 			loadermaplist.addEventListener(Event.COMPLETE, mapquerylistdata);
@@ -665,7 +689,7 @@ package
 			function mapquerylistdata(event:Event):void {
 				loadermaplist.removeEventListener(Event.COMPLETE, mapquerylistdata);
 				var maplistdata:XML = new XML(event.target.data);
-				//trace(maplistdata);
+				trace(maplistdata);
 				//trace("list map no:"+maplistdata.map.length());
 				dropboxlist_map.x = 14;
 				dropboxlist_map.y = 14;
@@ -692,8 +716,11 @@ package
 			buttoncancel.y = 30;
 			
 			buttonload.addEventListener(MouseEvent.CLICK,loadmapselect);
-			buttoncancel.addEventListener(MouseEvent.CLICK, filemappanelclose);
-			mapfilepanel.addEventListener(PanelEvent.CLOSE, filemappanelclose);
+			buttoncancel.addEventListener(MouseEvent.CLICK, mapfilepaneleventclose);
+			function mapfilepaneleventclose(event:Event):void {
+				filemappanelclose();
+			}
+			mapfilepanel.addEventListener(PanelEvent.CLOSE,filemappanelclose );
 			
 			function loadmapselect(event:Event):void {
 				buttonload.removeEventListener(MouseEvent.CLICK,loadmapselect);
@@ -706,6 +733,7 @@ package
 					//variables.mapname = mapname;
 					variables.mapid = dropboxlist_map.getidname();
 					variables.action = 'load';
+					variables.session = session;
 					var request:URLRequest = new URLRequest();
 					var loader:URLLoader = new URLLoader();
 					request.url = siteaccess+mapscripturl;
@@ -778,6 +806,7 @@ package
 			//actionname
 			variables.action = actionname;
 			variables.mapdata = mapsavexml.toXMLString();
+			variables.session = session;
 			request.url = siteaccess+mapscripturl;
 			//request.contentType = "text/xml";
 			//request.data = mapsavexml.toXMLString();
@@ -802,6 +831,7 @@ package
 		public function checkmapnamedatabase(event:Event = null):void {
 			var variables:URLVariables = new URLVariables();
 			variables.mapname = mapname;
+			variables.session = session;
 			//variables.mapname = 'test object';
 			//test object
 			variables.action = 'check';
@@ -809,6 +839,7 @@ package
 			var loader:URLLoader = new URLLoader();
 			request.url = siteaccess+mapscripturl;
 			request.data = variables;
+			request.method = URLRequestMethod.POST;
 			loader.load(request);
 			loader.addEventListener(Event.COMPLETE, checkmapnamedata);
 			
@@ -852,8 +883,11 @@ package
 			mapfilepanel.y = 64;
 			
 			buttonsavemap.addEventListener(MouseEvent.CLICK, mapdataactionupdate);
-			buttoncanelmap.addEventListener(MouseEvent.CLICK, filemappanelclose);
-			mapfilepanel.addEventListener(PanelEvent.CLOSE, filemappanelclose);
+			buttoncanelmap.addEventListener(MouseEvent.CLICK, mapfilepaneleventclose);
+			function mapfilepaneleventclose(event:Event):void {
+				filemappanelclose();
+			}
+			mapfilepanel.addEventListener(PanelEvent.CLOSE,filemappanelclose );
 			
 			function mapdataactionupdate(event:Event = null):void {
 				//trace('update...');
@@ -898,8 +932,11 @@ package
 			//trace("width:x" + mapfilepanel.x + " y:" + mapfilepanel.y);
 			
 			buttonsavemap.addEventListener(MouseEvent.CLICK, mapdataactionsave);
-			buttoncanelmap.addEventListener(MouseEvent.CLICK, filemappanelclose);
-			mapfilepanel.addEventListener(PanelEvent.CLOSE, filemappanelclose);
+			buttoncanelmap.addEventListener(MouseEvent.CLICK, mapfilepaneleventclose);
+			function mapfilepaneleventclose(event:Event):void {
+				filemappanelclose();
+			}
+			mapfilepanel.addEventListener(PanelEvent.CLOSE,filemappanelclose );
 			
 			function mapdataactionsave(event:Event = null):void {
 				mapaction('save');
@@ -916,10 +953,10 @@ package
 		
 		//DIALOGBOX CLOSE MAP
 		//remove dialog file menu panel
-		public function filemappanelclose(event:Event = null):void {
+		public function filemappanelclose(event:PanelEvent = null):void {
 			//textbox.text = dropbox.getboxname(); 
 			//trace(String(event.actionpanel));
-			mapfilepanel.removeEventListener(MouseEvent.CLICK, filemappanelclose);
+			//mapfilepanel.removeEventListener(MouseEvent.CLICK, filemappanelclose);
 			mapfilepanel.removeEventListener(PanelEvent.CLOSE, filemappanelclose);
 			removeChild(mapfilepanel);
 		}
@@ -947,7 +984,11 @@ package
 			buttoncancel.y = 30;
 			
 			buttonrename.addEventListener(MouseEvent.CLICK,renamemap);
-			buttoncancel.addEventListener(MouseEvent.CLICK, cancelmapname);
+			buttoncancel.addEventListener(MouseEvent.CLICK, mapfilepaneleventclose);
+			function mapfilepaneleventclose(event:Event):void {
+				filemappanelclose();
+			}
+			mapfilepanel.addEventListener(PanelEvent.CLOSE,filemappanelclose );
 			
 			mapsprite.addChild(buttonrename);
 			mapsprite.addChild(buttoncancel);
@@ -983,7 +1024,7 @@ package
 		//=======================================
 		
 		//=======================================
-		//{ object mesh map/data
+		//{ OBJECT MESH AND MODEL MAP DATA
 		
 		//update model data for editor
 		public function objectmodelupdate():void {
@@ -999,12 +1040,12 @@ package
 		//menu list object mesh/model/texture
 		public function filemeshobjectpanel():void {
 			dropboxlist_meshmenu.x = 128;
-			dropboxlist_meshmenu.boxlist = new Array();
-			dropboxlist_meshmenu.boxlist.push( { name:'Load Object', id:'loadobject' } );
-			dropboxlist_meshmenu.boxlist.push( { name:'Textures', id:'textures' } );
-			dropboxlist_meshmenu.boxlist.push( { name:'Mesh Object', id:'meshobject' } );
-			dropboxlist_meshmenu.boxlist.push( { name:'Model Object',id:'modelobject' } );
-			dropboxlist_meshmenu.boxlist.push( { name:'AnimMesh Object', id:'animmeshobject' });
+			dropboxlist_meshmenu.clearlist();
+			dropboxlist_meshmenu.addlist( { name:'Load Object', id:'loadobject' } );
+			dropboxlist_meshmenu.addlist( { name:'Textures', id:'textures' } );
+			dropboxlist_meshmenu.addlist( { name:'Mesh Object', id:'meshobject' } );
+			dropboxlist_meshmenu.addlist( { name:'Model Object',id:'modelobject' } );
+			dropboxlist_meshmenu.addlist( { name:'AnimMesh Object', id:'animmeshobject' });
 			dropboxlist_meshmenu.addEventListener(DropBoxEvent.SELECT,dropboxlist_meshselect);
 			addChild(dropboxlist_meshmenu);
 			
@@ -1016,7 +1057,6 @@ package
 				}
 				
 				if (stringname == 'textures') {
-					//dialogboxtexturelist();
 					dialogboxtextureid();
 				}
 				
@@ -1030,7 +1070,7 @@ package
 			}
 		}
 		
-		//load mesh data from site
+		//load mesh data from site MESH / ANIMATION MESH / TEXTURE URL LIST DATA
 		public function meshlisturl():void {
 			var request:URLRequest = new URLRequest(siteaccess+objecturl);
 			var load:URLLoader = new URLLoader();
@@ -1043,20 +1083,19 @@ package
 			}	
 		}
 		
-		//make list objects mesh
+		//make list objects MESH / ANIMATION MESH / TEXTURE
 		public function meshdataload(event:Event = null):void {
 			//trace(event.target.data);
 			//objectlistxml
-			dropboxlist_meshlist.boxlist = new Array();
+			dropboxlist_meshlist.clearlist();
 			for (var objectno:int = 0; objectno < objectlistxml.file.length(); objectno++ ) {
 				//trace(objectlistxml.file[objectno].name);
 				dropboxlist_meshlist.boxlist.push({name:objectlistxml.file[objectno].name,id:objectlistxml.file[objectno].idobject});
 			}
 			dialogboxloadmeshdata();
-			
 		}
 		
-		//show mesh object name for loading into the map data store
+		// DIALOGBOX MESH / ANIMATION MESH / TEXTURE LIST show mesh object name for loading into the map data store
 		public function dialogboxloadmeshdata():void {
 			//dialogbox_meshdataid
 			//trace("load mesh......");
@@ -1082,12 +1121,16 @@ package
 			//dropbox_file.addEventListener(DropBoxEvent.SELECT,fileselectid);
 			buttonload.addEventListener(MouseEvent.CLICK, loadobjectmesh);
 			
-			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_meshdataclose);
+			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_mouseclick);
+			function dialogbox_mouseclick(event:Event):void {
+				dialogbox_meshdataclose();
+			}
+			
 			dialogbox_meshdata.addEventListener(PanelEvent.CLOSE, dialogbox_meshdataclose);
 			addChild(dialogbox_meshdata);
 		}
 		
-		//file id
+		//file id MESH / ANIMATION MESH / TEXTURE LOADING FILES
 		public function loadobjectmesh(event:Event):void {
 			dialogbox_meshdataclose();
 			//trace(dropboxlist_meshlist.getidname());
@@ -1204,7 +1247,6 @@ package
 					}
 				}
 				
-				
 				var bobjectfound:Boolean = false;
 				for (var textureno:int = 0; textureno < texturemesh.length; textureno++) {
 					if (texturemesh[textureno].idhash == filename) {
@@ -1222,16 +1264,54 @@ package
 			}
 		}
 		
-		//MESH EDIT DATA FOR STORE
+		//MESH EDIT OBJECT DATA FOR STORE
 		//set id mesh to show
 		public function dialogbox_meshdataid(meshid:String):void {
 			cleanscene2();
+			var format:TextFormat = defaulttextformat();
+			//drawframemeshpreview();
 			var objectdataimage:Sprite = new Sprite();
 			var objecteditimage:Sprite = new Sprite();
 			
 			var objecteditpanel:Sprite = new Sprite();
+			var dropbox_dataedit:DropBoxList = new DropBoxList();
+			dropbox_dataedit.x = 128;
+			dropbox_dataedit.y = 14;
+			dropbox_dataedit.clearlist();
+			dropbox_dataedit.addlist( { name:'Data', id:'meshdata' } );
+			dropbox_dataedit.addlist( { name:'Textures', id:'textures' } );
+			dropbox_dataedit.addlist( { name:'Collisions', id:'collisions' } );
+			dropbox_dataedit.addlist( { name:'Preview', id:'preview' } );
+			dropbox_dataedit.addlist( { name:'Animation', id:'animation' } );
+			
+			dropbox_dataedit.addEventListener(DropBoxEvent.SELECT, selecteditdata)
+			function selecteditdata(event:DropBoxEvent):void {
+				if (dropbox_dataedit._idname == 'meshdata') {
+					loaddata();
+				}
+				
+				if (dropbox_dataedit._idname == 'textures') {
+					showmeshtextures();
+				}
+				
+				if (dropbox_dataedit._idname == 'collisions') {
+					showmeshcollision();
+				}
+				
+				if (dropbox_dataedit._idname == 'preview') {
+					
+				}
+				
+				if (dropbox_dataedit._idname == 'animation') {
+					
+				}
+				
+				
+			}
+			
 			dialogbox_meshdata._pheight = 256;
 			dialogbox_meshdata._pwidth = 256;
+			
 			var meshdata:SMesh = new SMesh();
 			for (var objectmeshno:int = 0; objectmeshno < objectmesh.length; objectmeshno ++ ) {
 				if(objectmesh[objectmeshno].idhash == meshid){
@@ -1241,28 +1321,34 @@ package
 			}
 			g2.addChild(meshdata.mesh);
 			
+			//OBJECT NAME TEXT
+			var textobjectname:TextField = new TextField();
+			textobjectname.text = meshdata.name;
+			textobjectname.setTextFormat(format);
+			textobjectname.selectable = false;
+			
 			var buttonmeshdata:Button = new Button("Data");//not sure base on xml create object
 			var buttonmeshaddscene:Button = new Button("Add Scene");//error on clone same id
 			var buttonmeshtexturedata:Button = new Button("Textures");
 			var buttonmeshcollisiondata:Button = new Button("Collisions");
 			var buttonmeshanimationdata:Button = new Button("Animations");//this is later
 			
-			buttonmeshdata.x = 128;
+			//buttonmeshdata.x = 128;
 			buttonmeshaddscene.x = 128;
-			buttonmeshaddscene.y = 14 * 1;
-			buttonmeshtexturedata.x = 128;
-			buttonmeshtexturedata.y = 14 * 2;
-			buttonmeshcollisiondata.x = 128;
-			buttonmeshcollisiondata.y = 14 * 3;
-			buttonmeshanimationdata.x = 128;
-			buttonmeshanimationdata.y = 14 * 4;
+			buttonmeshaddscene.y = 0;
+			//buttonmeshtexturedata.x = 128;
+			//buttonmeshtexturedata.y = 14 * 2;
+			//buttonmeshcollisiondata.x = 128;
+			//buttonmeshcollisiondata.y = 14 * 3;
+			//buttonmeshanimationdata.x = 128;
+			//buttonmeshanimationdata.y = 14 * 4;
 			
 			//var loader:URLLoader = new URLLoader();
 			//loader.
 			
 			buttonmeshdata.addEventListener(MouseEvent.CLICK,loaddata);
 			
-			function loaddata(event:Event):void {
+			function loaddata(event:Event=null):void {
 				cleaneditimage();
 				
 				var buttonloaddata:Button = new Button('Load Data');
@@ -1322,14 +1408,14 @@ package
 			
 			buttonmeshaddscene.addEventListener(MouseEvent.CLICK, addmeshscene);
 			
-			function addmeshscene(event:Event):void {
+			function addmeshscene(event:Event=null):void {
 				meshdata_addscene(meshid);
 			}
 			
 			buttonmeshcollisiondata.addEventListener(MouseEvent.CLICK, showmeshcollision);
 			
 			//COLLISION EDIT OPTIONS
-			function showmeshcollision(event:Event):void {
+			function showmeshcollision(event:Event=null):void {
 				cleaneditimage();
 				var buttoncreatebox:Button = new Button('Create Box');
 				buttoncreatebox.x = 168;
@@ -1367,7 +1453,7 @@ package
 			buttonmeshtexturedata.addEventListener(MouseEvent.CLICK, showmeshtextures);
 			
 			//TEXTURE EDIT OPTIONS
-			function showmeshtextures(event:Event):void {
+			function showmeshtextures(event:Event=null):void {
 				cleaneditimage();
 				//trace('-----||---');
 				var buttonedittex:Button = new Button('Edit Tex');
@@ -1525,6 +1611,7 @@ package
 			}
 			
 			//array class update read time vars
+			//COLLISION BOX
 			function createcollision(box:CollisionBox):void {
 				
 				dialogbox_meshdata.actionpanel = 'show';
@@ -1595,31 +1682,31 @@ package
 				numposz.y = 14 * 9;
 				numposz.valuenumber = box.z;
 				
-				//numheight.addEventListener(NumericUpDownEvent.VALUE, changenumheight);
+				numheight.addEventListener(NumericUpDownEvent.VALUE, changenumheight);
 				function changenumheight(event:NumericUpDownEvent):void {
 					box.height = numheight.currentnumber;//box.height = event.number;//trace("event number:"+event.numberchange);//trace("box height:"+box.height);//trace(event.number);
 				}
 				
-				//numlength.addEventListener(NumericUpDownEvent.VALUE, changenumlength);
+				numlength.addEventListener(NumericUpDownEvent.VALUE, changenumlength);
 				function changenumlength(event:NumericUpDownEvent):void {
 					box.length = numlength.currentnumber;
 					//trace("box height:"+box.height);
 				}
 				
-				//numwidth.addEventListener(NumericUpDownEvent.VALUE, changenumwidth);
+				numwidth.addEventListener(NumericUpDownEvent.VALUE, changenumwidth);
 				function changenumwidth(event:NumericUpDownEvent):void {
 					box.width = numwidth.currentnumber;
 					//trace("box height:"+box.height);
 				}
-				//numposx.addEventListener(NumericUpDownEvent.VALUE, changeposx);
+				numposx.addEventListener(NumericUpDownEvent.VALUE, changeposx);
 				function changeposx(event:NumericUpDownEvent):void {
 					box.x = numposx.currentnumber;
 				}
-				//numposy.addEventListener(NumericUpDownEvent.VALUE, changeposy);
+				numposy.addEventListener(NumericUpDownEvent.VALUE, changeposy);
 				function changeposy(event:NumericUpDownEvent):void {
 					box.y = numposy.currentnumber;
 				}
-				//numposz.addEventListener(NumericUpDownEvent.VALUE, changeposz);
+				numposz.addEventListener(NumericUpDownEvent.VALUE, changeposz);
 				function changeposz(event:NumericUpDownEvent):void {
 					box.z = numposz.currentnumber;
 				}
@@ -1675,19 +1762,23 @@ package
 			
 			objectdataimage.addChild(objecteditpanel);
 			objectdataimage.addChild(objecteditimage);
-			objectdataimage.addChild(buttonmeshdata);
+			//objectdataimage.addChild(buttonmeshdata);
 			objectdataimage.addChild(buttonmeshaddscene);
-			objectdataimage.addChild(buttonmeshtexturedata);
-			objectdataimage.addChild(buttonmeshcollisiondata);
-			objectdataimage.addChild(buttonmeshanimationdata);
+			//objectdataimage.addChild(buttonmeshtexturedata);
+			//objectdataimage.addChild(buttonmeshcollisiondata);
+			//objectdataimage.addChild(buttonmeshanimationdata);
 			objectdataimage.addChild(imagemeshpreview);
+			
+			objectdataimage.addChild(textobjectname);
+			objectdataimage.addChild(dropbox_dataedit);
+			
 			
 			dialogbox_meshdata.content(objectdataimage);
 			dialogbox_meshdata.addEventListener(PanelEvent.CLOSE, dialogbox_meshdataclose);
 			addChild(dialogbox_meshdata);
 		}
 		
-		// model list dialogbox
+		//DIALOGBOX MODEL LIST
 		public function dialogbox_modeldatalist():void {
 			var modeldataimage:Sprite = new Sprite();
 			dialogbox_meshdata._pheight = 64;
@@ -1699,7 +1790,11 @@ package
 			var buttoncancel:Button = new Button('Cancel');
 			buttoncancel.x = 50;
 			buttoncancel.y = 30;
-			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_meshdataclose);
+			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_clickclose);
+			
+			function dialogbox_clickclose(event:Event):void {
+				dialogbox_meshdataclose();
+			}
 			
 			dropboxlist_meshlist.x = 14;
 			dropboxlist_meshlist.y = 14;
@@ -1727,7 +1822,7 @@ package
 			}
 		}
 		
-		//EDIT OBJECT DATA
+		//DIALOGBOX EDIT MODEL OBJECT DATA 
 		//object model id for data control
 		public function modeldataid(meshid:String):void {
 			//trace('LOADED...');
@@ -1746,7 +1841,6 @@ package
 				}
 			}
 			
-			//{
 			var textfieldinputpos:TextField = new TextField();
 			textfieldinputpos.height = 14;
 			textfieldinputpos.text = '1';
@@ -1790,14 +1884,16 @@ package
 			textfieldrotx.height = 14;
 			textfieldrotx.y = 14 * 6;
 			
-			var buttonminusrotx:Button = new Button('rx-');
-			buttonminusrotx.x = 30;
-			buttonminusrotx.y = 14 * 6;
-			buttonminusrotx.addEventListener(MouseEvent.CLICK, clickmeshminusrotx);
-			var buttonplusrotx:Button = new Button('rx+');
-			buttonplusrotx.x = 50;
-			buttonplusrotx.y = 14 * 6;
-			buttonplusrotx.addEventListener(MouseEvent.CLICK, clickmeshplusrotx);
+			//{ROTATION
+			var numrotx:NumericUpDown = new NumericUpDown();
+			numrotx.x = 30;
+			numrotx.y = 14 * 6;
+			numrotx.valuenumber = meshdata.rotation.x;
+			numrotx.addEventListener(NumericUpDownEvent.VALUE, numrotxchnage);
+			numrotx.addEventListener(NumericUpDownEvent.ENTER, numrotxchnage);
+			function numrotxchnage(event:NumericUpDownEvent):void {
+				meshdata.rotation.x = numrotx.valuenumber;
+			}
 			
 			var textfieldroty:TextField = new TextField();
 			textfieldroty.text = 'roty';
@@ -1806,14 +1902,15 @@ package
 			textfieldroty.setTextFormat(format);
 			textfieldroty.y = 14 * 7;
 			
-			var buttonminusroty:Button = new Button('ry-');
-			buttonminusroty.x = 30;
-			buttonminusroty.y = 14 * 7;
-			buttonminusroty.addEventListener(MouseEvent.CLICK, clickmeshminusroty);
-			var buttonplusroty:Button = new Button('ry+');
-			buttonplusroty.x = 50;
-			buttonplusroty.y = 14 * 7;
-			buttonplusroty.addEventListener(MouseEvent.CLICK, clickmeshplusroty);
+			var numroty:NumericUpDown = new NumericUpDown();
+			numroty.x = 30;
+			numroty.y = 14 * 7;
+			numroty.valuenumber = meshdata.rotation.y;
+			numroty.addEventListener(NumericUpDownEvent.VALUE, numrotychnage);
+			numroty.addEventListener(NumericUpDownEvent.ENTER, numrotychnage);
+			function numrotychnage(event:NumericUpDownEvent):void {
+				meshdata.rotation.y = numroty.valuenumber;
+			}
 			
 			var textfieldrotz:TextField = new TextField();
 			textfieldrotz.text = 'rotz';
@@ -1822,67 +1919,74 @@ package
 			textfieldrotz.setTextFormat(format);
 			textfieldrotz.y = 14 * 8;
 			
-			var buttonminusrotz:Button = new Button('rz-');
-			buttonminusrotz.x = 30;
-			buttonminusrotz.y = 14 * 8;
-			buttonminusrotz.addEventListener(MouseEvent.CLICK, clickmeshminusrotz);
-			var buttonplusrotz:Button = new Button('rz+');
-			buttonplusrotz.x = 50;
-			buttonplusrotz.y = 14 * 8;
-			buttonplusrotz.addEventListener(MouseEvent.CLICK, clickmeshplusrotz);
+			var numrotz:NumericUpDown = new NumericUpDown();
+			numrotz.x = 30;
+			numrotz.y = 14 * 8;
+			numrotz.valuenumber = meshdata.rotation.z;
+			numrotz.addEventListener(NumericUpDownEvent.VALUE, numrotzchnage);
+			numrotz.addEventListener(NumericUpDownEvent.ENTER, numrotzchnage);
+			function numrotzchnage(event:NumericUpDownEvent):void {
+				meshdata.rotation.z = numrotz.valuenumber;
+			}
 			//}
-			
 			textfieldobjectname.text = "Name:" + meshdata.name+"_"+meshdata.mesh.name;
 			textfieldobjectname.selectable = false;
 			textfieldobjectname.height = 14;
 			textfieldobjectname.setTextFormat(format);
+			//{POSITION
+			var numposx:NumericUpDown = new NumericUpDown();
+			numposx.x = 30;
+			numposx.y = 14 * 2;
+			numposx.valuenumber = meshdata.x;
+			numposx.addEventListener(NumericUpDownEvent.VALUE, numposxchnage);
+			numposx.addEventListener(NumericUpDownEvent.ENTER, numposxchnage);
+			function numposxchnage(event:NumericUpDownEvent):void {
+				meshdata.x = numposx.valuenumber;
+			}
 			
-			var buttonminusx:Button = new Button('x-');
-			buttonminusx.x = 30;
-			buttonminusx.y = 14*2;
-			var buttonplusx:Button = new Button('x+');
-			buttonplusx.x = 50;
-			buttonplusx.y = 14*2;
+			var numposy:NumericUpDown = new NumericUpDown();
+			numposy.x = 30;
+			numposy.y = 14 * 3;
 			
-			var buttonminusy:Button = new Button('y-');
-			buttonminusy.x = 30;
-			buttonminusy.y = 14 * 3;
-			var buttonplusy:Button = new Button('y+');
-			buttonplusy.y = 14 * 3;
-			buttonplusy.x = 50;
+			numposy.valuenumber = meshdata.y;
+			numposy.addEventListener(NumericUpDownEvent.VALUE, numposychnage);
+			numposy.addEventListener(NumericUpDownEvent.ENTER, numposychnage);
+			function numposychnage(event:NumericUpDownEvent):void {
+				meshdata.y = numposy.valuenumber;
+			}
 			
-			var buttonminusz:Button = new Button('z-');
-			buttonminusz.x = 30;
-			buttonminusz.y = 14 * 4;
-			var buttonplusz:Button = new Button('z+');
-			buttonplusz.y = 14 * 4;
-			buttonplusz.x = 50;
+			var numposz:NumericUpDown = new NumericUpDown();
+			numposz.x = 30;
+			numposz.y = 14 * 4;
+			
+			numposz.valuenumber = meshdata.z;
+			numposz.addEventListener(NumericUpDownEvent.VALUE, numposzchnage);
+			numposz.addEventListener(NumericUpDownEvent.ENTER, numposzchnage);
+			function numposzchnage(event:NumericUpDownEvent):void {
+				meshdata.z = numposz.valuenumber;
+			}
+			//}
 			
 			var buttondeleteobject:Button = new Button('Delete Object');
 			buttondeleteobject.y = 14*10;
 			buttondeleteobject.addEventListener(MouseEvent.CLICK, deletesceneobjectmesh);
 			
-			//minus
 			var buttonload:Button = new Button('Ok');
 			buttonload.x = 14;
 			buttonload.y = 14 * 12;
-			buttonload.addEventListener(MouseEvent.CLICK, dialogbox_meshdataclose);
+			buttonload.addEventListener(MouseEvent.CLICK, dialogbox_clickclose);
+			function dialogbox_clickclose(even:Event):void {
+				dialogbox_meshdataclose();
+			}
 			
 			//buttonload.addEventListener(MouseEvent.CLICK, modeldataselectid);
 			var buttoncancel:Button = new Button('Cancel');
 			buttoncancel.x = 50;
 			buttoncancel.y = 14*11;
-			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_meshdataclose);
+			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_clickclose);
 			
 			dropboxlist_meshlist.x = 14;
 			dropboxlist_meshlist.y = 14;
-			
-			buttonminusx.addEventListener(MouseEvent.CLICK, clickmeshminusx);
-			buttonplusx.addEventListener(MouseEvent.CLICK, clickmeshplusx);
-			buttonminusy.addEventListener(MouseEvent.CLICK, clickmeshminusy);
-			buttonplusy.addEventListener(MouseEvent.CLICK, clickmeshplusy);
-			buttonminusz.addEventListener(MouseEvent.CLICK, clickmeshminusz);
-			buttonplusz.addEventListener(MouseEvent.CLICK, clickmeshplusz);
 			
 			modeldataimage.addChild(textfieldinputpos);
 			modeldataimage.addChild(textfieldinputrot);
@@ -1893,23 +1997,17 @@ package
 			modeldataimage.addChild(textfieldposz);
 			
 			modeldataimage.addChild(textfieldrotx);
-			modeldataimage.addChild(buttonminusrotx);
-			modeldataimage.addChild(buttonplusrotx);
-			
 			modeldataimage.addChild(textfieldroty);
-			modeldataimage.addChild(buttonminusroty);
-			modeldataimage.addChild(buttonplusroty);
-			
 			modeldataimage.addChild(textfieldrotz);
-			modeldataimage.addChild(buttonminusrotz);
-			modeldataimage.addChild(buttonplusrotz);
 			
-			modeldataimage.addChild(buttonplusx);
-			modeldataimage.addChild(buttonminusx);
-			modeldataimage.addChild(buttonplusy);
-			modeldataimage.addChild(buttonminusy);
-			modeldataimage.addChild(buttonplusz);
-			modeldataimage.addChild(buttonminusz);
+			modeldataimage.addChild(numposx);
+			modeldataimage.addChild(numposy);
+			modeldataimage.addChild(numposz);
+			
+			modeldataimage.addChild(numrotx);
+			modeldataimage.addChild(numroty);
+			modeldataimage.addChild(numrotz);
+			
 			modeldataimage.addChild(buttondeleteobject);
 			
 			modeldataimage.addChild(buttonload);
@@ -1942,57 +2040,6 @@ package
 					//trace('nope');
 					return 1;
 				}
-			}
-			
-			//var posnumber:String = textfieldinputpos.text;
-			//posnumber.match
-			
-			
-			//event for mesh to move
-			function clickmeshminusx(event:Event):void {
-				//meshdata.mesh.x --;
-				//checkposinput();
-				//meshdata.x --;
-				meshdata.x -= posinput();
-			}
-			function clickmeshplusx(event:Event):void {
-				//meshdata.x ++;
-				meshdata.x += posinput();
-			}
-			function clickmeshminusy(event:Event):void {
-				meshdata.y -= posinput();
-			}
-			function clickmeshplusy(event:Event):void {
-				meshdata.y += posinput();
-			}
-			function clickmeshminusz(event:Event):void {
-				meshdata.z  -= posinput();
-			}
-			function clickmeshplusz(event:Event):void {
-				meshdata.z  += posinput();
-			}
-			
-			//event for mesh rotation
-			function clickmeshminusrotx(event:Event):void {
-				//meshdata.mesh.rotateX -= 45;
-				meshdata.rotation.x -= 45;
-				//trace(meshdata.mesh.rotateX);
-			}
-			function clickmeshplusrotx(event:Event):void {
-				meshdata.rotation.x += rotinput();
-				//trace(meshdata.mesh.rotateX);
-			}
-			function clickmeshminusroty(event:Event):void {
-				meshdata.rotation.y -= rotinput();
-			}
-			function clickmeshplusroty(event:Event):void {
-				meshdata.rotation.y += rotinput();
-			}
-			function clickmeshminusrotz(event:Event):void {
-				meshdata.rotation.z -= rotinput();
-			}
-			function clickmeshplusrotz(event:Event):void {
-				meshdata.rotation.z += rotinput();
 			}
 			
 			function deletesceneobjectmesh():void {
@@ -2035,7 +2082,7 @@ package
 			removeChild(dialogbox_meshdata);
 		}
 		
-		//draw image background
+		//DRAW BACKGROUND SCENE imagemeshpreview sprite
 		public function drawframemeshpreview():void {
 			imagemeshpreview.graphics.clear();
 			imagemeshpreview.graphics.beginFill(0x999999);
@@ -2044,7 +2091,6 @@ package
 		}
 		
 		//{ //START store mesh object section
-		
 		public function dialogbox_meshobjectlist():void {
 			var meshdatapanel:Sprite = new Sprite();
 			dialogbox_meshdata._pheight = 64;
@@ -2067,7 +2113,10 @@ package
 			
 			buttonload.addEventListener(MouseEvent.CLICK,meshobjectselect);
 			
-			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_meshdataclose);
+			buttoncancel.addEventListener(MouseEvent.CLICK, dialogbox_clickclose);
+			function dialogbox_clickclose(event:Event):void {
+				dialogbox_meshdataclose();
+			}
 			dialogbox_meshdata.addEventListener(PanelEvent.CLOSE, dialogbox_meshdataclose);
 			
 			meshdatapanel.addChild(buttonload);
@@ -2128,13 +2177,14 @@ package
 			addChild(dialogbox_meshdata);
 		}
 		
-		//DIALOGBOX TEXTURE IDHASH
+		//[======  DIALOGBOX TEXTURE IDHASH
 		public function dialogboxtextureid(id:String = null):void {
 			cleanscene2();
+			drawframemeshpreview();
 			var meshdatapanel:Sprite = new Sprite();
 			var format:TextFormat = defaulttextformat();
 			var texturedata:STexture = new STexture();
-			var buttonclose:Button = new Button('close');
+			//var buttonclose:Button = new Button('close');
 			for (var texno:int = 0; texno < texturemesh.length;texno++) {
 				if (texturemesh[texno].idhash == id) {
 					texturedata = texturemesh[texno];
@@ -2146,8 +2196,8 @@ package
 				dropboxlist_texture.boxlist.push({name:texturemesh[texno].name,id:texturemesh[texno].idhash});
 			}
 			
-			dropboxlist_texture.x = 14;
-			dropboxlist_texture.y = 14 * 1;
+			dropboxlist_texture.x = 0;
+			dropboxlist_texture.y = 0;
 			
 			var textimagename:TextField = new TextField();
 			textimagename.text = texturedata.name;
@@ -2162,15 +2212,20 @@ package
 			}
 			//addChild(texturedata.bitimage);
 			g2.addChild(textureplane);
-			imagemeshpreview.y = 14 * 3;
+			imagemeshpreview.y = 14*2;
 			
-			buttonclose.x = 50;
-			buttonclose.y = 14 * 14;
-			textimagename.y = 14 * 0;
+			//buttonclose.x = 50;
+			//buttonclose.y = 14 * 14;
+			textimagename.y = 14 * 1;
 			
-			buttonclose.addEventListener(MouseEvent.CLICK, dialogbox_meshdataclose);
+			//buttonclose.addEventListener(MouseEvent.CLICK, dialogbox_mouseclick);
+			//function dialogbox_mouseclick(event:Event):void {
+			//	dialogbox_meshdataclose();
+			///}
+			
 			dropboxlist_texture.addEventListener(DropBoxEvent.SELECT, applytexture);
-			
+			//var materail:BitmapMaterial = new BitmapMaterial( texturemesh[matno].bitimage.bitmapData );
+			//materail.precision = 1;
 			function applytexture(event:DropBoxEvent):void {
 				var strname:String = dropboxlist_texture.getidname();
 				for (var matno:int = 0; matno < texturemesh.length; matno++ ) {
@@ -2179,17 +2234,22 @@ package
 						cleanscene2();
 						var textureplane2:Shape3D = new Plane3D('texture', 200, 200, 1, 1, Plane3D.YZ_ALIGNED, 'quad');
 						textureplane2.enableBackFaceCulling = false;
-						textureplane2.appearance = new Appearance (new BitmapMaterial( texturemesh[matno].bitimage.bitmapData ));
+						var materail:BitmapMaterial = new BitmapMaterial( texturemesh[matno].bitimage.bitmapData );
+						materail.precision = 1;//fix bend texture
+						textureplane2.appearance = new Appearance (materail);
+						
 						g2.addChild(textureplane2);
 					}
 				}
 			}
 			
-			meshdatapanel.addChild(buttonclose);
+			dialogbox_meshdata.addEventListener(PanelEvent.CLOSE, dialogbox_meshdataclose);
+			
+			//meshdatapanel.addChild(buttonclose);
 			meshdatapanel.addChild(textimagename);
 			meshdatapanel.addChild(imagemeshpreview);
 			meshdatapanel.addChild(dropboxlist_texture);
-			dialogbox_meshdata._pheight = 230;
+			dialogbox_meshdata._pheight = 188;
 			dialogbox_meshdata._pwidth = 128;
 			dialogbox_meshdata.content(meshdatapanel);
 			addChild(dialogbox_meshdata);
@@ -2207,13 +2267,13 @@ package
 			 * of names if match it being to load one file each time.
 			 */
 			
-			trace('init.char...');
+			//trace('init.char...');
 			var urlrequest:URLRequest = new URLRequest(siteaccess+characterobjecturl);
 			var urlloader:URLLoader = new URLLoader(urlrequest);
 			urlloader.addEventListener(Event.COMPLETE, initdata)
 			
 			function initdata(event:Event):void {
-				trace(event.target.data);
+				//trace(event.target.data);
 				characterlistxml = new XML(event.target.data);
 				creatcharacterlist();
 			}
@@ -2233,20 +2293,20 @@ package
 		
 		//load character animation mesh
 		public function characternameidload(stridname:String):void {
-			trace('init..chardata...');
+			//trace('init..chardata...');
 			var bcharfound:Boolean = false;
 			for (var charno:int = 0; charno < charactermesh.length; charno++) {
 				if (charactermesh[charno].idhash == stridname) {
-					trace(charactermesh[charno].idhash);
+					//trace(charactermesh[charno].idhash);
 					bcharfound = true;
 					break;
 				}
 			}
 			
 			if (!bcharfound == false) {
-				trace('found...');
+				//trace('found...');
 			}else{
-				trace('not found...');
+				//trace('not found...');
 				var variables:URLVariables = new URLVariables();
 				variables.idhash = stridname;
 				variables.action = 'load';
@@ -2260,9 +2320,9 @@ package
 				urlloader.addEventListener(Event.COMPLETE, initdata)
 				
 				function initdata(event:Event):void {
-					trace("data char:"+event.target.data);
+					//trace("data char:"+event.target.data);
 					//character
-					trace('character frame loaded...');
+					//trace('character frame loaded...');
 					loadanimationmeshset(new XML(event.target.data));
 				}
 			}
@@ -2272,17 +2332,17 @@ package
 		public function loadanimationmeshset(objectxml:XML):void {
 			var sanimset:SAnimationSet = new SAnimationSet();
 			sanimset.mesh
-			trace('init...mesh load...');
+			//trace('init...mesh load...');
 			var schar:SCharacter = new SCharacter();
 			schar.name = objectxml.character.name;
 			schar.idhash = objectxml.character.idhash;
 			
 			var queue:LoaderQueue = new LoaderQueue();
-			trace("XML===="+objectxml.character.animationset.mesh.length());
+			//trace("XML===="+objectxml.character.animationset.mesh.length());
 			for (var animmeshno:int = 0; animmeshno < objectxml.character.animationset.mesh.length(); animmeshno++) {
 				var strfile:String = objectxml.character.animationset.mesh[animmeshno].idhash
 				var nameurlobject:String  = siteaccess + objecturl + '?file=' +strfile;
-				trace(nameurlobject);
+				//trace(nameurlobject);
 				if(strfile.length){
 					queue.add(String(strfile), new URLRequest(String(nameurlobject)), "BIN" );
 				}
@@ -2290,6 +2350,8 @@ package
 			
 			queue.addEventListener(SandyEvent.QUEUE_COMPLETE,loadcharactercomplete);
 			queue.start();
+			//var action:SActionFrame = new SActionFrame();
+			//action.savexmldata();
 			
 			function loadcharactercomplete():void {
 				for (var animmeshsetno:int = 0; animmeshsetno < objectxml.character.animationset.mesh.length(); animmeshsetno++) {
@@ -2300,13 +2362,20 @@ package
 						//var animmd2:MD2  = new MD2 (String(strfileloaded), queue.data[strfileloaded], 1);
 						sanimset.mesh = new MD2 (String(strfileloaded), queue.data[strfileloaded], 1);
 						sanimset.idhash = strfileloaded;
+						//trace("number actions:" + objectxml.character.animationset.mesh[animmeshsetno].actionset.action.length())
+						//create action set from frame index's
+						for (var actionno:int = 0; actionno < objectxml.character.animationset.mesh[animmeshsetno].actionset.action.length(); actionno++) {
+							var action:SActionFrame = new SActionFrame();
+							action.readxmldata(objectxml.character.animationset.mesh[animmeshsetno].actionset.action[actionno]);
+							sanimset.actionframe.push(action);
+						}
 						//g.addChild(animmd2);
 						schar.meshs.push(sanimset);
 					}
 				}
 				//character mesh with animationset
 				charactermesh.push(schar);
-				trace('Char...:'+charactermesh.length);
+				//trace('Char...:'+charactermesh.length);
 			}
 		}
 		
@@ -2336,7 +2405,14 @@ package
 							//trace('found...');
 							for (var charmeshno:int = 0; charmeshno < charactermesh[charactermeshno].meshs.length; charmeshno++) {
 								var sanimset:SAnimationSet = new SAnimationSet();
+								
+								//sanimset.actionframe = charactermesh[charactermeshno].meshs[charmeshno].actionframe;
+								//trace("clone action:" + charactermesh[charactermeshno].meshs[charmeshno].actionframe.length)
+								sanimset.actionframe = charactermesh[charactermeshno].meshs[charmeshno].actionframe;
+								
 								sanimset.mesh = charactermesh[charactermeshno].meshs[charmeshno].mesh.clone() as MD2;
+								//trace('actionindex no:' + charactermesh[charactermeshno].meshs[charmeshno].actionframe.length);
+								
 								g.addChild(sanimset.mesh);
 								splayer.meshs.push(sanimset);
 							}
@@ -2358,39 +2434,57 @@ package
 			for (var playerno:int = 0; playerno < playermodel.length; playerno++ ) {
 				if (playermodel[playerno].playername == splayer.playername) {
 					//trace('found...');
+					var bwalkx:Boolean = false;
+					var bwalkz:Boolean = false;
 					if (buparrow) {
 						playermodel[playerno].movedirz = 1;
-						camera.z += 1;
-						//trace(playermodel[playerno].z);
+						playermodel[playerno].framename = 'walk';
+						bwalkz = true;
 					}else if (bdownarrow) {
 						playermodel[playerno].movedirz = -1;
-						camera.z -= 1;
-					}else{
+						playermodel[playerno].framename = 'walk';
+						bwalkz = true;
+					}else {
+						//playermodel[playerno].framename = 'stand';
 						playermodel[playerno].movedirz = 0;
+						bwalkz = false;
 					}
 					
 					if (brightarrow) {
 						playermodel[playerno].movedirx = 1;
+						playermodel[playerno].framename = 'walk';
 						camera.x += 1;
+						bwalkx = true;
 					}else if (bleftarrow) {
 						playermodel[playerno].movedirx = -1;
+						playermodel[playerno].framename = 'walk';
 						camera.x -= 1;
+						bwalkx = true;
 					}else{
 						playermodel[playerno].movedirx = 0;
+						bwalkx = false;
 					}
+					
+					if ((bwalkx == false)&&((bwalkz == false)) ){
+						playermodel[playerno].framename = 'stand';
+					}
+					
+					camera.x = playermodel[playerno].x - 100;
+					camera.y = playermodel[playerno].y + 100;
+					camera.z = playermodel[playerno].z - 200;
 				}
 			}
 		}
 		
+		//collision mesh
 		public function playercollisionmesh():void {
 			for (var playerno:int = 0; playerno < playermodel.length; playerno++ ) {
 				//playermodel[playerno].intersetmesh
 				for (var meshno:int = 0; meshno < objectmodel.length; meshno++ ) {
 					//trace("main: " + objectmodel[meshno].x+':'+ objectmodel[meshno].y+':'+ objectmodel[meshno].z);
-					if (playermodel[playerno].intersetmesh(objectmodel[meshno])) {
-						trace('collision');
-						//playermodel[playerno].intersetmesh()
-					}
+					
+					playermodel[playerno].intersetbox(objectmodel[meshno]);
+					playermodel[playerno].groundcollisionmesh(objectmodel[meshno]);
 					//trace(meshno);
 				}
 			}
@@ -2399,9 +2493,12 @@ package
 		//THIS WILL RE-ADD TO THE SCENE FOR CHARACTER MESH
 		public function playerreloadmodel():void {
 			for (var charno:int = 0; charno < playermodel.length; charno++ ) {
-				trace("box:"+playermodel[charno].collison.box.length);
+				//trace("box:"+playermodel[charno].collison.box.length);
 				for (var charmeshno:int = 0; charmeshno < playermodel[charno].meshs.length; charmeshno++) {
 					//playermodel[charno].meshs[charmeshno].mesh
+					playermodel[charno].x = 0;
+					playermodel[charno].y = 0;
+					playermodel[charno].z = 0;
 					g.addChild(playermodel[charno].meshs[charmeshno].mesh);
 				}
 			}
@@ -2474,22 +2571,14 @@ package
 			}
 			
 			function querylogin(event:Event):void {
-				trace("==" + event.target.data);
+				//trace("==" + event.target.data);
 				
 				var userdataxml:XML = new XML(event.target.data);
 				if (userdataxml.message == 'pass') {
-					trace(userdataxml.username);
+					//trace(userdataxml.username);
 					username = userdataxml.username;
 					session = userdataxml.session;
-					
-					//galaxyid = userdataxml.galaxyid;
-					//solarsystemid = userdataxml.solarsystemid;
-					//homeplanetid = userdataxml.homeplanetid;
-					//planetid = userdataxml.setplanetid;
-					
-					//selectgalaxyid = userdataxml.galaxyid;
-					//selectsolarsystemid = userdataxml.solarsystemid;
-					//selectplanetid = userdataxml.homeplanetid;
+					//trace('session:'+session);
 					dialogboxloginclose();
 				}
 			}
@@ -2512,7 +2601,6 @@ package
 			removeChild(dialogbox_login);
 		}
 		
-		
 		public function dialogboxmessageclose(event:Event):void {
 			dialogbox_message.removeEventListener(MouseEvent.CLICK, dialogboxmessageclose);
 			removeChild(dialogbox_message);
@@ -2532,6 +2620,30 @@ package
 			filemeshobjectpanel();
 		}
 		
+		public function tmplogin(event:Event = null):void {
+			var user:URLVariables = new URLVariables();
+			user.username = 'guest';
+			user.password = 'guest';
+			user.sumbit = 'sumbit';
+			var request:URLRequest = new URLRequest();
+			request.url = siteaccess + loginurl;
+			request.data = user;
+			request.method = URLRequestMethod.POST;
+			var loader:URLLoader = new URLLoader();
+			loader.load(request);
+			loader.addEventListener(Event.COMPLETE, querylogin);
+			function querylogin(event:Event):void {
+				//trace("==" + event.target.data);
+				
+				var userdataxml:XML = new XML(event.target.data);
+				if (userdataxml.message == 'pass') {
+					//trace(userdataxml.username);
+					username = userdataxml.username;
+					session = userdataxml.session;
+					trace('session:'+session);
+				}
+			}
+		}
 		
 		//} // End HUD/GUI
 		//=======================================
