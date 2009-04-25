@@ -71,6 +71,9 @@ Builds:
   * Polygon ()
 
  * Battle System
+  * Level
+  * stats
+  * conditions 
   * actions
    * walk
    * attack
