@@ -1,4 +1,5 @@
 <?php
+session_start(); // This must at the top else it not work right
 include('config.php');
 mysql_connect($accessdata['host'],$accessdata['username'],$accessdata['password']) or die(mysql_error());
 mysql_select_db($accessdata['database']) or die(mysql_error());

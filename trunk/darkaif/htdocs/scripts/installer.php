@@ -8,23 +8,28 @@ include('system/system_installer.php');
 //include('bot/install_chat.php');
 include('system/install_page.php');
 
-
+include('system/characterobject_installer.php');
+include('system/entityobject_installer.php');
 include('system/objectfile_installer.php');
+include('system/meshdata_installer.php');
 include('system/mapdata_install.php');
 include('system/thumbnail_install.php');
 include('system/flashapp_install.php');
 
 echo 'Scripts:<br>';
 //function script
-install_ipaddresscheck();//working
-install_member();//working
-install_settings();//working
+//install_characterobject();working
+//install_entityobject();
+//install_ipaddresscheck();//working
+//install_member();//working
+//install_settings();//working
 
-install_page(); //working
-install_flashapp(); //working
-install_mapdata(); //working
-install_thumbnail();//working
-install_objectfile(); //working
+//install_page(); //working
+//install_flashapp(); //working
+//install_mapdata(); //working
+//install_thumbnail();//working
+//install_objectfile(); //working
+//install_meshdata();
 
 //Not working yet
 #install_bot_log();

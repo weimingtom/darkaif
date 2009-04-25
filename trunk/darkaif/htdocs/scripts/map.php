@@ -6,20 +6,32 @@ action:
 -update
 -delete
 -check
-
 */
+
+session_start(); // This must at the top else it not work right
 include('config.php');
 
-mysql_connect($host,$username,$password) or die(mysql_error());
-mysql_select_db($database) or die(mysql_error());
+//mysql_connect($host, $username, $password) or die(mysql_error());
+//$username ='';
+mysql_connect($host, $username, $password) or die('<data>databaseerroraccess</data>');
+//$database = 'sds';
+//mysql_select_db($database) or die(mysql_error());
+//mysql_select_db($database) or (echo '<data>databaseerror</data>'; );
+mysql_select_db($database) or die('<data>databaseerrortable</data>');
 
-$membername = 'guest';
+$db_member = $prefix."members";
+$query = "SELECT * FROM $db_member WHERE session='{$_POST['session']}'";
+$result = mysql_query($query) or die(mysql_error());
+$row_member = mysql_fetch_array($result);
+
+if ($row_member['ban']) {
+	die();
+}
+$membername = $row_member['username'];
 $membernamehash = md5($membername);
 
-$mapname = $_GET['mapname'];
-$action = $_GET['action'];
 //echo $_POST['action'];
-if(($_GET == null)&&($_POST == null)){
+if($_POST['action'] == 'maplist'){
 	$db_table = $prefix."mapdata";
 	$query = "SELECT * FROM $db_table WHERE authorname='$membername'";
 	$result = mysql_query($query) or die(mysql_error());
@@ -28,19 +40,20 @@ if(($_GET == null)&&($_POST == null)){
 	header ("content-type: text/xml");
 	$xml_output = '<data>';
 	while ($row = mysql_fetch_array($result)) { //
-	//echo 
-	$xml_output .= '<map>';
-	$xml_output .= '<name>' . $row['name'] .'</name>';
-	$xml_output .= '<id>' . $row['idhash'] .'</id>';
-	$xml_output .= '</map>';
-	
+		//echo 
+		$xml_output .= '<map>';
+		//$xml_output .= '<name>' . $row['name'] .$_SESSION['username'].'</name>';
+		$xml_output .= '<name>' . $row['name'] .'</name>';
+		$xml_output .= '<id>' . $row['idhash'] .'</id>';
+		$xml_output .= '</map>';
 	}
+	//$xml_output .= '<member>'.$row_member['username'].$_SESSION['session'].'</member>';
 	$xml_output .= '</data>';
 	echo $xml_output;
 }
-else if ($action == 'check') {
+else if ($_POST['action'] == 'check') {
 	$db_table = $prefix."mapdata";
-	$query = "SELECT * FROM $db_table WHERE authorname='$membername' AND name='{$mapname}'";
+	$query = "SELECT * FROM $db_table WHERE authorname='$membername' AND name='{$_POST['mapname']}'";
 	$result = mysql_query($query) or die(mysql_error());
 	$num_rows = mysql_num_rows($result); 
 	header ("content-type: text/xml");
@@ -68,11 +81,11 @@ else if ($_POST['action'] == 'save') {
 	$db_table = $prefix."mapdata";
 	mysql_query("INSERT INTO $db_table
 	(idhash,name,filetype,idauthor,authorname,datatype,date,filename,fileversion,sharelevel,description,imageid,mapdata,flag,locked)
-	VALUES( '$maphash','{$mapname}','.xml','{$membernamehash}','{$membername}','$datapath','$datestamp','$objectnametext','1','1','none','none','$dataxmlmap','0','0')")
+	VALUES( '$maphash','{$mapname}','.xml','{$row_member['id_encrypt']}','{$row_member['username']}','$datapath','$datestamp','$objectnametext','1','1','none','none','$dataxmlmap','0','0')")
 	or die(mysql_error());
 	header ("content-type: text/xml");
 	$xml_output = '<data>';
-	$xml_output .= 'done';
+	$xml_output .= 'save';
 	$xml_output .= '</data>';
 	echo $xml_output;
 	//echo $_POST['mapdata'];
@@ -86,7 +99,7 @@ else if ($_POST['action'] == 'update') {
 	$sql = mysql_query($query) or die(mysql_error());
 	
 	$xml_output = '<data>';
-	$xml_output .= 'done';
+	$xml_output .= 'save';
 	$xml_output .= '</data>';
 	echo $xml_output;	
 }
@@ -99,8 +112,7 @@ else if ($_POST['action'] == 'load') {
 	#$bodycontent .= '[-]';
 	header ("content-type: text/xml");
 	while ($row = mysql_fetch_array($result)) {
-	$xml_output .= $row['mapdata'];
-	
+		$xml_output .= $row['mapdata'];
 	}
 	echo $xml_output;
 }
