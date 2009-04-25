@@ -10,7 +10,20 @@ Character Build: This will take time to deal with animation control and mesh con
 
 Builds:
  * Login
-  * Access 
+  * Access
+
+ * Character Editor (wip)
+  * Collision (wip)
+  * Animation mesh set (wip)
+   * Action set (wip)
+  * Players (wip)
+  * Monsters
+  * NPCs
+
+ * Mesh Editor
+  * Texture ID
+  * Animation
+
  * Map Save/Load (WIP)
  * Map List (WIP)
  * Map Editor (WIP)
