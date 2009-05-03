@@ -50,7 +50,7 @@ Builds:
   * Monster ()
   * NPC ()
 
- * mesh 
+ * Mesh 
   * Collisions
   * Textures
 
@@ -85,6 +85,18 @@ Builds:
    * hit
 
  * Skill System
+
+ * Monster
+  * Load Monster Character DataFile
+  * Check frame loop
+   * Check file is loaded
+   * Check Monster mesh/texture if loaded.
+   * Check Monster spawn Boolean for loop.
+   * Check Monster spawn monster is on the list matches the location.
+  *...
+  * need to refine the loop, var, and null.
+
+ * Bot System
 
 = RTS SPACEWAR BUILD: =
 Builds:
