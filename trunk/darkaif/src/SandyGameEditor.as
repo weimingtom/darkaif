@@ -6,6 +6,7 @@ package
 {
 	
 	//{
+	import adobe.utils.CustomActions;
 	import darknet.core.collision.CollisionBox;
 	import darknet.core.display.DropBoxList;
 	import darknet.core.display.NumericUpDown;
@@ -25,6 +26,8 @@ package
 	import darknet.engine.sandy.entity.SPlayer;
 	import darknet.engine.sandy.entity.SUser;
 	import darknet.engine.sandy.entity.STexture;
+	import flash.text.TextFieldAutoSize;
+	import org.jloa.display.ResourceMonitor;
 	
 	import flash.display.Sprite;
 	import flash.events.*;
@@ -41,6 +44,7 @@ package
 	import flash.system.*;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequestMethod;
+	import flash.system.*;
 	
 	import sandy.core.Scene3D;
 	import sandy.core.data.*;
@@ -142,6 +146,7 @@ package
 		public var session:String = ''; //player session when time expire
 		public var username:String = ''; //player name
 		//public var userid:String = ''; //player id
+		public var querylist:Array = new Array();
 		
 		public var TEXTUREID:String = '';
 		public var MESHOBJECT:String = '';
@@ -151,8 +156,9 @@ package
 		
 		public var dialogbox_login:DialogBox = new DialogBox();
 		
-		
 		public var dropbox_file:DropBoxList = new DropBoxList();
+		public var dropbox_charactermenu:DropBoxList = new DropBoxList();
+		public var dialogbox_character:DialogBox = new DialogBox();
 		public var dropboxlist_map:DropBoxList = new DropBoxList();
 		public var dropboxlist_meshmenu:DropBoxList = new DropBoxList();
 		public var dropboxlist_meshlist:DropBoxList = new DropBoxList();
@@ -210,6 +216,8 @@ package
 		//}
 		public var count:Number = 0;
 		
+		//public var textmemory:TextField = new TextField();
+		
 		//MAIN CLASS
 		public function SandyGameEditor() {
 			stage.showDefaultContextMenu = false;
@@ -257,6 +265,16 @@ package
 			
 			//dialogboxlogin();
 			//trace('---------------'+dropbox_file.y);
+			
+			//characternameidload('b34c2abb8b7d4b447cc2bfbaa5eb8c5f');
+			//textmemory.autoSize = TextFieldAutoSize.LEFT;
+			//textmemory.x=550;
+			//addChild(textmemory);
+			var monitor:ResourceMonitor = new ResourceMonitor(true, true)
+			monitor.x = 550;
+			addChild(monitor);
+			monitor.monitor();
+			
 		}
 		
 		// This update the code and the function when every frame count is pass
@@ -292,6 +310,8 @@ package
 			}
 			
 			scene2.render();
+			//var mem:String = Number( System.totalMemory / 1024 / 1024 ).toFixed( 2 ) + 'Mb';
+			//textmemory.text = String(mem);
 		}
 		
 		//create scene
@@ -326,6 +346,10 @@ package
 					g.removeChildByName(objectmove[c].name);
 				}
 			}
+			System.gc();
+			System.gc();
+			//System.exit(0);
+			trace("TEST:"+System.vmVersion);
 		}
 		
 		public function cleanmapdata():void {
@@ -353,6 +377,8 @@ package
 			load.addEventListener(Event.COMPLETE, loaddata);
 			function loaddata(event:Event):void {
 				load.removeEventListener(Event.COMPLETE, loaddata);
+				load = null;
+				request = null;
 				//trace(event.target.data);
 				mapxml = new XML(event.target.data);
 				//trace(mapxml);
@@ -369,7 +395,7 @@ package
 			playerreloadmodel();
 			
 			objectmodel = new Vector.<SMesh>();
-			
+			var queue:LoaderQueue = new LoaderQueue();
 			var parserstack:ParserStack = new ParserStack();
 			var count:Number = 0;
 			//trace(mapxml);
@@ -382,7 +408,20 @@ package
 					if (mapxml.objectlist.mesh[meshlistno].typeext == '.ase') {
 						//trace('.ASE...');
 						parser = Parser.create(String(siteaccess+objecturl+'?file='+ objectid), Parser.ASE); //object data
+						//queue.add(objectid, new URLRequest(siteaccess + objecturl + '?file=' + objectid), "BIN" );
 						parserstack.add(String(objectid), parser);//name file, object data
+					}
+					if (mapxml.objectlist.mesh[meshlistno].typeext == '.3ds') {
+						//trace('.3ds...');
+						//queue.add(objectid, new URLRequest(siteaccess + objecturl + '?file=' + objectid), "BIN" );
+					}
+					if (mapxml.objectlist.mesh[meshlistno].typeext == '.dae') {
+						//trace('.dae...');
+						//queue.add(objectid, new URLRequest(siteaccess + objecturl + '?file=' + objectid), "BIN" );
+					}
+					if (mapxml.objectlist.mesh[meshlistno].typeext == '.md2') {
+						//trace('.md2...');
+						//queue.add(objectid, new URLRequest(siteaccess + objecturl + '?file=' + objectid), "BIN" );
 					}
 				}else {
 					
@@ -392,6 +431,8 @@ package
 			if(mapxml.objectlist.mesh.length() > 0 ){
 				parserstack.addEventListener(ParserStack.COMPLETE,loaddatafile);
 				parserstack.start();
+				//queue.addEventListener(SandyEvent.QUEUE_COMPLETE, loaddatafile );
+				//queue.start();
 			}
 			
 			//once all files are loaded
@@ -402,10 +443,35 @@ package
 					var objectidname:String = mapxml.objectlist.mesh[meshdatano].idobject;
 					var meshdata:SMesh = new SMesh();
 					var objectname:String = mapxml.objectlist.mesh[meshdatano].name;
-					var tmpshape:Shape3D;
-					tmpshape = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+					//var tmpshape:Shape3D;
+					
+					if (mapxml.objectlist.mesh[meshdatano].typeext == '.ase') {
+						//tmpshape = queue.data[objectidname] as Shape3D;
+						//tmpshape = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+						//meshdata.mesh = tmpshape;
+						meshdata.mesh = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+					}
+					if (mapxml.objectlist.mesh[meshdatano].typeext == '.3ds') {
+						//tmpshape = queue.data[objectidname] as Shape3D;
+						//tmpshape = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+						//g.addChild(tmpshape);
+						meshdata.mesh = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+					}
+					if (mapxml.objectlist.mesh[meshdatano].typeext == '.dae') {
+						//tmpshape = queue.data[objectidname] as Shape3D;
+						//tmpshape = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+						//g.addChild(tmpshape);
+						meshdata.mesh = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+					}
+					if (mapxml.objectlist.mesh[meshdatano].typeext == '.md2') {
+						//tmpshape = queue.data[objectidname] as Shape3D;
+						//tmpshape = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+						//g.addChild(tmpshape);
+						meshdata.mesh = parserstack.getGroupByName(String(objectidname)).children[0] as Shape3D;
+					}
+					
 					meshdata.filedir = mapxml.objectlist.mesh[meshdatano].localdir;
-					meshdata.mesh = tmpshape;
+					//meshdata.mesh = tmpshape;
 					meshdata.mesh.name = objectname;
 					meshdata.idhash = objectidname;
 					meshdata.name = objectname;
@@ -443,6 +509,8 @@ package
 				}
 				//when object is finish goes here
 				//buildmeshmap();
+				parserstack.clear();
+				parserstack = null;
 				loadtexture();
 			}
 			
@@ -506,6 +574,7 @@ package
 					}
 				}
 				//buildmeshmap();
+				queue = null;
 				TextureAssign();
 			}
 		}
@@ -576,9 +645,9 @@ package
 			
 			//objectmodel.push(datamesh);
 			
-			for (var meshmodelno:int = 0; meshmodelno < objectmodel.length; meshmodelno++) {
-				trace("model box:"+objectmodel[meshmodelno].collison.box.length);
-			}
+			//for (var meshmodelno:int = 0; meshmodelno < objectmodel.length; meshmodelno++) {
+				//trace("model box:"+objectmodel[meshmodelno].collison.box.length);
+			///}
 			
 			//loadcharacterurl();
 		}
@@ -688,16 +757,20 @@ package
 			
 			function mapquerylistdata(event:Event):void {
 				loadermaplist.removeEventListener(Event.COMPLETE, mapquerylistdata);
+				variables = null;
+				requestmaplist = null;
+				loadermaplist = null;
 				var maplistdata:XML = new XML(event.target.data);
 				trace(maplistdata);
 				//trace("list map no:"+maplistdata.map.length());
 				dropboxlist_map.x = 14;
 				dropboxlist_map.y = 14;
-				dropboxlist_map.boxlist = new Array();
+				dropboxlist_map.clearlist();
 				for (var mapdatano:int = 0; mapdatano < maplistdata.map.length(); mapdatano++) {
 					//trace(mapdata.map[mapdatano].name);
-					dropboxlist_map.boxlist.push({name:maplistdata.map[mapdatano].name,id:maplistdata.map[mapdatano].id});
+					dropboxlist_map.addlist({name:maplistdata.map[mapdatano].name,id:maplistdata.map[mapdatano].id});
 				}
+				maplistdata = null;
 				dialogboxmaploadlist();
 			}
 		}
@@ -793,6 +866,13 @@ package
 			
 			mapsavexml.appendChild(xmlobjects);
 			
+			var xmlmonsters:XML = <monsterlist/>;
+			for (var monsterno:int = 0; monsterno < monstermodel.length;monsterno++ ) {
+				xmlmonsters.appendChild(monstermodel[monsterno].savemonstermap());
+			}
+			
+			mapsavexml.appendChild(xmlmonsters);
+			
 			//trace("========");
 			//trace(mapsavexml);
 			//trace("========");
@@ -817,6 +897,9 @@ package
 			filemappanelclose();
 			
 			function checkmapaction(event:Event = null):void {
+				loader = null;
+				request = null;
+				variables = null;
 				var dataxml:XML = new XML(event.target.data);
 				//trace(event.target.data);
 				//FlashConnect.trace(dataxml);
@@ -844,6 +927,9 @@ package
 			loader.addEventListener(Event.COMPLETE, checkmapnamedata);
 			
 			function checkmapnamedata(event:Event = null):void {
+				variables = null;
+				request = null;
+				loader = null;
 				var dataxml:XML = new XML(event.target.data);
 				//FlashConnect.trace(dataxml);
 				//trace("[" + dataxml.message + "]");
@@ -1079,6 +1165,8 @@ package
 			function loaddata(event:Event):void {
 				//trace(event.target.data);
 				objectlistxml = new XML(event.target.data);
+				request = null;
+				load = null;
 				meshdataload();
 			}	
 		}
@@ -1140,7 +1228,19 @@ package
 					//trace('FOUND ID FOR LOADING');
 					//trace(objectlistxml.file[objectno].type+"]]]");
 					if (objectlistxml.file[objectno].type == '.ase') {
-						loadobjectfile_ase(objectlistxml.file[objectno].idobject);
+						loadobjectfile_meshdata(objectlistxml.file[objectno].idobject);
+					}
+					
+					if (objectlistxml.file[objectno].type == '.3ds') {
+						loadobjectfile_meshdata(objectlistxml.file[objectno].idobject);
+					}
+					
+					if (objectlistxml.file[objectno].type == '.dae') {
+						loadobjectfile_meshdata(objectlistxml.file[objectno].idobject);
+					}
+					
+					if (objectlistxml.file[objectno].type == '.md2') {
+						loadobjectfile_meshdata(objectlistxml.file[objectno].idobject);
 					}
 					
 					if (imagecheckext(objectlistxml.file[objectno].type)) {
@@ -1215,7 +1315,242 @@ package
 				if(!bobjectfound){
 					objectmesh.push(meshobject);
 				}
+				parserstack.clear();
+				parserstack = null;
+				dialogbox_meshdataid(meshobject.idhash);
+				//trace("COUNT MESH:" + objectmesh.length);
+				//drawframemeshpreview();
+				//addChild(imagemeshpreview);
+			}
+		}
+		
+		//MD2 Stills Mesh object loader
+		public function loadobjectfile_md2(filename:String):void {
+			var parserstack:ParserStack = new ParserStack();
+			var objectname:String = 'md2';
+			//file access url
+			var parser:IParser = Parser.create(String(siteaccess+objecturl+'?file='+filename), Parser.MD2 );
+			parserstack.add(String(objectname), parser);
+			parserstack.addEventListener(ParserStack.COMPLETE,loaddatafile);
+			parserstack.start();
+			var dataobject:SMesh = new SMesh();
+			//dataobject.mesh
+			dataobject.mesh
+			
+			function loaddatafile():void {
+				//var :SMesh = new SMesh();
+				var meshobject:SMesh = new SMesh();
+				var tmpshape:Shape3D;
+				//tmpshape = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				for (var meshxmlno:int = 0; meshxmlno < objectlistxml.file.length(); meshxmlno++) {
+					//trace(objectlistxml);
+					if (objectlistxml.file[meshxmlno].idobject == filename) {
+						meshobject.exttype = objectlistxml.file[meshxmlno].type;
+						trace("loading..."+objectlistxml.file[meshxmlno].typeext );
+						//meshobject.filedir = objectlistxml.file[meshxmlno].localdir;
+						meshobject.name = objectlistxml.file[meshxmlno].name
+						//trace('id found!');
+						break;
+					}
+				}
 				
+				meshobject.idhash = filename;
+				meshobject.mesh = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				//g.addChild(meshobject.mesh);
+				g2.addChild(meshobject.mesh);
+				//g.addChild(tmpshape);
+				var bobjectfound:Boolean = false;
+				for (var objectmeshno:int = 0; objectmeshno < objectmesh.length;objectmeshno++) {
+					if (objectmesh[objectmeshno].idhash == filename) {
+						bobjectfound = true;
+					}
+				}
+				
+				if(!bobjectfound){
+					objectmesh.push(meshobject);
+				}
+				parserstack.clear();
+				parserstack = null;
+				dialogbox_meshdataid(meshobject.idhash);
+				//trace("COUNT MESH:" + objectmesh.length);
+				//drawframemeshpreview();
+				//addChild(imagemeshpreview);
+			}
+		}
+		
+		//3DS Stills Mesh object loader
+		public function loadobjectfile_3ds(filename:String):void {
+			var parserstack:ParserStack = new ParserStack();
+			var objectname:String = '3ds';
+			//file access url
+			var parser:IParser = Parser.create(String(siteaccess+objecturl+'?file='+filename), Parser.MAX_3DS );
+			parserstack.add(String(objectname), parser);
+			parserstack.addEventListener(ParserStack.COMPLETE,loaddatafile);
+			parserstack.start();
+			var dataobject:SMesh = new SMesh();
+			//dataobject.mesh
+			dataobject.mesh
+			
+			function loaddatafile():void {
+				//var :SMesh = new SMesh();
+				var meshobject:SMesh = new SMesh();
+				var tmpshape:Shape3D;
+				//tmpshape = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				for (var meshxmlno:int = 0; meshxmlno < objectlistxml.file.length(); meshxmlno++) {
+					//trace(objectlistxml);
+					if (objectlistxml.file[meshxmlno].idobject == filename) {
+						meshobject.exttype = objectlistxml.file[meshxmlno].type;
+						trace("loading..."+objectlistxml.file[meshxmlno].typeext );
+						//meshobject.filedir = objectlistxml.file[meshxmlno].localdir;
+						meshobject.name = objectlistxml.file[meshxmlno].name
+						//trace('id found!');
+						break;
+					}
+				}
+				
+				meshobject.idhash = filename;
+				meshobject.mesh = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				//g.addChild(meshobject.mesh);
+				g2.addChild(meshobject.mesh);
+				//g.addChild(tmpshape);
+				var bobjectfound:Boolean = false;
+				for (var objectmeshno:int = 0; objectmeshno < objectmesh.length;objectmeshno++) {
+					if (objectmesh[objectmeshno].idhash == filename) {
+						bobjectfound = true;
+					}
+				}
+				
+				if(!bobjectfound){
+					objectmesh.push(meshobject);
+				}
+				parserstack.clear();
+				parserstack = null;
+				dialogbox_meshdataid(meshobject.idhash);
+				//trace("COUNT MESH:" + objectmesh.length);
+				//drawframemeshpreview();
+				//addChild(imagemeshpreview);
+			}
+		}
+		
+		//DAE Mesh object loader
+		public function loadobjectfile_dae(filename:String):void {
+			var parserstack:ParserStack = new ParserStack();
+			var objectname:String = '3ds';
+			//file access url
+			var parser:IParser = Parser.create(String(siteaccess+objecturl+'?file='+filename), Parser.COLLADA);
+			parserstack.add(String(objectname), parser);
+			parserstack.addEventListener(ParserStack.COMPLETE,loaddatafile);
+			parserstack.start();
+			var dataobject:SMesh = new SMesh();
+			//dataobject.mesh
+			dataobject.mesh
+			
+			function loaddatafile():void {
+				//var :SMesh = new SMesh();
+				var meshobject:SMesh = new SMesh();
+				var tmpshape:Shape3D;
+				//tmpshape = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				for (var meshxmlno:int = 0; meshxmlno < objectlistxml.file.length(); meshxmlno++) {
+					//trace(objectlistxml);
+					if (objectlistxml.file[meshxmlno].idobject == filename) {
+						meshobject.exttype = objectlistxml.file[meshxmlno].type;
+						trace("loading..."+objectlistxml.file[meshxmlno].typeext );
+						//meshobject.filedir = objectlistxml.file[meshxmlno].localdir;
+						meshobject.name = objectlistxml.file[meshxmlno].name
+						//trace('id found!');
+						break;
+					}
+				}
+				
+				meshobject.idhash = filename;
+				meshobject.mesh = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				//g.addChild(meshobject.mesh);
+				g2.addChild(meshobject.mesh);
+				//g.addChild(tmpshape);
+				var bobjectfound:Boolean = false;
+				for (var objectmeshno:int = 0; objectmeshno < objectmesh.length;objectmeshno++) {
+					if (objectmesh[objectmeshno].idhash == filename) {
+						bobjectfound = true;
+					}
+				}
+				
+				if(!bobjectfound){
+					objectmesh.push(meshobject);
+				}
+				parserstack.clear();
+				parserstack = null;
+				dialogbox_meshdataid(meshobject.idhash);
+				//trace("COUNT MESH:" + objectmesh.length);
+				//drawframemeshpreview();
+				//addChild(imagemeshpreview);
+			}
+		}
+		
+		//DATA Mesh object loader //MAIN LOADER FOR OBJECT MESH DATA FOR CHECK EXT.
+		public function loadobjectfile_meshdata(filename:String):void {
+			var parserstack:ParserStack = new ParserStack();
+			var objectname:String = '3ds';
+			//file access url
+			for (var objectno:int = 0; objectno < objectlistxml.file.length(); objectno++) {
+				var parser:IParser;
+				if ((objectlistxml.file[objectno].type == '.dae')&&(objectlistxml.file[objectno].idobject == filename)) {
+					parser = Parser.create(String(siteaccess + objecturl + '?file=' + filename), Parser.COLLADA);
+					break;
+				}
+				if ((objectlistxml.file[objectno].type == '.md2')&&(objectlistxml.file[objectno].idobject == filename)) {
+					parser = Parser.create(String(siteaccess + objecturl + '?file=' + filename), Parser.MD2);
+					break;
+				}
+				if ((objectlistxml.file[objectno].type == '.ase')&&(objectlistxml.file[objectno].idobject == filename)) {
+					parser = Parser.create(String(siteaccess + objecturl + '?file=' + filename), Parser.ASE);
+					break;
+				}
+				if ((objectlistxml.file[objectno].type == '.3ds')&&(objectlistxml.file[objectno].idobject == filename)) {
+					parser = Parser.create(String(siteaccess + objecturl + '?file=' + filename), Parser.MAX_3DS);
+					break;
+				}
+			}
+			parserstack.add(String(objectname), parser);
+			parserstack.addEventListener(ParserStack.COMPLETE,loaddatafile);
+			parserstack.start();
+			var dataobject:SMesh = new SMesh();
+			//dataobject.mesh
+			dataobject.mesh
+			
+			function loaddatafile():void {
+				//var :SMesh = new SMesh();
+				var meshobject:SMesh = new SMesh();
+				var tmpshape:Shape3D;
+				//tmpshape = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				for (var meshxmlno:int = 0; meshxmlno < objectlistxml.file.length(); meshxmlno++) {
+					//trace(objectlistxml);
+					if (objectlistxml.file[meshxmlno].idobject == filename) {
+						meshobject.exttype = objectlistxml.file[meshxmlno].type;
+						trace("loading..."+objectlistxml.file[meshxmlno].typeext );
+						//meshobject.filedir = objectlistxml.file[meshxmlno].localdir;
+						meshobject.name = objectlistxml.file[meshxmlno].name
+						//trace('id found!');
+						break;
+					}
+				}
+				
+				meshobject.idhash = filename;
+				meshobject.mesh = parserstack.getGroupByName(String(objectname)).children[0] as Shape3D; 
+				//g.addChild(meshobject.mesh);
+				g2.addChild(meshobject.mesh);
+				//g.addChild(tmpshape);
+				var bobjectfound:Boolean = false;
+				for (var objectmeshno:int = 0; objectmeshno < objectmesh.length;objectmeshno++) {
+					if (objectmesh[objectmeshno].idhash == filename) {
+						bobjectfound = true;
+					}
+				}
+				
+				if(!bobjectfound){
+					objectmesh.push(meshobject);
+				}
+				parserstack.clear();
+				parserstack = null;
 				dialogbox_meshdataid(meshobject.idhash);
 				//trace("COUNT MESH:" + objectmesh.length);
 				//drawframemeshpreview();
@@ -1259,7 +1594,7 @@ package
 					texturemesh.push(textureimage);
 					dialogboxtextureid(textureimage.idhash);
 				}
-				
+				queue = null;
 				//addChild(textureimage.bitimage);
 			}
 		}
@@ -1394,6 +1729,9 @@ package
 					load.load(request);
 					load.addEventListener(Event.COMPLETE, loaddata);
 					function loaddata(event:Event):void {
+						variables = null;
+						request = null;
+						load = null;
 						//trace(event.target.data);
 						var objxml:XML = new XML(event.target.data);
 						meshdata.objxmlconvertdata(objxml);
@@ -2288,9 +2626,10 @@ package
 				characterlist.push(schar);
 			}
 			//trace('...');
-			characternameidload('b34c2abb8b7d4b447cc2bfbaa5eb8c5f');
+			//characternameidload('b34c2abb8b7d4b447cc2bfbaa5eb8c5f');
 		}
 		
+		//QUERY CHARACTER MESH SET
 		//load character animation mesh
 		public function characternameidload(stridname:String):void {
 			//trace('init..chardata...');
@@ -2320,25 +2659,36 @@ package
 				urlloader.addEventListener(Event.COMPLETE, initdata)
 				
 				function initdata(event:Event):void {
-					//trace("data char:"+event.target.data);
-					//character
-					//trace('character frame loaded...');
-					loadanimationmeshset(new XML(event.target.data));
+					//trace(event.target.data);
+					var dataxml:XML = new XML(event.target.data);
+					var bnamefound:Boolean = false;
+					
+					for (var checkno:int = 0;checkno < querylist.length ; checkno++) {
+						if (querylist[checkno] == dataxml.character.name) {
+							bnamefound = true;
+							break;
+						}
+					}
+					
+					if(!bnamefound){
+						loadanimationmeshset(new XML(event.target.data));
+						querylist.push(dataxml.character.name);
+						trace("list check:" + querylist.length);//make sure it not over load meory.
+					}
 				}
 			}
 		}
 		
+		//LOAD ANIMATION MESH AND ACTION FRAME SET
 		//character animationset mesh
 		public function loadanimationmeshset(objectxml:XML):void {
-			var sanimset:SAnimationSet = new SAnimationSet();
-			sanimset.mesh
 			//trace('init...mesh load...');
 			var schar:SCharacter = new SCharacter();
 			schar.name = objectxml.character.name;
 			schar.idhash = objectxml.character.idhash;
 			
 			var queue:LoaderQueue = new LoaderQueue();
-			//trace("XML===="+objectxml.character.animationset.mesh.length());
+			//START LOAD FILE MESH
 			for (var animmeshno:int = 0; animmeshno < objectxml.character.animationset.mesh.length(); animmeshno++) {
 				var strfile:String = objectxml.character.animationset.mesh[animmeshno].idhash
 				var nameurlobject:String  = siteaccess + objecturl + '?file=' +strfile;
@@ -2347,23 +2697,19 @@ package
 					queue.add(String(strfile), new URLRequest(String(nameurlobject)), "BIN" );
 				}
 			}
-			
 			queue.addEventListener(SandyEvent.QUEUE_COMPLETE,loadcharactercomplete);
 			queue.start();
-			//var action:SActionFrame = new SActionFrame();
-			//action.savexmldata();
 			
+			//DATA FILE FINISH
 			function loadcharactercomplete():void {
 				for (var animmeshsetno:int = 0; animmeshsetno < objectxml.character.animationset.mesh.length(); animmeshsetno++) {
 					var sanimset:SAnimationSet = new SAnimationSet();
 					var strfileloaded:String = objectxml.character.animationset.mesh[animmeshsetno].idhash;
 					//trace(strfileloaded);
 					if(strfileloaded.length){
-						//var animmd2:MD2  = new MD2 (String(strfileloaded), queue.data[strfileloaded], 1);
 						sanimset.mesh = new MD2 (String(strfileloaded), queue.data[strfileloaded], 1);
 						sanimset.idhash = strfileloaded;
-						//trace("number actions:" + objectxml.character.animationset.mesh[animmeshsetno].actionset.action.length())
-						//create action set from frame index's
+						//CREATE ACTION FRAME
 						for (var actionno:int = 0; actionno < objectxml.character.animationset.mesh[animmeshsetno].actionset.action.length(); actionno++) {
 							var action:SActionFrame = new SActionFrame();
 							action.readxmldata(objectxml.character.animationset.mesh[animmeshsetno].actionset.action[actionno]);
@@ -2373,15 +2719,24 @@ package
 						schar.meshs.push(sanimset);
 					}
 				}
-				//character mesh with animationset
-				charactermesh.push(schar);
-				//trace('Char...:'+charactermesh.length);
+				var bcharfound:Boolean = false;
+				for (var charsetno:int = 0; charsetno < charactermesh.length;charsetno++ ) {
+					if (charactermesh[charsetno].idhash == schar.idhash) {
+						bcharfound = true;
+						break;
+					}
+				}
+				
+				if(!bcharfound){
+					charactermesh.push(schar);
+				}
+				trace('number of char:'+charactermesh.length);
 			}
 		}
 		
 		//this will find one player and it exit it
 		public function checkplayercharacter():void {
-			//trace('...'+player.length);
+			//trace('...'+player.length+"[:]"+playermodel.length);
 			if(!playerfound){
 			//check if player by list to be shown in game
 			for (var playerno:int = 0; playerno < player.length;playerno++ ) {
@@ -2390,6 +2745,7 @@ package
 				for (var playermodelno:int = 0; playermodelno < playermodel.length  ;playermodelno++) {
 					if (bplayerfound == playermodel[playermodelno].playername) {
 						bplayerfound = true;
+						break;
 					}
 				}
 				
@@ -2422,7 +2778,13 @@ package
 						}
 					}
 				}else {
-					//trace('FOUND++>');
+					trace('Not FOUND++>');
+				}
+				
+				if (bplayerfound == false) {
+					trace('not found...');
+					//player[playerno].characteridhash
+					characternameidload(player[playerno].characteridhash);
 				}
 			}
 			}
@@ -2503,6 +2865,104 @@ package
 				}
 			}
 		}
+		
+		public function showcharactermenu():void {
+			dropbox_charactermenu.x = 300;
+			dropbox_charactermenu.clearlist();
+			dropbox_charactermenu.addlist( { name:'Character Load', id:'characterload' } );
+			dropbox_charactermenu.addlist( { name:'Character', id:'character' } );
+			dropbox_charactermenu.addlist( { name:'Monster', id:'monster' } );
+			dropbox_charactermenu.addlist( { name:'NPC', id:'npc' } );
+			
+			dropbox_charactermenu.addEventListener(DropBoxEvent.SELECT, seletedcharmenu);
+			
+			function seletedcharmenu(event:DropBoxEvent):void {
+				if (dropbox_charactermenu._idname == 'character') {
+					dialogboxcharacterlist();
+				}
+				
+				if (dropbox_charactermenu._idname == 'monster') {
+					
+				}
+				
+				if (dropbox_charactermenu._idname == 'npc') {
+					
+				}
+			}
+			
+			addChild(dropbox_charactermenu);
+		}
+		
+		public function dialogboxcharacterlist():void {
+			var panel:Sprite = new Sprite();
+			var buttonaddmonster:Button = new Button('Add Monster');
+			buttonaddmonster.x = 14;
+			buttonaddmonster.y = 30;
+			var buttonaddnpc:Button = new Button('Add NPC');
+			var dropboxlist_character:DropBoxList = new DropBoxList();
+			dropboxlist_character.clearlist();
+			for (var charno:int = 0; charno < charactermesh.length;charno++) {
+				dropboxlist_character.addlist({name:charactermesh[charno].name,id:charactermesh[charno].idhash});
+			}
+			
+			buttonaddmonster.addEventListener(MouseEvent.CLICK, addmonster);
+			function addmonster(event:Event):void {
+				for (var characterlistno:int = 0; characterlistno < charactermesh.length;characterlistno++ ) {
+					if (charactermesh[characterlistno].idhash == dropboxlist_character._idname) {
+						//trace('found');
+						MonsterCloneAddMap(charactermesh[characterlistno]);
+						break;
+					}
+				}
+			}
+			
+			dialogbox_character.addEventListener(PanelEvent.CLOSE,dropboxlist_characterclose);
+			panel.addChild(buttonaddmonster);
+			panel.addChild(dropboxlist_character);
+			dialogbox_character.content(panel);
+			addChild(dialogbox_character);
+		}
+		
+		public function dropboxlist_characterclose(event:PanelEvent =null):void {
+			removeChild(dialogbox_character);
+		}
+		
+		//}
+		//=======================================
+		
+		//=======================================
+		//{
+		public function MonsterLoadMesh():void {
+			for (var objectlistno:int = 0; objectlistno < mapxml.monsterlist.monster.length()  ; objectlistno++ ) {
+				
+			}
+		}
+		
+		public function MonsterCloneAddMap(scharacter:SCharacter):void {
+			var smonster:SMonster = new SMonster();
+			smonster.idhash = scharacter.idhash;
+			smonster.name = scharacter.name;
+			smonster.collison = scharacter.collison;
+			
+			for (var charactermeshno:int = 0; charactermeshno < scharacter.meshs.length; charactermeshno++) {
+				var sanimset:SAnimationSet = new SAnimationSet();
+				sanimset.mesh = scharacter.meshs[charactermeshno].mesh.clone() as MD2;
+				sanimset.actionframe = scharacter.meshs[charactermeshno].actionframe;
+				smonster.meshs.push(sanimset);
+				g.addChild(sanimset.mesh);
+			}
+			
+			monstermodel.push(smonster);
+		}
+		
+		public function MonsterMeshLoadCheck():void {
+			
+		}
+		
+		public function MonsterBuildMap():void {
+			
+		}
+		
 		
 		
 		//}
@@ -2618,6 +3078,7 @@ package
 			//mapfilepanel.addEventListener(PanelCloseEvent.CHANGE, mapsavepanelclose);
 			showfilepanel();
 			filemeshobjectpanel();
+			showcharactermenu();
 		}
 		
 		public function tmplogin(event:Event = null):void {

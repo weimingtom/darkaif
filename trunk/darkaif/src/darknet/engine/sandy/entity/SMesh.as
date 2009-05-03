@@ -46,7 +46,7 @@
 			mesh.x = px;
 			mesh.y = py;
 			mesh.z = pz;
-			trace('set position:' + x + ':' + y + ':' + z);
+			//trace('set position:' + x + ':' + y + ':' + z);
 		}
 		
 		public function setrotation(px:Number, py:Number, pz:Number):void {

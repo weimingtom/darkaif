@@ -70,6 +70,62 @@
 			rotation.z = xmldata.rotation.z;
 		}
 		
+		public function dataconvertxml():XML
+		{
+			var meshbox:XML = <box/>;
+			//scale
+			var meshscale:XML = <scale/>;
+			meshscale.appendChild(scale);
+			meshbox.appendChild(meshscale);
+			var meshscalex:XML = <scalex/>;
+			meshscalex.appendChild(scalex)
+			meshbox.appendChild(meshscalex);
+			var meshscaley:XML = <scaley/>;
+			meshscaley.appendChild(scaley)
+			meshbox.appendChild(meshscaley);
+			var meshscalez:XML = <scalez/>;
+			meshscalez.appendChild(scalez)
+			meshbox.appendChild(meshscalez);
+			
+			//box size
+			var meshheight:XML = <height/>;
+			meshheight.appendChild(height)
+			meshbox.appendChild(meshheight);
+			var meshlength:XML = <length/>;
+			meshlength.appendChild(length)
+			meshbox.appendChild(meshlength);
+			var meshwidth:XML = <width/>;
+			meshwidth.appendChild(width)
+			meshbox.appendChild(meshwidth);
+			
+			//position
+			var meshposition:XML = <position/>;
+			var meshposx:XML = <x/>;
+			meshposx.appendChild(x)
+			meshposition.appendChild(meshposx);
+			var meshposy:XML = <y/>;
+			meshposy.appendChild(y)
+			meshposition.appendChild(meshposy);
+			var meshposz:XML = <z/>;
+			meshposz.appendChild(z)
+			meshposition.appendChild(meshposz);
+			meshbox.appendChild(meshposition);
+			//rotation
+			var meshrotation:XML = <rotation/>;
+			var meshrotx:XML = <x/>;
+			meshrotx.appendChild(rotation.x);
+			meshrotation.appendChild(meshrotx);
+			var meshroty:XML = <y/>;
+			meshroty.appendChild(rotation.y);
+			meshrotation.appendChild(meshroty);
+			var meshrotz:XML = <z/>;
+			meshrotz.appendChild(rotation.z);
+			meshrotation.appendChild(meshrotz);
+			meshbox.appendChild(meshrotation);
+				
+			return meshbox;
+		}
+		
 	}
 	
 }

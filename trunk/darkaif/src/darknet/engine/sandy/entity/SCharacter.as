@@ -23,7 +23,7 @@
 		public var framename:String = 'stand'; //sub action frame into parts
 		public var bgravity:Boolean = false;
 		public var gravityx:Number  = 0;
-		public var gravityy:Number  = 1;
+		public var gravityy:Number  = 0;//1
 		public var gravityz:Number  = 0;
 		
 		public var walkspeed:Number = 1;
@@ -49,6 +49,16 @@
 			}
 			//objectxml.appendChild(objectanimationset);
 			//return objectxml;
+			return objectanimationset;
+		}
+		
+		//SAVE BOX COLLISION XML
+		public function characterboxsavexml():XML {
+			
+			var objectanimationset:XML = <collision/>;
+			for (var boxno:int = 0; boxno < collison.box.length;boxno++ ) {
+				objectanimationset.appendChild(collison.box[boxno].dataconvertxml());
+			}
 			return objectanimationset;
 		}
 		
@@ -139,7 +149,6 @@
 				dirz = 0;
 			}
 		}
-		
 		
 		/**
 		 * 

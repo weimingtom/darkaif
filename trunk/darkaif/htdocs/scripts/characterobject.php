@@ -50,6 +50,38 @@ if(($_POST['name'] != null) and ($_POST['action'] == 'save')){
 		or die(mysql_error());
 		$xmloutput .= '<message>save</message><idhash>'.$idmeshhash.'</idhash>';
 	}
+}else if(($_POST['name'] != null) and ($_POST['action'] == 'savemeshdata')){
+//echo '['.$_POST['name']."=".$_POST['idhash'].']';
+
+	$db_table = $prefix."characterobject";
+	
+	if (!empty($_POST['idhash'])){
+		$query = "SELECT * FROM $db_table WHERE idhash='{$_POST['idhash']}'";
+		//echo '1=';
+	}else {
+		//echo '0=';
+		$query = "SELECT * FROM $db_table WHERE name='{$_POST['name']}' AND authorname='{$usernamemember}'";
+	}
+	
+	$result = mysql_query($query) or die(mysql_error());
+	$row = mysql_fetch_array($result);
+	$count = mysql_num_rows($result);
+	//$count = 1;
+	//echo $count;
+	
+	if ($count) {//update file
+		//echo 'there...';
+		$query = "UPDATE $db_table SET meshdata='{$_POST['meshdata']}' WHERE idhash='{$row['idhash']}'";
+		$sql = mysql_query($query) or die(mysql_error());
+		$xmloutput .= '<message>saveupdate</message>';
+	}else {//save file and build it
+		echo 'not there...';//not there
+		mysql_query("INSERT INTO $db_table
+		(idhash,name,meshdata,version,idauthor,authorname,date)
+		VALUES('{$idmeshhash}','{$_POST['name']}','{$_POST['meshdata']}','1','{$usernamememberhash}','{$usernamemember}','{$time}')")
+		or die(mysql_error());
+		$xmloutput .= '<message>save</message><idhash>'.$idmeshhash.'</idhash>';
+	}
 }
 else if (($_POST['idhash'] != null) and ($_POST['action'] == 'load')) {
 	$actionset = array();
@@ -75,6 +107,7 @@ $xmloutput .= '<character>
   <name>'.$row['name'].'</name>
   <idhash>'.$row['idhash'].'</idhash>
   ';
+$xmloutput .= $row['meshdata'];
 	//convert xml to be able to read them
 	$dom = new domDocument();
 	$dom->loadXML($row['animationdata']);
