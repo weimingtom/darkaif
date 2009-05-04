@@ -2,7 +2,7 @@
 #labels as3,actionscript,EventDispatcher,Event,class
 
 = Introduction =
-Basic and simple form.
+Basic and simple format.
 
 MyClassEvent.as
 {{{
