@@ -34,17 +34,13 @@ package
 }
 }}}
 
-
+ClasDemoEvent.as
 {{{
 package  
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	/**
-	 * ...
-	 * @author Darknet
-	 */
 	public class ClasDemoEvent extends Sprite
 	{
 		
