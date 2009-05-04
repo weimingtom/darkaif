@@ -46,7 +46,7 @@ package
 		
 		public function ClasDemoEvent () 
 		{
-			//var clas:MyClassEvent
+			//var testclass:MyClassEvent
 			MyClassEvent.addEventListener(Event.COMPLETE, onComplete, false, 0, true);
 			function onComplete(p_event:Event):void {
 				trace("Complete!");
