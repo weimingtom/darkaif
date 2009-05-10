@@ -9,6 +9,7 @@ Map Build: Manage to build a basic map for load and saving the map data.
 Character Build: This will take time to deal with animation control and mesh control. There are id tag to manage data structures.
 
 Builds:
+ * Screen Shot
  * Login
   * Access
 
@@ -38,6 +39,12 @@ Builds:
    * Texture (part done)
    * Animation Set (part done)
    * Action Set (part done)
+
+ * Terrain
+  * Height Map
+  * Edit
+  * Save
+  * Load
 
  * Character (part done)
   * Animation set (part done)
@@ -70,7 +77,7 @@ Builds:
   * Sphere (part done)
   * Polygon ()
 
- * Battle System
+ * Battle System (WIP)
   * Level
   * stats
   * conditions 
