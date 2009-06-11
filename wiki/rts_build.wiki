@@ -8,7 +8,10 @@ I am currency working on some basic functions to do with buildings and units.
 
 soldiers/vehicles = units
 
- * Terrain builds.
- * Select units using square base.
- * Select units objects.
- * Move units.
+ * Terrain builds. (WIP)
+ * Select units using square base.(WIP)
+ * Select units objects.(WIP)
+ * Move units.(WIP)
+
+ * Build Commands
+ * Orders
