@@ -1,0 +1,6 @@
+﻿work with gourp spacing position spacing select to move point
+
+building refinery
+ ore
+ gas
+ crytal
