@@ -24,6 +24,11 @@
 = RTS game builds: =
  * [rts_build]
 
+= Actionscript3: =
+ * [AS3_Class_implements_interface]
+ * [AS3_Class_Event_EventDispatcher]
+ * [as3_sprite_remove_child] 
+
 = Sandy Engine Demo: =
  * [Sandy_Progress_Bar_Plane3D]
  * [Sandy_GUI_Plane3D]
