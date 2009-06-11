@@ -7,8 +7,11 @@ http://creativecommons.org/licenses/by/2.5/ca/
 
 Information:
 	This is Real Time strategy (RTS). Working on ground base build. This is under go testing.
-	
-Working on ground and space battle field build.
+Working on ground and space battle field build. This will be the 2D style format.
+
+Support Package:
+-darknet
+--trunk/darkaif/src/darknet (Menu Builds)
 
 DOLIST:
 -Select functions

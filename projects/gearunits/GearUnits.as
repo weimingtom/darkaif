@@ -184,6 +184,7 @@
 			
 			var solider:Solider = new Solider();
 			solider.x = 32;
+			solider.z = 32;
 			solider.ownerid = playername;
 			singleunit_assign(solider);
 			g.addChild(solider.mesh);
@@ -191,12 +192,30 @@
 			
 			solider = new Solider();
 			solider.x = -32;
+			solider.z = 32;
 			solider.ownerid = playername;
 			singleunit_assign(solider);
 			g.addChild(solider.mesh);
 			unit.push(solider);
 			
 			solider = new Solider();
+			solider.x = 32;
+			solider.z = -64;
+			solider.ownerid = playername;
+			singleunit_assign(solider);
+			g.addChild(solider.mesh);
+			unit.push(solider);
+			
+			solider = new Solider();
+			solider.x = 92;
+			solider.z = -53;
+			solider.ownerid = playername;
+			singleunit_assign(solider);
+			g.addChild(solider.mesh);
+			unit.push(solider);
+			
+			solider = new Solider();
+			solider.x = -32;
 			solider.z = -64;
 			solider.ownerid = '1';
 			singleunit_assign(solider);
@@ -548,9 +567,11 @@
 					if ((unit[unitno].x > minpoint.x) && (unit[unitno].x < maxpoint.x)&&
 						(unit[unitno].z > minpoint.z)&&(unit[unitno].z < maxpoint.z)) {
 						trace('found');
-						unit[unitno].bselected = true;
-						if(SHIFT){
-							unit[unitno].bselected = false;
+						if(unit[unitno].ownerid == playername){//this make sure it not over lap the other select
+							unit[unitno].bselected = true;
+							if(SHIFT){
+								unit[unitno].bselected = false;
+							}
 						}
 					}else {
 						trace('not found');
@@ -562,7 +583,8 @@
 					if (unit[unitno].bselected == true) {
 						unit[unitno].order = 'move';
 						//unit[unitno].
-						unit[unitno].movepoint = event.point;
+						//unit[unitno].movepoint = event.point;
+						unit[unitno].targetangle(event.point);
 					}
 				}
 			}
@@ -574,21 +596,26 @@
 		}
 		
 		//single unit
-		public function singleunit_down(event:Shape3DEvent):void {
-			
-		}
 		
-		public function singleunit_up(event:Shape3DEvent):void {
-			trace(event.shape.name+'ID');
-			
-		}
-		
+		//need to get object menu build
 		//select function and other functions
 		public function singleunit_click(event:Shape3DEvent):void {
 			trace('ID:' + event.shape.name);
+			//var playername
 			for (var unitno:int = 0; unitno < unit.length; unitno++) {
 				if (unit[unitno].mesh.name == event.shape.name) {
-					trace('found! unit:'+unit[unitno].mesh.name+' ownerid:'+unit[unitno].ownerid);
+					trace('found! unit:' + unit[unitno].mesh.name + ' ownerid:' + unit[unitno].ownerid);
+					if (unit[unitno].ownerid == playername) {//do not attack
+						if (CTRL == true) {
+							unit[unitno].bselected = true;
+						}
+						if (SHIFT == true) {
+							unit[unitno].bselected = false;
+						}
+					}else {//attack object
+						
+					}
+					break;
 				}
 			}
 		}
@@ -677,6 +704,14 @@
 			
 			for (var projectileno:int = 0; projectileno < projectile.length;projectileno++ ) {
 				projectile[projectileno].update();
+				
+				//remove from scene and delete class
+				if (projectile[projectileno].balive == false) {
+					g.removeChildByName(projectile[projectileno].mesh.name);
+					projectile.splice(projectileno,1);
+				}
+				
+				
 			}
 			
 			textresource.text = 'pow:'+ (commanderdata.powerlevel-commanderdata.poweruse)+'/'+commanderdata.powerlevel + ' ore:'+commanderdata.ore +' units:'+unitselectedno+'[]'+unit.length;

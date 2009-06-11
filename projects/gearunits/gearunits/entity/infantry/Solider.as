@@ -21,7 +21,7 @@
 			mesh = new Box();
 			mesh.appearance = appearance;
 			classtype = 'Solider';
-			
+			movespeed = 1;
 			var weaponassaultrifle:WeaponAssaultRifle = new WeaponAssaultRifle();
 			weapon.push(weaponassaultrifle);
 		}

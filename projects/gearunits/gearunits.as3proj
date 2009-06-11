@@ -73,6 +73,10 @@
     <hidden path="gearunits\entity\StructureUnitInfantry.as" />
     <hidden path="gearunits\entity\StructureUnitVehicle.as" />
     <hidden path="GearUnitsPlanet.as" />
+    <hidden path="SandyOrbitRotation.as" />
+    <hidden path="GearShot.as" />
+    <hidden path="GearUnitsTargetCode.as" />
+    <hidden path="CircleSlicePreloader.as" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

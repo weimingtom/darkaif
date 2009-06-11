@@ -14,6 +14,7 @@
 			name = 'Bullet';
 			mesh = new Box();
 			damage = 1;
+			maxdistance = 100;
 		}
 		
 	}
