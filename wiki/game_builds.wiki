@@ -21,6 +21,9 @@
 
  * Notice: Game build will web site interface and page build using php script for access to the game with flash and mysql database. *
 
+= RTS game builds: =
+ * [rts_build]
+
 = Sandy Engine Demo: =
  * [Sandy_Progress_Bar_Plane3D]
  * [Sandy_GUI_Plane3D]
