@@ -1,0 +1,8 @@
+#summary Real Time Strategy(RTS) Build
+#labels rts
+
+= Information: =
+I am Currently working different areas for apply for rts and rpg elements to able to understand read time data flow.
+
+I am currency working on some basic functions to do with buildings and units.
+
