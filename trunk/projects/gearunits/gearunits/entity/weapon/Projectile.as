@@ -112,6 +112,10 @@
 			return facedirection;
 		}
 		
+		public function targetangle(degree:Number):void {
+			angle = degree;
+		}
+		
 		//update target point
 		public function updatetragetpoint():void {
 			angle = anglepoint(startpoint, targetpoint);

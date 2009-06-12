@@ -49,8 +49,10 @@
 		public var minrange:Number = 0;
 		public var detectrange:Number = 0;
 		public var angle:Number = 0;
+		public var targetangle:Number = 0;
 		
 		public var distance:Number = 0;
+		public var targetdistance:Number = 0;
 		public var maxdistance:Number = 0;
 		public var mindistance:Number = 0;
 		
@@ -101,14 +103,23 @@
 				x += velocity.x;
 				y += velocity.y;
 				z += velocity.z;
-				
-				
+				distancepoint();
 				//fixed follow when finish move point
 				
-				if ((x > movepoint.x-1) && (x < movepoint.x+1)&&(z > movepoint.z-1) && (z < movepoint.z+1)) {
+				if ((x > movepoint.x-3) && (x < movepoint.x+3)&&(z > movepoint.z-3) && (z < movepoint.z+3) &&(distance < 2)) {
 					order = 'none';
-					trace('finish move point');
+					//trace('finish move point');
+				}else {
+					//angle = rotationpoint(movepoint);
 				}
+				
+				/*
+				if (distance < 2) {
+					order = 'none';
+				}else {
+					//trace(distance);
+				}
+				*/
 			}
 		}
 		
@@ -136,8 +147,21 @@
 			z = point.z;
 		}
 		
-		public function targetangle(p3d:Point3D):void {
+		//target point object
+		public function targetpoint(p3d:Point3D):void {
 			movepoint = p3d;
+			targetangle = rotationpoint(p3d);
+		}
+		
+		//this will move to point in angle
+		public function pointmove(p3d:Point3D):void {
+			trace(p3d);
+			movepoint = p3d;
+			angle = rotationpoint(p3d);
+		}
+		
+		//get point of angle //MATH
+		public function rotationpoint(p3d:Point3D):Number {
 			var facedirection:Number = 0;
 			facedirection = Math.atan2(z - p3d.z, x - p3d.x);
 			facedirection = facedirection * 180 / Math.PI;
@@ -147,6 +171,7 @@
 			//-------x--top-view-x-------
 			//270 to 180  |z| 90 to -180
 			
+			// as3 from Math.atan2(z,x)
 			//0 to -90 || 91 to -180 (Fixed area)
 			//----------------------
 			//0 to 90  || 91 to -180
@@ -159,8 +184,15 @@
 				facedirection = (180 + (90 - facedirection));
 			}
 			//trace('facedirection:'+facedirection);
-			angle = facedirection;
+			return facedirection;
 		}
+		
+		//get distance point to go there in 3d space// MATH
+		public function distancepoint():void {
+			distance = Math.abs((((x - movepoint.x) * 2) + ((y - movepoint.y) * 2) + ((z - movepoint.z) * 2)) / 2);
+			//trace(distance);
+		}
+		
 	}
 	
 }
