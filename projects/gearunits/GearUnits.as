@@ -4,6 +4,7 @@
 	import adobe.utils.CustomActions;
 	import darknet.core.display.Button;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	import flash.text.TextField;
 	import gearunits.entity.building.*;
 	import gearunits.entity.Commander;
@@ -28,6 +29,10 @@
 	/**
 	 * ...
 	 * @author Darknet
+	 * 
+	 * information: 
+	 * 	This will be the main game build for checks and updates. This game is run frame loops.
+	 * 
 	 */
 	
 	public class GearUnits extends Sprite
@@ -56,6 +61,8 @@
 		
 		public var startpoint:Point3D = new Point3D();
 		public var endpoint:Point3D = new Point3D();
+		public var selectbox:Point = new Point(); //select point of the screen
+		public var selectboxframe:Sprite = new Sprite(); 
 		
 		//tmp object for preview
 		public var meshconstructionyard:MeshConstructionYard = new MeshConstructionYard();
@@ -105,7 +112,10 @@
 			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keydownevent);
-			stage.addEventListener(KeyboardEvent.KEY_UP,keyupevent)
+			stage.addEventListener(KeyboardEvent.KEY_UP, keyupevent);
+			
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, selectboxunit_down);
+			stage.addEventListener(MouseEvent.MOUSE_UP, selectboxunit_out);
 			
 			menupanel.x = 500;
 			
@@ -115,6 +125,7 @@
 			buildtest();
 			objectpositionmesh();
 			addChild(menupanel);
+			addChild(selectboxframe);
 		}
 		
 		public function keydownevent(key:KeyboardEvent):void {
@@ -530,6 +541,7 @@
 			
 			var minpoint:Point3D = new Point3D();
 			var maxpoint:Point3D = new Point3D();
+			var groupselectedunit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
 			
 			if (startpoint.z < endpoint.z) {
 				trace('z min:' + startpoint.z + ' max:' + endpoint.z);
@@ -578,30 +590,67 @@
 					}
 				}
 			}else {
+				//rework the group squad type
+				var numberselectunit:int = -1;
+				
+				
+				
 				for (unitno = 0; unitno < unit.length; unitno++) {
 					//unit[unitno].x
 					if (unit[unitno].bselected == true) {
+						numberselectunit++;
 						unit[unitno].order = 'move';
+						var pospoint:Point3D = new Point3D();
 						//unit[unitno].
 						//unit[unitno].movepoint = event.point;
-						unit[unitno].targetangle(event.point);
+						//this work some reason due to [var pospoint:Point3D = new Point3D()][not this-> var pospoint:Point3D = event.point]
+						pospoint.x = event.point.x + (9 * numberselectunit);
+						pospoint.y = event.point.y;
+						pospoint.z = event.point.z;
+						
+						trace('count:'+numberselectunit+'group pos x:'+pospoint.x+' y:'+pospoint.y+' z:'+pospoint.z);
+						unit[unitno].pointmove(pospoint);
 					}
 				}
 			}
-			
 		}
 		
 		public function selectunit_updateposition(event:Shape3DEvent):void {
+			//startpoint
 			
+			graphics.clear();
+			graphics.beginFill(0x999999);
+			//graphics.drawRect()
+		}
+		
+		//2D selection screen not 3D yet, working on it.
+		public function selectboxunit_down(event:Event):void {
+			//startpoint
+			selectbox.x = mouseX;
+			selectbox.y = mouseY;
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, selectboxunit_over);
+		}
+		
+		public function selectboxunit_over(event:Event):void {
+			selectboxframe.graphics.clear();
+			selectboxframe.graphics.lineStyle(1)
+			selectboxframe.graphics.drawRect(selectbox.x, selectbox.y, mouseX - selectbox.x + 1, mouseY - selectbox.y + 1);//offeset conflict over lap layers
+		}
+		
+		public function selectboxunit_out(event:Event):void {
+			selectboxframe.graphics.clear();
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, selectboxunit_over);
 		}
 		
 		//single unit
 		
 		//need to get object menu build
 		//select function and other functions
+		//attack function if not match
 		public function singleunit_click(event:Shape3DEvent):void {
 			trace('ID:' + event.shape.name);
-			//var playername
+			//select function 
+			//{
 			for (var unitno:int = 0; unitno < unit.length; unitno++) {
 				if (unit[unitno].mesh.name == event.shape.name) {
 					trace('found! unit:' + unit[unitno].mesh.name + ' ownerid:' + unit[unitno].ownerid);
@@ -616,6 +665,30 @@
 						
 					}
 					break;
+				}
+			}
+			//}
+			
+			var bemeny:Boolean = false;
+			//attack function
+			for (var unitcheckno:int = 0; unitcheckno < unit.length;unitcheckno++ ) {
+				if (unit[unitcheckno].mesh.name == event.shape.name) {
+					//trace('------');
+					if (unit[unitcheckno].ownerid != playername) {
+						trace('attack point');
+						bemeny = true;
+					}else {
+						trace('friendly point');
+					}
+					break;
+				}
+			}
+			
+			for (var unittargetno:int = 0; unittargetno < unit.length; unittargetno++ ) {
+				if (unit[unittargetno].ownerid == playername) {
+					if (unit[unittargetno].bselected == true) {
+						unit[unittargetno].targetpoint(event.point);
+					}
 				}
 			}
 		}
@@ -686,10 +759,12 @@
 				for (var weaponno:int = 0; weaponno < weapon.length; weaponno++) {
 					weapon[weaponno].update();
 					if (weapon[weaponno].BFIRE) {
-						trace('Fire');
+						//trace('Fire');
 						//var buildprojectile:Projectile = weapon[weaponno].projectilefire;
 						var buildprojectile:Projectile = new ProjectileBullet();
 						buildprojectile.setposition(unit[unitno].point());
+						buildprojectile.targetangle(unit[unitno].targetangle);
+						//buildprojectile
 						g.addChild(buildprojectile.mesh);
 						projectile.push(buildprojectile);
 						weapon[weaponno].BFIRE = false;
@@ -710,8 +785,6 @@
 					g.removeChildByName(projectile[projectileno].mesh.name);
 					projectile.splice(projectileno,1);
 				}
-				
-				
 			}
 			
 			textresource.text = 'pow:'+ (commanderdata.powerlevel-commanderdata.poweruse)+'/'+commanderdata.powerlevel + ' ore:'+commanderdata.ore +' units:'+unitselectedno+'[]'+unit.length;
