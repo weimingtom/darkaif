@@ -9,6 +9,7 @@
 	{
 		public function Infantry() 
 		{
+			name = 'Infantry';
 			classtype = 'Infantry';
 		}
 		

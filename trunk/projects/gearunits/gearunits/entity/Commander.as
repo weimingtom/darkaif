@@ -14,8 +14,8 @@
 		public var name:String = 'none';
 		public var bbot:Boolean = false;
 		
-		public var unit:Vector.<Infantry> = new Vector.<Infantry>();
-		public var vehicle:Vector.<Vehicle> = new Vector.<Vehicle>();
+		public var unit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
+		//public var vehicle:Vector.<Vehicle> = new Vector.<Vehicle>();
 		
 		public var allies:Vector.<Commander> = new Vector.<Commander>();
 		

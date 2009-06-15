@@ -1,9 +1,15 @@
 ﻿package gearunits.entity.building 
 {
-	import gearunits.entity.infantry.Engineer;
-	import gearunits.entity.infantry.Marine;
-	import gearunits.entity.infantry.Sniper;
+	import gearunits.entity.EntityPoint3D;
+	import gearunits.entity.infantry.*;
+	import gearunits.entity.StructureUnit;
 	import gearunits.models.MeshBarracks;
+	import sandy.materials.Appearance;
+	import sandy.materials.attributes.LightAttributes;
+	import sandy.materials.attributes.LineAttributes;
+	import sandy.materials.attributes.MaterialAttributes;
+	import sandy.materials.ColorMaterial;
+	import sandy.materials.Material;
 	
 	/**
 	 * ...
@@ -15,6 +21,28 @@
 		{
 			name = 'Barracks';
 			mesh = new MeshBarracks();
+			var materialAttr:MaterialAttributes = new MaterialAttributes( 
+				new LineAttributes( 0.5, 0x2111BB, 0.4 ),
+				new LightAttributes( true, 0.1)
+			);
+			var material:Material = new ColorMaterial(0x999999,1,materialAttr);
+			//material.lightingEnable = true;
+			var appearance:Appearance = new Appearance(material);
+			mesh.appearance = appearance;
+			var listunit:StructureUnit;
+			
+			listunit = new Solider();
+			unit.push(listunit);
+			
+			listunit = new Engineer();
+			unit.push(listunit);
+			
+			
+			var ep3d:EntityPoint3D;
+			ep3d = new EntityPoint3D();
+			ep3d.z = -32;
+			entitypoint.push(ep3d);
+			
 		}
 		
 	}

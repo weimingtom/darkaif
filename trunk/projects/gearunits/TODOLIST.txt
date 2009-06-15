@@ -1,6 +1,5 @@
-﻿work with gourp spacing position spacing select to move point
+﻿Project Gear Units
 
-building refinery
- ore
- gas
- crytal
+select box for units [part done]
+select box for 3d [part done]
+builidng barracks spawn units build [part done]
