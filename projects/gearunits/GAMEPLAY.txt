@@ -1,0 +1,6 @@
+﻿-squad systems
+-It will get update like 2-5 sec and doing squard system and custom character unit build
+-I fixed the server later heh just going to test how it works and do stande test to know what happenging
+-player class
+--engineer
+--medic

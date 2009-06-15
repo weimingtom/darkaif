@@ -1,6 +1,5 @@
 ﻿package gearunits.entity.infantry 
 {
-	import gearunits.entity.StructureUnit;
 	import gearunits.entity.weapon.WeaponAssaultRifle;
 	import sandy.materials.Appearance;
 	import sandy.materials.ColorMaterial;
@@ -16,12 +15,15 @@
 		
 		public function Solider() 
 		{
+			name = 'Solider';
+			classtype = 'Solider';
+			movespeed = 1;
+			spawntime = 100;
+			
 			var material:Material = new ColorMaterial(0xadff2f);
 			var appearance:Appearance = new Appearance(material);
 			mesh = new Box();
 			mesh.appearance = appearance;
-			classtype = 'Solider';
-			movespeed = 1;
 			var weaponassaultrifle:WeaponAssaultRifle = new WeaponAssaultRifle();
 			weapon.push(weaponassaultrifle);
 		}

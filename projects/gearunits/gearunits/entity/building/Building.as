@@ -1,6 +1,7 @@
 ﻿package gearunits.entity.building
 {
 	import gearunits.entity.Commander;
+	import gearunits.entity.EntityPoint3D;
 	import gearunits.entity.StructureUnit;
 	import gearunits.technologytree.TechnologyTree;
 	import sandy.core.data.Point3D;
@@ -36,6 +37,8 @@
 		public var bproduction:Boolean = false;
 		public var bbuild:Boolean = false;
 		public var bdisable:Boolean = false;// for power use or stop build
+		
+		public var entitypoint:Vector.<EntityPoint3D> = new Vector.<EntityPoint3D>();
 		
 		public function Building() 
 		{

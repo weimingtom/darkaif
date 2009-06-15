@@ -2,14 +2,21 @@
 {
 	//{
 	import adobe.utils.CustomActions;
+	import darkaif.frame.Panel;
 	import darknet.core.display.Button;
+	import darknet.core.display.DialogBox;
+	import darknet.core.display.GameButton;
+	import darknet.core.event.GameButtonEvent;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.text.TextField;
 	import gearunits.entity.building.*;
 	import gearunits.entity.Commander;
+	import gearunits.entity.infantry.Infantry;
+	import gearunits.entity.infantry.InfantryClass;
 	import gearunits.entity.infantry.Solider;
 	import gearunits.entity.StructureUnit;
+	import gearunits.entity.UnitClass;
 	import gearunits.entity.vehicle.*;
 	import gearunits.entity.weapon.Projectile;
 	import gearunits.entity.weapon.ProjectileBullet;
@@ -55,6 +62,7 @@
 		public var selectunit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
 		
 		public var buildingname:String = '';
+		public var buildingid:String = '';
 		public var selectbuilding:String = '';
 		public var objectid:String = '';
 		public var playername:String = 'guest';
@@ -74,6 +82,7 @@
 		public var commander:Vector.<Commander> = new Vector.<Commander>();
 		public var textresource:TextField = new TextField();
 		public var menupanel:Sprite = new Sprite();
+		public var unitpanel:DialogBox = new DialogBox();
 		
 		//{ CONTROL KEY EVENT
 		
@@ -117,7 +126,7 @@
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, selectboxunit_down);
 			stage.addEventListener(MouseEvent.MOUSE_UP, selectboxunit_out);
 			
-			menupanel.x = 500;
+			//menupanel.x = 500;
 			
 			terrainbuild();
 			BuildMainMenu();
@@ -126,6 +135,9 @@
 			objectpositionmesh();
 			addChild(menupanel);
 			addChild(selectboxframe);
+			
+			unitpanel.x = 500;
+			addChild(unitpanel);
 		}
 		
 		public function keydownevent(key:KeyboardEvent):void {
@@ -186,12 +198,37 @@
 		//BUILDING TEST FOR UPDATE TEST
 		public function buildtest():void {
 			var build:Building;
-			build = new BuildingConstructionYard();
-			selectbuilding = 'Constuction Yard';
-			assignbuilding(build);
+			//build = new BuildingConstructionYard();
+			//selectbuilding = 'Constuction Yard';
+			//assignbuilding(build);
+			//g.addChild(build.mesh);
+			//build.ownerid = playername;
+			//buildings.push(build);
+			
+			
+			build = new BuildingBarracks();
+			//selectbuilding = 'Constuction Yard';
+			//build = assignbuilding(build);
 			g.addChild(build.mesh);
+			build.mesh.enableEvents = true;
+			build.mesh.addEventListener(MouseEvent.CLICK, selectbuildmenu);
+			
 			build.ownerid = playername;
 			buildings.push(build);
+			
+			
+			build = new BuildingMechFactory();
+			build.x = 64;
+			g.addChild(build.mesh);
+			//selectbuilding = 'Constuction Yard';
+			//build = assignbuilding(build);
+			build.mesh.enableEvents = true;
+			build.mesh.addEventListener(MouseEvent.CLICK, selectbuildmenu);
+			build.ownerid = playername;
+			buildings.push(build);
+			
+			//units / functions
+			
 			
 			var solider:Solider = new Solider();
 			solider.x = 32;
@@ -200,7 +237,7 @@
 			singleunit_assign(solider);
 			g.addChild(solider.mesh);
 			unit.push(solider);
-			
+			/*
 			solider = new Solider();
 			solider.x = -32;
 			solider.z = 32;
@@ -232,7 +269,7 @@
 			singleunit_assign(solider);
 			g.addChild(solider.mesh);
 			unit.push(solider);
-			
+			*/
 		}
 		
 		//main building that build stuff
@@ -532,34 +569,32 @@
 		//multi units
 		public function selectunit_down(event:Shape3DEvent):void {
 			startpoint = event.point
-			trace('down point:' + startpoint);
+			//trace('down point:' + startpoint);
 		}
 		
 		public function selectunit_up(event:Shape3DEvent):void {
 			endpoint = event.point;
-			trace('up point:' + endpoint);
-			
+			//trace('up point:' + endpoint);
 			var minpoint:Point3D = new Point3D();
 			var maxpoint:Point3D = new Point3D();
-			var groupselectedunit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
 			
 			if (startpoint.z < endpoint.z) {
-				trace('z min:' + startpoint.z + ' max:' + endpoint.z);
+				//trace('z min:' + startpoint.z + ' max:' + endpoint.z);
 				minpoint.z = startpoint.z;
 				maxpoint.z = endpoint.z;
 				
 			}else {
-				trace('z min:' + endpoint.z + ' max:' + startpoint.z);
+				//trace('z min:' + endpoint.z + ' max:' + startpoint.z);
 				minpoint.z = endpoint.z
 				maxpoint.z = startpoint.z;
 			}
 			
 			if (startpoint.x < endpoint.x) {
-				trace('x min:' + startpoint.x + ' max:' + endpoint.x);
+				//trace('x min:' + startpoint.x + ' max:' + endpoint.x);
 				minpoint.x = startpoint.x;
 				maxpoint.x = endpoint.x;
 			}else {
-				trace('x min:' + endpoint.x + ' max:' + startpoint.x);
+				//trace('x min:' + endpoint.x + ' max:' + startpoint.x);
 				minpoint.x = endpoint.x;
 				maxpoint.x = startpoint.x;
 			}
@@ -589,27 +624,50 @@
 						trace('not found');
 					}
 				}
-			}else {
+			}else 
+			{
+				
+				var groupselectedunit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
 				//rework the group squad type
-				var numberselectunit:int = -1;
+				var groupunitgrid:int = 0;
+				//this deal with selecting and grouping
+				for (var unitselectno:int = 0; unitselectno < unit.length; unitselectno++ ) {
+					if (unit[unitselectno].bselected == true) {
+						groupselectedunit.push(unit[unitselectno]);//class
+					}
+				}
 				
+				trace('number of units:' + groupselectedunit.length);
+				//this deal with group-  unit-> selected length < loop(x)x2 
+				for (var groupunitno:int = 0;  groupunitno < groupselectedunit.length ;groupunitno++ ) {
+					if (groupselectedunit.length  <= (groupunitno * 2)) {
+						groupunitgrid = groupunitno;
+						break;
+					}else {
+						groupunitgrid = 1;
+					}
+				}
+				trace('grid size:' + groupunitgrid);
 				
-				
-				for (unitno = 0; unitno < unit.length; unitno++) {
-					//unit[unitno].x
-					if (unit[unitno].bselected == true) {
-						numberselectunit++;
-						unit[unitno].order = 'move';
-						var pospoint:Point3D = new Point3D();
-						//unit[unitno].
-						//unit[unitno].movepoint = event.point;
-						//this work some reason due to [var pospoint:Point3D = new Point3D()][not this-> var pospoint:Point3D = event.point]
-						pospoint.x = event.point.x + (9 * numberselectunit);
-						pospoint.y = event.point.y;
-						pospoint.z = event.point.z;
-						
-						trace('count:'+numberselectunit+'group pos x:'+pospoint.x+' y:'+pospoint.y+' z:'+pospoint.z);
-						unit[unitno].pointmove(pospoint);
+				var countunit:int = 0;
+				//row and col group loop
+				for (var unitcolno:int = 0; unitcolno < groupselectedunit.length; unitcolno++ ) {
+					//trace('units:'+unitrowno);
+					if (countunit >= groupselectedunit.length) {
+						break;
+					}
+					for (var unitrowno:int = 0; unitrowno < groupunitgrid; unitrowno++) {
+						if (countunit >= groupselectedunit.length) {
+							break;
+						}
+						var posgrouppoint:Point3D = new Point3D();
+						groupselectedunit[countunit].order = 'move';
+						posgrouppoint.x = event.point.x + (9 * unitcolno);
+						posgrouppoint.y = event.point.y;
+						posgrouppoint.z = event.point.z + (9 * unitrowno);
+						//trace('ID:'+unitcolno+' move point'+posgrouppoint);
+						groupselectedunit[countunit].pointmove(posgrouppoint);
+						countunit++;
 					}
 				}
 			}
@@ -699,7 +757,6 @@
 			trace('unit click...');
 		}
 		
-		
 		//} //END BUILDING/SELECTING FUNCTIONS
 		
 		//buildings functions and update
@@ -725,6 +782,30 @@
 			
 			for (var objectno:int = 0; objectno < buildings.length;objectno++ ) {
 				buildings[objectno].update();
+				
+				if (buildings[objectno].queryunit.length > 0) {
+					
+					buildings[objectno].queryunit[0].time++;
+					if (buildings[objectno].queryunit[0].time > buildings[objectno].queryunit[0].spawntime ) {
+						buildings[objectno].queryunit[0].time = 0;
+						trace('unit finish build...');
+						
+						//solider.ownerid = playername;
+						//singleunit_assign(solider);
+						if (buildings[objectno].entitypoint.length > 0) {
+							buildings[objectno].queryunit[0].x = buildings[objectno].x + buildings[objectno].entitypoint[0].x;
+							buildings[objectno].queryunit[0].y = buildings[objectno].y + buildings[objectno].entitypoint[0].y;
+							buildings[objectno].queryunit[0].z = buildings[objectno].z + buildings[objectno].entitypoint[0].z;
+						}
+						buildings[objectno].queryunit[0].ownerid = playername;//assign solider
+						singleunit_assign(buildings[objectno].queryunit[0]);//add functions and listener
+						g.addChild(buildings[objectno].queryunit[0].mesh);
+						unit.push(buildings[objectno].queryunit[0]);
+						
+						buildings[objectno].queryunit.splice(0, 1);
+					}
+				}
+				
 				//Ore Refinery
 				if (!buildings[objectno].bdisable) {
 					if (totalpowerlevel <= 0) {
@@ -793,22 +874,99 @@
 		}
 		
 		//SELECT FUNCTION
-		public function assignbuilding(buiding:Building):void {
+		public function assignbuilding(buiding:Building):Building {
 			buiding.mesh.enableEvents = true;
-			buiding.mesh.addEventListener(MouseEvent.CLICK,selectbuildmenu);
+			buiding.mesh.addEventListener(MouseEvent.CLICK, selectbuildmenu);
+			return buiding;
 		}
 		
 		//{ MENU CONTROLS AREA
-		
-		public function selectbuildmenu(event:Event = null):void {
-			trace('MENU:' + selectbuilding);
-			buildmenu();
+		//Mesh id to select frame build
+		public function selectbuildmenu(event:Shape3DEvent):void {
+			trace(event.shape.name);
+			buildingid = event.shape.name;
+			buildingidaction(event.shape.name);
 		}
 		
-		public function buildmenu():void {
-			cleanmenupanel();
-			var button_build:Button = new Button();
-			menupanel.addChild(button_build);
+		public function buildingidaction(id:String):void {
+			//trace('ID' + id);
+			for (var buildingno:int = 0; buildingno < buildings.length ;buildingno++ ) {
+				if (buildings[buildingno].mesh.name == id) {
+					trace('BUILDING:' + buildings[buildingno].name + 'Mesh ID:' + buildings[buildingno].mesh.name);
+					unitbuildingmenu(buildings[buildingno]);
+					break;
+				}
+			}
+		}
+		
+		public function unitbuildingmenu(building:Building):void {
+			trace('BUILDING:' + building.name);
+			//this make sure there is no error
+			if (building != null) {
+				var button_build:GameButton;
+				//barracks code class test
+				if (building.name == 'Barracks') {
+					cleanmenupanel();
+					trace('Unit list:');
+					for (var unitinfanno:int = 0; unitinfanno < building.unit.length;unitinfanno++ ) {
+						trace('unit class:' + building.unit[unitinfanno].name);
+						button_build = new GameButton(building.unit[unitinfanno].name);
+						button_build._width = 64;
+						//button_build.tag = 'Hel';
+						button_build.tag = building.unit[unitinfanno].classtype;
+						button_build.addEventListener(GameButtonEvent.TAG,unit_build);
+						//button_build.
+						button_build.y = 14 * unitinfanno;
+						menupanel.addChild(button_build);
+					}
+					
+					//query build
+					//for () {
+					///}
+					
+					unitpanel.content(menupanel);
+					//unitpanel.x = 14;
+				}
+				
+				if (building.name == 'Mech Factory') {
+					//trace('Mech Factory');
+					cleanmenupanel();
+					
+					for (var unitvehno:int = 0; unitvehno < building.unit.length;unitvehno++ ) {
+						trace('unit class:' + building.unit[unitvehno].name);
+						button_build = new GameButton(building.unit[unitvehno].name);
+						button_build.tag = building.unit[unitvehno].classtype;
+						//button_build.addEventListener(MouseEvent.CLICK,unit_build);
+						button_build.y = 14 * unitvehno;
+						button_build._width = 64;
+						menupanel.addChild(button_build);
+					}
+					unitpanel.content(menupanel);
+				}
+			}
+		}
+		
+		public function unit_build(event:GameButtonEvent):void {
+			trace('test:' + event.tagname);
+			//buildingid
+			var classjob:StructureUnit = new UnitClass().unitload(event.tagname);
+			trace('check class:' + classjob.classtype);
+			
+			for (var buildingno:int = 0; buildingno < buildings.length; buildingno++) {
+				if (buildings[buildingno].mesh.name == buildingid) {
+					buildings[buildingno].queryunit.push(classjob);
+					trace('found and adding query build...'+buildings[buildingno].queryunit.length);
+					break;
+				}
+			}
+		}
+		
+		public function unit_holdbuild():void {
+			
+		}
+		
+		public function unit_cancelbuild():void {
+			
 		}
 		
 		public function cleanmenupanel():void {

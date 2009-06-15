@@ -13,6 +13,10 @@
 	 * 
 	 * This wil be convert into sandy engine later other ones.
 	 * 
+	 * cost to build
+	 * spawn time
+	 * 
+	 * 
 	 */
 	public class StructureUnit
 	{
@@ -20,7 +24,7 @@
 		public var faction:String = 'none';
 		public var ownerid:String = '';
 		public var classtype:String = 'StructureUnit';
-		public var name:String = '';
+		public var name:String = 'StructureUnit';
 		public var teamcolor:uint;
 		
 		public var weapon:Vector.<Weapon> = new Vector.<Weapon>();
@@ -39,6 +43,7 @@
 		
 		public var bselected:Boolean = false;
 		public var order:String = 'none';
+		public var aiorder:String = 'autoattack'; //attack, autoattack, returnfire, gaurd, defence, retreat, patrol
 		public var query:Array = new Array();
 		
 		public var time:Number = 0;

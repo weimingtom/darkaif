@@ -12,6 +12,7 @@
 		public function Vehicle() 
 		{
 			name = 'Vehicle';
+			classtype = 'Vehicle';
 		}
 		
 	}
