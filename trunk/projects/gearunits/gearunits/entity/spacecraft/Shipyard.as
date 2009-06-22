@@ -5,7 +5,7 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class Shipyard 
+	public class Shipyard extends Spacestation
 	{
 		
 		public function Shipyard() 

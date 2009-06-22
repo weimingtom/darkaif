@@ -1,6 +1,9 @@
 ﻿package gearunits.entity 
 {
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import gearunits.entity.weapon.Weapon;
+	import gearunits.events.StructureUnitEvent;
 	import sandy.core.data.Point3D;
 	import sandy.core.scenegraph.Shape3D;
 	
@@ -16,21 +19,46 @@
 	 * cost to build
 	 * spawn time
 	 * 
-	 * 
 	 */
+	
 	public class StructureUnit
 	{
 		//{
+		protected static var disp:EventDispatcher; //listener function
+		
 		public var faction:String = 'none';
 		public var ownerid:String = '';
 		public var classtype:String = 'StructureUnit';
 		public var name:String = 'StructureUnit';
 		public var teamcolor:uint;
+		public var bbot:Boolean = false;
 		
+		public var unit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
+		public var spawnpoint:Vector.<Point3D> = new Vector.<Point3D>();
+		public var queryunit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
+		public var entitypoint:Vector.<EntityPoint3D> = new Vector.<EntityPoint3D>();
 		public var weapon:Vector.<Weapon> = new Vector.<Weapon>();
 		
-		public var mesh:Shape3D;
+		public var healthpoint:Number = 100;
+		public var healthpointmax:Number = 100;
 		
+		//{point system
+		public var credits:Number = 0;
+		public var money:Number = 0;
+		public var cost:Number = 0;
+		public var fuel:Number = 0;
+		public var metal:Number = 0;
+		public var crystal:Number = 0;
+		public var gas:Number = 0;
+		public var ore:Number = 0;
+		public var commandpoint:Number = 0;
+		public var commandpointmax:Number = 10;
+		public var powerlevel:Number = 0;
+		public var poweruse:Number = 0;
+		public var powertotal:Number = 0;
+		//}
+		
+		public var mesh:Shape3D;
 		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;
@@ -66,6 +94,7 @@
 		public var movepoint:Point3D = new Point3D();
 		public var minpoint:Point3D = new Point3D();
 		public var maxpoint:Point3D = new Point3D();
+		
 		//}
 		public function StructureUnit() 
 		{
@@ -192,12 +221,36 @@
 			return facedirection;
 		}
 		
+		public function set timer(timecount:Number):void {
+			time = timecount;
+			//trace(time);
+			dispatchEvent(new StructureUnitEvent(StructureUnitEvent.TIME,time));
+		}
+		
+		public function get timer():Number {
+			return time;
+		}
+		
 		//get distance point to go there in 3d space// MATH
 		public function distancepoint():void {
 			distance = Math.abs((((x - movepoint.x) * 2) + ((y - movepoint.y) * 2) + ((z - movepoint.z) * 2)) / 2);
 			//trace(distance);
 		}
 		
+		//DISPATCHER
+		public function addEventListener(p_type:String, p_listener:Function, p_useCapture:Boolean = false, p_priority:int = 0, p_useWeakReference:Boolean = false):void {
+			if (disp == null) { disp = new EventDispatcher(); }
+			disp.addEventListener(p_type, p_listener, p_useCapture, p_priority, p_useWeakReference);
+		}
+		public function removeEventListener(p_type:String, p_listener:Function, p_useCapture:Boolean=false):void {
+			if (disp == null) { return; }
+			disp.removeEventListener(p_type, p_listener, p_useCapture);
+		}
+		public function dispatchEvent(p_event:Event):void {
+			if (disp == null) { return; }
+			disp.dispatchEvent(p_event);
+		}
+
 	}
 	
 }

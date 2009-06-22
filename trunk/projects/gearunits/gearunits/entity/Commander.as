@@ -7,6 +7,7 @@
 	 * ...
 	 * @author Darknet
 	 */
+	
 	public class Commander 
 	{
 		public var ranage:Number = 500;

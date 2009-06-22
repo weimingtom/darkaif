@@ -5,7 +5,7 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class Spaceship 
+	public class Spaceship extends Spacecraft
 	{
 		/*
 		 * main branch for ships

@@ -17,8 +17,12 @@
 	 */
 	public class BuildingBarracks extends Building
 	{
+		//[Embed(source = "../../../system/icon/barracks_rts_icon32.jpg")]
+		//private var buildingimage:Class;
+		
 		public function BuildingBarracks() 
 		{
+			//buildingicon = new buildingimage();
 			name = 'Barracks';
 			mesh = new MeshBarracks();
 			var materialAttr:MaterialAttributes = new MaterialAttributes( 

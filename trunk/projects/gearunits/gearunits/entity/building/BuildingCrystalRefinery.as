@@ -2,26 +2,30 @@
 {
 	import gearunits.models.MeshConstructionYard;
 	import gearunits.technologytree.TechPowerPlant;
-	
 	/**
 	 * ...
 	 * @author Darknet
 	 */
-	public class BuildingConstructionYard extends Building
+	public class BuildingCrystalRefinery extends Building
 	{
-		//[Embed(source = "../../../system/icon/constructionyard_rts_icon32.jpg")]
+		//[Embed(source = "../../../system/icon/crystalrefinery_rts_icon32.jpg")]
 		//private var buildingimage:Class;
 		//public var buildingicon:Bitmap = new buildingimage();
 		
-		public function BuildingConstructionYard() 
+		public function BuildingCrystalRefinery() 
 		{
 			//buildingicon = new buildingimage();
-			name = 'Construction Yard';
+			name = 'Crystal Refinery';
 			mesh = new MeshConstructionYard();
 			
 			//tech
 			var techpowerplant:TechPowerPlant = new TechPowerPlant();
 			tech.push(techpowerplant);
+			
+			buildtime = 120;
+			producetime = 100;
+			crystal = 10;
+			poweruse = 2;
 		}
 		
 	}
