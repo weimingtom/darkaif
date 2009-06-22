@@ -5,7 +5,7 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class SpacestationOutpost 
+	public class SpacestationOutpost extends Spacestation
 	{
 		
 		public function SpacestationOutpost() 

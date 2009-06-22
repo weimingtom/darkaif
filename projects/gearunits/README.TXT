@@ -6,69 +6,22 @@ Licenses:creative commons
 http://creativecommons.org/licenses/by/2.5/ca/
 
 Information:
-	This is Real Time Strategy (RTS) Game. Working on ground base build. Working on ground and space 
-battle field build. This will be the 2D style format in 3D scene view form. There will be two type of 
-game play. One is the basic build up and defeat the enemy. Two using squad system to do with real 
-time fight. This deal with AI build and test. This deal with combat fight. This is base on army combat 
-system that will be base on sci-fi stuff. Working on simple way to build a game with out lagging the 
-game. I will keep it very simple. This will be test how much I can push the grahpics and flash.
+		This is Real Time Strategy (RTS) Game. Working on ground and space battle field build. This will be the 2D style format in 3D scene view format. There will be two type of game play. 
+	One is the basic build up and defeat the enemy. This game mode is for conquest or conquer. This goes toward technology build and defeat the players in any matters with in the game rules. This goes toward ground and space that will be build differently.
+	Two using squad system to do with real time fight. This for ground fight. The number is unknown for how many squad. This deal with AI build and test. This deal with combat fight. This will be different this involved class base. For example engineer can build stuff and repair machines. Marine can carry different weapon. Health stats may differ on class.
+	Working on simple way to build a game with out lagging the game. This will be kept simple as can be. This will be test how much I can push the graphics and flash.
 
-Solider Class:
- * engineer
-  * Building
-  * Repair
- * Medic
-  * Healer
-  * Boost
- *Marine
-  * Assault Weapon
- * Heavy Marine
-  * Heavy Weapon
- * Sniper
-  * Long range weapon
- * Tactical
-  * Spawn point
-  * Air Support
-  
-Vehicle Class:
- * Land
-  * Jeep
-  * Tank
-  * Antitank
-  * Anticraft
-  
- * Sea
-  * Boat
-  
- * Air
-  * Jet
-  * Dropship
-  * Attack Craft
-  * Defence Craft
-  
 
-Mech Class:
- * Defence Mech
- * Spider Mech
- * 
+SOURCE PACKAGE:
+http://darkaif.googlecode.com/svn/trunk/projects/gearunits/
 
 Support Package:
--darknet
---trunk/darkaif/src/darknet (Menu Builds)
-
-DOLIST:
--Select functions
--build function
--unit function (soliders/vehicles)
--stats build class for sub
--techtree
--planet Real Time strategy
--ground Real Time strategy
--space Real Time strategy
+http://darkaif.googlecode.com/svn/trunk/darkaif/src/[darknet] <-(Menu Builds)
 
 unit = soliders/vehicles
 Controls:
 Shif key: mini unit
 ctrl key: plus unit
 
-Support group move cell
+Notice:
+-select box not working out well yet.

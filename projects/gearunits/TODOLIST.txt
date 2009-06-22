@@ -2,4 +2,31 @@
 
 select box for units [part done]
 select box for 3d [part done]
-builidng barracks spawn units build [part done]
+builidng barracks spawn units build [part done].
+
+unit formation
+-line
+-line2
+-box
+-v
+
+action oreder button icon button
+
+top bar
+-resource 
+bottom bar
+-map
+-unit info and command
+
+-AI PATH
+--collision
+--start and end point
+
+-Select functions
+-build function
+-unit function (soliders/vehicles)
+-stats build class for sub
+-techtree
+-planet Real Time strategy
+-ground Real Time strategy
+-space Real Time strategy

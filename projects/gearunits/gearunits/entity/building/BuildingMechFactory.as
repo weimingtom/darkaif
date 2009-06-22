@@ -17,8 +17,12 @@
 	 */
 	public class BuildingMechFactory extends Building
 	{
+		//[Embed(source = "../../../system/icon/mechfactory_rts_icon32.jpg")]
+		//private var buildingimage:Class;
+		
 		public function BuildingMechFactory() 
 		{
+			//buildingicon = new buildingimage();
 			name = 'Mech Factory';
 			//objecttype = '';
 			mesh = new MeshMechFactory();

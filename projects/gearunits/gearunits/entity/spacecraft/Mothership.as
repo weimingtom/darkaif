@@ -5,7 +5,7 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class Mothership 
+	public class Mothership extends Spaceship
 	{
 		
 		public function Mothership() 

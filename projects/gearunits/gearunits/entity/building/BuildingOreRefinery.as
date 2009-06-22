@@ -8,8 +8,12 @@
 	 */
 	public class BuildingOreRefinery extends Building
 	{
+		//[Embed(source = "../../../system/icon/orerefinery_rts_icon32.jpg")]
+		//private var buildingimage:Class;
+		
 		public function BuildingOreRefinery() 
 		{
+			//buildingicon = new buildingimage();
 			name = 'Ore Refinery';
 			buildingtype = 'Ore Refinery';
 			buildtime = 120;

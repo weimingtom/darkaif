@@ -1,6 +1,61 @@
-﻿-squad systems
+﻿Project: Gear Units
+
+Game Play: The game will be simple as can be. Still doing some testing and reasrching about builds and tech. The game object is control the area with limited units in hand. 
+
+Inferface:
+Player will be using left click mouse. Right click mouse will not work on flash. Shortcut key will be use for commands.
+
+Game mode: Squad Unit
+-squad systems
 -It will get update like 2-5 sec and doing squard system and custom character unit build
 -I fixed the server later heh just going to test how it works and do stande test to know what happenging
 -player class
 --engineer
 --medic
+
+Game mode:Conquest
+
+ * UNIT CLASS
+ *
+	The class will be explain later in detail.
+
+Solider Class:
+ * engineer
+  * Building
+  * Repair
+ * Medic
+  * Healer
+  * Boost
+ *Marine
+  * Assault Weapon
+ * Heavy Marine
+  * Heavy Weapon
+ * Sniper
+  * Long range weapon
+ * Tactical
+  * Spawn point
+  * Air Support
+  
+Vehicle Class:
+ * Land
+  * Jeep
+  * Tank
+  * Antitank
+  * Anticraft
+  
+ * Sea
+  * Boat
+  
+ * Air
+  * Jet
+  * Dropship
+  * Attack Craft
+  * Defence Craft
+  
+
+Mech Class:
+ * Defence Mech
+ * Spider Mech
+ * 
+
+Weapon Class:
