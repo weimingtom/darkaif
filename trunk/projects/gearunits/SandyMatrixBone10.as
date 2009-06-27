@@ -66,6 +66,7 @@
             );
 			
 			var material:Material = new ColorMaterial( 0xFFCC33, 1, materialAttr );
+			//trace(material.attributes);
 			material.lightingEnable = true;
 			var app:Appearance = new Appearance( material );
 			
@@ -73,7 +74,6 @@
 			//}
 			
 			bonemenu();
-			
 			bonetest.appearance = app;
 			bonetest.changed = true;
 			//bonetest.bone('bone1');
