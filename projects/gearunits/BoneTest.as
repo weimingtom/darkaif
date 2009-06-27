@@ -18,6 +18,7 @@ package  {
 		private var vertexframe:Array = new Array();
 		public var bone:Array = new Array();
 		public var weight:Array = new Array();
+		public var parentbone:Array = new Array();
 
 		private function f(v1:Number,v2:Number,v3:Number,uv00:Number,uv01:Number,uv10:Number,uv11:Number,uv20:Number,uv21:Number,normX:Number,normY:Number,normZ:Number):void {
 			var uv1:Number = l.getNextUVCoordID();
@@ -69,8 +70,9 @@ package  {
 			}
 			
 			buildbone();
-			
 			buildweight();
+			bonebranch();
+			
 		}
 
 		public function generate(... arguments):Geometry3D {
@@ -176,10 +178,12 @@ package  {
 				
 				//need to work on parent point effect on child
 				//move the bone assign vertex point
+				//vertexf got to caluate matrix code
 				for (var bonep:int = 0; bonep < bone.length; bonep++ ) {
 					var pivotpoint:Point3D = new Point3D(bone[bonep].x,bone[bonep].y,bone[bonep].z);
 					for (var weightno:int = 0; weightno < weight.length ; weightno++ ) {
 						if (bone[bonep].parent == weight[weightno].boneid) {
+							var vp:Array = new Array();//vertex id
 							//trace('found....update point...');
 							var matrix:Matrix4 = new Matrix4();
 							var point:Point3D = new Point3D(vertexf[weightno].x, vertexf[weightno].y, vertexf[weightno].z);
@@ -194,6 +198,8 @@ package  {
 							vertexf[weight[weightno].vertexid].x = point.x;
 							vertexf[weight[weightno].vertexid].y = point.y;
 							vertexf[weight[weightno].vertexid].z = point.z;
+							
+							
 						}
 					}
 				}
@@ -210,6 +216,42 @@ package  {
 				
 				//set vertex from all bone code
 			}
+			
+			function parentbranch(parent:Array,parentname:String):void {
+				//parent
+				//vp.push(vextexid)
+				//check id if match add or skip
+				//check bone if branch off else return face id vertex
+				
+				
+				
+			}
+			
+			
+		}
+		
+		
+		
+		//This for rebuild bone branch when the export from 3d model program that has to translate back
+		private function bonebranch():void {
+			//set up parent bone to branch off
+			for (var bp:int = 0; bp < bone.length; bp++ ) {
+				parentbone.push( { parent:bone[bp].parent, child:Array} );
+			}
+			
+			for (var bc:int = 0; bc < parentbone.length; bc++ ) {
+				//parentbone.push(bone[bc].parent);
+				//parent build in order is a must
+				trace(parentbone[bc].parent);
+				parentbone[bc].child = new Array();
+				for (var bpc:int = 0; bpc < bone.length; bpc++) {
+					//if parent have child add them
+					if (parentbone[bc].parent == bone[bpc].child) {
+						parentbone[bc].child.push(bone[bpc].parent);
+					}
+				}
+				trace('Parent:'+parentbone[bc].parent+' Number childs:'+parentbone[bc].child.length);
+			}
 		}
 		
 		//bone
@@ -217,6 +259,8 @@ package  {
 		private function buildbone():void {
 			bone.push( { parent:'bone1',  child:null, x:0, y:0, z:0, rotx:0, roty:0, rotz:0 } );
 			bone.push( { parent:'bone2',  child:'bone1', x:0, y:5, z:0, rotx:0, roty:0, rotz:0 } );
+			//bone.push( { parent:'bone3',  child:'bone1', x:0, y:5, z:0, rotx:0, roty:0, rotz:0 } );
+			//bone.push( { parent:'bone4',  child:'bone1', x:0, y:5, z:0, rotx:0, roty:0, rotz:0 } );
 		}
 		//weight
 		//aVertex id, weight, bone id
