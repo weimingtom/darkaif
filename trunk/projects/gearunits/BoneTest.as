@@ -9,16 +9,30 @@ package  {
 	import sandy.core.scenegraph.Shape3D;
 	//}
 	/*
-	 * Information: This is bone and skin test for skeletion build.
+	 * Created by: darknet
+	 * Link: http://code.google.com/p/darkaif/
+	 * Information: This is for bone and skin test for skeletion build. To able to control and move or rotate 
+	 * with out animation being play. I am just manage to code matrix rotation and pivot.
+	 * 
+	 * 
+	 * Credit:
+	 * name: Dennis Ippel
+	 * link: http://www.rozengain.com/blog
+	 * Information: With help of quick export just the mesh format. Blender Export to .as file.
+	 * 
+	 * Note: 
+	 * -This will re-render all the vertex points that effect the branches of the parent to child.
+	 * -Clipping error it only partly detect some change.
+	 * -not yet finished but partly working
 	 */
 
 	public class BoneTest extends Shape3D implements Primitive3D {
 		private var l:Geometry3D;
 		
 		private var vertexframe:Array = new Array();
-		public var bone:Array = new Array();
-		public var weight:Array = new Array();
-		public var parentbone:Array = new Array();
+		private var bone:Array = new Array();
+		private var weight:Array = new Array();
+		private var parentbone:Array = new Array();
 
 		private function f(v1:Number,v2:Number,v3:Number,uv00:Number,uv01:Number,uv10:Number,uv11:Number,uv20:Number,uv21:Number,normX:Number,normY:Number,normZ:Number):void {
 			var uv1:Number = l.getNextUVCoordID();
@@ -115,6 +129,11 @@ package  {
 			return (l);
 		}
 		
+		//=========================================================================================
+		// CUSTOM BONE SYSTEM
+		//=========================================================================================
+		//{
+		//this is an test function
 		public function testpoint(rotate:Number):void {
 			
 			for (var a:int = 6; a < 11+1; a++ ) {
@@ -147,6 +166,7 @@ package  {
 		 //bone1 = base
 		 //bone2 = topbase
 		public function _bone(bones:*):void {
+			//trace('==============');
 			/*
 			 Need to create a simple format.
 			 Clone vertex
@@ -180,16 +200,16 @@ package  {
 				//move the bone assign vertex point
 				//vertexf got to caluate matrix code
 				for (var bonep:int = 0; bonep < bone.length; bonep++ ) {
-					var pivotpoint:Point3D = new Point3D(bone[bonep].x,bone[bonep].y,bone[bonep].z);
+					var pivotpoint:Point3D = new Point3D(bone[bonep].x, bone[bonep].y, bone[bonep].z);
+					var vp:Array = new Array();//vertex id//format id = vertexid
+					//point weight
 					for (var weightno:int = 0; weightno < weight.length ; weightno++ ) {
 						if (bone[bonep].parent == weight[weightno].boneid) {
-							var vp:Array = new Array();//vertex id
 							//trace('found....update point...');
 							var matrix:Matrix4 = new Matrix4();
 							var point:Point3D = new Point3D(vertexf[weightno].x, vertexf[weightno].y, vertexf[weightno].z);
-							
+							//if there no input it will remaind default rotation
 							matrix.axisRotationWithReference(new Point3D(1, 0, 0), pivotpoint, bone[bonep].rotx*weight[weightno].weight);
-							trace(bone[bonep].x);
 							point = Matrix4Math.transform(matrix, point);
 							matrix.axisRotationWithReference(new Point3D(0, 1, 0),pivotpoint, bone[bonep].roty*weight[weightno].weight);
 							point = Matrix4Math.transform(matrix, point);
@@ -198,9 +218,28 @@ package  {
 							vertexf[weight[weightno].vertexid].x = point.x;
 							vertexf[weight[weightno].vertexid].y = point.y;
 							vertexf[weight[weightno].vertexid].z = point.z;
-							
-							
+							//add vertex point to parent
 						}
+					}
+					
+					parentbranch(vp, bone[bonep].parent);
+					//trace('points' + vp.length);
+					//vertex id and weight set to 1 that branch off child parent
+					for (var vpno:int = 0; vpno < vp.length ; vpno++ ) {
+						//trace('point:'+vp[vpno]);
+						//trace('found....update point...');
+						var matrix2:Matrix4 = new Matrix4();
+						var point2:Point3D = new Point3D(vertexf[vp[vpno]].x, vertexf[vp[vpno]].y, vertexf[vp[vpno]].z);
+						matrix2.axisRotationWithReference(new Point3D(1, 0, 0), pivotpoint, bone[bonep].rotx);
+						point2 = Matrix4Math.transform(matrix2, point2);
+						matrix2.axisRotationWithReference(new Point3D(0, 1, 0),pivotpoint, bone[bonep].roty);
+						point2 = Matrix4Math.transform(matrix2, point2);
+						matrix2.axisRotationWithReference(new Point3D(0, 0, 1),pivotpoint, bone[bonep].rotz);
+						point2 = Matrix4Math.transform(matrix2, point2);
+						vertexf[vp[vpno]].x = point2.x;
+						vertexf[vp[vpno]].y = point2.y;
+						vertexf[vp[vpno]].z = point2.z;
+						//add vertex point to parent
 					}
 				}
 				
@@ -217,22 +256,47 @@ package  {
 				//set vertex from all bone code
 			}
 			
-			function parentbranch(parent:Array,parentname:String):void {
+			function parentbranch(pv:Array, parentname:String):void {
+				//countindex++;
+				/*
+				//for(parentbone)
 				//parent
 				//vp.push(vextexid)
 				//check id if match add or skip
 				//check bone if branch off else return face id vertex
-				
-				
-				
+				*/
+				for (var pbn:int = 0; pbn < parentbone.length;pbn++ ) {//current bone index in loop
+					if (parentbone[pbn].parent == parentname) {
+						//trace('parent..');
+						for (var pbc:int = 0; pbc < parentbone[pbn].child.length ; pbc++ ) {//parent child loop from parent
+							//trace('child..');
+							//trace(parentbone[pbn].child[pbc]);//bone name
+							//looping matching vertex id
+							for (var weightno:int = 0; weightno < weight.length ; weightno++ ) {
+								if (parentbone[pbn].child[pbc] == weight[weightno].boneid) {
+									var bvid:Boolean = false;
+									//weight[weightno].vertexid;
+									//vertex id if match for loop check
+									for (var vidno:int = 0; vidno < pv.length;vidno++ ) {
+										if (pv[vidno] == weight[weightno].vertexid) {
+											bvid = true;
+											break;
+										}
+									}
+									if (!bvid) {
+										pv.push(weight[weightno].vertexid);
+									}
+								}
+							}
+							//loop branch off code will repeat if has child
+							parentbranch(pv,parentbone[pbn].child[pbc]);//loop parentbranch
+						}
+					}
+				}
 			}
-			
-			
 		}
 		
-		
-		
-		//This for rebuild bone branch when the export from 3d model program that has to translate back
+		//This for rebuild bone branch when the export from 3d model program that has to translate back different way
 		private function bonebranch():void {
 			//set up parent bone to branch off
 			for (var bp:int = 0; bp < bone.length; bp++ ) {
@@ -242,7 +306,7 @@ package  {
 			for (var bc:int = 0; bc < parentbone.length; bc++ ) {
 				//parentbone.push(bone[bc].parent);
 				//parent build in order is a must
-				trace(parentbone[bc].parent);
+				//trace(parentbone[bc].parent);
 				parentbone[bc].child = new Array();
 				for (var bpc:int = 0; bpc < bone.length; bpc++) {
 					//if parent have child add them
@@ -250,18 +314,19 @@ package  {
 						parentbone[bc].child.push(bone[bpc].parent);
 					}
 				}
-				trace('Parent:'+parentbone[bc].parent+' Number childs:'+parentbone[bc].child.length);
+				//trace('Parent:'+parentbone[bc].parent+' Number childs:'+parentbone[bc].child.length);
 			}
 		}
 		
 		//bone
-		//name,parent, child, position, rotation,
+		//name,parent, child, position, rotation, scale
 		private function buildbone():void {
 			bone.push( { parent:'bone1',  child:null, x:0, y:0, z:0, rotx:0, roty:0, rotz:0 } );
-			bone.push( { parent:'bone2',  child:'bone1', x:0, y:5, z:0, rotx:0, roty:0, rotz:0 } );
+			bone.push( { parent:'bone2',  child:'bone1', x:0, y:3, z:0, rotx:0, roty:0, rotz:0 } );
 			//bone.push( { parent:'bone3',  child:'bone1', x:0, y:5, z:0, rotx:0, roty:0, rotz:0 } );
 			//bone.push( { parent:'bone4',  child:'bone1', x:0, y:5, z:0, rotx:0, roty:0, rotz:0 } );
 		}
+		
 		//weight
 		//aVertex id, weight, bone id
 		private function buildweight():void {
@@ -284,7 +349,7 @@ package  {
 		public function bonelist():Array {
 			return bone;
 		}
-		//return rotate of x,y,z
+		//return rotate of x,y,z of name bone
 		public function bonerotation(namebone:String):Point3D {
 			var brotate:Point3D = new Point3D();
 			for (var boneno:int = 0; boneno < bone.length ;boneno++ ) {
@@ -297,6 +362,6 @@ package  {
 			}
 			return brotate;
 		}
-		
+		//}
 	}
 }

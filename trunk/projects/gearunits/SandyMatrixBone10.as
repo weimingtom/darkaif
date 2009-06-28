@@ -35,9 +35,6 @@
 		public var camera:Camera3D; //basic one cam
 		public var g:Group = new Group("myGroup");
 		public var bonetest:BoneTest = new BoneTest();
-		public var angle:Number = 0;
-		public var angle1:Number = 0;
-		public var weight:Number = 0;
 		
 		public var bonelistpanel:DropBoxList = new DropBoxList();
 		public var bonename:String = '';
@@ -45,7 +42,6 @@
 		public var buttonrotx:NumericUpDown = new NumericUpDown();
 		public var buttonroty:NumericUpDown = new NumericUpDown();
 		public var buttonrotz:NumericUpDown = new NumericUpDown();
-		
 		//}
 		
 		public function SandyMatrixBone10() {
@@ -75,9 +71,7 @@
 			
 			bonemenu();
 			bonetest.appearance = app;
-			bonetest.changed = true;
-			//bonetest.bone('bone1');
-			//bonetest._bone({name:'bone1',rotatex:45});
+			//bonetest.changed = true;
 		}
 		
 		public function bonemenu():void {
@@ -102,7 +96,7 @@
 			buttonrotx.addEventListener(NumericUpDownEvent.VALUE, rotx);
 			buttonrotx.addEventListener(NumericUpDownEvent.ENTER, rotx);
 			function rotx(event:NumericUpDownEvent):void {
-				trace('rotx'+event.numberchange);
+				//trace('rotx'+event.numberchange);
 				bonetest._bone( { name:bonename,rotx:event.numberchange} );
 			}
 			
@@ -111,7 +105,7 @@
 			buttonroty.addEventListener(NumericUpDownEvent.VALUE, roty);
 			buttonroty.addEventListener(NumericUpDownEvent.ENTER, roty);
 			function roty(event:NumericUpDownEvent):void {
-				trace('roty'+event.numberchange);
+				//trace('roty'+event.numberchange);
 				bonetest._bone( { name:bonename,roty:event.numberchange} );
 			}
 			
@@ -120,7 +114,7 @@
 			buttonrotz.addEventListener(NumericUpDownEvent.VALUE, rotz);
 			buttonrotz.addEventListener(NumericUpDownEvent.ENTER, rotz);
 			function rotz(event:NumericUpDownEvent):void {
-				trace('rotz'+event.numberchange);
+				//trace('rotz'+event.numberchange);
 				bonetest._bone( { name:bonename,rotz:event.numberchange} );
 			}
 			
@@ -132,26 +126,12 @@
 		
 		// This update the code and the function when every frame is pass
 		private function enterFrameHandler( event : Event ) : void {
-			angle++;
-			if (angle > 30 ) {
-				angle = 0;
-			}
-			angle1++;
-			if (angle1 > 360 ) {
-				angle1 = 0;
-			}
-			//bonetest._bone( { name:'bone1', rotz:angle ,rotx:angle1} );
-			//bonetest._bone( { name:'bone2', rotz:angle1 } );
-			//bonetest._bone( { name:'bone1', rotz:angle1 } );
-			//bonetest.changed = true;
-			//bonetest._bone( { name:'bone1' } );
 			/*
-			bonetest.x +=0.1;
-			if (bonetest.x > 20) {
-				bonetest.x = 0;
+			bonetest.x += 0.1;
+			if (bonetest.x >= 10) {
+				bonetest.x = -10;
 			}
 			*/
-			//bonetest.testpoint(angle);
 			scene.render();
 		}
 	}
