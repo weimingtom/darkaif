@@ -8,26 +8,25 @@
 	/**
 	 * ...
 	 * @author Darknet
-	 * 
-	 * Information: Beware the code need to be all in there. Any missing information it will cause an event error.
 	 */
-	public class Engineer extends Infantry
+	public class UnitBlock extends Infantry
 	{
 		
-		public function Engineer() 
+		public function UnitBlock() 
 		{
-			name = 'Engineer';
-			classtype = 'Engineer';
+			name = 'Soldier';
+			classtype = 'Soldier';
 			movespeed = 1;
 			spawntime = 100;
 			
 			var material:Material = new ColorMaterial(0xadff2f);
 			var appearance:Appearance = new Appearance(material);
-			mesh = new Box();
+			mesh = new Box(null,32,32,32);
 			mesh.appearance = appearance;
+			mesh.enableForcedDepth = true;
+			mesh.depth = 1;
 			var weaponassaultrifle:WeaponAssaultRifle = new WeaponAssaultRifle();
 			weapon.push(weaponassaultrifle);
-			
 		}
 		
 	}

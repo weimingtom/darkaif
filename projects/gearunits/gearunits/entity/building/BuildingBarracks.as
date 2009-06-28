@@ -35,7 +35,7 @@
 			mesh.appearance = appearance;
 			var listunit:StructureUnit;
 			
-			listunit = new Solider();
+			listunit = new Soldier();
 			unit.push(listunit);
 			
 			listunit = new Engineer();

@@ -7,6 +7,8 @@
 	import flash.text.TextFormat;
 	import gearunits.entity.StructureUnit;
 	import gearunits.events.StructureUnitEvent;
+	import gearunits.events.UnitEvent;
+	import gearunits.events.UnitQueryBuildEvent;
 	
 	/**
 	 * ...
@@ -43,8 +45,8 @@
 			unit = unitb;
 			settext(unit.name);
 			//percentage = (unit.time / unit.timemax);
-			unit.addEventListener(StructureUnitEvent.TIME,querybuildpercent);
-			function querybuildpercent(event:StructureUnitEvent):void {
+			unit.addEventListener(UnitQueryBuildEvent.TIME,querybuildtime);
+			function querybuildtime(event:UnitQueryBuildEvent):void {
 				percentage = (unit.time / unit.spawntime);
 				if ((percent > 1) && (percent < 0)) {//error code
 					percent = 0;
@@ -54,6 +56,9 @@
 		
 		public function set percentage(per:Number):void {
 			percent = per;
+			if ((percent > 1) && (percent < 0)) {//error code
+				percent = 0;
+			}
 			drawbar();
 		}
 		
@@ -64,7 +69,11 @@
 		public function drawbar():void {
 			bar.graphics.clear();
 			bar.graphics.beginFill(0x0000ff);
-			bar.graphics.drawRect(2, 0,(Width-4)*percent,2);
+			var scale:Number = (Width - 4) * percent;
+			if (scale < 0) {
+				scale = 0;
+			}
+			bar.graphics.drawRect(2, 0,scale,2);
 			bar.graphics.endFill();
 		}
 		
