@@ -141,11 +141,14 @@
 				z += velocity.z;
 				distancepoint();
 				//fixed follow when finish move point
-				
-				if ((x > movepoint.x-3) && (x < movepoint.x+3)&&(z > movepoint.z-3) && (z < movepoint.z+3) &&(distance < 2)) {
+				//trace('point:'+ ' x:'+x+' y:' +y +' z:'+z + movepoint + '[DIS]' + distance);
+				if ((x > movepoint.x-6) && (x < movepoint.x+6)&&(z > movepoint.z-6) && (z < movepoint.z+6) &&(distance < 15)) {
 					order = 'none';
 					//trace('finish move point');
-				}else {
+				}else if ((x == movepoint.x)&&(y == movepoint.y)&&(z == movepoint.z)){
+					order = 'none';
+					//trace('hellloooo');
+				}else{
 					//angle = rotationpoint(movepoint);
 				}
 				
@@ -191,7 +194,8 @@
 		
 		//this will move to point in angle
 		public function pointmove(p3d:Point3D):void {
-			trace(p3d);
+			//trace(p3d);
+			order = 'move';
 			movepoint = p3d;
 			angle = rotationpoint(p3d);
 		}
