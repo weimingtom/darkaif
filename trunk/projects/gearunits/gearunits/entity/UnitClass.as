@@ -1,7 +1,7 @@
 ﻿package gearunits.entity 
 {
 	import gearunits.entity.infantry.Engineer;
-	import gearunits.entity.infantry.Solider;
+	import gearunits.entity.infantry.Soldier;
 	
 	/**
 	 * ...
@@ -16,7 +16,7 @@
 		}
 		
 		public function unitload(classtype:String):StructureUnit {
-			var classunit0:StructureUnit = new Solider();
+			var classunit0:StructureUnit = new Soldier();
 			var classunit1:StructureUnit = new Engineer();
 			
 			if (classtype == classunit0.classtype) {

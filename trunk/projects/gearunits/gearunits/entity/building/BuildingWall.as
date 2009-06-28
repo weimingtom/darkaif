@@ -1,6 +1,7 @@
 ﻿package gearunits.entity.building 
 {
 	import gearunits.models.MeshConstructionYard;
+	import sandy.primitive.Box;
 	
 	/**
 	 * ...
@@ -11,7 +12,10 @@
 		public function BuildingWall() 
 		{
 			name = 'Wall';
-			mesh = new MeshConstructionYard();
+			mesh = new Box(null, 32, 32, 32);
+			
+			mesh.enableForcedDepth = true;
+			mesh.depth = 1;
 		}
 		
 	}

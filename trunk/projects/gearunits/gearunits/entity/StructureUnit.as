@@ -4,6 +4,8 @@
 	import flash.events.EventDispatcher;
 	import gearunits.entity.weapon.Weapon;
 	import gearunits.events.StructureUnitEvent;
+	import gearunits.events.UnitEvent;
+	import gearunits.events.UnitQueryBuildEvent;
 	import sandy.core.data.Point3D;
 	import sandy.core.scenegraph.Shape3D;
 	
@@ -224,7 +226,8 @@
 		public function set timer(timecount:Number):void {
 			time = timecount;
 			//trace(time);
-			dispatchEvent(new StructureUnitEvent(StructureUnitEvent.TIME,time));
+			//dispatchEvent(new StructureUnitEvent(StructureUnitEvent.TIME, time));
+			dispatchEvent(new UnitQueryBuildEvent(UnitQueryBuildEvent.TIME,time));
 		}
 		
 		public function get timer():Number {

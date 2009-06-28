@@ -5,19 +5,21 @@
 	import sandy.materials.ColorMaterial;
 	import sandy.materials.Material;
 	import sandy.primitive.Box;
+	
 	/**
 	 * ...
 	 * @author Darknet
 	 * 
 	 * Information: Beware the code need to be all in there. Any missing information it will cause an event error.
+	 * 
 	 */
-	public class Engineer extends Infantry
+	public class Soldier extends Infantry
 	{
 		
-		public function Engineer() 
+		public function Soldier() 
 		{
-			name = 'Engineer';
-			classtype = 'Engineer';
+			name = 'Soldier';
+			classtype = 'Soldier';
 			movespeed = 1;
 			spawntime = 100;
 			
@@ -27,7 +29,6 @@
 			mesh.appearance = appearance;
 			var weaponassaultrifle:WeaponAssaultRifle = new WeaponAssaultRifle();
 			weapon.push(weaponassaultrifle);
-			
 		}
 		
 	}

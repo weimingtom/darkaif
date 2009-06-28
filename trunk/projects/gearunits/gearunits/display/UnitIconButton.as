@@ -6,6 +6,8 @@
 	import flash.events.MouseEvent;
 	import gearunits.entity.building.Building;
 	import gearunits.entity.StructureUnit;
+	import gearunits.events.StructureUnitEvent;
+	import gearunits.events.UnitEvent;
 	
 	/**
 	 * ...
@@ -18,6 +20,8 @@
 		//private var imagepic:Class;
 		//public var buildingicon:Bitmap = new imagepic();
 		public var buildingicon:Bitmap;
+		public var unitid:String = '';
+		public var unitclass:String = '';
 		
 		public function UnitIconButton(bitmap:Bitmap) 
 		{
@@ -30,12 +34,23 @@
 			buildingicon.x = 1;
 			buildingicon.y = 1;
 			//buildingicon
+			//addEventListener(MouseEvent.CLICK, clickicon);
+			addEventListener(MouseEvent.MOUSE_UP, clickicon);
 			addEventListener(MouseEvent.MOUSE_OVER, overicon);
 			addEventListener(MouseEvent.MOUSE_OUT, outicon);
 			//buildingicon.alpha
 			addChild(buildingicon);
 		}
-		
+		private function downicon(event:Event):void {
+			event.currentTarget.alpha = 0.8;
+			//trace('over');
+		}
+		private function clickicon(event:Event):void {
+			event.currentTarget.alpha = 0.9;
+			dispatchEvent(new UnitEvent(UnitEvent.CHECK,{unitid:unitid,unitclass:unitclass}));
+			trace('click');
+			//trace('over');
+		}
 		private function overicon(event:Event):void {
 			event.currentTarget.alpha = 0.5;
 			//trace('over');
