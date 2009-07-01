@@ -4,7 +4,6 @@
 	import gearunits.entity.Commander;
 	import gearunits.entity.EntityPoint3D;
 	import gearunits.entity.StructureUnit;
-	import gearunits.technologytree.TechnologyTree;
 	import sandy.core.data.Point3D;
 	import sandy.core.scenegraph.Shape3D;
 	
@@ -19,7 +18,6 @@
 		//[Embed(source = "../../../system/icon/building_rts_icon32.jpg")]
 		//private var buildingimage:Class; //need to be private to work
 		//public var buildingicon:Bitmap = new buildingimage();
-		public var tech:Vector.<TechnologyTree> = new Vector.<TechnologyTree>();
 		
 		public var attackpoint:Number = 0;
 		public var defencepoint:Number = 0;

@@ -5,11 +5,12 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class Carriers 
+	public class Carriers extends Spaceship
 	{
 		
 		public function Carriers() 
 		{
+			unittype.push( { name:'Carrier' } );
 			
 		}
 		

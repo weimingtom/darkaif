@@ -1,13 +1,16 @@
 ﻿package gearunits.entity 
 {
+	//{
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import gearunits.entity.weapon.Weapon;
 	import gearunits.events.StructureUnitEvent;
 	import gearunits.events.UnitEvent;
 	import gearunits.events.UnitQueryBuildEvent;
+	import gearunits.technologytree.TechnologyTree;
 	import sandy.core.data.Point3D;
 	import sandy.core.scenegraph.Shape3D;
+	//}
 	
 	/**
 	 * ...
@@ -35,8 +38,22 @@
 		public var teamcolor:uint;
 		public var bbot:Boolean = false;
 		
+		//units functions
+		public var unittype:Array = new Array();
+		public var bselected:Boolean = false;
+		public var bsingleselected:Boolean = false;//this deal with building and cap ships
+		public var order:String = 'none';
+		public var aiorder:String = 'autoattack'; //attack, autoattack, returnfire, gaurd, defence, retreat, patrol
+		public var query:Array = new Array();
+		public var options:Array = new Array();//actions //buildings //ships
+		public var tech:Vector.<TechnologyTree> = new Vector.<TechnologyTree>();
+		public var bdeploy:Boolean = false;
+		public var bdocked:Boolean = false;
+		
+		//public var b
+		
 		public var unit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
-		public var spawnpoint:Vector.<Point3D> = new Vector.<Point3D>();
+		public var spawnpoint:Vector.<Point3D> = new Vector.<Point3D>();//not use
 		public var queryunit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
 		public var entitypoint:Vector.<EntityPoint3D> = new Vector.<EntityPoint3D>();
 		public var weapon:Vector.<Weapon> = new Vector.<Weapon>();
@@ -71,14 +88,11 @@
 		
 		public var movespeed:Number = 0;
 		
-		public var bselected:Boolean = false;
-		public var order:String = 'none';
-		public var aiorder:String = 'autoattack'; //attack, autoattack, returnfire, gaurd, defence, retreat, patrol
-		public var query:Array = new Array();
-		
 		public var time:Number = 0;
 		public var timemax:Number = 0;
 		public var spawntime:Number = 0;
+		public var launchtime:Number = 0;
+		public var launchtimemax:Number = 0;
 		public var range:Number = 0;
 		public var maxrange:Number = 0;
 		public var minrange:Number = 0;
