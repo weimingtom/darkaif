@@ -137,6 +137,12 @@
 			createunit.z = -128;
 			g.addChild(createunit.mesh);
 			unit.push(createunit);
+			
+			createunit = new BuildingWall();
+			createunit.x = -32;
+			createunit.z = -64;
+			g.addChild(createunit.mesh);
+			unit.push(createunit);
 		}
 		
 		public function positionpoint(event:Shape3DEvent):void {

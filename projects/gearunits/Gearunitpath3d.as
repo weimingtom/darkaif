@@ -40,7 +40,7 @@
 	 * 
 	 */
 	
-	public class GearUnitPath3D03 extends Sprite
+	public class Gearunitpath3d extends Sprite
 	{
 		//{
 		//sandy engine
@@ -50,27 +50,21 @@
 		public var terrainplane:Shape3D = new Plane3D('terrainplane', 512, 512, 16, 16, Plane3D.ZX_ALIGNED, 'quad');
 		
 		public var unit:Vector.<StructureUnit> = new Vector.<StructureUnit>();
-		
 		public var path:Vector.<NodePoint3D> = new Vector.<NodePoint3D>();
 		public var pathnode:Vector.<NodePoint3D> = new Vector.<NodePoint3D>();
-		//public var opennode:Vector.<NodePoint3D> = new Vector.<NodePoint3D>();
-		//public var closenode:Vector.<NodePoint3D> = new Vector.<NodePoint3D>();
-		public var pointsandy3d:Array = new Array();
-		
 		public var pointa:NodePoint3D = new NodePoint3D();
 		public var pointb:NodePoint3D = new NodePoint3D();
 		public var bfinishpath:Boolean = false;
-		
+		public var pointsandy3d:Array = new Array();
 		//this handle endless loop for path check
 		public var pathcount:int = 0;
 		public var pathcountmax:int = 32;
-		
 		public var line:Line3D;
 		public var linepath:Array = new Array();
 		public var unitbot:StructureUnit = new UnitBlock();
 		//}
 		
-		public function GearUnitPath3D03() {
+		public function Gearunitpath3d() {
 			//{ Scene world
 			camera = new Camera3D(320, 240);
 			camera.far = 1000;
@@ -90,10 +84,6 @@
 			//material.lightingEnable = true;
 			var app:Appearance = new Appearance( material );
 			terrainplane.appearance  = app;
-			
-			//trace('grid:' + NodePoint3D.gridsize);
-			//NodePoint3D.gridsize = 16;
-			//trace('grid:'+NodePoint3D.gridsize);
 			
 			buildterrain();
 			buildunits();
@@ -126,24 +116,6 @@
 			createunit.z = -128;
 			g.addChild(createunit.mesh);
 			unit.push(createunit);
-			
-			createunit = new BuildingWall();
-			createunit.x = -64;
-			createunit.z = -64;
-			g.addChild(createunit.mesh);
-			unit.push(createunit);
-			
-			createunit = new BuildingWall();
-			createunit.x = -128;
-			createunit.z = -128;
-			g.addChild(createunit.mesh);
-			unit.push(createunit);
-			
-			createunit = new BuildingWall();
-			createunit.x = -32;
-			createunit.z = -64;
-			g.addChild(createunit.mesh);
-			unit.push(createunit);
 		}
 		
 		public function positionpoint(event:Shape3DEvent):void {
@@ -172,17 +144,14 @@
 			pointb.y = gridpoint1.y;
 			pointb.z = gridpoint1.z;
 			
-			trace(gridpoint2 + '=>' + gridpoint1);
-			
-			//start point
-			createpoint(pointa.x, pointa.y, pointa.z);
-			
+			trace(gridpoint2+'=>'+gridpoint1);
 			startpoint(pointa);
 		}
 		
 		public function startpoint(point:NodePoint3D):void {
 			pathcount++;
 			var buildpath:Vector.<NodePoint3D> = new Vector.<NodePoint3D>();
+			var fpath:Array = new Array();
 			
 			if ((pointb.x == point.x)&&(pointb.y == point.y)&&(pointb.z == point.z)) {
 				bfinishpath = true;
@@ -198,6 +167,8 @@
 			
 			if(bfinishpath == false){
 				var buildpointpath:NodePoint3D;
+				//CENTER POINT
+				createpoint(point.x, point.y, point.z);
 				
 				//{ Build Path node point
 				//NORTH POINT
@@ -215,7 +186,7 @@
 				//WEST
 				buildpointpath = createpoint(point.x - 1, point.y, point.z,point);
 				buildpath.push(buildpointpath);
-				
+				/*
 				//SOUTH EAST
 				buildpointpath = createpoint(point.x + 1, point.y, point.z - 1,point);
 				buildpath.push(buildpointpath);
@@ -228,15 +199,13 @@
 				//NORTHWEST
 				buildpointpath = createpoint(point.x - 1, point.y, point.z + 1,point);
 				buildpath.push(buildpointpath);
-				
+				*/
 				//}
 				//trace(path.length);
 				//find the lowest number to start and end point
-				var fpath:Array = new Array();
 				for (var fno:int = 0; fno < buildpath.length; fno ++) {
 					//check if path is walkable
-					if ((buildpath[fno].walkable == true) && (buildpath[fno].bvisited == false)) {
-						trace(buildpath[fno].f);
+					if((buildpath[fno].walkable == true) && (buildpath[fno].bvisited == false)){
 						fpath.push(buildpath[fno].f);
 					}
 				}
@@ -249,7 +218,6 @@
 					//trace('..' + buildpath[buildpathno].f);
 					if ((buildpath[buildpathno].f == minValue)&&(buildpath[buildpathno].walkable == true)&&(buildpath[buildpathno].bvisited == false)) {
 						startpoint(buildpath[buildpathno]);
-						//trace('found..['+buildpath[buildpathno].x+'::'+buildpath[buildpathno].y+':'+buildpath[buildpathno].z+']');
 						break;
 					}
 				}
@@ -292,48 +260,22 @@
 			node.z = node.z * 32;
 			pointsandy3d.push(node);
 			if (node.parent) {
-				patharray(node.parent);//add path to sandy array
-			}else {//if there no more path then create line.
+				patharray(node.parent);
+			}else {
 				g.removeChildByName('line');
-				if(pointsandy3d.length > 1){
-					line = new Line3D('line', pointsandy3d);
-					line.enableForcedDepth = true;
-					line.depth = -1;
-					g.addChild(line);
-				}
+				line = new Line3D('line', pointsandy3d);
+				line.enableForcedDepth = true;
+				line.depth = -1;
+				g.addChild(line);
 			}
 		}
 		
 		// This update the code and the function when every frame count is pass
 		public function enterFrameHandler( event : Event ) : void {
 			//update unit position
-			
 			for each(var unitclass:StructureUnit in unit ) {
 				unitclass.update();
 			}
-			unitbot.update();
-			//unitbot.x++;
-			if (pointsandy3d.length) {
-				//trace('found..'+pointsandy3d.length);
-				//var points3d:Point3D = new Point3D(200,0,200);
-				var pathindex:Number = pointsandy3d.length - 1; //max value to go first
-				if (unitbot.order == 'none') {
-					pointsandy3d.splice(pathindex, 1);
-					pathindex -= 1;
-				}
-				if (pointsandy3d.length) {
-					var points3d:Point3D = new Point3D(
-					pointsandy3d[pathindex].x,
-					pointsandy3d[pathindex].y,
-					pointsandy3d[pathindex].z);
-					//trace('->' + points3d);
-					//unitbot.order = 'move';
-					unitbot.pointmove(points3d);
-					//trace(unitbot.order);
-				}
-				
-			}
-			
 			scene.render();
 		}
 		

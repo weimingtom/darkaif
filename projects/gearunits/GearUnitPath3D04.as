@@ -40,7 +40,7 @@
 	 * 
 	 */
 	
-	public class GearUnitPath3D03 extends Sprite
+	public class GearUnitPath3D04 extends Sprite
 	{
 		//{
 		//sandy engine
@@ -70,7 +70,7 @@
 		public var unitbot:StructureUnit = new UnitBlock();
 		//}
 		
-		public function GearUnitPath3D03() {
+		public function GearUnitPath3D04() {
 			//{ Scene world
 			camera = new Camera3D(320, 240);
 			camera.far = 1000;

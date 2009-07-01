@@ -28,6 +28,8 @@
 		public function Spacecraft() 
 		{
 			classtype = 'Spacecraft';
+			//unittype
+			unittype.push({name:'Spacecraft'});
 		}
 		
 	}
