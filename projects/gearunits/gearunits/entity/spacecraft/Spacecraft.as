@@ -29,7 +29,7 @@
 		{
 			classtype = 'Spacecraft';
 			//unittype
-			unittype.push({name:'Spacecraft'});
+			unittype.push({name:'spacecraft'});
 		}
 		
 	}

@@ -10,8 +10,8 @@
 		public function Spacestation() 
 		{
 			classtype = 'Spacestation';
-			unittype = new Array();
-			unittype.push({name:'Spacestation'});
+			//unittype = new Array();
+			unittype.push({name:'spacestation'});
 		}
 		
 	}

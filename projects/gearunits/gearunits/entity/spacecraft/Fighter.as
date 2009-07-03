@@ -10,7 +10,7 @@
 		
 		public function Fighter() 
 		{
-			unittype.push( { name:'Fighter' } );
+			unittype.push({name:'fighter'});
 		}
 		
 	}

@@ -47,6 +47,7 @@
 		public var query:Array = new Array();
 		public var options:Array = new Array();//actions //buildings //ships
 		public var tech:Vector.<TechnologyTree> = new Vector.<TechnologyTree>();
+		public var bmovable:Boolean = false;
 		public var bdeploy:Boolean = false;
 		public var bdocked:Boolean = false;
 		

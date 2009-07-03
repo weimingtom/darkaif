@@ -18,7 +18,8 @@
 		 */ 
 		public function Spaceship() 
 		{
-			unittype.push({name:'Spaceship'});
+			bmovable = true;
+			unittype.push({name:'spaceship'});
 		}
 		
 		override public function update():void 
