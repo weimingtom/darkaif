@@ -21,9 +21,11 @@
 	import gearunits.entity.infantry.Infantry;
 	import gearunits.entity.infantry.InfantryClass;
 	import gearunits.entity.infantry.Soldier;
+	import gearunits.entity.spacecraft.SpacecraftDesign;
 	import gearunits.entity.spacecraft.SpacecraftFedBaseship;
 	import gearunits.entity.spacecraft.SpacecraftFedCarrier;
 	import gearunits.entity.spacecraft.SpacecraftFedFighter;
+	import gearunits.entity.spacecraft.SpacestationFedShipyard;
 	import gearunits.entity.StructureUnit;
 	import gearunits.entity.UnitClass;
 	import gearunits.entity.vehicle.*;
@@ -115,6 +117,13 @@
 		
 		[Embed(source = "system/icon/unload_icon32.jpg")]
 		private var image32unload:Class;
+		
+		
+		[Embed(source = "system/icon/spacecraft_fedcarrier_icon32.jpg")]
+		private var image32fedcarrier:Class;
+		
+		[Embed(source = "system/icon/spacecraft_fedfighter_icon32.jpg")]
+		private var image32fedfighter:Class;
 		//}
 		
 		//{
@@ -138,6 +147,9 @@
 		
 		public var buildingname:String = '';
 		public var buildingid:String = '';
+		//space id build
+		public var unitid:String = '';
+		public var unitbuildname:String = '';
 		public var selectbuilding:String = '';
 		public var objectselect:Boolean = false;
 		public var objectid:String = '';
@@ -205,8 +217,9 @@
 		public var iconsoldier:UnitIconButton = new UnitIconButton(new image32soldier());
 		public var iconengineer:UnitIconButton = new UnitIconButton(new image32engineer());
 		
-		
 		//vehicle
+		public var iconfedcarrier:UnitIconButton = new UnitIconButton(new image32fedcarrier());
+		public var iconfedfighter:UnitIconButton = new UnitIconButton(new image32fedfighter());
 		
 		
 		//{ CONTROL KEY EVENT
@@ -412,6 +425,13 @@
 			g.addChild(spaceunit_0.mesh);
 			unit.push(spaceunit_0);
 			
+			spaceunit_0 = new SpacestationFedShipyard();
+			//spaceunit_0.z = 64;
+			spaceunit_0.ownerid = playername;
+			singleunit_assign(spaceunit_0);
+			g.addChild(spaceunit_0.mesh);
+			unit.push(spaceunit_0);
+			
 			spaceunit_0 = new SpacecraftFedFighter();
 			spaceunit_0.ownerid = playername;
 			singleunit_assign(spaceunit_0);
@@ -450,6 +470,8 @@
 			bottom.forcedDepth = 9999999999;
 			
 			g.addChild(bottom);
+			
+			spacebuttonsetting();
 		}
 		
 		//=========================================================================================
@@ -828,6 +850,8 @@
 		//attack function if not match
 		public function singleunit_click(event:Shape3DEvent):void {
 			trace('ID:-.' + event.shape.name);
+			unitid = event.shape.name;
+			var selectunit_o:StructureUnit;
 			//select function 
 			//{
 			for (var unitno:int = 0; unitno < unit.length; unitno++) {
@@ -835,20 +859,22 @@
 					trace('found! unit:' + unit[unitno].mesh.name + ' ownerid:' + unit[unitno].ownerid);
 					if (unit[unitno].ownerid == playername) {//do not attack
 						if (CTRL == true) {
+							trace('control...'+CTRL);
 							unit[unitno].bselected = true;
+							break;//this break will add units
 						}else if (SHIFT == true) {
 							unit[unitno].bselected = false;
-						}else if ((SHIFT == false) && (CTRL == false)&&(objectselect == true)) {
+							break;//this code will break to remove unit
+						}else if ((SHIFT == false) && (CTRL == false) && (objectselect == true)) {
+							//this is for current one unit select and deselect others
 							unit[unitno].bselected = true;
-							//objectselect = true;
 						}else {
-							unit[unitno].bselected = false;
 						}
-					}
-					else{//attack object
+						selectunit_o = unit[unitno];
 					}
 					//break;
 				}else {
+					//this will deselect all the unit that is current selected
 					unit[unitno].bselected = false;
 				}
 			}
@@ -879,14 +905,31 @@
 				}
 			}
 			
+			//clearsprite(unitactionorderpanel);
+			clearsprite(unitquerypanel);
+			clearsprite(unitactionpanel);
+			//selectunit_o.
 			//menus and panel access
-			//for () {
-				
-			///}
-			
-			
+			if(selectunit_o != null){
+				//iconunload.
+				for (var i:int = 0; i < selectunit_o.unittype.length; i++ ) {
+					//deployablespaceship
+					if(selectunit_o.unittype[i].name == 'deployablespaceship'){
+						unitactionpanel.addChild(iconunload);
+						iconload.x = 32;
+						unitactionpanel.addChild(iconload);
+					}
+					
+					if (selectunit_o.unittype[i].name == 'shipyard') {
+						iconfedcarrier.x =0;
+						unitactionpanel.addChild(iconfedcarrier);
+						iconfedfighter.x = 32;
+						unitactionpanel.addChild(iconfedfighter);
+					}
+				}
+			}
+			//set object select off
 			objectselect = false;
-			
 		}
 		
 		public function singleunit_down(event:Shape3DEvent):void {
@@ -1077,6 +1120,7 @@
 		//{ START CONTROLERS AND EVENTS
 		public function singleunit_assign(su:StructureUnit):void {
 			su.mesh.enableEvents = true;
+			su.mesh.useSingleContainer = true;
 			su.mesh.addEventListener(MouseEvent.CLICK, singleunit_click);
 			su.mesh.addEventListener(MouseEvent.MOUSE_DOWN, singleunit_down);
 			trace('unit click...');
@@ -1093,41 +1137,63 @@
 			//ship enter
 			//weapons
 			
-			for each (var shipclass:StructureUnit in unit) {
-				//shipclass
-				for (var l:int; l < shipclass.unittype.length; l++ ) {
-					//deployablespaceship 
-					if (shipclass.unittype[l].name == 'deployablespaceship') {
+			for (var ui:int = 0; ui < unit.length; ui++ ) {
+				//trace(unit[ui].name + ':' + unit[ui].unittype.length);
+				for (var ut:int = 0; ut < unit[ui].unittype.length;ut++ ) {
+					//trace('---' + unit[ui].unittype[ut].name);
+					if (unit[ui].unittype[ut].name == 'deployablespaceship') {
 						//trace('found...');
-						if (shipclass.unittype[l].bdeploy == true) {
-							shipclass.launchtime++;
-							if (shipclass.launchtime > shipclass.launchtimemax) {
-								shipclass.launchtime = 0;
+						//trace('deployablespaceship---');
+						if (unit[ui].unittype[ut].bdeploy == true) {
+							unit[ui].launchtime++;
+							if (unit[ui].launchtime > unit[ui].launchtimemax) {
+								unit[ui].launchtime = 0;
 								//trace('hello');
-								
-								if (shipclass.unit.length > 0) {
+								if (unit[ui].unit.length > 0) {
 									//shipclass.unit[0]
 									//error//need to fixed
-									shipclass.unit[0].x = shipclass.x + shipclass.entitypoint[0].x;
-									shipclass.unit[0].y = shipclass.y + shipclass.entitypoint[0].y;
-									shipclass.unit[0].z = shipclass.z + shipclass.entitypoint[0].z;
+									unit[ui].unit[0].x = unit[ui].x + unit[ui].entitypoint[0].x;
+									unit[ui].unit[0].y = unit[ui].y + unit[ui].entitypoint[0].y;
+									unit[ui].unit[0].z = unit[ui].z + unit[ui].entitypoint[0].z;
 									
-									//shipclass.unit[0].x = shipclass.x + 0;
-									//shipclass.unit[0].y = shipclass.y + 0;
-									//shipclass.unit[0].z = shipclass.z + 160;
+									unit[ui].unit[0].bdocked = false;
+									singleunit_assign(unit[ui].unit[0]);
+									//unit[ui].unit[0].ownerid =  unit[ui].ownerid;
+									g.addChild(unit[ui].unit[0].mesh);
 									
-									shipclass.unit[0].bdocked = false;
-									g.addChild(shipclass.unit[0].mesh);
-									unit.push(shipclass.unit[0]);
+									unit.push(unit[ui].unit[0]);
 									
-									shipclass.unit.splice(0, 1);
+									unit[ui].unit.splice(0, 1);
 								}
-								
 							}
 						}
 					}
+					
+					//build ships
+					if (unit[ui].unittype[ut].name == 'shipyard') {
+						//check if there is query in the unit
+						//trace('shipyard---');
+						if (unit[ui].queryunit.length > 0) {
+							//default 0 
+							unit[ui].queryunit[0].time++;
+							if (unit[ui].queryunit[0].time > unit[ui].queryunit[0].spawntime) {
+								//default 0 
+								unit[ui].queryunit[0].x = unit[ui].x + unit[ui].entitypoint[0].x;
+								unit[ui].queryunit[0].y = unit[ui].x + unit[ui].entitypoint[0].y;
+								unit[ui].queryunit[0].z = unit[ui].x + unit[ui].entitypoint[0].z;
+								unit[ui].queryunit[0].ownerid = unit[ui].ownerid;
+								singleunit_assign(unit[ui].queryunit[0]);
+								g.addChild(unit[ui].queryunit[0].mesh);
+								unit.push(unit[ui].queryunit[0]);
+								unit[ui].queryunit.splice(0, 1);
+								trace('spawn ship');
+							}
+						}
+					}
+					
 				}
 			}
+			
 		}
 		
 		
@@ -1295,6 +1361,47 @@
 			customtextset(resource_unit,'Unit:'+unitselectedno + '/' + totalowner);
 			//commanderdata
 		}
+		
+		//{ build default buttonhandlder
+		
+		//button build for space craft
+		public function spacebuttonsetting():void {
+			//need full name will be later use to check
+			iconfedcarrier.addEventListener(MouseEvent.CLICK, clickbuild_fedcarrier);
+			function clickbuild_fedcarrier(event:Event):void {
+				//unitid = '';
+				unitbuildname = 'FedCarrier';
+				//trace('fedcarrier');
+				unitbuildspacecraft();
+			}
+			iconfedfighter.addEventListener(MouseEvent.CLICK, clickbuild_fedfighter);
+			function clickbuild_fedfighter(event:Event):void {
+				//trace('fedfighter');
+				//unitid = '';
+				unitbuildname = 'FedFighter';
+				unitbuildspacecraft();
+			}
+		}
+		
+		//build space craft with the name
+		public function unitbuildspacecraft():void {
+			trace('build...');
+			for (var u:int = 0; u < unit.length;u++ ) {
+				if (unit[u].mesh.name == unitid) {
+					//unitbuildname
+					//created a class to return value class else null
+					var ship:StructureUnit = new SpacecraftDesign().ShipName(unitbuildname);
+					trace(ship);
+					if (ship != null) {
+						//add to query build
+						unit[u].queryunit.push(ship);
+					}
+					break;
+				}
+			}
+		}
+		
+		//}
 		
 		
 		//{ START HUD

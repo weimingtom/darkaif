@@ -10,8 +10,7 @@
 		
 		public function Carriers() 
 		{
-			unittype.push( { name:'Carrier' } );
-			
+			unittype.push({name:'Carrier'});
 		}
 		
 	}

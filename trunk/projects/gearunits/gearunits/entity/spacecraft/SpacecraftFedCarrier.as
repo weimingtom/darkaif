@@ -18,9 +18,12 @@
 		
 		public function SpacecraftFedCarrier() 
 		{
+			name = 'FedCarrier';
+			classtype = 'SpacecraftFedCarrier';
 			unittype.push({name:'deployablespaceship',bdeploy:false}); //this will control ship lanuch
 			mesh = new MeshSpacecraftFedCarrier();
 			movespeed = 2;
+			spawntime = 100;
 			
 			var materialAttr:MaterialAttributes = new MaterialAttributes(
 			new LineAttributes( 0.5, 0x2111BB, 0.4 ),
