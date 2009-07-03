@@ -1,8 +1,8 @@
-#summary One-sentence summary of this page.
+#summary polygon surface point position.
 #labels away3d
 
 
-Information: This is about the polygon given mouse given position in the 3D world.
+Information: This is about the surface polygon given point of the mouse given position in the 3D world.
 
 {{{
 
