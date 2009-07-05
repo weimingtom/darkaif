@@ -1,5 +1,5 @@
 #summary Real Time Strategy(RTS) Build
-#labels rts
+#labels rts,sandy,away3d
 
 = Information: =
 I am currently working different areas for apply for rts and rpg elements to able to understand read time data flow.
@@ -16,6 +16,7 @@ soldiers/vehicles = units
  * Orders
 
 = Away3D Build: =
+ * Basic head up display ()
  * Basic Select function (done)
  * Basic Move Function (done)
  * AI Path (part done)
@@ -23,8 +24,11 @@ soldiers/vehicles = units
   * Building
   * Soldier
   * Spacecraft
+   * Shipyard
+   * Deploy able ships
 
 = Sandy Build: =
+ * Basic head up display (part done)
  * Basic Select function (done)
  * Basic Move Function (done)
  * AI Path (part done)
@@ -32,6 +36,10 @@ soldiers/vehicles = units
   * Building
   * Soldier
   * Spacecraft
+   * Shipyard
+   * Deploy able ships
 
 = Papervision3D Build: =
  * none
+
+Note this is base on my current build and test.
