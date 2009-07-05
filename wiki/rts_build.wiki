@@ -26,6 +26,8 @@ soldiers/vehicles = units
   * Spacecraft
    * Shipyard
    * Deploy able ships
+ * ground build
+ * space build
 
 = Sandy Build: =
  * Basic head up display (part done)
@@ -38,6 +40,8 @@ soldiers/vehicles = units
   * Spacecraft
    * Shipyard
    * Deploy able ships
+ * ground build
+ * space build
 
 = Papervision3D Build: =
  * none
