@@ -12,6 +12,26 @@ soldiers/vehicles = units
  * Select units using square base.(WIP)
  * Select units objects.(WIP)
  * Move units.(WIP)
-
  * Build Commands
  * Orders
+
+= Away3D Build: =
+ * Basic Select function (done)
+ * Basic Move Function (done)
+ * AI Path (part done)
+ * Unit
+  * Building
+  * Soldier
+  * Spacecraft
+
+= Sandy Build: =
+ * Basic Select function (done)
+ * Basic Move Function (done)
+ * AI Path (part done)
+ * Unit
+  * Building
+  * Soldier
+  * Spacecraft
+
+= Papervision3D Build: =
+ * none
