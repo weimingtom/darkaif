@@ -8,7 +8,6 @@
   * [Game_Modes]
 
  * [Engine3D]
-
    * [Sandy_Lesson]
     * [sandy_remove_object_from_scene]
     * [Sandy_Loading_Mesh_Files]
