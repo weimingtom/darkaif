@@ -32,7 +32,6 @@
   * [AS3_Class_implements_interface]
   * [actionscript3_client_server_others]
 
-
  * Project Build
   * [ToDoList]
   * Webpage Design:
@@ -41,11 +40,17 @@
    * [loading_url_php_path_flash]
   * RPG game builds:
    * [rpg_status]
+   * [rpg_game]
    * [client_and_server_builds]
    * [map_editor]
   * RTS game builds:
    * [rts_build]
   * []
+
+ * Game Build:
+  * [AI_Path]
+  * [AI_build]
+  * [game_menu]
 
  * SVN:
   * [svn_builds]
