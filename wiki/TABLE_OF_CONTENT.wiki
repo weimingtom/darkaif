@@ -22,7 +22,7 @@
    * [Away3D_Loading_Mesh_Files]
    * [Away3D_Material_Texture]
    * [Away3D_ray_casting]
-   * [Away3D_point_position ]
+   * [Away3D_point_position]
 
  * Actionscript3:
   * [AS3_Class_implements_interface]
@@ -30,7 +30,7 @@
   * [as3_sprite_remove_child]
   * [AS3_Static]
   * [AS3_Class_implements_interface]
-  * [actionscript3_client_server_others ]
+  * [actionscript3_client_server_others]
 
 
  * Project Build
