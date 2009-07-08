@@ -11,3 +11,5 @@ Player Goals:
  * Player can share the maps
  * Player who can build a better in different type of game plays.
  * How you build a well theme map.
+
+* Note: Still working out the game play a bit. *
