@@ -1,0 +1,21 @@
+﻿//===============================================
+// CREDITS
+//===============================================
+
+Here are the credits from people who help me build the game.
+I give credits to people who help me build the game.
+
+//===============================================
+// Away3D
+//===============================================
+Link: http://groups.google.com/group/away3d-dev
+
+//===============================================
+// Papervision3D
+//===============================================
+Link: http://forum.papervision3d.org/
+
+//===============================================
+// Sandy3D
+//===============================================
+Link: http://www.flashsandy.org/forum/

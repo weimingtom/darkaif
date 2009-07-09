@@ -39,6 +39,8 @@
 	 * 
 	 * Information: Space and Ground Battles Game Modes.
 	 * 
+	 * Note: This is Port from sandy code. This 
+	 * 
 	 * Combat System:
 	 * -Not yet work on yet. Working on the basic functions.
 	 * -vechiles
@@ -164,8 +166,6 @@
 		public var bpowerplant:ABuildingPowerPlant = new ABuildingPowerPlant();
 		public var borerefinery:ABuildingOreRefinery = new ABuildingOreRefinery();
 		public var bgasrefinery:ABuildingGasRefinery = new ABuildingGasRefinery();
-		
-		
 		//}
 		
 		//{ KEYBOARD

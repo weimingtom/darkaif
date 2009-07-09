@@ -1,32 +1,98 @@
-﻿Project Gear Units
+﻿Project: Gear Units
 
-select box for units [part done]
-select box for 3d [part done]
-builidng barracks spawn units build [part done].
 
-unit formation
--line
--line2
--box
--v
+//===============================================
+// Away3D:
+//===============================================
+-Unit
+--single select [part done]
+--select box [part done]
+--Action order button icon button []
+--Stats Build
+---Tech Tree
 
-action oreder button icon button
+-Spacecraft Unit
+--Space Ship Cap
+--Shipyard
+---Create ships [part done]
+--Ship Bay
+---ship exit [part done]
+---ship entery
+--Menu
+---Single click [part done]
+---Shortcut menu [part done]
 
-top bar
--resource 
-bottom bar
--map
--unit info and command
+-Unit Buildings
+--barracks spawn units build [part done].
+---Tech Tree
 
--AI PATH
---collision
---start and end point
+-Unit Formation
+--Line Formation
+--Line2 Formation
+--Box Formation
+--V Formation
+--Wall Formation
 
--Select functions
--build function
--unit function (soliders/vehicles)
--stats build class for sub
--techtree
--planet Real Time strategy
--ground Real Time strategy
--space Real Time strategy
+-Head Up Display (HUD)
+--Top Bar
+---Resource 
+--Bottom Bar
+---Map
+---Unit Info. and Command
+
+Game Modes:
+-Ground Real Time strategy
+-Space Real Time strategy
+
+Combat code:
+
+-Bot AI path [part done]
+--collision [part done]
+--start and end point [part done]
+
+//===============================================
+// Sandy3D:
+//===============================================
+-Unit
+--single select [part done]
+--select box [part done]
+--Action order button icon button []
+--Stats Build
+---Tech Tree
+
+-Spacecraft Unit
+--Space Ship Cap
+--Shipyard
+---Create ships [part done]
+--Ship Bay
+---ship exit [part done]
+---ship entery
+--Menu
+---Single click [part done]
+---Shortcut menu [part done]
+
+-Unit Buildings
+--barracks spawn units build [part done].
+---Tech Tree
+
+-Unit Formation
+--Line Formation
+--Line2 Formation
+--Box Formation
+--V Formation
+--Wall Formation
+
+-Head Up Display (HUD)
+--Top Bar
+---Resource 
+--Bottom Bar
+---Map
+---Unit Info. and Command
+
+Game Modes:
+-Ground Real Time strategy
+-Space Real Time strategy
+
+-Bot AI path [part done]
+--collision [part done]
+--start and end point [part done]

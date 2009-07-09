@@ -21,11 +21,16 @@
 	 * ...
 	 * @author Darknet
 	 * 
-	 * information:path build is getting some error in infi. loop need to fix. Bit stable.
+	 * Information: This is a prefab build for AI path for game build test.
+	 * This for basic collisin build and no terrain build detection yet.
+	 * Path build is getting some error in infinite loop need to fix. Bit stable.
+	 * This work for away3d, sandy3d, and papervision3d. I coded the same way.
+	 * 
+	 * Note: Papervision3d is partly fixed. That deal with plane slope will give infinite loop.
 	 * 
 	 */
 	
-	public class Away3DGearUnitPath04 extends Sprite
+	public class Away3DGearUnitPathBeta extends Sprite
 	{
 		//{
 		public var view:View3D = new View3D( { x:320, y:240 } );
@@ -50,7 +55,7 @@
 		public var unitbot:AStructureUnit = new AUnitBlock();
 		//}
 		
-		public function Away3DGearUnitPath04() {
+		public function Away3DGearUnitPathBeta() {
 			addChild(view);
 			
 			view.camera.y = 600;

@@ -1,5 +1,6 @@
 ﻿package gearunits.papervision3d.entity 
 {
+	import org.papervision3d.core.math.Number3D;
 	
 	/**
 	 * ...

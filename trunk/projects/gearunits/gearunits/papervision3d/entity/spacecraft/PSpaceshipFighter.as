@@ -7,10 +7,12 @@
 	 */
 	public class PSpaceshipFighter extends PSpaceship
 	{
+		public static const NAME:String = 'PSpaceshipFighter';
 		
 		public function PSpaceshipFighter() 
 		{
-			
+			name = 'PSpaceshipFighter';
+			type.push({name:'fighter'});
 		}
 		
 	}

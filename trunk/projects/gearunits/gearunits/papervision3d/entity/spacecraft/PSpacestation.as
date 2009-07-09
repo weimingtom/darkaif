@@ -7,10 +7,11 @@
 	 */
 	public class PSpacestation extends PSpacecraft
 	{
+		public static const NAME:String = 'PSpacestation';
 		
 		public function PSpacestation() 
 		{
-			
+			type.push({name:'spacestation'});
 		}
 		
 	}
