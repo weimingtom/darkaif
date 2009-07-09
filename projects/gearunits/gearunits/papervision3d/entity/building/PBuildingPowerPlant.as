@@ -1,20 +1,19 @@
-﻿package gearunits.papervision3d.entity.infantry 
+﻿package gearunits.papervision3d.entity.building 
 {
+	import gearunits.models.PMeshBuildingPowerPlant;
+	import org.papervision3d.materials.ColorMaterial;
 	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.materials.WireframeMaterial;
-	import org.papervision3d.objects.primitives.Cube;
-	import org.papervision3d.materials.ColorMaterial;
-	import org.papervision3d.materials.utils.MaterialsList;
 	
 	/**
 	 * ...
 	 * @author Darknet
 	 */
-	public class PUnitBlock extends PInfantry
+	public class PBuildingPowerPlant extends PBuilding
 	{
-		public static const NAME:String = 'AInfantry';
+		public static const NAME:String = 'PBuildingPowerPlant';
 		
-		public function PUnitBlock() 
+		public function PBuildingPowerPlant() 
 		{
 			var matcolor:ColorMaterial =  new ColorMaterial(0x00CC00);
 			var matwirecolor:WireframeMaterial = new WireframeMaterial(0x000000);
@@ -22,10 +21,7 @@
 			compMat.addMaterial(matcolor);
 			compMat.addMaterial(matwirecolor);
 			compMat.interactive = true;
-			
-			var matlist:MaterialsList = new MaterialsList( { all:compMat } );
-			mesh = new Cube(matlist, 32, 32, 32);
-			movespeed = 2;
+			mesh = new PMeshBuildingPowerPlant(new ColorMaterial(0x00CC00));
 		}
 		
 	}

@@ -1,6 +1,6 @@
-﻿package gearunits.papervision3d.entity.spacecraft 
+﻿package gearunits.papervision3d.entity.projectile 
 {
-	import gearunits.models.PMeshSpacestationFedShipYard;
+	import gearunits.models.PPlane;
 	import org.papervision3d.materials.ColorMaterial;
 	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.materials.WireframeMaterial;
@@ -9,21 +9,23 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class PSpacestationFedShipyard extends PSpacestationShipyard
+	public class PProjectileBullet extends PProjectile
 	{
-		public static const NAME:String = 'PSpacestationFedShipyard';
+		public static const NAME:String = 'PProjectileBullet';
 		
-		public function PSpacestationFedShipyard() 
+		public function PProjectileBullet() 
 		{
-			name = 'PSpacestationFedShipyard';
-			var matcolor:ColorMaterial =  new ColorMaterial(0x0FFFF00);
+			var matcolor:ColorMaterial =  new ColorMaterial(0x0FFFFFF);
 			var matwirecolor:WireframeMaterial = new WireframeMaterial(0x000000);
 			var compMat:CompositeMaterial = new CompositeMaterial();
 			compMat.addMaterial(matcolor);
 			compMat.addMaterial(matwirecolor);
 			compMat.interactive = true;
 			
-			mesh = new PMeshSpacestationFedShipYard(compMat);
+			name = 'Bullet';
+			mesh = new PPlane(compMat);
+			speed = 1;
+			maxdistance = 100;
 		}
 		
 	}

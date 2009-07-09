@@ -24,4 +24,5 @@ Shif key: mini unit
 ctrl key: plus unit
 
 Notice:
--select box not working out well yet.
+-3D Select box is bit tricky to deal ray casting for each engine that is coded is different.
+-I am working on the away3d, sandy3d and papervision3d.

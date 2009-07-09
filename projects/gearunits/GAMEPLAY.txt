@@ -5,6 +5,10 @@ Game Play: The game will be simple as can be. Still doing some testing and reasr
 Inferface:
 Player will be using left click mouse. Right click mouse will not work on flash. Shortcut key will be use for commands.
 
+Single player:
+just build it.
+
+
 Game mode: Squad Unit
 -squad systems
 -It will get update like 2-5 sec and doing squard system and custom character unit build
@@ -59,3 +63,16 @@ Mech Class:
  * 
 
 Weapon Class:
+
+SPACE RTS BUILD:
+
+FIRST -> CHARCTER CREATION:
+Player will able to create up to 20-50 characters names. This game is about character used in the game. The ship will
+have to be able to fill the crew with the class they are assign to. To able to be use of the ship battle.
+
+
+
+SECOND -> CONQUEST
+
+
+

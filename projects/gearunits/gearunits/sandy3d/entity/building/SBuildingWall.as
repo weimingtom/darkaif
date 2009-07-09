@@ -1,6 +1,5 @@
 ﻿package gearunits.sandy3d.entity.building 
 {
-	import gearunits.models.MeshConstructionYard;
 	import sandy.primitive.Box;
 	
 	/**

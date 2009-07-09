@@ -1,9 +1,13 @@
 ﻿package gearunits.papervision3d.entity 
 {
+	import gearunits.papervision3d.entity.projectile.PProjectile;
+	import gearunits.papervision3d.entity.weapon.PWeapon;
+	import gearunits.papervision3d.technologytree.PTechnologyTree;
 	import org.papervision3d.core.geom.TriangleMesh3D;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import org.papervision3d.core.math.Number3D;
+	import org.papervision3d.scenes.Scene3D;
 	
 	/**
 	 * ...
@@ -15,19 +19,52 @@
 		public var name:String = 'PStructureUnit';
 		public var mesh:TriangleMesh3D;
 		
-		public var x:Number = 0
+		public static const NAME:String = 'AStructureUnit';
+		public static const TYPE:String = 'Unit';
+		
+		public var balive:Boolean = true;
+		public static var scene:Scene3D; //global var class
+		public static var units:Vector.<PStructureUnit>; //global var class
+		public static var projectile:Vector.<PProjectile>; //global var class
+		
+		public var weapon:Vector.<PWeapon> = new Vector.<PWeapon>();
+		public var type:Array = new Array();
+		public var tech:Vector.<PTechnologyTree> = new Vector.<PTechnologyTree>();
+		public var queryunit:Vector.<PStructureUnit> = new Vector.<PStructureUnit>();
+		public var unit:Vector.<PStructureUnit> = new Vector.<PStructureUnit>();
+		public var entityPoint:Vector.<PEntityPoint3D> = new Vector.<PEntityPoint3D>();
+		
+		public var time:Number = 0;
+		public var spawntime:Number = 0;
+		public var launchtime:Number = 0;
+		public var indexpoint:Number = 0;
+		
+		public static var _id:int = 0;
+		public var id:int;
+		
+		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;
-		public var order:String = 'none';
-		public var movepoint:Number3D = new Number3D();
+		
+		
+		public var min:Number3D = new Number3D();
+		public var max:Number3D = new Number3D();
+		
+		public var ownerid:String = '';
+		public var bselected:Boolean = false;
+		public var bsingleselect:Boolean = false;
 		public var angle:Number = 0;
-		public var distance:Number = 0;
 		public var movespeed:Number = 0;
+		public var order:String = 'none';
+		
+		public var distance:Number = 0;
 		public var velocity:Number3D = new Number3D();
+		public var movepoint:Number3D = new Number3D();
 		
 		public function PStructureUnit() 
 		{
-			
+			_id++;
+			id = _id;
 		}
 		
 		public function update():void {

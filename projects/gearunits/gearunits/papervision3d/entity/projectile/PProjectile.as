@@ -1,17 +1,15 @@
-﻿package gearunits.away3d.entity.projectile 
+﻿package gearunits.papervision3d.entity.projectile 
 {
-	import away3d.core.base.Object3D;
-	import away3d.core.math.Number3D;
+	import org.papervision3d.core.geom.TriangleMesh3D;
+	import org.papervision3d.core.math.Number3D;
 	
 	/**
 	 * ...
 	 * @author Darknet
-	 * 
-	 * Information: This will build collision and spawn projetile.
-	 * 
 	 */
-	public class AProjectile 
+	public class PProjectile 
 	{
+		public static const NAME:String = 'PProjectile';
 		//{
 		public var x:Number = 0;
 		public var y:Number = 0;
@@ -31,7 +29,7 @@
 		public var damage:Number = 0;
 		public var defence:Number = 0;
 		public var materialtype:String = '';
-		public var mesh:Object3D;
+		public var mesh:TriangleMesh3D;
 		
 		public var velocity:Number3D = new Number3D();
 		
@@ -46,11 +44,9 @@
 		
 		// FIRE CONTROLS
 		public var firetype:String = 'none';
-		
-		
 		//}
 		
-		public function AProjectile() 
+		public function PProjectile() 
 		{
 			
 		}
@@ -143,18 +139,15 @@
 			updatetragetpoint();
 		}
 		
-		public function projectile(classname:String):AProjectile {
-			var projectileclass:AProjectile;
+		public function projectile(classname:String):PProjectile {
+			var projectileclass:PProjectile;
 			
-			if (classname == AProjectileBullet.NAME) {
-				projectileclass = new AProjectileBullet();
+			if (classname == PProjectileBullet.NAME) {
+				projectileclass = new PProjectileBullet();
 			}
 			
 			return projectileclass;
 		}
 		
-		
-		
 	}
-	
 }
