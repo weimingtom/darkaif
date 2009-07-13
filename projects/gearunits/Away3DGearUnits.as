@@ -153,6 +153,10 @@
 		public var HUD_USER:Sprite = new Sprite();
 		public var HUD:Sprite = new Sprite();
 		
+		public var rendertime:Number = 0;
+		public var rendertimemax:Number = 5;
+		public var bplayercontrol:Boolean = true;
+		
 		public var playername:String = 'guest';
 		//}
 		
@@ -171,6 +175,13 @@
 		//{ KEYBOARD
 		public var SHIFT:Boolean = false;
 		public var CTRL:Boolean = false;
+		public var KEY_SPACE:Boolean = false;
+		
+		public var KEY_LEFT:Boolean = false;
+		public var KEY_RIGHT:Boolean = false;
+		public var KEY_UP:Boolean = false;
+		public var KEY_DOWN:Boolean = false;
+		
 		public var KEY_A:Boolean = false;
 		public var KEY_B:Boolean = false;
 		public var KEY_C:Boolean = false;
@@ -202,7 +213,13 @@
 		//}
 		
 		public function Away3DGearUnits() {
+			
+			
             addChild(view);
+			
+			//var chibi:AMeshCharacterChbibi = new AMeshCharacterChbibi();
+			//view.scene.addChild(chibi);
+			
 			//space code
 			//view.camera.y = 800;
 			//view.camera.x = 0;
@@ -223,6 +240,10 @@
 			AStructureUnit.units = unit;
 			AStructureUnit.projectile = projectile;
 			
+			AProjectile.view = view;
+			AProjectile.units = unit;
+			AProjectile.projectile = projectile;
+			
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, pointposition );
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keypressdown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyupevent);
@@ -231,8 +252,9 @@
 			
 			init_selectboxfun();
 			
-			//spacetest();
-			groundtest();
+			spacetest();
+			//groundtest();
+			//init_terrain();
 			
 			addEventListener(Event.ENTER_FRAME, render);
 			
@@ -263,30 +285,52 @@
 		
 		//RENDER
 		public function render(event:Event):void {
+			controlunit();
 			//trace(projectile.length)
+			//if (rendertime > 2) {
 			for (var p:int = 0; p < projectile.length;p++ ) {
 				projectile[p].update();
+				if (projectile[p].balive == true) {//check if projectile is alive to be moving around
+					for (var i:int = 0; i < unit.length; i++ ) {
+						//trace('check collison' + i);
+						//do not self damage unit
+						if ((unit[i].interset3d(projectile[p]) == true) &&(unit[i].ownerid != projectile[p].ownerentity)){
+							projectile[p].balive = false
+							projectile[p].mesh.visible = false;
+							view.scene.removeChild(projectile[p].mesh);
+							trace('collision');
+							unit[i].health -= projectile[p].damage;
+							break;
+						}
+					}
+				}
 			}
 			
 			for (var u:int = 0; u < unit.length; u++ ) {
 				unit[u].update();
 			}
-			
+			///}
 			unitupdate();
-			
-			view.render();
+			//rendertime++;
+			//if (rendertime > rendertimemax) {
+				//rendertime = 0;
+				view.render();
+			///}
 			//System.gc();
 		}
 		
+		//TEST AERA
 		public function spacetest():void {
 			var structureunit:AStructureUnit;
 			var structureunit2:AStructureUnit;
 			
 			//in the carrier test
 			structureunit2 = new ASpaceshipFedFighter();
+			//structureunit2.busercontrol = true;
 			structureunit2.ownerid = playername;
 			unitfun(structureunit2);
 			
+			/*
 			structureunit = new ASpaceshipFedCarrier();
 			unitfun(structureunit);
 			structureunit.ownerid = playername;
@@ -294,21 +338,22 @@
 			structureunit.x = 64;
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
-			//trace(structureunit.id);
+			*/
 			
 			
 			//trace(ASpaceshipFedCarrier.NAME);
 			//trace(ASpaceshipFedFighter.NAME);
 			//trace(ASpaceshipFedFighter.NAME);
-			
+			/*
 			structureunit = new ASpacestationFedShipyard();
 			structureunit.ownerid = playername;
 			structureunit.x = 0;
 			unitfun(structureunit);
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
-			
+			*/
 			structureunit = new ASpaceshipFedFighter();
+			structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			structureunit.x = -32;
 			view.scene.addChild(structureunit.mesh);
@@ -323,7 +368,7 @@
 			unit.push(structureunit);
 		}
 		
-		public function groundtest():void {
+		public function init_terrain():void {
 			var mat:WireColorMaterial = new WireColorMaterial();
 			mat.color = 0x008000;
 			mat.wirecolor = 0x000000;
@@ -336,7 +381,65 @@
 			plane3d.segmentsH = 16;
 			plane3d.segmentsW = 16;
 			view.scene.addChild(plane3d);
+		}
+		
+		public function groundtest():void {
 			
+			var structureunit:AStructureUnit;
+			
+			structureunit = new ABuildingBarrack();
+			structureunit.ownerid = playername;
+			structureunit.x = 0;
+			unitfun(structureunit);
+			view.scene.addChild(structureunit.iconhud);
+			view.scene.addChild(structureunit.mesh);
+			unit.push(structureunit);
+			
+			structureunit = new AInfantrySoldier();
+			structureunit.ownerid = playername;
+			structureunit.x = -8;
+			structureunit.z = -92;
+			unitfun(structureunit);
+			view.scene.addChild(structureunit.iconhud);
+			view.scene.addChild(structureunit.mesh);
+			unit.push(structureunit);
+			/*
+			structureunit = new AInfantrySoldier();
+			structureunit.ownerid = playername;
+			structureunit.x = -32;
+			structureunit.z = -92;
+			unitfun(structureunit);
+			view.scene.addChild(structureunit.iconhud);
+			view.scene.addChild(structureunit.mesh);
+			unit.push(structureunit);
+			
+			structureunit = new AInfantrySoldier();
+			structureunit.ownerid = playername;
+			structureunit.x = -32;
+			structureunit.z = -128;
+			unitfun(structureunit);
+			view.scene.addChild(structureunit.iconhud);
+			view.scene.addChild(structureunit.mesh);
+			unit.push(structureunit);
+			
+			structureunit = new AInfantrySoldier();
+			structureunit.ownerid = playername;
+			structureunit.x = 32;
+			structureunit.z = 128;
+			unitfun(structureunit);
+			view.scene.addChild(structureunit.iconhud);
+			view.scene.addChild(structureunit.mesh);
+			unit.push(structureunit);
+			
+			structureunit = new AInfantrySoldier();
+			structureunit.ownerid = playername;
+			structureunit.x = 64;
+			structureunit.z = 128;
+			unitfun(structureunit);
+			view.scene.addChild(structureunit.iconhud);
+			view.scene.addChild(structureunit.mesh);
+			unit.push(structureunit);
+			*/
 		}
 		
 		//{ KEY BOARD FUNCTIONS
@@ -351,16 +454,20 @@
 			}
 			
 			if (key.keyCode == 37) {//left
-				view.camera.x -= 10;
+				//view.camera.x -= 10;
+				KEY_LEFT = true;
 			}
 			if (key.keyCode == 39) {//right
-				view.camera.x += 10;
+				//view.camera.x += 10;
+				KEY_RIGHT = true;
 			}
 			if (key.keyCode == 40) {//down
-				view.camera.z -= 10;
+				//view.camera.z -= 10;
+				KEY_DOWN = true;
 			}
 			if (key.keyCode == 38) {//up
-				view.camera.z += 10;
+				//view.camera.z += 10;
+				KEY_UP = true;
 				//camera.lookAt(0, 0, 0);
 			}
 			
@@ -371,6 +478,11 @@
 			if (key.keyCode == 88) {
 				KEY_X =  true;
 			}
+			
+			if (key.keyCode == 32) {
+				KEY_SPACE = true;
+			}
+			
 			
 			unitshortcutpanel();
 		}
@@ -393,11 +505,27 @@
 				KEY_X =  false;
 			}
 			
+			if (key.keyCode == 37) {//left
+				KEY_LEFT = false;
+			}
+			if (key.keyCode == 39) {//right
+				KEY_RIGHT = false;
+			}
+			if (key.keyCode == 40) {//down
+				KEY_DOWN = false;
+			}
+			if (key.keyCode == 38) {//up
+				KEY_UP = false;
+				//camera.lookAt(0, 0, 0);
+			}
+			if (key.keyCode == 32) {
+				KEY_SPACE = false;
+			}
 		}
 		//}
 		
 		//=========================================================================================
-		//units
+		// units
 		//=========================================================================================
 		
 		public function unitfun(su:AStructureUnit):void {
@@ -599,6 +727,50 @@
 			}
 		}
 		
+		//=========================================================================================
+		// units CONTROL
+		//=========================================================================================
+		
+		public function controlunit():void {
+			
+			if (bplayercontrol == true) {
+				//trace('Hello');
+				for (var i:int = 0; i < unit.length; i++ ) {
+					//trace('Hello');
+					if (unit[i].busercontrol == true) {
+						//trace('Hello');
+						if (KEY_RIGHT == true) {
+							unit[i].angle += unit[i].TurnSpeed;
+						}
+						
+						if (KEY_LEFT == true) {
+							unit[i].angle -= unit[i].TurnSpeed;
+						}
+						
+						if (KEY_UP == true) {
+							unit[i].moveforward(unit[i].movespeed);
+						}
+						
+						if (KEY_DOWN == true) {
+							trace('down' );
+							unit[i].moveforward(-(unit[i].movespeed));
+						}
+						
+						if (KEY_SPACE == true) {
+							unit[i].BWEAPONFIRE = true;
+						}else {
+							unit[i].BWEAPONFIRE = false;
+						}
+						
+						view.camera.x = unit[i].x;
+						view.camera.z = unit[i].z + -500;
+						break;
+					}
+				}
+			}
+			
+		}
+		
 		
 		//=========================================================================================
 		//units building
@@ -637,7 +809,6 @@
 						//icon32fedcarrier.x = 32;
 						//HUD_UNIT.addChild(icon32fedcarrier);
 					}
-					
 				}
 			}
 			unitshortcutpanel();
@@ -729,7 +900,7 @@
 		}
 		
 		//=========================================================================================
-		//
+		// SELECT BOX 3D
 		//=========================================================================================
 		
 		//{ select box function
@@ -970,7 +1141,7 @@
 				//meshplacement.ownCanvas = true;
 				//meshplacement.alpha = 0.8;
 			}
-			trace('...update mesh x:' + event.sceneX + ' y:' + event.sceneY + ' z:' +event.sceneZ);
+			trace('...update mesh x:' + Math.floor(event.sceneX) + ' y:' + Math.floor(event.sceneY) + ' z:' +Math.floor(event.sceneZ));
 		}
 		
 		//place object once click and remove listener from terrain

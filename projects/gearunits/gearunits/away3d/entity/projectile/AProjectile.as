@@ -1,7 +1,12 @@
 ﻿package gearunits.away3d.entity.projectile 
 {
+	import away3d.containers.View3D;
+	import away3d.core.base.Mesh;
 	import away3d.core.base.Object3D;
+	import away3d.core.base.VertexPosition;
 	import away3d.core.math.Number3D;
+	import gearunits.away3d.entity.AStructureUnit;
+	import gearunits.core.GlobalUnit;
 	
 	/**
 	 * ...
@@ -10,17 +15,18 @@
 	 * Information: This will build collision and spawn projetile.
 	 * 
 	 */
-	public class AProjectile 
+	public class AProjectile extends GlobalUnit
 	{
+		public static var ID:int = 0; 
+		public var id:int = 0;
+		public static const NAME:String = 'AProjectile';
+		public var CLASS:String = 'AProjectile';
+		public static var projectile:Vector.<AProjectile>; //global var class
+		public static var units:Vector.<AStructureUnit>; //global var class
+		public static var view:View3D; //global var class
 		//{
-		public var x:Number = 0;
-		public var y:Number = 0;
-		public var z:Number = 0;
-		
-		public var min:Number3D = new Number3D();
-		public var max:Number3D = new Number3D();
-		
 		public var name:String = 'Projectile';
+		public var ownerentity:String = '';
 		public var startpoint:Number3D = new Number3D();
 		public var endpoint:Number3D = new Number3D();
 		public var targetpoint:Number3D = new Number3D();
@@ -31,7 +37,7 @@
 		public var damage:Number = 0;
 		public var defence:Number = 0;
 		public var materialtype:String = '';
-		public var mesh:Object3D;
+		public var mesh:Mesh;
 		
 		public var velocity:Number3D = new Number3D();
 		
@@ -52,8 +58,11 @@
 		
 		public function AProjectile() 
 		{
-			
+			ID++;
+			id = ID;
 		}
+		
+		//{
 		
 		public function update():void {
 			//trace('updating...');
@@ -63,26 +72,33 @@
 				mesh.y = y;
 				mesh.z = z;
 			}
-			
-			velocity.x = speed * Math.sin(angle* Math.PI / 180);
-			velocity.z = speed * Math.cos(angle* Math.PI / 180);
-			
-			x += velocity.x;
-			y += velocity.y;
-			z += velocity.z;
+			if (balive == true) {
+				velocity.x = speed * Math.sin(angle* Math.PI / 180);
+				velocity.z = speed * Math.cos(angle* Math.PI / 180);
+				
+				x += velocity.x;
+				y += velocity.y;
+				z += velocity.z;
+			}
 			getdistance();
 			
 			//updatetragetpoint();
 			
 			if (Math.abs(distance) > maxdistance) {
 				balive = false;
+				//trace(distance);
+				//trace('AProjectile OFF');
+				if (view != null) {
+					view.scene.removeChild(mesh);
+				}
 			}
 		}
 		
 		//calculate distance
 		//this will either clean up mesh when reach border line
 		public function getdistance():void {
-			distance = Math.abs((((startpoint.x - x) * 2)+((startpoint.y - y) * 2)+((startpoint.z - z) * 2))/2);
+			//FIXED MATH
+			distance = Math.abs(Math.sqrt(((startpoint.x - x)*(startpoint.x - x))+((startpoint.y - y)*(startpoint.y - y))+((startpoint.z - z) * (startpoint.z - z))));
 			//trace(distance);
 		}
 		
@@ -140,6 +156,12 @@
 			startpoint.y = p3d.y;
 			startpoint.z = p3d.z;
 			
+			if (mesh != null) {
+				mesh.x = p3d.x;
+				mesh.y = p3d.y;
+				mesh.z = p3d.z;
+			}
+			
 			updatetragetpoint();
 		}
 		
@@ -153,7 +175,14 @@
 			return projectileclass;
 		}
 		
+		//}
 		
+		public function copyobject(object:AProjectile):void {
+			ownerentity = object.ownerentity;
+			damage = object.damage;
+			angle = object.angle;
+			speed = object.speed;
+		}
 		
 	}
 	

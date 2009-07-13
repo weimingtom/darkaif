@@ -54,7 +54,7 @@
 			h = Math.sqrt(Math.pow((x - end.x), 2) + Math.pow((y - end.y), 2) + Math.pow((z - end.z), 2));//working -diagonal
 			//h = Math.floor(h) * 32;
 			h = h*gridsize;//this for how much grid space
-			f = g + h;
+			f = Math.floor(g + h);
 		}
 		
 		public function sandypointgrid(point:Number3D):void {

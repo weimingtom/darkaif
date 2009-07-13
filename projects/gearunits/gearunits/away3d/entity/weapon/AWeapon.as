@@ -1,6 +1,7 @@
 ﻿package gearunits.away3d.entity.weapon 
 {
 	import gearunits.away3d.entity.projectile.AProjectile;
+	import gearunits.core.GlobalUnit;
 	
 	/**
 	 * ...
@@ -9,14 +10,10 @@
 	 * Information: MAIN TEMPLATE
 	 * 
 	 */
-	public class AWeapon 
+	public class AWeapon extends GlobalUnit
 	{
-		public var x:Number = 0;
-		public var y:Number = 0;
-		public var z:Number = 0;
-		
 		//INFORMATION
-		public var name:String = 'Weapon';
+		public var name:String = 'AWeapon';
 		public var time:Number = 0;
 		public var timemax:Number = 0;
 		public var damage:Number = 0;
@@ -25,6 +22,8 @@
 		//FLASH MUZZLE
 		// [?]
 		//WEAPON CONTROL
+		public var PRESSFIRE:Boolean = false;
+		public var BCONTROLFIRE:Boolean = false;
 		public var BFIRE:Boolean = false;
 		public var BALTFIRE:Boolean = false;
 		public var binfiniteammo:Boolean = false;
@@ -35,6 +34,7 @@
 		public var firerate:Number = 0;
 		public var heattime:Number = 0;
 		public var cooltime:Number = 0;
+		public var offsetlengthfire:Number = 0; //2D spawn // current position and spacing and math of sin and cos base
 		
 		public function AWeapon() 
 		{

@@ -1,5 +1,7 @@
 ﻿package gearunits.away3d.entity.spacecraft 
 {
+	import gearunits.away3d.entity.weapon.AWeapon;
+	import gearunits.away3d.entity.weapon.AWeaponSpaceshipGun;
 	import gearunits.models.AMeshSpacecraftFedFighter;
 	
 	/**
@@ -17,7 +19,14 @@
 			name = 'FedFighter';
 			mesh = new AMeshSpacecraftFedFighter();
 			movespeed = 4;
+			TurnSpeed = 5;
 			spawntime = 30;
+			
+			var weap:AWeapon;
+			weap = new AWeaponSpaceshipGun();
+			//weap.z = 16;
+			weap.offsetlengthfire = 16;
+			weapon.push(weap);
 		}
 		
 	}
