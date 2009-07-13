@@ -34,7 +34,7 @@
 
 
  * Project Build
- * [Projects]
+ * [Projects] -Game/Test Projects
   * [ToDoList]
   * Webpage Design:
    * [Captcha_AS3_PHP]
