@@ -48,6 +48,55 @@
 					//angle = rotationpoint(movepoint);
 				}
 			}
+			
+			/*
+			//WEAPON SYSTEM
+			//if () { //check if bot ai for firing at the target
+				//FIRE WEAPON
+				for (var w:int = 0; w < weapon.length; w++ ) {
+					weapon[w].time++;
+					if (weapon[w].time > weapon[w].timemax) {
+						weapon[w].time = 0;
+						for (var p:int = 0; p < weapon[w].projectile.length;p++ ) {
+							//projectile
+							trace('FIRE....');
+							weapon[w].projectile[p].x = x;
+							weapon[w].projectile[p].y = y;
+							weapon[w].projectile[p].z = z;
+							//need to set it for render iusses
+							weapon[w].projectile[p].mesh.x = x;
+							weapon[w].projectile[p].mesh.y = y;
+							weapon[w].projectile[p].mesh.z = z;
+							
+							weapon[w].projectile[p].angle = angle;
+							weapon[w].projectile[p].balive = true;
+							weapon[w].projectile[p].ownerentity = mesh.name;
+							//weapon[w].projectile[p].
+							
+							if(view != null){
+								view.scene.addChild(weapon[w].projectile[p].mesh);
+								weapon[w].projectile[p].mesh.visible = true;
+								var bprojetfound:Boolean = false;
+								//this deal with same object class loop
+								for (var ip:int = 0; ip < projectile.length; ip++ ) {
+									if (projectile[ip] == weapon[w].projectile[p]) {
+										bprojetfound = true;
+										break;
+									}
+								}
+								
+								if(!bprojetfound){
+									projectile.push(weapon[w].projectile[p]);
+								}
+								trace('projectile:'+projectile.length);
+							}
+						}
+					}
+				}
+			///}
+			*/
+			
+			//TYPE COMMAND
 			for (var t:int = 0; t < type.length; t++ ) {
 				//spawn ship
 				if (type[t].name == 'shipyard') {

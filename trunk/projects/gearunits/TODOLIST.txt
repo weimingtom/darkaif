@@ -1,6 +1,5 @@
 ﻿Project: Gear Units
 
-
 //===============================================
 // Away3D:
 //===============================================
@@ -52,6 +51,102 @@ Combat code:
 
 //===============================================
 // Sandy3D:
+//===============================================
+-Unit
+--single select [part done]
+--select box [part done]
+--Action order button icon button []
+--Stats Build
+---Tech Tree
+
+-Spacecraft Unit
+--Space Ship Cap
+--Shipyard
+---Create ships [part done]
+--Ship Bay
+---ship exit [part done]
+---ship entery
+--Menu
+---Single click [part done]
+---Shortcut menu [part done]
+
+-Unit Buildings
+--barracks spawn units build [part done].
+---Tech Tree
+
+-Unit Formation
+--Line Formation
+--Line2 Formation
+--Box Formation
+--V Formation
+--Wall Formation
+
+-Head Up Display (HUD)
+--Top Bar
+---Resource 
+--Bottom Bar
+---Map
+---Unit Info. and Command
+
+Game Modes:
+-Ground Real Time strategy
+-Space Real Time strategy
+
+-Bot AI path [part done]
+--collision [part done]
+--start and end point [part done]
+
+//===============================================
+// Away3D:
+//===============================================
+-Unit
+--single select [part done]
+--select box [part done]
+--Action order button icon button []
+--Stats Build
+---Tech Tree
+
+-Spacecraft Unit
+--Space Ship Cap
+--Shipyard
+---Create ships [part done]
+--Ship Bay
+---ship exit [part done]
+---ship entery
+--Menu
+---Single click [part done]
+---Shortcut menu [part done]
+
+-Unit Buildings
+--barracks spawn units build [part done].
+---Tech Tree
+
+-Unit Formation
+--Line Formation
+--Line2 Formation
+--Box Formation
+--V Formation
+--Wall Formation
+
+-Head Up Display (HUD)
+--Top Bar
+---Resource 
+--Bottom Bar
+---Map
+---Unit Info. and Command
+
+Game Modes:
+-Ground Real Time strategy
+-Space Real Time strategy
+
+Combat code:
+
+-Bot AI path [part done]
+--collision [part done]
+--start and end point [part done]
+
+//===============================================
+// Papervision3D:
 //===============================================
 -Unit
 --single select [part done]

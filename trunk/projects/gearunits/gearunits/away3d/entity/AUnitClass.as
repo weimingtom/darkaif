@@ -23,7 +23,7 @@
 			//{ space craft
 			if (name == ASpaceshipFedFighter.NAME ) {
 				unit = new ASpaceshipFedFighter();
-				trace('---'+ASpaceshipFedFighter.NAME);
+				//trace('---'+ASpaceshipFedFighter.NAME);
 			}
 			if (name == ASpaceshipFedCarrier.NAME) {
 				unit = new ASpaceshipFedCarrier();

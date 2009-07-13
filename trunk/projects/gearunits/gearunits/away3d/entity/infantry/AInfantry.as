@@ -13,7 +13,7 @@
 		
 		public function AInfantry() 
 		{
-			
+			setbox(16,16,16)
 		}
 		
 		override public function update():void {
@@ -56,15 +56,22 @@
 						for (var p:int = 0; p < weapon[w].projectile.length;p++ ) {
 							//projectile
 							trace('FIRE....');
-							weapon[w].projectile[p].x = x;
-							weapon[w].projectile[p].y = y;
+							weapon[w].projectile[p].x = x+16;
+							weapon[w].projectile[p].y = y+4;
 							weapon[w].projectile[p].z = z;
+							//need to set it for render iusses
+							weapon[w].projectile[p].mesh.x = x+16;
+							weapon[w].projectile[p].mesh.y = y+4;
+							weapon[w].projectile[p].mesh.z = z;
+							
 							weapon[w].projectile[p].angle = angle;
 							weapon[w].projectile[p].balive = true;
+							weapon[w].projectile[p].ownerentity = mesh.name;
 							//weapon[w].projectile[p].
 							
 							if(view != null){
 								view.scene.addChild(weapon[w].projectile[p].mesh);
+								weapon[w].projectile[p].mesh.visible = true;
 								var bprojetfound:Boolean = false;
 								//this deal with same object class loop
 								for (var ip:int = 0; ip < projectile.length; ip++ ) {

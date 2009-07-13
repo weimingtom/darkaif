@@ -10,6 +10,7 @@
 	import org.papervision3d.core.utils.Mouse3D;
 	import org.papervision3d.events.InteractiveScene3DEvent;
 	import org.papervision3d.materials.ColorMaterial;
+	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.materials.utils.MaterialsList;
 	import org.papervision3d.materials.WireframeMaterial;
 	import org.papervision3d.objects.DisplayObject3D;
@@ -60,9 +61,13 @@
 		}
 		
 		public function buildterrain():void {
-			var mat:ColorMaterial = new ColorMaterial(0x555500);
-			mat.interactive = true;
-			plane.material = mat;
+			var matcolor:ColorMaterial = new ColorMaterial(0x555500);
+			var matwire:WireframeMaterial = new WireframeMaterial(0x000000);
+			var compost:CompositeMaterial = new CompositeMaterial();
+			compost.addMaterial(matcolor);
+			compost.addMaterial(matwire);
+			compost.interactive = true;
+			plane.material = compost;
 			plane.rotationX = 90;
 			plane.rotationY = 0;
 			plane.rotationZ = 0;

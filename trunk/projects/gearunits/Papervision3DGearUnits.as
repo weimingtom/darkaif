@@ -109,7 +109,7 @@
 		//PAPERVISION
 		private var mouse3D:Mouse3D;
 		private var pivotPoint:DisplayObject3D = new DisplayObject3D();
-		public var plane:Plane = new Plane(null, 512, 512, 32, 32);
+		public var plane:Plane = new Plane(null, 512, 512, 16, 16);
 		
 		//GAME DATA
 		public var unitbot:PStructureUnit = new PUnitBlock();
@@ -215,9 +215,9 @@
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, selectboxdown );
 			stage.addEventListener(MouseEvent.MOUSE_UP, selectboxup );
 			
-			//buildspaceunit();
-			buildgroundunit();
-			buildterrain();
+			buildspaceunit();
+			//buildgroundunit();
+			//buildterrain();
 			startRendering();
 			init_selectbox3d();
 			init_setuphud();

@@ -1,5 +1,7 @@
 ﻿package gearunits.away3d.entity.building 
 {
+	import away3d.sprites.MovieClipSprite;
+	import gearunits.away3d.display.AUnitIconHUD;
 	import gearunits.away3d.entity.AEntityPoint3D;
 	import gearunits.models.AMeshBuildingBarrack;
 	
@@ -11,12 +13,24 @@
 	{
 		public static const NAME:String = 'ABuildingBarrack';
 		public static const TYPE:String = 'Building';
+		public var uniticon:AUnitIconHUD = new AUnitIconHUD();
 		
 		public function ABuildingBarrack() 
 		{
 			name = 'Barracks';
 			mesh = new AMeshBuildingBarrack();
-			type.push({name:'Infantry'});
+			//mesh.
+			
+			var data:AMeshBuildingBarrack = new AMeshBuildingBarrack();
+			
+			type.push( { name:'Infantry' } );
+			
+			//HUD
+			//iconoffset.y = 64;
+			uniticon.text = name;
+			iconhud = new MovieClipSprite(uniticon);
+			
+			setbox(32,32,32);
 			
 			var entpoint:AEntityPoint3D;
 			entpoint = new AEntityPoint3D();
@@ -30,6 +44,12 @@
 		
 		override public function update():void {
 			super.update();
+			
+			if (iconhud != null) {
+				uniticon.percent = health / healthmax;
+				iconhud.y = y + 64;
+			}
+			
 			for (var i:int = 0; i < type.length; i++ ) {
 				if (type[i].name == 'Infantry') {
 					if (queryunit.length) {

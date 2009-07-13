@@ -1,7 +1,11 @@
 ﻿package gearunits.away3d.entity 
 {
+	//{
 	import away3d.containers.View3D;
+	import away3d.core.base.Mesh;
 	import away3d.core.base.Object3D;
+	import away3d.sprites.MovieClipSprite;
+	import gearunits.away3d.display.AUnitIconHUD;
 	import gearunits.away3d.entity.building.ABuildingBarrack;
 	import gearunits.away3d.entity.projectile.AProjectile;
 	import gearunits.away3d.entity.weapon.AWeapon;
@@ -10,6 +14,9 @@
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import gearunits.away3d.technologytree.ATechnologyTree;
+	import gearunits.core.GlobalUnit;
+	import gearunits.core.GUPoint;
+	//}
 	
 	/**
 	 * ...
@@ -18,17 +25,30 @@
 	 * Information: This holds all objects in render
 	 * 
 	 */
-	public class AStructureUnit 
+	
+	public class AStructureUnit extends GlobalUnit
 	{
+		protected static var disp:EventDispatcher; //listener function
+		
+		public var id:int;
 		public static const NAME:String = 'AStructureUnit';
 		public static const TYPE:String = 'Unit';
+		public var name:String = 'AStructureUnit';
+		
+		//public var iconhud:AUnitIconHUD;
+		public var iconhud:MovieClipSprite;
+		
+		public var mesh:Mesh;
 		
 		public var balive:Boolean = true;
-		protected static var disp:EventDispatcher; //listener function
+		
+		//GLOBAL VAR
+		public static var _id:int = 0;
 		public static var view:View3D; //global var class
 		public static var units:Vector.<AStructureUnit>; //global var class
 		public static var projectile:Vector.<AProjectile>; //global var class
 		
+		//VAR
 		public var weapon:Vector.<AWeapon> = new Vector.<AWeapon>();
 		public var type:Array = new Array();
 		public var tech:Vector.<ATechnologyTree> = new Vector.<ATechnologyTree>();
@@ -36,35 +56,47 @@
 		public var unit:Vector.<AStructureUnit> = new Vector.<AStructureUnit>();
 		public var entityPoint:Vector.<AEntityPoint3D> = new Vector.<AEntityPoint3D>();
 		
+		//TIME
 		public var time:Number = 0;
-		public var spawntime:Number = 0;
-		public var launchtime:Number = 0;
-		public var indexpoint:Number = 0;
+		public var spawntime:Number = 0;  //unit spawn time
+		public var launchtime:Number = 0; //unit leaving building time
+		public var indexpoint:Number = 0; //entity point counter
 		
-		public static var _id:int = 0;
-		public var id:int;
+		//STATS
+		public var health:Number = 100;
+		public var healthmax:Number = 100;
 		
-		public var name:String = 'AStructureUnit';
+		//HUD
+		//public var iconoffset:GUPoint = new GUPoint();
 		
-		public var x:Number = 0;
-		public var y:Number = 0;
-		public var z:Number = 0;
-		
-		public var mesh:Object3D;
-		
-		public var min:Number3D = new Number3D();
-		public var max:Number3D = new Number3D();
-		
+		//SELECT
 		public var ownerid:String = '';
-		public var bselected:Boolean = false;
-		public var bsingleselect:Boolean = false;
-		public var angle:Number = 0;
-		public var movespeed:Number = 0;
-		public var order:String = 'none';
+		public var bselected:Boolean = false; //object selected
+		public var bsingleselect:Boolean = false; //only single select object
+		public var busercontrol:Boolean = false;
 		
+		//CONTROL
+		public var movespeed:Number = 0;//unit movement
+		//Spacecraft settings
+		public var SpeedAirMin:Number = 0;
+		public var SpeedAirMax:Number = 0;
+		
+		public var SpeedGroundMin:Number = 0;
+		public var SpeedGroundMax:Number = 0;
+		
+		public var TurnSpeed:Number = 0;
+		public var TurnSpeedMin:Number = 0;
+		public var TurnSpeedMax:Number = 0;
+		
+		public var movementtype:String = 'stationary';//space //land //sea //sub //air
+		public var order:String = 'none';
+		public var angle:Number = 0;
 		public var distance:Number = 0;
 		public var velocity:Number3D = new Number3D();
 		public var movepoint:Number3D = new Number3D();
+		
+		public var BWEAPONFIRE:Boolean = false;
+		public var weaponaction:Array = new Array();
 		
 		public function AStructureUnit() {
 			_id++;
@@ -78,7 +110,21 @@
 				mesh.y = y;
 				mesh.z = z;
 			}
+			
+			if (iconhud != null) {
+				iconhud.x = x;
+				iconhud.y = y;
+				iconhud.z = z;
+			}
+			
 			//trace('G_units:'+units.length);
+			
+			//for (var p:int = 0; p > projectile.length;p++ ) {
+				
+			///}
+			
+			
+			
 		}
 		
 		//this will move to point in angle
@@ -120,6 +166,16 @@
 			//trace('facedirection:'+facedirection);
 			return facedirection;
 		}
+		
+		//2D Move direction
+		public function moveforward(o_speed:Number):void {
+			velocity.x = o_speed * Math.sin(angle* Math.PI / 180);
+			velocity.z = o_speed * Math.cos(angle * Math.PI / 180);	
+			x += velocity.x;
+			y += velocity.y;
+			z += velocity.z;
+		}
+		
 		
 		// GLOBAL VIEW SCENE
 		public function set gview(g_view:View3D):void {
