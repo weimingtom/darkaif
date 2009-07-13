@@ -1,7 +1,10 @@
 #summary List of Games/Tests projects.
-#labels Away3D,Sandy,Papervision3D
+#labels Away3D,Sandy,Papervision3D,Featured
+
+Information: I will try to update the codes and other stuffs.
 
 = Project: Gear Units =
+Information: This game is split into three engine.
 
 * Away3D Engine *
 
