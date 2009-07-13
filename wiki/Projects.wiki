@@ -28,3 +28,5 @@ Main File:
 
 Path Code:
  * http://code.google.com/p/darkaif/source/browse/trunk/projects/gearunits/Sandy3DGearUnitPathBeta.as
+
+*Note: If your getting some errors. Just check the packages. uncomment it.*
