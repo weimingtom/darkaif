@@ -39,7 +39,7 @@ Path Code:
 = Project: Darkaif =
 Game: RPG
 
-Information: This is put on hold. This deal with loading functions and code methods.
+Information: This is put on hold. This deal with loading functions and code methods. Note this is online scripts. It has not yet build offline format.
 
  * Main File:
 http://code.google.com/p/darkaif/source/browse/trunk/darkaif/src/RolePlayingGame.as
