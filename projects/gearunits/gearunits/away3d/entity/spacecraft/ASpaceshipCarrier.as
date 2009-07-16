@@ -16,6 +16,10 @@
 			type.push( { name:'deployablespaceship', bdeploy:false } );
 		}
 		
+		override public function update():void {
+			super.update();
+		}
+		
 	}
 	
 }

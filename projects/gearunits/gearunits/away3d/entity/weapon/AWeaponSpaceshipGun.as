@@ -19,6 +19,9 @@
 			projetileammo = new AProjectileBullet();
 			projetileammo.damage = 10;
 			projetileammo.speed = 3;
+			
+			firepoint.z = 18;
+			offsetlengthfire = 32;
 			projectile.push(projetileammo);
 		}
 		

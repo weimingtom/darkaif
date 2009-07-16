@@ -1,6 +1,8 @@
 ﻿package gearunits.away3d.entity 
 {
+	import away3d.core.base.Mesh;
 	import away3d.core.math.Number3D;
+	import gearunits.models.AMesh_2DBox;
 	
 	/**
 	 * ...
@@ -11,8 +13,10 @@
 		public var name:String = 'EntityPoint3D';
 		
 		public var x:Number = 0;
-		public var y:Number = 0
+		public var y:Number = 0;
 		public var z:Number = 0;
+		
+		public var meshbox:Mesh = new AMesh_2DBox();//2d and 3d collision
 		
 		public var rotationx:Number = 0;
 		public var rotationy:Number = 0;
@@ -33,6 +37,15 @@
 		{
 			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 	
