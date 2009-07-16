@@ -5,6 +5,9 @@
 	import away3d.core.base.Mesh;
 	import away3d.core.base.Object3D;
 	import away3d.sprites.MovieClipSprite;
+	import flash.geom.Matrix3D;
+	import flash.geom.Point;
+	import flash.geom.Vector3D;
 	import gearunits.away3d.display.AUnitIconHUD;
 	import gearunits.away3d.entity.building.ABuildingBarrack;
 	import gearunits.away3d.entity.projectile.AProjectile;
@@ -16,6 +19,8 @@
 	import gearunits.away3d.technologytree.ATechnologyTree;
 	import gearunits.core.GlobalUnit;
 	import gearunits.core.GUPoint;
+	import sandy.core.data.Point3D;
+	import sandy.math.IntersectionMath;
 	//}
 	
 	/**
@@ -28,6 +33,7 @@
 	
 	public class AStructureUnit extends GlobalUnit
 	{
+		//{
 		protected static var disp:EventDispatcher; //listener function
 		
 		public var id:int;
@@ -39,6 +45,7 @@
 		public var iconhud:MovieClipSprite;
 		
 		public var mesh:Mesh;
+		public var collisionmesh:Mesh;//3D/2D Collision It has to be basic
 		
 		public var balive:Boolean = true;
 		
@@ -63,6 +70,7 @@
 		public var indexpoint:Number = 0; //entity point counter
 		
 		//STATS
+		public var BSelfDamage:Boolean = false;
 		public var health:Number = 100;
 		public var healthmax:Number = 100;
 		
@@ -97,14 +105,20 @@
 		
 		public var BWEAPONFIRE:Boolean = false;
 		public var weaponaction:Array = new Array();
-		
+		//}
 		public function AStructureUnit() {
 			_id++;
 			id = _id;
 		}
 		
-		
 		public function update():void {
+			
+			if (collisionmesh != null) {
+				collisionmesh.x = x;
+				collisionmesh.y = y;
+				collisionmesh.z = z;
+			}
+			
 			if (mesh != null) {
 				mesh.x = x;
 				mesh.y = y;
@@ -117,13 +131,18 @@
 				iconhud.z = z;
 			}
 			
-			//trace('G_units:'+units.length);
-			
-			//for (var p:int = 0; p > projectile.length;p++ ) {
-				
-			///}
-			
-			
+			/*
+			if(entityPoint.length){
+				for (var ep:int = 0; ep < entityPoint.length; ep++ ) {
+					var m:Matrix3D = new Matrix3D();
+					m.position = new Vector3D(entityPoint[ep].x, entityPoint[ep].y, entityPoint[ep].z)
+					m.appendRotation(angle, new Vector3D(0, 1, 0));
+					entityPoint[ep].x = m.position.x;
+					entityPoint[ep].y = m.position.y;
+					entityPoint[ep].z = m.position.z;
+				}
+			}
+			*/
 			
 		}
 		
@@ -176,6 +195,125 @@
 			z += velocity.z;
 		}
 		
+		//MESH COLLISION AGAINIST MESH COLLISION
+		public function ismeshintersect(object:AStructureUnit):Boolean {
+			var bhitobject:Boolean = false;
+			for (var i:int = 0; i < collisionmesh.vertices.length; i++ ) {
+				var m:Matrix3D = new Matrix3D();
+				m.position = new Vector3D(collisionmesh.vertices[i].x, collisionmesh.vertices[i].y, collisionmesh.vertices[i].z);
+				m.appendRotation(angle, new Vector3D(0, 1, 0));
+				var point:Point = new Point(x + m.position.x,z + m.position.z);
+				
+				for (var ii:int = 0; ii < object.collisionmesh.faces.length; ii++ ) {
+					var m1:Matrix3D = new Matrix3D();
+					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[0].x, object.collisionmesh.faces[ii].vertices[0].y, object.collisionmesh.faces[ii].vertices[0].z);
+					m1.appendRotation(object.angle, new Vector3D(0, 1, 0));
+					var point1:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
+					
+					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[1].x, object.collisionmesh.faces[ii].vertices[1].y, object.collisionmesh.faces[ii].vertices[1].z);
+					m1.appendRotation(object.angle, new Vector3D(0, 1, 0));
+					var point2:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
+					
+					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[2].x, object.collisionmesh.faces[ii].vertices[2].y, object.collisionmesh.faces[ii].vertices[2].z);
+					m1.appendRotation(object.angle, new Vector3D(0, 1, 0));
+					var point3:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
+					
+					bhitobject = IntersectionMath.isPointInTriangle2D(point, point1, point2, point3);
+					if (bhitobject) {
+						break;
+					}
+				}
+				if (bhitobject) {
+					break;
+				}
+			}
+			return bhitobject;
+		}
+		
+		//small ship > detect entity point from carrier
+		public function ismeshintersectentitypoint(object:AStructureUnit):Boolean {
+			var bhitobject:Boolean = false;
+			for (var i:int = 0; i < collisionmesh.vertices.length; i++ ) {
+				var m:Matrix3D = new Matrix3D();
+				m.position = new Vector3D(collisionmesh.vertices[i].x, collisionmesh.vertices[i].y, collisionmesh.vertices[i].z);
+				m.appendRotation(angle, new Vector3D(0, 1, 0));
+				var point:Point = new Point(x + m.position.x, z + m.position.z);
+				for (var sp:int = 0; sp < object.entityPoint.length;sp++ ) {//enter and exit point
+					for (var ie:int = 0; ie < object.entityPoint[sp].meshbox.faces.length; ie++ ) {//mesh face
+						//trace ('face');
+						m.position = new Vector3D(object.entityPoint[sp].x + object.entityPoint[sp].meshbox.faces[ie].vertices[0].x,
+												  object.entityPoint[sp].y + object.entityPoint[sp].meshbox.faces[ie].vertices[0].y,
+												  object.entityPoint[sp].z + object.entityPoint[sp].meshbox.faces[ie].vertices[0].z
+												);
+						m.appendRotation(object.angle, new Vector3D(0, 1, 0));
+						var point1:Point = new Point(object.x + m.position.x, object.z + m.position.z);//current point in the world
+						
+						m.position = new Vector3D(object.entityPoint[sp].x + object.entityPoint[sp].meshbox.faces[ie].vertices[1].x,
+												  object.entityPoint[sp].y + object.entityPoint[sp].meshbox.faces[ie].vertices[1].y,
+												  object.entityPoint[sp].z + object.entityPoint[sp].meshbox.faces[ie].vertices[1].z
+												);
+						m.appendRotation(object.angle, new Vector3D(0, 1, 0));
+						var point2:Point = new Point(object.x + m.position.x, object.z + m.position.z);//current point in the world
+						
+						m.position = new Vector3D(object.entityPoint[sp].x + object.entityPoint[sp].meshbox.faces[ie].vertices[2].x,
+												  object.entityPoint[sp].y + object.entityPoint[sp].meshbox.faces[ie].vertices[2].y,
+												  object.entityPoint[sp].z + object.entityPoint[sp].meshbox.faces[ie].vertices[2].z
+												);
+						m.appendRotation(object.angle, new Vector3D(0, 1, 0));
+						var point3:Point = new Point(object.x + m.position.x, object.z + m.position.z);//current point in the world
+						
+						bhitobject = IntersectionMath.isPointInTriangle2D(point, point1, point2, point3);
+						if (bhitobject) {
+							//trace('hit enter');
+							break;
+						}
+					}
+					if (bhitobject) {
+						break;
+					}
+				}
+				if (bhitobject) {
+					break;
+				}
+			}
+			return bhitobject;
+		}
+		
+		/**
+		 * 
+		 * @param	object
+		 * @return boolean true or false collision
+		 * point intersect mesh tri point 2d
+		 */
+		public function ispointintersectmesh(object:Number3D):Boolean {
+			var bhitobject:Boolean = false;
+			for (var i:int = 0; i < collisionmesh.vertices.length; i++ ) {
+				var point:Point = new Point(object.x,object.z);
+				for (var ii:int = 0; ii < collisionmesh.faces.length; ii++ ) {
+					var m1:Matrix3D = new Matrix3D();
+					m1.position = new Vector3D(collisionmesh.faces[ii].vertices[0].x, collisionmesh.faces[ii].vertices[0].y, collisionmesh.faces[ii].vertices[0].z);
+					m1.appendRotation(angle, new Vector3D(0, 1, 0));
+					var point1:Point = new Point(x + m1.position.x,z + m1.position.z);
+					
+					m1.position = new Vector3D(collisionmesh.faces[ii].vertices[1].x, collisionmesh.faces[ii].vertices[1].y, collisionmesh.faces[ii].vertices[1].z);
+					m1.appendRotation(angle, new Vector3D(0, 1, 0));
+					var point2:Point = new Point(x + m1.position.x, z + m1.position.z);
+					
+					m1.position = new Vector3D(collisionmesh.faces[ii].vertices[2].x, collisionmesh.faces[ii].vertices[2].y, collisionmesh.faces[ii].vertices[2].z);
+					m1.appendRotation(angle, new Vector3D(0, 1, 0));
+					var point3:Point = new Point(x + m1.position.x, z + m1.position.z);
+					
+					bhitobject = IntersectionMath.isPointInTriangle2D(point, point1, point2, point3);
+					if (bhitobject) {
+						break;
+					}
+				}
+				if (bhitobject) {
+					break;
+				}
+			}
+			return bhitobject;
+		}
 		
 		// GLOBAL VIEW SCENE
 		public function set gview(g_view:View3D):void {

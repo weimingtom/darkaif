@@ -1,5 +1,6 @@
 ﻿package gearunits.away3d.entity.weapon 
 {
+	import away3d.core.math.Number3D;
 	import gearunits.away3d.entity.projectile.AProjectile;
 	import gearunits.core.GlobalUnit;
 	
@@ -35,10 +36,15 @@
 		public var heattime:Number = 0;
 		public var cooltime:Number = 0;
 		public var offsetlengthfire:Number = 0; //2D spawn // current position and spacing and math of sin and cos base
+		public var firepoint:Number3D = new Number3D();//where spawn projectiles
 		
 		public function AWeapon() 
 		{
 			
+		}
+		
+		public function position():Number3D {
+			return new Number3D(x,y,z);
 		}
 		
 	}

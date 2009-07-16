@@ -1,5 +1,6 @@
 ﻿package gearunits.away3d.entity.projectile 
 {
+	//{
 	import away3d.containers.View3D;
 	import away3d.core.base.Mesh;
 	import away3d.core.base.Object3D;
@@ -7,6 +8,7 @@
 	import away3d.core.math.Number3D;
 	import gearunits.away3d.entity.AStructureUnit;
 	import gearunits.core.GlobalUnit;
+	//}
 	
 	/**
 	 * ...
@@ -56,8 +58,7 @@
 		
 		//}
 		
-		public function AProjectile() 
-		{
+		public function AProjectile() {
 			ID++;
 			id = ID;
 		}
@@ -184,6 +185,9 @@
 			speed = object.speed;
 		}
 		
+		public function position():Number3D {
+			return new Number3D(x,y,z);
+		}
 	}
 	
 }

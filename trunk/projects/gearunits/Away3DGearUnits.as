@@ -213,8 +213,6 @@
 		//}
 		
 		public function Away3DGearUnits() {
-			
-			
             addChild(view);
 			
 			//var chibi:AMeshCharacterChbibi = new AMeshCharacterChbibi();
@@ -292,13 +290,13 @@
 				projectile[p].update();
 				if (projectile[p].balive == true) {//check if projectile is alive to be moving around
 					for (var i:int = 0; i < unit.length; i++ ) {
-						//trace('check collison' + i);
-						//do not self damage unit
-						if ((unit[i].interset3d(projectile[p]) == true) &&(unit[i].ownerid != projectile[p].ownerentity)){
+						//point collision mesh for ship
+						if ((unit[i].ispointintersectmesh(projectile[p].position()) == true)&&(String(unit[i].id) != projectile[p].ownerentity)) {
+							//trace('Collision.... 2d');
 							projectile[p].balive = false
 							projectile[p].mesh.visible = false;
 							view.scene.removeChild(projectile[p].mesh);
-							trace('collision');
+							//trace('collision');
 							unit[i].health -= projectile[p].damage;
 							break;
 						}
@@ -324,26 +322,21 @@
 			var structureunit:AStructureUnit;
 			var structureunit2:AStructureUnit;
 			
-			//in the carrier test
-			structureunit2 = new ASpaceshipFedFighter();
-			//structureunit2.busercontrol = true;
-			structureunit2.ownerid = playername;
-			unitfun(structureunit2);
 			
-			/*
 			structureunit = new ASpaceshipFedCarrier();
 			unitfun(structureunit);
+			structureunit.angle = 180;
+			//structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			structureunit.unit.push(structureunit2);
-			structureunit.x = 64;
+			structureunit.x = 128;
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
-			*/
-			
 			
 			//trace(ASpaceshipFedCarrier.NAME);
 			//trace(ASpaceshipFedFighter.NAME);
 			//trace(ASpaceshipFedFighter.NAME);
+			
 			/*
 			structureunit = new ASpacestationFedShipyard();
 			structureunit.ownerid = playername;
@@ -352,11 +345,13 @@
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
 			*/
+			
 			structureunit = new ASpaceshipFedFighter();
 			structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			structureunit.x = -32;
 			view.scene.addChild(structureunit.mesh);
+			view.scene.addChild(structureunit.iconhud);
 			unitfun(structureunit);
 			unit.push(structureunit);
 			
@@ -364,6 +359,7 @@
 			structureunit.ownerid = playername;
 			structureunit.x = 32;
 			view.scene.addChild(structureunit.mesh);
+			view.scene.addChild(structureunit.iconhud);
 			unitfun(structureunit);
 			unit.push(structureunit);
 		}
@@ -752,7 +748,7 @@
 						}
 						
 						if (KEY_DOWN == true) {
-							trace('down' );
+							//trace('down' );
 							unit[i].moveforward(-(unit[i].movespeed));
 						}
 						
@@ -761,6 +757,8 @@
 						}else {
 							unit[i].BWEAPONFIRE = false;
 						}
+						
+						//trace(unit[i].mesh.maxX);//box min and max
 						
 						view.camera.x = unit[i].x;
 						view.camera.z = unit[i].z + -500;

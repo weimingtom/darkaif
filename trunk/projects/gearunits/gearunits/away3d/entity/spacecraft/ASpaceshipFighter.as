@@ -1,6 +1,10 @@
 ﻿package gearunits.away3d.entity.spacecraft 
 {
 	import away3d.core.math.Number3D;
+	import away3d.sprites.MovieClipSprite;
+	import flash.geom.Matrix3D;
+	import flash.geom.Vector3D;
+	import gearunits.away3d.display.AUnitIconHUD;
 	import gearunits.away3d.entity.projectile.AProjectile;
 	import gearunits.away3d.entity.weapon.AWeapon;
 	import gearunits.away3d.entity.weapon.AWeaponAssaultRifle;
@@ -13,15 +17,26 @@
 	{
 		public static const NAME:String = 'ASpaceshipFighter';
 		public static const TYPE:String = 'Spaceship';
+		public var uniticon:AUnitIconHUD = new AUnitIconHUD();
 		
 		public function ASpaceshipFighter() 
 		{
 			type.push( { name:'fighter' } );
 			//TurnSpeed = 5;
+			name = 'ASpaceshipFighter';
+			uniticon.text = name;
+			uniticon.setbar(6, 32);
+			iconhud = new MovieClipSprite(uniticon);
 		}
 		
 		override public function update():void {
 			super.update();
+			
+			//update position and health
+			if (iconhud != null) {
+				uniticon.percent = health / healthmax;
+				iconhud.y = y - 32;
+			}
 			
 			
 			//trace('fire--');
@@ -78,13 +93,17 @@
 								}
 								projectileclass.balive = true;
 								projectileclass.copyobject(weapon[w].projectile[p]);
-								projectileclass.setposition(new Number3D(x + (weapon[w].offsetlengthfire * Math.sin(angle * Math.PI / 180)),
-																				y,
-																				z + (weapon[w].offsetlengthfire * Math.cos(angle * Math.PI / 180))));
+								
+								var m:Matrix3D = new Matrix3D();
+								m.position = new Vector3D(weapon[w].firepoint.x,weapon[w].firepoint.y,weapon[w].firepoint.z);
+								m.appendRotation(angle, new Vector3D(0, 1, 0));
+								projectileclass.setposition(new Number3D(x + m.position.x, y + m.position.y, z + m.position.z));
+								m = null;
 								
 								projectileclass.angle = angle;
 								projectileclass.balive = true;
-								projectileclass.ownerentity = mesh.name;
+								projectileclass.ownerentity = String(id);
+								//trace(mesh.name);
 								//check if there is view scene
 								if(view != null){
 									view.scene.addChild(projectileclass.mesh);

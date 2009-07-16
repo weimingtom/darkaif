@@ -21,6 +21,41 @@
 		
 		override public function update():void {
 			super.update();
+			
+			if(units != null){
+				for (var c:int = 0; c < units.length; c++ ) {
+					if (( id != units[c].id)&&(units[c].collisionmesh != null) ){
+						if (ismeshintersect(units[c])) {
+							trace('collision other objects...');
+						}
+						
+						if (ismeshintersectentitypoint(units[c])) {
+							trace('entity collision...');
+						}
+						
+					}
+				}
+				/*
+				for (var su:int = 0; su < units.length;su++ ) {
+					//deal enter and exit code
+					if(ismeshintersect(units[su])){//check if box bound
+						for (var s:int = 0; s > entityPoint.length; s++ ) {
+							
+						
+						
+						}
+					}
+				}
+				*/
+			}
+			
+			
+			
+			
+			
+			
+			
+			
 			//trace(order+':'+x);
 			/*
 			//this make sure if the mesh doesn't give error
