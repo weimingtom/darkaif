@@ -4,6 +4,8 @@
 Information: I will try to update the codes and other stuffs.
 
 = Project: Gear Units =
+Game:RTS
+
 Information: This game is split into three engine.
 
 * Away3D Engine *
@@ -33,3 +35,18 @@ Path Code:
  * http://code.google.com/p/darkaif/source/browse/trunk/projects/gearunits/Sandy3DGearUnitPathBeta.as
 
 *Note: If your getting some errors. Just check the packages. uncomment it.*
+
+= Project: Darkaif =
+Game: RPG
+
+Information: This is put on hold. This deal with loading functions and code methods.
+
+ * Main File:
+http://code.google.com/p/darkaif/source/browse/trunk/darkaif/src/RolePlayingGame.as
+
+ * Editor Tools:
+
+ * htdocs(Host site):
+
+
+*Note: This might be recode differently a bit once the testing is done.*
