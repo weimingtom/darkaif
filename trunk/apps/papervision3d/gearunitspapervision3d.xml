@@ -4,9 +4,9 @@
   <Content type="html">
      <![CDATA[ 
 	 <object classid="" width="800" height="600">
-        <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/away3d/gearunitsaway3d.swf" />
+        <param name="movie" value="http://darkaif.googlecode.com/svn/trunk/apps/papervision3d/gearunitspapervision3d.swf" />
         <!--[if !IE]>-->
-        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/away3d/gearunitsaway3d.swf" width="800" height="600">
+        <object type="application/x-shockwave-flash" data="http://darkaif.googlecode.com/svn/trunk/apps/papervision3d/gearunitspapervision3d.swf" width="800" height="600">
         <!--<![endif]-->
           <p>Alternative content</p>
         <!--[if !IE]>-->
