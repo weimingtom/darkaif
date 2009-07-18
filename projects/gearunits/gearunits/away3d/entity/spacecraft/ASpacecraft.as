@@ -1,5 +1,7 @@
 ﻿package gearunits.away3d.entity.spacecraft 
 {
+	import flash.geom.Matrix3D;
+	import flash.geom.Vector3D;
 	import gearunits.away3d.entity.AStructureUnit;
 	
 	/**
@@ -8,61 +10,77 @@
 	 * 
 	 * Information: Need to work on some code to deal with basic lag reduce some how.
 	 * 
+	 * Notes:
+	 * Error in remove object if looop with null error.
+	 * 
 	 */
 	public class ASpacecraft extends AStructureUnit
 	{
 		public static const NAME:String = 'ASpacecraft';
 		public static const TYPE:String = 'Spacecraft';
 		
-		public function ASpacecraft() 
-		{
+		public function ASpacecraft() {
+			
 			type.push({name:'spacecraft'});
 		}
 		
 		override public function update():void {
 			super.update();
 			
-			if(units != null){
+			if (units != null) {
+				var collisionpoint:Boolean = false;
+				var bobjectcollision:Boolean = false;
 				for (var c:int = 0; c < units.length; c++ ) {
-					if (( id != units[c].id)&&(units[c].collisionmesh != null) ){
+					if (( id != units[c].id) && (units[c].collisionmesh != null) ) {
 						if (ismeshintersect(units[c])) {
-							trace('collision other objects...');
+							//trace('collision other objects...');
+							bobjectcollision = true;
 						}
-						
-						if (ismeshintersectentitypoint(units[c])) {
-							trace('entity collision...');
+						//check if the object just spawn from the entery point and do not let is load into the unit(ship)
+						if ((ismeshintersectentitypoint(units[c]) == true) && (balive == true) && (bjustspawn == true)) {
+							collisionpoint = true;
+						}
+						//loop object with entity points
+						if ((ismeshintersectentitypoint(units[c]) == true)&&(balive == true)&&(bjustspawn == false)) {
+							//trace('entity collision...');
+							balive = false;
+							if(mesh != null){
+								view.scene.removeChildByName(mesh.name);
+							}
+							if(iconhud != null){
+								view.scene.removeChildByName(iconhud.name);
+							}
+							units[c].unit.push(this); //push into the units that carry it
+							for (var ui:int = 0; ui < units.length;ui++ ) {//remove from main unit
+								if (units[ui] == this) {//if object is matches this class then remove it from unit
+									units.splice(ui, 1);
+									break;
+								}
+							}
+							//units.splice(c, 1);
 						}
 						
 					}
 				}
-				/*
-				for (var su:int = 0; su < units.length;su++ ) {
-					//deal enter and exit code
-					if(ismeshintersect(units[su])){//check if box bound
-						for (var s:int = 0; s > entityPoint.length; s++ ) {
-							
-						
-						
-						}
+				if (bobjectcollision) {
+					bhit = true;
+				}else {
+					bhit = false;
+				}
+				
+				//trace('collision point:'+collisionpoint);
+				//this make sure the spawn will not over lap the spawn and loading
+				//when player leave the entery point the is a timer will set the spawn to false
+				if ((bjustspawn == true) && (collisionpoint != true)&&(balive == true)) {
+					//trace('----' + collisionpoint);
+					justspawntime++;
+					if (justspawntime > justspawntimemax) {
+						justspawntime = 0;
+						bjustspawn = false;
 					}
 				}
-				*/
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			//trace(order+':'+x);
-			/*
-			//this make sure if the mesh doesn't give error
-			if (mesh != null) {
-				mesh.rotationY = angle;
-			}
-			*/
 			
 			//AI BUILD TEST
 			if (order == 'move') {
@@ -161,18 +179,32 @@
 					if(type[t].bdeploy == true){
 						if (unit.length) {
 							unit[0].time++;
+							
 							if (unit[0].time > unit[0].launchtime) {
 								unit[0].time = 0;
 								//check point to exit
-								for (var ii:int = 0; ii < entityPoint.length;ii++ ) {
-									unit[0].x = x + entityPoint[ii].x;
-									unit[0].y = y + entityPoint[ii].y;
-									unit[0].z = x + entityPoint[ii].z;
+								
+								
+								for (var ep:int = 0; ep < entityPoint.length; ep++ ) {
+									var m:Matrix3D = new Matrix3D();
+									m.position = new Vector3D(entityPoint[ep].x, entityPoint[ep].y,entityPoint[ep].z)
+									m.appendRotation(angle, new Vector3D(0, 1, 0));
+									unit[0].x =x+ m.position.x;
+									unit[0].y =y+ m.position.y;
+									unit[0].z =z+ m.position.z;
 								}
+								
 								if(view != null){
 									//unitfun(unit[li].unit[0]);//build function
-									trace('spawn...');
+									trace('spawn spaceship...');
+									unit[0].angle = angle;//need to work on direction spawn
+									unit[0].balive = true;
+									unit[0].bjustspawn = true;
 									view.scene.addChild(unit[0].mesh);
+									if (unit[0].iconhud != null) {
+										view.scene.addChild(unit[0].iconhud);
+									}
+									
 									units.push(unit[0]);
 									unit.splice(0, 1);
 								}	
@@ -183,9 +215,9 @@
 					}
 				}
 				
+				
 			}	
 		}
-	
 	}
 	
 }

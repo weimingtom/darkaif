@@ -40,14 +40,12 @@
 		public static const NAME:String = 'AStructureUnit';
 		public static const TYPE:String = 'Unit';
 		public var name:String = 'AStructureUnit';
-		
-		//public var iconhud:AUnitIconHUD;
-		public var iconhud:MovieClipSprite;
+		public var iconhud:MovieClipSprite; //DISPLAY INFORMATION
 		
 		public var mesh:Mesh;
 		public var collisionmesh:Mesh;//3D/2D Collision It has to be basic
 		
-		public var balive:Boolean = true;
+		public var balive:Boolean = true;//boolean ship alive?
 		
 		//GLOBAL VAR
 		public static var _id:int = 0;
@@ -64,6 +62,9 @@
 		public var entityPoint:Vector.<AEntityPoint3D> = new Vector.<AEntityPoint3D>();
 		
 		//TIME
+		public var bjustspawn:Boolean = false;
+		public var justspawntime:Number = 0;
+		public var justspawntimemax:Number = 30;
 		public var time:Number = 0;
 		public var spawntime:Number = 0;  //unit spawn time
 		public var launchtime:Number = 0; //unit leaving building time
@@ -71,6 +72,7 @@
 		
 		//STATS
 		public var BSelfDamage:Boolean = false;
+		public var bhit:Boolean = false;
 		public var health:Number = 100;
 		public var healthmax:Number = 100;
 		
@@ -111,6 +113,7 @@
 			id = _id;
 		}
 		
+		//UPDATE
 		public function update():void {
 			
 			if (collisionmesh != null) {
@@ -130,19 +133,6 @@
 				iconhud.y = y;
 				iconhud.z = z;
 			}
-			
-			/*
-			if(entityPoint.length){
-				for (var ep:int = 0; ep < entityPoint.length; ep++ ) {
-					var m:Matrix3D = new Matrix3D();
-					m.position = new Vector3D(entityPoint[ep].x, entityPoint[ep].y, entityPoint[ep].z)
-					m.appendRotation(angle, new Vector3D(0, 1, 0));
-					entityPoint[ep].x = m.position.x;
-					entityPoint[ep].y = m.position.y;
-					entityPoint[ep].z = m.position.z;
-				}
-			}
-			*/
 			
 		}
 		
@@ -188,11 +178,17 @@
 		
 		//2D Move direction
 		public function moveforward(o_speed:Number):void {
-			velocity.x = o_speed * Math.sin(angle* Math.PI / 180);
-			velocity.z = o_speed * Math.cos(angle * Math.PI / 180);	
+			if(bhit){
+				velocity.x =  (o_speed/50) * Math.sin(angle* Math.PI / 180);
+				velocity.z =  (o_speed/50) * Math.cos(angle * Math.PI / 180);	
+			}else {
+				velocity.x = o_speed * Math.sin(angle* Math.PI / 180);
+				velocity.z = o_speed * Math.cos(angle * Math.PI / 180);	
+			}
 			x += velocity.x;
 			y += velocity.y;
 			z += velocity.z;
+			
 		}
 		
 		//MESH COLLISION AGAINIST MESH COLLISION

@@ -1,6 +1,11 @@
-﻿Project: Gear Units
-Author: Darknet
+﻿//===============================================
+	Project: Gear Units
+//===============================================
+	Author: Darknet
+//===============================================
 Link: http://code.google.com/p/darkaif/
+
+BE WARN THAT I MIGHT MIXED UP THE CODES ENGINE IN SOME AREAS TO DEAL GAME CODE.
 
 Licenses:creative commons
 http://creativecommons.org/licenses/by/2.5/ca/
@@ -11,11 +16,12 @@ Information:
 	Two using squad system to do with real time fight. This for ground fight. The number is unknown for how many squad. This deal with AI build and test. This deal with combat fight. This will be different this involved class base. For example engineer can build stuff and repair machines. Marine can carry different weapon. Health stats may differ on class.
 	Working on simple way to build a game with out lagging the game. This will be kept simple as can be. This will be test how much I can push the graphics and flash.
 
-
 SOURCE PACKAGE:
 http://darkaif.googlecode.com/svn/trunk/projects/gearunits/
 
 Support Package:
+Information: not all the packages are in the src.
+
 http://darkaif.googlecode.com/svn/trunk/darkaif/src/[darknet] <-(Menu Builds)
 
 unit = soliders/vehicles

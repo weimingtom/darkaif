@@ -19,6 +19,7 @@
 		{
 			name = 'FedShipyard';
 			mesh = new AMeshSpacestationFedShipYard();
+			mesh.name = name + '_' + id;
 			bsingleselect = true;
 			
 			var techbase:ATechnologyTree;
