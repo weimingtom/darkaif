@@ -328,7 +328,7 @@
 			structureunit.angle = 180;
 			//structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
-			structureunit.unit.push(structureunit2);
+			//structureunit.unit.push(structureunit2);
 			structureunit.x = 128;
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
@@ -696,6 +696,10 @@
 					if (unit[li].type[t].name == 'deployablespaceship') {
 						unit[li].type[t].bdeploy = bunload; //test function //execute code
 						
+						if (unit[li].unit.length == 0) {
+							bunload = false;
+						}
+						
 						/* //build in class
 						if(unit[li].type[t].bdeploy == true){
 							if (unit[li].unit.length) {
@@ -1019,14 +1023,18 @@
 				unitbuild();
 			}
 			
-			icon32unload.addEventListener(MouseEvent.CLICK,clickbuild_unload);
+			icon32unload.addEventListener(MouseEvent.CLICK, clickbuild_unload);
+			icon32unload.addEventListener(MouseEvent.MOUSE_OVER, mousecontrolunitselect_remove);
+			icon32unload.addEventListener(MouseEvent.MOUSE_OUT, mousecontrolunitselect_add);
 			function clickbuild_unload(event:Event):void {
 				unitbuildid = '';
 				bunload = true;
 				unitbuild();
 			}
 			
-			icon32load.addEventListener(MouseEvent.CLICK,clickbuild_load);
+			icon32load.addEventListener(MouseEvent.CLICK, clickbuild_load);
+			icon32load.addEventListener(MouseEvent.MOUSE_OVER, mousecontrolunitselect_remove);
+			icon32load.addEventListener(MouseEvent.MOUSE_OUT, mousecontrolunitselect_add);
 			function clickbuild_load(event:Event):void {
 				unitbuildid = '';
 				bunload = false;
@@ -1095,18 +1103,35 @@
 			//}
 			
 			//{ Infantry Class
-			icon32soldier.addEventListener(MouseEvent.CLICK,clickbuild_soldier);
+			icon32soldier.addEventListener(MouseEvent.CLICK, clickbuild_soldier);
+			icon32soldier.addEventListener(MouseEvent.MOUSE_OVER, mousecontrolunitselect_remove);
+			icon32soldier.addEventListener(MouseEvent.MOUSE_OUT, mousecontrolunitselect_add);
 			function clickbuild_soldier(event:Event):void {
 				unitbuildid = AInfantrySoldier.NAME;
 				unitbuild();
 			}
 			
-			icon32engineer.addEventListener(MouseEvent.CLICK,clickbuild_engineer);
+			icon32engineer.addEventListener(MouseEvent.CLICK, clickbuild_engineer);
+			icon32engineer.addEventListener(MouseEvent.MOUSE_OVER, mousecontrolunitselect_remove);
+			icon32engineer.addEventListener(MouseEvent.MOUSE_OUT, mousecontrolunitselect_add);
 			function clickbuild_engineer(event:Event):void {
 				unitbuildid = AInfantryEngineer.NAME;
 				unitbuild();
 			}
+			
+			
+			
 			//}
+		}
+		
+		public function mousecontrolunitselect_remove(event:Event = null):void {
+			stage.removeEventListener(MouseEvent.MOUSE_DOWN, selectboxdown );
+			stage.removeEventListener(MouseEvent.MOUSE_UP, selectboxup );
+		}
+		
+		public function mousecontrolunitselect_add(event:Event = null):void {
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, selectboxdown );
+			stage.addEventListener(MouseEvent.MOUSE_UP, selectboxup );
 		}
 		
 		//This will remove the mesh that is last currently use.

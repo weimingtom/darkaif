@@ -33,6 +33,7 @@ This is a working build code for rts game.
  * Select functions for 3D Select Box.
  * Ray Casting 2D to 3D.
  * Control depth for z sorting.
+ * 2D Collision ploygon.
 
 -CONS:
  * Render clipping and over object not working out well.
@@ -65,6 +66,7 @@ This is a working build code for rts game.
  * Not easy to get matrix math code to work. Do more home to able to get object face direction working.
  * Tons of reseach.
  * Polygon limited.
+ * no polygon collision or intersect
  
  
  Note: There might be different build that depend on the class build on the engine.

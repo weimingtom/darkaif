@@ -1,4 +1,5 @@
 package  {
+	//{
 	import away3d.core.base.Face;
 	import away3d.core.base.Mesh;
 	import away3d.core.base.UV;
@@ -8,7 +9,8 @@ package  {
 	import away3d.core.utils.Init;
 	import flash.geom.Vector3D;
 	import flash.geom.Matrix3D;
-
+	//}
+	
 	public class Away3DBoneVertexTest extends Mesh {
 		private var ve:Array;
 		private var fa:Array;
@@ -17,7 +19,7 @@ package  {
 		private var boneg:Array = new Array();
 		private var bonev:Array = new Array();
 		private var parentbone:Array = new Array();
-
+		
 		public function Away3DBoneVertexTest(init:Object = null) {
 			super( init );
 			init = Init.parse(init);
@@ -99,7 +101,6 @@ package  {
 		//{
 		
 		/*
-		
 		top mesh of aVertex point
 		-6
 		-7
@@ -108,7 +109,6 @@ package  {
 		-10
 		-11
 		-no 12
-		
 		 */
 		
 		 //bone1 = base
@@ -160,16 +160,6 @@ package  {
 								var bmatrix:Matrix3D = new Matrix3D();
 								var bpoint:Vector3D = new Vector3D(bonematrix[bmc].x, bonematrix[bmc].y, bonematrix[bmc].z);
 								
-								//trace(bpoint+'rx:'+bonematrix[bonep].roty+':'+bonematrix[bonep].roty+':'+bonematrix[bonep].rotz+']');
-								/*
-								bmatrix.axisRotationWithReference(new Point3D(1, 0, 0), bpivotpoint, bonematrix[bonep].rotx);
-								bpoint = Matrix4Math.transform(bmatrix, bpoint);
-								bmatrix.axisRotationWithReference(new Point3D(0, 1, 0), bpivotpoint, bonematrix[bonep].roty);
-								bpoint = Matrix4Math.transform(bmatrix, bpoint);
-								bmatrix.axisRotationWithReference(new Point3D(0, 0, 1), bpivotpoint, bonematrix[bonep].rotz);
-								bpoint = Matrix4Math.transform(bmatrix, bpoint);
-								*/
-								//bmatrix.appendTranslation();
 								bmatrix.appendRotation(bonematrix[bonep].rotx, new Vector3D(1, 0, 0));
 								bmatrix.appendRotation(bonematrix[bonep].roty, new Vector3D(0, 1, 0));
 								bmatrix.appendRotation(bonematrix[bonep].rotz, new Vector3D(0, 0, 1));
@@ -210,23 +200,11 @@ package  {
 							
 							matrix.position = new Vector3D(vertexf[weightno].x, vertexf[weightno].y, vertexf[weightno].z);
 							matrix.appendTranslation(bonematrix[bonep].x, bonematrix[bonep].y, bonematrix[bonep].z);
-							
 							matrix.appendRotation(bone[bonep].rotx * bonev[weightno].weight, new Vector3D(1, 0, 0));
 							matrix.appendRotation(bone[bonep].roty * bonev[weightno].weight, new Vector3D(0, 1, 0));
 							matrix.appendRotation(bone[bonep].rotz * bonev[weightno].weight, new Vector3D(0, 0, 1));
-							
 							matrix.appendTranslation(-bonematrix[bonep].x, -bonematrix[bonep].y, -bonematrix[bonep].z);
-							/*
-							//var point:Point3D = new Point3D(vertexf[weightno].x, vertexf[weightno].y, vertexf[weightno].z);
-							var point:Point3D = new Point3D(vertexf[bonev[weightno].vertexid].x, vertexf[bonev[weightno].vertexid].y, vertexf[bonev[weightno].vertexid].z);
-							//if there no input it will remaind default rotation
-							matrix.axisRotationWithReference(new Point3D(1, 0, 0), pivotpoint, bone[bonep].rotx*bonev[weightno].weight);
-							point = Matrix4Math.transform(matrix, point);
-							matrix.axisRotationWithReference(new Point3D(0, 1, 0), pivotpoint, bone[bonep].roty*bonev[weightno].weight);
-							point = Matrix4Math.transform(matrix, point);
-							matrix.axisRotationWithReference(new Point3D(0, 0, 1), pivotpoint, bone[bonep].rotz*bonev[weightno].weight);
-							point = Matrix4Math.transform(matrix, point);
-							*/
+							
 							vertexf[bonev[weightno].vertexid].x = matrix.position.x;
 							vertexf[bonev[weightno].vertexid].y = matrix.position.y;
 							vertexf[bonev[weightno].vertexid].z = matrix.position.z;
@@ -241,27 +219,13 @@ package  {
 					for (var vpno:int = 0; vpno < vp.length ; vpno++ ) {
 						//trace('point:'+vp[vpno]);
 						//trace('found....update point...');
-						//var matrix2:Matrix4 = new Matrix4();
-						
 						matrix.position = new Vector3D(vertexf[vp[vpno]].x, vertexf[vp[vpno]].y, vertexf[vp[vpno]].z)
-						
 						matrix.appendTranslation(bonematrix[bonep].x, bonematrix[bonep].y, bonematrix[bonep].z);
-						
 						matrix.appendRotation(bone[bonep].rotx, new Vector3D(1, 0, 0));
 						matrix.appendRotation(bone[bonep].roty, new Vector3D(0, 1, 0));
 						matrix.appendRotation(bone[bonep].rotz, new Vector3D(0, 0, 1));
-						
 						matrix.appendTranslation(-bonematrix[bonep].x, -bonematrix[bonep].y, -bonematrix[bonep].z);
 						
-						/*
-						var point2:Point3D = new Point3D(vertexf[vp[vpno]].x, vertexf[vp[vpno]].y, vertexf[vp[vpno]].z);
-						matrix2.axisRotationWithReference(new Point3D(1, 0, 0), pivotpoint, bone[bonep].rotx);
-						point2 = Matrix4Math.transform(matrix2, point2);
-						matrix2.axisRotationWithReference(new Point3D(0, 1, 0),pivotpoint, bone[bonep].roty);
-						point2 = Matrix4Math.transform(matrix2, point2);
-						matrix2.axisRotationWithReference(new Point3D(0, 0, 1),pivotpoint, bone[bonep].rotz);
-						point2 = Matrix4Math.transform(matrix2, point2);
-						*/
 						vertexf[vp[vpno]].x = matrix.position.x;
 						vertexf[vp[vpno]].y = matrix.position.y;
 						vertexf[vp[vpno]].z = matrix.position.z;
@@ -276,10 +240,6 @@ package  {
 					vertices[vertexset].y = vertexf[vertexset].y;
 					vertices[vertexset].z = vertexf[vertexset].z;
 				}
-				
-				//changed = true;
-				
-				//set vertex from all bone code
 			}
 			
 			function parentbranch(pv:Array, parentname:String):void {

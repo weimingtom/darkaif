@@ -1,10 +1,8 @@
 ﻿package gearunits.away3d.entity.spacecraft 
 {
 	import away3d.core.math.Number3D;
-	import away3d.sprites.MovieClipSprite;
 	import flash.geom.Matrix3D;
 	import flash.geom.Vector3D;
-	import gearunits.away3d.display.AUnitIconHUD;
 	import gearunits.away3d.entity.projectile.AProjectile;
 	import gearunits.away3d.entity.weapon.AWeapon;
 	import gearunits.away3d.entity.weapon.AWeaponAssaultRifle;
@@ -17,27 +15,17 @@
 	{
 		public static const NAME:String = 'ASpaceshipFighter';
 		public static const TYPE:String = 'Spaceship';
-		public var uniticon:AUnitIconHUD = new AUnitIconHUD();
 		
 		public function ASpaceshipFighter() 
 		{
 			type.push( { name:'fighter' } );
 			//TurnSpeed = 5;
 			name = 'ASpaceshipFighter';
-			uniticon.text = name;
-			uniticon.setbar(6, 32);
-			iconhud = new MovieClipSprite(uniticon);
+			
 		}
 		
 		override public function update():void {
 			super.update();
-			
-			//update position and health
-			if (iconhud != null) {
-				uniticon.percent = health / healthmax;
-				iconhud.y = y - 32;
-			}
-			
 			
 			//trace('fire--');
 			//IF key is press to fire weapon Multi 

@@ -25,26 +25,24 @@
 			name = 'FedCarrier';
 			var matwire:WireframeMaterial = new WireframeMaterial(0x999999);
 			mesh = new AMeshSpacecraftFedCarrier();
+			mesh.name = name + '_' + id;
 			//mesh.material = matwire;
 			//mesh = new AMeshSpacecraftFedMedCarrier();
 			collisionmesh = new AMeshSpacecraftFedCarrier_Box();
-			
-			cube.x = collisionmesh.vertices[0].x;
-			cube.y = collisionmesh.vertices[0].y;
-			cube.z = collisionmesh.vertices[0].z;
 			
 			view.scene.addChild(cube);
 			//view.scene.addChild(collisionmesh);
 			
 			//trace(mesh.maxX + ':' + mesh.maxZ);
-			setbox(50,150,150);
-			TurnSpeed = 5;
-			movespeed = 5;
-			spawntime = 60;
+			setbox(50,150,150);//set bounding box
+			TurnSpeed = 5;//set ship turn speed
+			movespeed = 5;//set ship speed
+			spawntime = 60;//set spawn time
 			
 			var pointentity:AEntityPoint3D;
 			pointentity = new AEntityPoint3D();
 			pointentity.bexit = true;
+			//pointentity.z = 160;
 			pointentity.z = 160;
 			entityPoint.push(pointentity);
 			
@@ -84,6 +82,7 @@
 					cube.z =z+ m.position.z;
 				}
 			}
+			
 		}
 		
 	}
