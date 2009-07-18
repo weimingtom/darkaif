@@ -1,0 +1,4 @@
+#summary Tech Demo and working in progress build.
+#labels Away3D
+
+<wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/away3d/gearunitsaway3d.xml" width="800" height="600" />
