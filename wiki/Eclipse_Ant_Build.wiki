@@ -1,9 +1,10 @@
 #summary Simple Build for ant build.
-#labels swf
+#labels swf,antbuild
 
 Information:
-To able to compile flex sdk. It took a while to look around.
+To able to compile flex sdk. It took a while to look around. But there are different way to build it. As long you know how the ant build works.
 
+build.xml
 {{{
 <?xml version="1.0" encoding="utf-8"?>
 <project name='flash swf compiler' default='as'>
