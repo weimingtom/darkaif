@@ -1,0 +1,29 @@
+#summary Simple Build for ant build.
+#labels swf
+
+Information:
+To able to compile flex sdk. It took a while to look around.
+
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+<project name='flash swf compiler' default='as'>
+
+	<!-- Declares references to needed directories. -->
+	  <property name="src.dir" location="src"/>
+	  <property name="lib.dir" location="lib"/>
+	  <property name="bin.dir" location="bin"/>
+
+  <target name='as'>
+    <property name='compiler' location='C:\flex_sdk_3\bin\mxmlc.exe' />
+  	<property name="ASFile" value="${src.dir}\Foo.as"/>
+  	<property name="SWFFile" value="${bin.dir}\Foo.swf"/>
+  	<property name="classPath" value="${src.dir}"/>
+  	<property name="screen" value="-default-size 508 308"/>
+    <exec executable='${compiler}' failonerror='true'>
+    	<arg line='"${ASFile}" ${screen} -output "${SWFFile}"'/>  
+    </exec>
+    <echo>mxml file compiled successfully</echo>
+    <echo>swf file generated successfully</echo>
+  </target>
+</project>
+}}}
