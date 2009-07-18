@@ -4,6 +4,10 @@
 Information:
 To able to compile flex sdk. It took a while to look around. But there are different way to build it. As long you know how the ant build works.
 
+http://darkaif.googlecode.com/svn/trunk/images/eclipseflashworkspace_foo.jpg
+
+The layout will look like this.
+
 build.xml
 {{{
 <?xml version="1.0" encoding="utf-8"?>
