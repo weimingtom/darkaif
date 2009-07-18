@@ -44,23 +44,22 @@ buildflashplayer.xml
 	<property name="bin.dir" location="bin"/>
 	<property name="build.dir" location="build"/>
 
-  <target name='as'>
-  	<property name="flashplayer" location="C:\flex_sdk_3\runtimes\player\10\win\FlashPlayer.exe"/>
+	<target name='as'>
+  		<property name="flashplayer" location="C:\flex_sdk_3\runtimes\player\10\win\FlashPlayer.exe"/>
+		<property name='compiler' location='C:\flex_sdk_3\bin\mxmlc.exe' />
+		<property name="ASFile" value="${src.dir}\ShowText.as"/>
+		<property name="SWFFile" value="${bin.dir}\Foo.swf"/>
+		<property name="classPath" value="${src.dir}"/>
+		<property name="screen" value="-default-size 508 308"/>
+		<exec executable='${compiler}' failonerror='true'>
+    		<arg line='"${ASFile}" ${screen} -output "${SWFFile}"'/>    	
+    	</exec>
+		<echo>mxml file compiled successfully</echo>
+		<echo>swf file generated successfully</echo>
   	
-    <property name='compiler' location='C:\flex_sdk_3\bin\mxmlc.exe' />
-  	<property name="ASFile" value="${src.dir}\ShowText.as"/>
-  	<property name="SWFFile" value="${bin.dir}\Foo.swf"/>
-  	<property name="classPath" value="${src.dir}"/>
-  	<property name="screen" value="-default-size 508 308"/>
-    <exec executable='${compiler}' failonerror='true'>
-    	<arg line='"${ASFile}" ${screen} -output "${SWFFile}"'/>    	
-    </exec>
-    <echo>mxml file compiled successfully</echo>
-    <echo>swf file generated successfully</echo>
-  	
-  	<exec executable='${flashplayer}' failonerror='true'>
-  	    <arg line='"${SWFFile}"'/>    	
-  	</exec>
-  </target>
+		<exec executable='${flashplayer}' failonerror='true'>
+			<arg line='"${SWFFile}"'/>    	
+		</exec>
+	</target>
 </project>
 }}}
