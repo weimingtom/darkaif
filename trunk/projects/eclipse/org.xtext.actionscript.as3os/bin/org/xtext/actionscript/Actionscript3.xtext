@@ -1,0 +1,50 @@
+grammar org.xtext.actionscript.actionscript3 with org.eclipse.xtext.common.Terminals
+
+generate actionscript3 "http://www.xtext.org/actionscript/actionscript3"
+
+
+Model :
+	(imports+=Import)*
+	(elements+=Type)*;
+	
+Import :
+	'import' importURI=STRING ';';
+
+Type:
+	Public | Private;
+
+Property:
+	Variables | Function;
+
+Public:
+	//'public' Class;
+	'public' Class | 'public' Function |'public' Variables;
+	
+Private:
+	//'public' Class;
+	'private' Class | 'private' Function |'private' Variables;
+	
+Class :
+	'class' name=ID ('extends' superClass=[Class])? '{'
+		properties+=Property*
+	'}';
+	
+Function:
+	'function' name=ID '(' ')'  '{' '}';
+	
+Variables:
+	'var' UNIT |'var' _String | 'var' _int | 'var' number;
+	
+UNIT:
+	Name=ID ':' 'unit'  ('=' String='0x000000' )?  ';';
+_String:
+	Name=ID ':'  'String' ('=' String=''?)? ';';
+	
+_int:
+	Name=ID ':' 'int' ('=' int='0')?  ';';
+	
+number:
+	Name=ID ':' 'Number' ('=' double='0')? ';';
+	
+	
+	
