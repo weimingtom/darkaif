@@ -159,6 +159,13 @@
 		//{ KEYBOARD
 		public var SHIFT:Boolean = false;
 		public var CTRL:Boolean = false;
+		public var KEY_SPACE:Boolean = false;
+		
+		public var KEY_LEFT:Boolean = false;
+		public var KEY_RIGHT:Boolean = false;
+		public var KEY_UP:Boolean = false;
+		public var KEY_DOWN:Boolean = false;
+		
 		public var KEY_A:Boolean = false;
 		public var KEY_B:Boolean = false;
 		public var KEY_C:Boolean = false;
@@ -186,6 +193,7 @@
 		public var KEY_Y:Boolean = false;
 		public var KEY_Z:Boolean = false;
 		//}
+		public var bplayercontrol:Boolean = true;
 		//}
 		
 		public function Papervision3DGearUnits() {
@@ -208,6 +216,11 @@
 			PStructureUnit.scene = scene;
 			PStructureUnit.units = unit;
 			PStructureUnit.projectile = projectile;
+			
+			PProjectile.scene = scene;
+			PProjectile.units = unit;
+			PProjectile.projectile = projectile;
+			
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keypressdown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyupevent);
@@ -238,27 +251,35 @@
 				CTRL = true;
 			}
 			
+			if (key.keyCode == 32) {
+				KEY_SPACE = true;
+			}
+			
 			if (key.keyCode == 37) {//left
-				camera.x -= 10;
-				center.x -= 10;
-				cameraAsCamera3D.x -= 10;
+				KEY_LEFT = true;
+				//camera.x -= 10;
+				//center.x -= 10;
+				//cameraAsCamera3D.x -= 10;
 				//viewport.x -= 10;
 			}
 			if (key.keyCode == 39) {//right
-				camera.x += 10;
-				center.x += 10;
-				cameraAsCamera3D.x += 10;
+				KEY_RIGHT = true;
+				//camera.x += 10;
+				//center.x += 10;
+				//cameraAsCamera3D.x += 10;
 				//viewport.x += 10;
 			}
 			if (key.keyCode == 40) {//down
-				camera.z -= 10;
-				center.z -= 10;
-				cameraAsCamera3D.z -= 10;
+				KEY_DOWN = true;
+				//camera.z -= 10;
+				//center.z -= 10;
+				//cameraAsCamera3D.z -= 10;
 				//viewport.z -= 10;
 			}
 			if (key.keyCode == 38) {//up
-				camera.z += 10;
-				center.z += 10;
+				KEY_UP = true;
+				//camera.z += 10;
+				//center.z += 10;
 				//cameraAsCamera3D.z += 10;
 				//viewport.z += 10;
 				//camera.lookAt(0, 0, 0);
@@ -278,11 +299,44 @@
 		public function keyupevent(key:KeyboardEvent):void {
 			//trace(key.keyCode);
 			if (key.keyCode == 16) {
-				//SHIFT = false;
+				SHIFT = false;
 			}
 			
 			if (key.keyCode == 17) {
-				//CTRL = false;
+				CTRL = false;
+			}
+			if (key.keyCode == 32) {
+				KEY_SPACE = false;
+			}
+			
+			if (key.keyCode == 37) {//left
+				KEY_LEFT = false;
+				//camera.x -= 10;
+				//center.x -= 10;
+				//cameraAsCamera3D.x -= 10;
+				//viewport.x -= 10;
+			}
+			if (key.keyCode == 39) {//right
+				KEY_RIGHT = false;
+				//camera.x += 10;
+				//center.x += 10;
+				//cameraAsCamera3D.x += 10;
+				//viewport.x += 10;
+			}
+			if (key.keyCode == 40) {//down
+				KEY_DOWN = false;
+				//camera.z -= 10;
+				//center.z -= 10;
+				//cameraAsCamera3D.z -= 10;
+				//viewport.z -= 10;
+			}
+			if (key.keyCode == 38) {//up
+				KEY_UP = false;
+				//camera.z += 10;
+				//center.z += 10;
+				//cameraAsCamera3D.z += 10;
+				//viewport.z += 10;
+				//camera.lookAt(0, 0, 0);
 			}
 			
 			if (key.keyCode == 90) {
@@ -351,6 +405,7 @@
 			unit.push(buildunit);
 			
 			buildunit = new PSpaceshipFedFighter();
+			buildunit.busercontrol = true;
 			buildunit.ownerid = playername;
 			buildunit.x = 0;
 			buildunit.y = 0;
@@ -404,8 +459,9 @@
 		
 		//}
 		
+		//RENDER
 		override protected function onRenderTick(event:Event = null):void {
-			
+			controlunit();
 			for (var p:int = 0; p < projectile.length;p++ ) {
 				projectile[p].update();
 			}
@@ -414,6 +470,7 @@
 				unit[i].update();
 			}
 			unitbot.update();
+			
 			
 			super.onRenderTick(event);
 		}
@@ -625,6 +682,54 @@
 				}
 			}
 		}
+		
+		//=========================================================================================
+		// units CONTROL
+		//=========================================================================================
+		
+		public function controlunit():void {
+			
+			if (bplayercontrol == true) {
+				//trace('Hello');
+				for (var i:int = 0; i < unit.length; i++ ) {
+					//trace('Hello');
+					if (unit[i].busercontrol == true) {
+						//trace('Hello');
+						if (KEY_RIGHT == true) {
+							unit[i].angle += unit[i].TurnSpeed;
+						}
+						
+						if (KEY_LEFT == true) {
+							unit[i].angle -= unit[i].TurnSpeed;
+						}
+						
+						if (KEY_UP == true) {
+							unit[i].moveforward(unit[i].movespeed);
+						}
+						
+						if (KEY_DOWN == true) {
+							//trace('down' );
+							unit[i].moveforward(-(unit[i].movespeed));
+						}
+						
+						if (KEY_SPACE == true) {
+							unit[i].BWEAPONFIRE = true;
+							//trace('space....');
+						}else {
+							unit[i].BWEAPONFIRE = false;
+						}
+						
+						//trace(unit[i].mesh.maxX);//box min and max
+						
+						camera.x = unit[i].x;
+						camera.z = unit[i].z + -200;
+						break;
+					}
+				}
+			}
+			
+		}
+		
 		
 		//=========================================================================================
 		//units building

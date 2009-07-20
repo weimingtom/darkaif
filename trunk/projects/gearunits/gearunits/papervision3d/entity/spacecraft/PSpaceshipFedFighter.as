@@ -1,6 +1,8 @@
 ﻿package gearunits.papervision3d.entity.spacecraft 
 {
 	import gearunits.models.PMeshSpacecraftFedFighter;
+	import gearunits.papervision3d.entity.weapon.PWeapon;
+	import gearunits.papervision3d.entity.weapon.PWeaponSpaceshipGun;
 	import org.papervision3d.materials.ColorMaterial;
 	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.materials.WireframeMaterial;
@@ -26,7 +28,15 @@
 			
 			mesh = new PMeshSpacecraftFedFighter(compMat);
 			movespeed = 2;
+			TurnSpeed = 5;
 			spawntime = 10;
+			
+			
+			var weap:PWeapon;
+			weap = new PWeaponSpaceshipGun();
+			//weap.z = 16;
+			weap.offsetlengthfire = 16;
+			weapon.push(weap);
 		}
 		
 	}

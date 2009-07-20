@@ -13,8 +13,10 @@
 	{
 		public static const NAME:String = 'PProjectileBullet';
 		
-		public function PProjectileBullet() 
-		{
+		public function PProjectileBullet() {
+			
+			CLASS = 'PProjectileBullet';
+			name = 'PProjectileBullet';
 			var matcolor:ColorMaterial =  new ColorMaterial(0x0FFFFFF);
 			var matwirecolor:WireframeMaterial = new WireframeMaterial(0x000000);
 			var compMat:CompositeMaterial = new CompositeMaterial();

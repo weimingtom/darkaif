@@ -46,6 +46,8 @@
 		public var y:Number = 0;
 		public var z:Number = 0;
 		
+		public var bhit:Boolean = false;
+		
 		
 		public var min:Number3D = new Number3D();
 		public var max:Number3D = new Number3D();
@@ -53,6 +55,8 @@
 		public var ownerid:String = '';
 		public var bselected:Boolean = false;
 		public var bsingleselect:Boolean = false;
+		public var busercontrol:Boolean = false;
+		
 		public var angle:Number = 0;
 		public var movespeed:Number = 0;
 		public var order:String = 'none';
@@ -60,6 +64,10 @@
 		public var distance:Number = 0;
 		public var velocity:Number3D = new Number3D();
 		public var movepoint:Number3D = new Number3D();
+		
+		public var TurnSpeed:Number = 0;
+		
+		public var BWEAPONFIRE:Boolean = false;
 		
 		public function PStructureUnit() 
 		{
@@ -73,6 +81,20 @@
 				mesh.y = y;
 				mesh.z = z;
 			}
+		}
+		
+		//2D Move direction
+		public function moveforward(o_speed:Number):void {
+			if(bhit){
+				velocity.x =  (o_speed/50) * Math.sin(angle* Math.PI / 180);
+				velocity.z =  (o_speed/50) * Math.cos(angle * Math.PI / 180);	
+			}else {
+				velocity.x = o_speed * Math.sin(angle* Math.PI / 180);
+				velocity.z = o_speed * Math.cos(angle * Math.PI / 180);	
+			}
+			x += velocity.x;
+			y += velocity.y;
+			z += velocity.z;
 		}
 		
 		//this will move to point in angle
