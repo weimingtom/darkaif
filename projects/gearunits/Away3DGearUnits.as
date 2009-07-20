@@ -3,6 +3,7 @@
 	//{
 	import gearunits.away3d.entity.building.*;
 	import gearunits.away3d.entity.infantry.*;
+	import gearunits.away3d.entity.weapon.AWeapon;
 	import gearunits.sandy3d.entity.spacecraft.*;
 	import gearunits.away3d.display.AUnitIconButton;
 	import gearunits.away3d.entity.AStructureUnit;
@@ -242,6 +243,10 @@
 			AProjectile.units = unit;
 			AProjectile.projectile = projectile;
 			
+			AWeapon.view = view;
+			AWeapon.units = unit;
+			AWeapon.projectiles = projectile;
+			
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, pointposition );
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keypressdown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyupevent);
@@ -326,7 +331,7 @@
 			structureunit = new ASpaceshipFedCarrier();
 			unitfun(structureunit);
 			structureunit.angle = 180;
-			//structureunit.busercontrol = true;
+			structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			//structureunit.unit.push(structureunit2);
 			structureunit.x = 128;
@@ -347,14 +352,14 @@
 			*/
 			
 			structureunit = new ASpaceshipFedFighter();
-			structureunit.busercontrol = true;
+			//structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			structureunit.x = -32;
 			view.scene.addChild(structureunit.mesh);
 			view.scene.addChild(structureunit.iconhud);
 			unitfun(structureunit);
 			unit.push(structureunit);
-			
+			/*
 			structureunit = new ASpaceshipFedFighter();
 			structureunit.ownerid = playername;
 			structureunit.x = 32;
@@ -362,6 +367,7 @@
 			view.scene.addChild(structureunit.iconhud);
 			unitfun(structureunit);
 			unit.push(structureunit);
+			*/
 		}
 		
 		public function init_terrain():void {

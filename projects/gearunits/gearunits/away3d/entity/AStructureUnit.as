@@ -35,7 +35,6 @@
 	{
 		//{
 		protected static var disp:EventDispatcher; //listener function
-		
 		public var id:int;
 		public static const NAME:String = 'AStructureUnit';
 		public static const TYPE:String = 'Unit';
@@ -71,7 +70,7 @@
 		public var indexpoint:Number = 0; //entity point counter
 		
 		//STATS
-		public var BSelfDamage:Boolean = false;
+		public var bselfdamage:Boolean = false;
 		public var bhit:Boolean = false;
 		public var health:Number = 100;
 		public var healthmax:Number = 100;
@@ -103,6 +102,7 @@
 		public var angle:Number = 0;
 		public var distance:Number = 0;
 		public var velocity:Number3D = new Number3D();
+		public var _rotation:Number3D = new Number3D();
 		public var movepoint:Number3D = new Number3D();
 		
 		public var BWEAPONFIRE:Boolean = false;
@@ -188,7 +188,6 @@
 			x += velocity.x;
 			y += velocity.y;
 			z += velocity.z;
-			
 		}
 		
 		//MESH COLLISION AGAINIST MESH COLLISION
@@ -346,6 +345,32 @@
 			
 			return structure;
 		}
+		
+		
+		public function set point(p_point:Number3D):void {
+			x = p_point.x;
+			y = p_point.y;
+			z = p_point.z;
+		}
+		
+		public function get point():Number3D {
+			return new Number3D(x,y,z);
+		}
+		
+		
+		public function set rotation(p_point:Number3D):void {
+			_rotation.x = p_point.x;
+			_rotation.y = p_point.y;
+			_rotation.z = p_point.z;
+		}
+		
+		public function get rotation():Number3D {
+			return new Number3D(x,angle,z);
+		}
+		
+		
+		
+		
 	}
 	
 }

@@ -5,6 +5,8 @@
 	import flash.geom.Matrix3D;
 	import flash.geom.Vector3D;
 	import gearunits.away3d.entity.AEntityPoint3D;
+	import gearunits.away3d.entity.weapon.AWeapon;
+	import gearunits.away3d.entity.weapon.AWeaponSpaceshipBaseTurret;
 	import gearunits.models.AMeshSpacecraftFedCarrier;
 	import gearunits.models.AMeshSpacecraftFedCarrier_Box;
 	import gearunits.models.AMeshSpacecraftFedMedCarrier;
@@ -45,6 +47,14 @@
 			//pointentity.z = 160;
 			pointentity.z = 160;
 			entityPoint.push(pointentity);
+			
+			
+			var weap:AWeapon;
+			weap = new AWeaponSpaceshipBaseTurret();
+			weap.y = 96;
+			weap.z = 96;
+			view.scene.addChild(weap.mesh);
+			weapon.push(weap);
 			
 			//mesh.debugbb = true;
 			//trace(mesh.debugBoundingBox);

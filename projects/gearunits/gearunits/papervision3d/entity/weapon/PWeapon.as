@@ -1,6 +1,7 @@
 ﻿package gearunits.papervision3d.entity.weapon 
 {
 	import gearunits.papervision3d.entity.projectile.PProjectile;
+	import org.papervision3d.core.math.Number3D;
 	
 	/**
 	 * ...
@@ -27,6 +28,7 @@
 		public var BFIRE:Boolean = false;
 		public var BALTFIRE:Boolean = false;
 		public var binfiniteammo:Boolean = false;
+		public var PRESSFIRE:Boolean = false;
 		//WEAPON AMMO
 		public var ammoclip:Number = 0;
 		public var ammo:Number = 0;
@@ -34,6 +36,9 @@
 		public var firerate:Number = 0;
 		public var heattime:Number = 0;
 		public var cooltime:Number = 0;
+		
+		public var firepoint:Number3D = new Number3D();
+		public var offsetlengthfire:Number = 0;
 		
 		public function PWeapon() 
 		{

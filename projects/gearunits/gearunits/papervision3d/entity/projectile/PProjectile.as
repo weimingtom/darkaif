@@ -1,7 +1,9 @@
 ﻿package gearunits.papervision3d.entity.projectile 
 {
+	import gearunits.papervision3d.entity.PStructureUnit;
 	import org.papervision3d.core.geom.TriangleMesh3D;
 	import org.papervision3d.core.math.Number3D;
+	import org.papervision3d.scenes.Scene3D;
 	
 	/**
 	 * ...
@@ -10,7 +12,14 @@
 	public class PProjectile 
 	{
 		public static const NAME:String = 'PProjectile';
+		
+		public static var scene:Scene3D; //global var class
+		public static var units:Vector.<PStructureUnit>; //global var class
+		public static var projectile:Vector.<PProjectile>; //global var class
+		
 		//{
+		public var CLASS:String = 'PProjectile';
+		
 		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;
@@ -19,6 +28,7 @@
 		public var max:Number3D = new Number3D();
 		
 		public var name:String = 'Projectile';
+		public var ownerentity:String = '';
 		public var startpoint:Number3D = new Number3D();
 		public var endpoint:Number3D = new Number3D();
 		public var targetpoint:Number3D = new Number3D();
@@ -29,6 +39,7 @@
 		public var damage:Number = 0;
 		public var defence:Number = 0;
 		public var materialtype:String = '';
+		
 		public var mesh:TriangleMesh3D;
 		
 		public var velocity:Number3D = new Number3D();
@@ -72,13 +83,19 @@
 			
 			if (Math.abs(distance) > maxdistance) {
 				balive = false;
+				//trace(distance);
+				//trace('AProjectile OFF');
+				if (scene != null) {
+					scene.removeChild(mesh);
+				}
 			}
 		}
 		
 		//calculate distance
 		//this will either clean up mesh when reach border line
 		public function getdistance():void {
-			distance = Math.abs((((startpoint.x - x) * 2)+((startpoint.y - y) * 2)+((startpoint.z - z) * 2))/2);
+			//FIXED MATH
+			distance = Math.abs(Math.sqrt(((startpoint.x - x)*(startpoint.x - x))+((startpoint.y - y)*(startpoint.y - y))+((startpoint.z - z) * (startpoint.z - z))));
 			//trace(distance);
 		}
 		
@@ -136,6 +153,11 @@
 			startpoint.y = p3d.y;
 			startpoint.z = p3d.z;
 			
+			mesh.x = p3d.x;
+			mesh.y = p3d.y;
+			mesh.z = p3d.z;
+			
+			
 			updatetragetpoint();
 		}
 		
@@ -147,6 +169,13 @@
 			}
 			
 			return projectileclass;
+		}
+		
+		public function copyobject(object:PProjectile):void {
+			ownerentity = object.ownerentity;
+			damage = object.damage;
+			angle = object.angle;
+			speed = object.speed;
 		}
 		
 	}
