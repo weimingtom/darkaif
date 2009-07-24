@@ -39,6 +39,10 @@
 		public var BFIRE:Boolean = false;
 		public var BALTFIRE:Boolean = false;
 		public var binfiniteammo:Boolean = false;
+		
+		public var bturret:Boolean = false;
+		public var bautoturret:Boolean = false;
+		
 		//WEAPON AMMO
 		public var ammoclip:Number = 0;
 		public var ammo:Number = 0;
@@ -68,7 +72,6 @@
 			}
 			*/
 			
-			
 			if (mesh != null) {
 				m.position = new Vector3D(x, y, z);
 				m.appendRotation(_objectangle.y, new Vector3D(0, 1, 0));
@@ -77,8 +80,6 @@
 				mesh.y = _objectpoint.y + m.position.y;
 				mesh.z = _objectpoint.z+  m.position.z;
 			}
-			
-			
 			
 			if ((BFIRE == false)&&(PRESSFIRE == true)) {
 				BFIRE = true;

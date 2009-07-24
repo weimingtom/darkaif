@@ -28,6 +28,7 @@
 			var matwire:WireframeMaterial = new WireframeMaterial(0x999999);
 			mesh = new AMeshSpacecraftFedCarrier();
 			mesh.name = name + '_' + id;
+			detectrange = 128;
 			//mesh.material = matwire;
 			//mesh = new AMeshSpacecraftFedMedCarrier();
 			collisionmesh = new AMeshSpacecraftFedCarrier_Box();
@@ -53,6 +54,12 @@
 			weap = new AWeaponSpaceshipBaseTurret();
 			weap.y = 96;
 			weap.z = 96;
+			view.scene.addChild(weap.mesh);
+			weapon.push(weap);
+			
+			weap = new AWeaponSpaceshipBaseTurret();
+			weap.y = 96;
+			weap.z = 0;
 			view.scene.addChild(weap.mesh);
 			weapon.push(weap);
 			

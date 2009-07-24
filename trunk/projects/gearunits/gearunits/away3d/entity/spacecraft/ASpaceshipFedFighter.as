@@ -28,6 +28,7 @@
 			movespeed = 4;
 			TurnSpeed = 5;
 			spawntime = 30;
+			detectrange = 128;
 			
 			//mesh.debugbb = true;
 			
