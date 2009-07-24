@@ -30,7 +30,6 @@
 				weapon[i].objectangle  = rotation;
 				weapon[i].objectpoint = point;
 				weapon[i].update();
-				
 			}
 		}
 		

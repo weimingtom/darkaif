@@ -19,7 +19,7 @@
 			super.update();
 			//this make sure if the mesh doesn't give error
 			if (mesh != null) {
-				mesh.rotationY = angle;
+				mesh.rotationY = _rotation.y;
 			}
 		}
 	}

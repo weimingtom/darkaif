@@ -11,21 +11,46 @@
 	 * ...
 	 * @author Darknet
 	 */
+	
 	public class ASpaceshipFighter extends ASpaceship
 	{
 		public static const NAME:String = 'ASpaceshipFighter';
 		public static const TYPE:String = 'Spaceship';
 		
-		public function ASpaceshipFighter() 
-		{
+		public function ASpaceshipFighter() {
 			type.push( { name:'fighter' } );
 			//TurnSpeed = 5;
 			name = 'ASpaceshipFighter';
-			
 		}
 		
 		override public function update():void {
 			super.update();
+			
+			if (units != null ){
+				for (var uid:int = 0; uid < units.length; uid++ ) {
+					if (id != units[uid].id) {//this make sure it doesn't loop slef
+						if(bbot == true){
+						if (caldistance(point,units[uid].point) < detectrange ) {//check if ship in range
+							trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
+							targetangle.y = rotationpoint(units[uid].point);
+							//trace(targetangle.y);
+							//_rotation.y = targetangle.y;
+							trace(rotation.y + ':'+targetangle.y);
+								if ((_rotation.y < 360 )&&(_rotation.y < targetangle.y-TurnSpeed)) {
+									//_rotation.y -= TurnSpeed;
+									//trace(rotation.y + ':'+targetangle.y);
+									_rotation.y += TurnSpeed;
+								}else if ((_rotation.y > 0 )&&(_rotation.y > targetangle.y+TurnSpeed)) {
+									_rotation.y -= TurnSpeed;
+								}else {
+									
+								}
+							
+						}
+						}
+					}
+				}
+			}
 			
 			//trace('fire--');
 			//IF key is press to fire weapon Multi 
@@ -35,11 +60,16 @@
 				}else {
 					weapon[i].PRESSFIRE = false;
 				}
+				weapon[i].objectid = String(id);
+				weapon[i].objectangle  = rotation;
+				weapon[i].objectpoint = point;
+				weapon[i].update();
 			}
 			
+			
+			/*
 			//WEAPON SYSTEM
-			//if (BWEAPONFIRE == true) { //check if bot ai for firing at the target
-				//trace('FIRE'); //FIRE WEAPON
+			//
 				for (var w:int = 0; w < weapon.length; w++ ) {
 					
 					if ((weapon[w].BFIRE == false)&&(weapon[w].PRESSFIRE == true)) {
@@ -54,9 +84,9 @@
 							weapon[w].BFIRE = false
 						}else if(weapon[w].time == 1){
 							for (var p:int = 0; p < weapon[w].projectile.length; p++ ) {
-								/*
-								 * Need to build a reuse projectile 
-								 */ 
+								//
+								// Need to build a reuse projectile 
+								// 
 								//projectile
 								
 								var projectileclass:AProjectile;
@@ -114,7 +144,7 @@
 						}
 					}
 				}
-			///}
+			*/
 		}
 	}
 	

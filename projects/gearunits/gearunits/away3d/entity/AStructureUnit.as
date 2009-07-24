@@ -85,6 +85,7 @@
 		public var busercontrol:Boolean = false;
 		
 		//CONTROL
+		public var bbot:Boolean = false;
 		public var movespeed:Number = 0;//unit movement
 		//Spacecraft settings
 		public var SpeedAirMin:Number = 0;
@@ -107,6 +108,18 @@
 		
 		public var BWEAPONFIRE:Boolean = false;
 		public var weaponaction:Array = new Array();
+		
+		//other objects
+		public var targetid:String = '';
+		public var targettype:String = '';
+		public var targetposition:Number3D = new Number3D();
+		public var targetangle:Number3D = new Number3D();
+		//detect
+		public var bdetectother:Boolean = false;
+		public var detectrange:Number = 0;//radius for emeny
+		
+		
+		
 		//}
 		public function AStructureUnit() {
 			_id++;
@@ -141,15 +154,23 @@
 			//trace(p3d);
 			order = 'move';
 			movepoint = p3d;
-			angle = rotationpoint(p3d);
+			//angle = rotationpoint(p3d);
+			rotation.y = rotationpoint(p3d);
 		}
 		
 		//get distance point to go there in 3d space// MATH
 		public function distancepoint():void {
-			distance = Math.abs((((x - movepoint.x) * 2) + ((y - movepoint.y) * 2) + ((z - movepoint.z) * 2)) / 2);
+			//distance = Math.abs((((x - movepoint.x) * 2) + ((y - movepoint.y) * 2) + ((z - movepoint.z) * 2)) / 2);
+			distance = Math.abs(Math.sqrt(((x - movepoint.x)*(x - movepoint.x))+((y - movepoint.y)*(y - movepoint.y))+((z - movepoint.z) * (z - movepoint.z))));
 			//trace(distance);
 		}
 		
+		public function caldistance(a_point:Number3D,b_point:Number3D):Number {
+			//return Math.abs((((a_point.x - b_point.x) * 2) + ((a_point.y - b_point.y) * 2) + ((a_point.z - b_point.z) * 2)) / 2);
+			return Math.abs(Math.sqrt(((a_point.x - b_point.x)*(a_point.x - b_point.x))+((a_point.y - b_point.y)*(a_point.y - b_point.y))+((a_point.z - b_point.z) * (a_point.z - b_point.z))));
+		}
+		
+		//ROTATE DIRE
 		public function rotationpoint(p3d:Number3D):Number {
 			var facedirection:Number = 0;
 			facedirection = Math.atan2(z - p3d.z, x - p3d.x);
@@ -179,11 +200,11 @@
 		//2D Move direction
 		public function moveforward(o_speed:Number):void {
 			if(bhit){
-				velocity.x =  (o_speed/50) * Math.sin(angle* Math.PI / 180);
-				velocity.z =  (o_speed/50) * Math.cos(angle * Math.PI / 180);	
+				velocity.x =  (o_speed/50) * Math.sin(rotation.y* Math.PI / 180);
+				velocity.z =  (o_speed/50) * Math.cos(rotation.y * Math.PI / 180);	
 			}else {
-				velocity.x = o_speed * Math.sin(angle* Math.PI / 180);
-				velocity.z = o_speed * Math.cos(angle * Math.PI / 180);	
+				velocity.x = o_speed * Math.sin(rotation.y* Math.PI / 180);
+				velocity.z = o_speed * Math.cos(rotation.y * Math.PI / 180);	
 			}
 			x += velocity.x;
 			y += velocity.y;
@@ -196,21 +217,21 @@
 			for (var i:int = 0; i < collisionmesh.vertices.length; i++ ) {
 				var m:Matrix3D = new Matrix3D();
 				m.position = new Vector3D(collisionmesh.vertices[i].x, collisionmesh.vertices[i].y, collisionmesh.vertices[i].z);
-				m.appendRotation(angle, new Vector3D(0, 1, 0));
+				m.appendRotation(rotation.y, new Vector3D(0, 1, 0));
 				var point:Point = new Point(x + m.position.x,z + m.position.z);
 				
 				for (var ii:int = 0; ii < object.collisionmesh.faces.length; ii++ ) {
 					var m1:Matrix3D = new Matrix3D();
 					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[0].x, object.collisionmesh.faces[ii].vertices[0].y, object.collisionmesh.faces[ii].vertices[0].z);
-					m1.appendRotation(object.angle, new Vector3D(0, 1, 0));
+					m1.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 					var point1:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
 					
 					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[1].x, object.collisionmesh.faces[ii].vertices[1].y, object.collisionmesh.faces[ii].vertices[1].z);
-					m1.appendRotation(object.angle, new Vector3D(0, 1, 0));
+					m1.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 					var point2:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
 					
 					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[2].x, object.collisionmesh.faces[ii].vertices[2].y, object.collisionmesh.faces[ii].vertices[2].z);
-					m1.appendRotation(object.angle, new Vector3D(0, 1, 0));
+					m1.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 					var point3:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
 					
 					bhitobject = IntersectionMath.isPointInTriangle2D(point, point1, point2, point3);
@@ -231,7 +252,7 @@
 			for (var i:int = 0; i < collisionmesh.vertices.length; i++ ) {
 				var m:Matrix3D = new Matrix3D();
 				m.position = new Vector3D(collisionmesh.vertices[i].x, collisionmesh.vertices[i].y, collisionmesh.vertices[i].z);
-				m.appendRotation(angle, new Vector3D(0, 1, 0));
+				m.appendRotation(rotation.y, new Vector3D(0, 1, 0));
 				var point:Point = new Point(x + m.position.x, z + m.position.z);
 				for (var sp:int = 0; sp < object.entityPoint.length;sp++ ) {//enter and exit point
 					for (var ie:int = 0; ie < object.entityPoint[sp].meshbox.faces.length; ie++ ) {//mesh face
@@ -240,21 +261,21 @@
 												  object.entityPoint[sp].y + object.entityPoint[sp].meshbox.faces[ie].vertices[0].y,
 												  object.entityPoint[sp].z + object.entityPoint[sp].meshbox.faces[ie].vertices[0].z
 												);
-						m.appendRotation(object.angle, new Vector3D(0, 1, 0));
+						m.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 						var point1:Point = new Point(object.x + m.position.x, object.z + m.position.z);//current point in the world
 						
 						m.position = new Vector3D(object.entityPoint[sp].x + object.entityPoint[sp].meshbox.faces[ie].vertices[1].x,
 												  object.entityPoint[sp].y + object.entityPoint[sp].meshbox.faces[ie].vertices[1].y,
 												  object.entityPoint[sp].z + object.entityPoint[sp].meshbox.faces[ie].vertices[1].z
 												);
-						m.appendRotation(object.angle, new Vector3D(0, 1, 0));
+						m.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 						var point2:Point = new Point(object.x + m.position.x, object.z + m.position.z);//current point in the world
 						
 						m.position = new Vector3D(object.entityPoint[sp].x + object.entityPoint[sp].meshbox.faces[ie].vertices[2].x,
 												  object.entityPoint[sp].y + object.entityPoint[sp].meshbox.faces[ie].vertices[2].y,
 												  object.entityPoint[sp].z + object.entityPoint[sp].meshbox.faces[ie].vertices[2].z
 												);
-						m.appendRotation(object.angle, new Vector3D(0, 1, 0));
+						m.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 						var point3:Point = new Point(object.x + m.position.x, object.z + m.position.z);//current point in the world
 						
 						bhitobject = IntersectionMath.isPointInTriangle2D(point, point1, point2, point3);
@@ -287,15 +308,15 @@
 				for (var ii:int = 0; ii < collisionmesh.faces.length; ii++ ) {
 					var m1:Matrix3D = new Matrix3D();
 					m1.position = new Vector3D(collisionmesh.faces[ii].vertices[0].x, collisionmesh.faces[ii].vertices[0].y, collisionmesh.faces[ii].vertices[0].z);
-					m1.appendRotation(angle, new Vector3D(0, 1, 0));
+					m1.appendRotation(rotation.y, new Vector3D(0, 1, 0));
 					var point1:Point = new Point(x + m1.position.x,z + m1.position.z);
 					
 					m1.position = new Vector3D(collisionmesh.faces[ii].vertices[1].x, collisionmesh.faces[ii].vertices[1].y, collisionmesh.faces[ii].vertices[1].z);
-					m1.appendRotation(angle, new Vector3D(0, 1, 0));
+					m1.appendRotation(rotation.y, new Vector3D(0, 1, 0));
 					var point2:Point = new Point(x + m1.position.x, z + m1.position.z);
 					
 					m1.position = new Vector3D(collisionmesh.faces[ii].vertices[2].x, collisionmesh.faces[ii].vertices[2].y, collisionmesh.faces[ii].vertices[2].z);
-					m1.appendRotation(angle, new Vector3D(0, 1, 0));
+					m1.appendRotation(rotation.y, new Vector3D(0, 1, 0));
 					var point3:Point = new Point(x + m1.position.x, z + m1.position.z);
 					
 					bhitobject = IntersectionMath.isPointInTriangle2D(point, point1, point2, point3);
@@ -347,6 +368,8 @@
 		}
 		
 		
+		//position
+		
 		public function set point(p_point:Number3D):void {
 			x = p_point.x;
 			y = p_point.y;
@@ -359,13 +382,14 @@
 		
 		
 		public function set rotation(p_point:Number3D):void {
-			_rotation.x = p_point.x;
-			_rotation.y = p_point.y;
-			_rotation.z = p_point.z;
+			_rotation.x = p_point.x % 360;
+			_rotation.y = p_point.y % 360;
+			_rotation.z = p_point.z % 360;
 		}
 		
 		public function get rotation():Number3D {
-			return new Number3D(x,angle,z);
+			//return new Number3D(x,angle,z);
+			return _rotation;
 		}
 		
 		
