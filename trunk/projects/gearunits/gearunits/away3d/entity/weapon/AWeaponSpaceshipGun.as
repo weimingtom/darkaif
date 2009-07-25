@@ -14,6 +14,8 @@
 		{
 			name = 'AWeaponSpaceshipGun';
 			timemax = 10;
+			detectrange = 128;
+			//TurnSpeed = 5;
 			
 			var projetileammo:AProjectile;
 			projetileammo = new AProjectileBullet();

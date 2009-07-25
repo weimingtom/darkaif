@@ -27,8 +27,8 @@
 					weapon[i].PRESSFIRE = false;
 				}
 				weapon[i].objectid = String(id);
-				weapon[i].objectangle  = rotation;
-				weapon[i].objectpoint = point;
+				weapon[i].objectangle  = rotation; //current ship rotation
+				weapon[i].objectpoint = point;//current ship rotation
 				weapon[i].update();
 			}
 		}

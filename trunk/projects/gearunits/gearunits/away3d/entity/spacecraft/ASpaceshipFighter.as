@@ -31,11 +31,12 @@
 					if (id != units[uid].id) {//this make sure it doesn't loop slef
 						if(bbot == true){
 						if (caldistance(point,units[uid].point) < detectrange ) {//check if ship in range
-							trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
+							//trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
 							targetangle.y = rotationpoint(units[uid].point);
 							//trace(targetangle.y);
 							//_rotation.y = targetangle.y;
-							trace(rotation.y + ':'+targetangle.y);
+							//trace(rotation.y + ':'+targetangle.y);
+							//change direction to follow target
 								if ((_rotation.y < 360 )&&(_rotation.y < targetangle.y-TurnSpeed)) {
 									//_rotation.y -= TurnSpeed;
 									//trace(rotation.y + ':'+targetangle.y);
@@ -43,14 +44,17 @@
 								}else if ((_rotation.y > 0 )&&(_rotation.y > targetangle.y+TurnSpeed)) {
 									_rotation.y -= TurnSpeed;
 								}else {
-									
+									BWEAPONFIRE = true;
 								}
-							
+						}else {
+							BWEAPONFIRE = false;
 						}
 						}
 					}
 				}
 			}
+			
+			
 			
 			//trace('fire--');
 			//IF key is press to fire weapon Multi 
@@ -65,7 +69,6 @@
 				weapon[i].objectpoint = point;
 				weapon[i].update();
 			}
-			
 			
 			/*
 			//WEAPON SYSTEM
