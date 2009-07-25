@@ -1,5 +1,6 @@
 ﻿package gearunits.away3d.entity.spacecraft 
 {
+	//{
 	import away3d.materials.WireframeMaterial;
 	import away3d.primitives.Cube;
 	import flash.geom.Matrix3D;
@@ -10,6 +11,8 @@
 	import gearunits.models.AMeshSpacecraftFedCarrier;
 	import gearunits.models.AMeshSpacecraftFedCarrier_Box;
 	import gearunits.models.AMeshSpacecraftFedMedCarrier;
+	//}
+	
 	
 	/**
 	 * ...
@@ -54,14 +57,18 @@
 			weap = new AWeaponSpaceshipBaseTurret();
 			weap.y = 96;
 			weap.z = 96;
+			weap.bbot = true;
 			view.scene.addChild(weap.mesh);
 			weapon.push(weap);
 			
+			/*
 			weap = new AWeaponSpaceshipBaseTurret();
 			weap.y = 96;
 			weap.z = 0;
+			weap.bbot = true;
 			view.scene.addChild(weap.mesh);
 			weapon.push(weap);
+			*/
 			
 			//mesh.debugbb = true;
 			//trace(mesh.debugBoundingBox);

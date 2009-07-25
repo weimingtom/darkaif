@@ -227,12 +227,19 @@
 			//view.camera.x = -30;
 			
 			//ground cam
+			/* //3rd cam
 			view.camera.x = 0;
 			view.camera.y = 500;
 			view.camera.z = -500;
 			view.camera.lookAt(new Number3D(0, 0, 0));
 			view.camera.y = 500;
 			view.camera.x = -50;
+			*/
+			
+			view.camera.x = 0;
+			view.camera.y = 500;
+			view.camera.z = -1;
+			view.camera.lookAt(new Number3D(0, 0, 0));
 			
 			//GLOBAL VARS
 			AStructureUnit.view = view;
@@ -325,18 +332,17 @@
 		//TEST AERA
 		public function spacetest():void {
 			var structureunit:AStructureUnit;
-			var structureunit2:AStructureUnit;
-			
 			
 			structureunit = new ASpaceshipFedCarrier();
 			unitfun(structureunit);
 			structureunit.angle = 180;
-			structureunit.busercontrol = true;
+			//structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			//structureunit.unit.push(structureunit2);
 			structureunit.x = 128;
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
+			
 			
 			//trace(ASpaceshipFedCarrier.NAME);
 			//trace(ASpaceshipFedFighter.NAME);
@@ -352,22 +358,25 @@
 			*/
 			
 			structureunit = new ASpaceshipFedFighter();
-			//structureunit.busercontrol = true;
+			structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			structureunit.x = -32;
 			view.scene.addChild(structureunit.mesh);
 			view.scene.addChild(structureunit.iconhud);
 			unitfun(structureunit);
 			unit.push(structureunit);
+			
 			/*
 			structureunit = new ASpaceshipFedFighter();
 			structureunit.ownerid = playername;
-			structureunit.x = 32;
+			structureunit.x = 128;
+			structureunit.bbot = true;
 			view.scene.addChild(structureunit.mesh);
 			view.scene.addChild(structureunit.iconhud);
 			unitfun(structureunit);
 			unit.push(structureunit);
 			*/
+			
 		}
 		
 		public function init_terrain():void {
@@ -746,11 +755,11 @@
 					if (unit[i].busercontrol == true) {
 						//trace('Hello');
 						if (KEY_RIGHT == true) {
-							unit[i].angle += unit[i].TurnSpeed;
+							unit[i].rotation.y += unit[i].TurnSpeed;
 						}
 						
 						if (KEY_LEFT == true) {
-							unit[i].angle -= unit[i].TurnSpeed;
+							unit[i].rotation.y -= unit[i].TurnSpeed;
 						}
 						
 						if (KEY_UP == true) {
@@ -771,7 +780,8 @@
 						//trace(unit[i].mesh.maxX);//box min and max
 						
 						view.camera.x = unit[i].x;
-						view.camera.z = unit[i].z + -500;
+						view.camera.z = unit[i].z;
+						//view.camera.z = unit[i].z + -500;// 3rd cam
 						break;
 					}
 				}

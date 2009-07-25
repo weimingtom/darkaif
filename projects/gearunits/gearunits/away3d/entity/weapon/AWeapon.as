@@ -34,14 +34,17 @@
 		//FLASH MUZZLE
 		// [?]
 		//WEAPON CONTROL
+		public var BWEAPONFIRE:Boolean = false;
 		public var PRESSFIRE:Boolean = false;
 		public var BCONTROLFIRE:Boolean = false;
 		public var BFIRE:Boolean = false;
 		public var BALTFIRE:Boolean = false;
 		public var binfiniteammo:Boolean = false;
 		
+		public var bbot:Boolean = false;
 		public var bturret:Boolean = false;
 		public var bautoturret:Boolean = false;
+		
 		
 		//WEAPON AMMO
 		public var ammoclip:Number = 0;
@@ -52,6 +55,15 @@
 		public var cooltime:Number = 0;
 		public var offsetlengthfire:Number = 0; //2D spawn // current position and spacing and math of sin and cos base
 		public var firepoint:Number3D = new Number3D();//where spawn projectiles
+		public var _rotation:Number3D = new Number3D();
+		public var TurnSpeed:Number = 0;
+		
+		public var detectrange:Number = 0;
+		
+		
+		public var targetid:String = '';
+		public var targetpoint:Number3D = new Number3D();
+		public var targetangle:Number3D = new Number3D();
 		
 		public function AWeapon() 
 		{
@@ -72,6 +84,41 @@
 			}
 			*/
 			
+			if(bbot == true){//bot to be on for turret
+			if (units != null ){
+				for (var uid:int = 0; uid < units.length; uid++ ) {
+					if (_objectid != String(units[uid].id)) {//this make sure it doesn't loop slef
+						//trace('turret');
+						//trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
+						if (caldistance(currentpoint,units[uid].point) < detectrange ) {//check if ship in range
+							//trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
+							targetangle.y = rotationpoint(units[uid].point);
+							trace(targetangle.y);
+							//_rotation.y = targetangle.y;
+							//trace(rotation.y + ':'+targetangle.y);
+							//change direction to follow target
+								/*
+								if ((_rotation.y < 360 )&&(_rotation.y < targetangle.y-TurnSpeed)) {
+									//_rotation.y -= TurnSpeed;
+									//trace(rotation.y + ':'+targetangle.y);
+									_rotation.y += TurnSpeed;
+								}else if ((_rotation.y > 0 )&&(_rotation.y > targetangle.y+TurnSpeed)) {
+									_rotation.y -= TurnSpeed;
+								}else {
+									BWEAPONFIRE = true;
+								}
+								*/
+								BWEAPONFIRE = true;
+						}else {
+							BWEAPONFIRE = false;
+						}
+						break;
+					}
+				}
+			}
+			}
+			
+			
 			if (mesh != null) {
 				m.position = new Vector3D(x, y, z);
 				m.appendRotation(_objectangle.y, new Vector3D(0, 1, 0));
@@ -79,6 +126,15 @@
 				mesh.x = _objectpoint.x + m.position.x;
 				mesh.y = _objectpoint.y + m.position.y;
 				mesh.z = _objectpoint.z+  m.position.z;
+			}
+			
+			//if bot over ride control for bot to fire
+			if (bbot == true) {
+				if (BWEAPONFIRE == true) {
+					PRESSFIRE = true;
+				}else {
+					PRESSFIRE = false;
+				}
 			}
 			
 			if ((BFIRE == false)&&(PRESSFIRE == true)) {
@@ -134,6 +190,11 @@
 						m = null;
 						
 						projectileclass.angle = _objectangle.y;
+						if (bbot == true) {//if bot control is on 
+							projectileclass.angle = targetangle.y;
+							//projectileclass.angle = 270;
+						}
+						
 						projectileclass.balive = true;
 						projectileclass.ownerentity = _objectid;
 						//trace(mesh.name);
@@ -158,10 +219,44 @@
 					}
 				}
 			}
+			
 		}
 		
 		public function position():Number3D {
 			return new Number3D(x,y,z);
+		}
+		
+		
+		public function caldistance(a_point:Number3D,b_point:Number3D):Number {
+			//return Math.abs((((a_point.x - b_point.x) * 2) + ((a_point.y - b_point.y) * 2) + ((a_point.z - b_point.z) * 2)) / 2);
+			return Math.abs(Math.sqrt(((a_point.x - b_point.x)*(a_point.x - b_point.x))+((a_point.y - b_point.y)*(a_point.y - b_point.y))+((a_point.z - b_point.z) * (a_point.z - b_point.z))));
+		}
+		
+		//ROTATE DIRE
+		public function rotationpoint(p3d:Number3D):Number {
+			var facedirection:Number = 0;
+			facedirection = Math.atan2(currentpoint.z - p3d.z, currentpoint.x - p3d.x);
+			facedirection = facedirection * 180 / Math.PI;
+			
+			//default    
+			//270 to 360  |z| 00 to  090
+			//-------x--top-view-x-------
+			//270 to 180  |z| 90 to -180
+			
+			// as3 from Math.atan2(z,x)
+			//0 to -90 || 91 to -180 (Fixed area)
+			//----------------------
+			//0 to 90  || 91 to -180
+			
+			if ((facedirection < -91)&&(facedirection > -180) ){
+				//trace('angle:' + Math.abs(90 + facedirection));
+				facedirection = Math.abs(90 + facedirection);
+			}else {
+				//trace('angle:' + (180 + (90 - facedirection)) + '[:]' + facedirection);
+				facedirection = (180 + (90 - facedirection));
+			}
+			//trace('facedirection:'+facedirection);
+			return facedirection;
 		}
 		
 		//=======================================
@@ -192,6 +287,19 @@
 			return _objectid;
 		}
 		
+		public function set point(p_point:Number3D):void {
+			x = p_point.x;
+			y = p_point.y;
+			z = p_point.z;
+		}
+		
+		public function get point():Number3D {
+			return new Number3D(x,y,z);
+		}
+		
+		public function get currentpoint():Number3D {//add the current position of global
+			return new Number3D(x+_objectpoint.x,_objectpoint.y + y,_objectpoint.z+z);
+		}
 	}
 	
 }
