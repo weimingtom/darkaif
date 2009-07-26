@@ -18,6 +18,7 @@
 	 * ...
 	 * @author Darknet
 	 */
+	
 	public class ASpaceshipFedCarrier extends ASpaceshipCarrier
 	{
 		public static const NAME:String = 'FedCarrier';
@@ -52,23 +53,24 @@
 			pointentity.z = 160;
 			entityPoint.push(pointentity);
 			
-			
 			var weap:AWeapon;
 			weap = new AWeaponSpaceshipBaseTurret();
 			weap.y = 96;
 			weap.z = 96;
 			weap.bbot = true;
+			weap.bturret = true;
 			view.scene.addChild(weap.mesh);
 			weapon.push(weap);
 			
-			/*
+			
 			weap = new AWeaponSpaceshipBaseTurret();
 			weap.y = 96;
 			weap.z = 0;
 			weap.bbot = true;
+			weap.rotation.y = 270;
 			view.scene.addChild(weap.mesh);
 			weapon.push(weap);
-			*/
+			
 			
 			//mesh.debugbb = true;
 			//trace(mesh.debugBoundingBox);
@@ -99,7 +101,7 @@
 					var m:Matrix3D = new Matrix3D();
 					m.position = new Vector3D(entityPoint[ep].x, entityPoint[ep].y,entityPoint[ep].z)
 					//m.appendTranslation(x, y, z);
-					m.appendRotation(angle, new Vector3D(0, 1, 0));
+					m.appendRotation(_rotation.y, new Vector3D(0, 1, 0));
 					//m.appendTranslation(-(x), -(y), -(z));
 					cube.x =x+ m.position.x;
 					cube.y =y+ m.position.y;

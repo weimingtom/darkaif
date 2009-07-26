@@ -801,7 +801,7 @@
 			var su:AStructureUnit;
 			for (var ii:int = 0; ii < unit.length;ii++ ) {
 				if (String(unit[ii].id) == unitid) {
-					trace('found...');
+					//trace('found...');
 					su = unit[ii];
 					break;
 				}
@@ -1003,10 +1003,10 @@
 			}
 			
 			if (bunitmenu == true) {
-				trace('Hello');
+				//trace('Hello');
 				unitshortcutaction();
 			}else if (bunitmainmenu == true) {
-				trace('Hello');
+				//trace('Hello');
 				unitmainaction();
 			}else {
 				clearsprite(HUD_UNITSHORTCUT);
@@ -1021,13 +1021,13 @@
 		
 		//ALL UNIT BUTTONS FUNCTIONS
 		public function buttonbuildunit():void {
-			trace('init... buttons...');
+			//trace('init... buttons...');
 			//{ space craft builder
 			icon32fedfighter.addEventListener(MouseEvent.CLICK,clickbuild_fedfighter);
 			function clickbuild_fedfighter(event:Event):void {
 				//unitbuildid = 'FedFighter';
 				unitbuildid = ASpaceshipFedFighter.NAME;
-				trace(unitbuildid +'===');
+				//trace(unitbuildid +'===');
 				unitbuild();
 			}
 			
@@ -1035,7 +1035,7 @@
 			function clickbuild_fedcarrier(event:Event):void {
 				//unitbuildid = 'FedCarrier';
 				unitbuildid = ASpaceshipFedCarrier.NAME;
-				trace(unitbuildid +'===');
+				//trace(unitbuildid +'===');
 				unitbuild();
 			}
 			
@@ -1196,14 +1196,14 @@
 		}
 		
 		public function buildunitbuilding():void {
-			trace(unitbuildid + '->');
+			//trace(unitbuildid + '->');
 			
 			var builtunit:AStructureUnit = new AUnitClass().CheckName(unitbuildid);
 			if(builtunit != null){//this make sure if the class is not there that will give error
 				builtunit.x = endpoint.x;
 				builtunit.y = endpoint.y;
 				builtunit.z = endpoint.z;
-				trace(endpoint + ';;;;');
+				//trace(endpoint + ';;;;');
 				unitfun(builtunit);//add functions and listener here
 				view.scene.addChild(builtunit.mesh);
 				unit.push(builtunit);

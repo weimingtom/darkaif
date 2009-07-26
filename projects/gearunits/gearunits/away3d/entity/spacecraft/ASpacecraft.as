@@ -84,8 +84,8 @@
 			
 			//AI BUILD TEST
 			if (order == 'move') {
-				velocity.x = movespeed * Math.sin(angle* Math.PI / 180);
-				velocity.z = movespeed * Math.cos(angle * Math.PI / 180);
+				velocity.x = movespeed * Math.sin(_rotation.y* Math.PI / 180);
+				velocity.z = movespeed * Math.cos(_rotation.y * Math.PI / 180);
 				
 				x += velocity.x;
 				y += velocity.y;
@@ -163,8 +163,8 @@
 								//check point to exit
 								for (var i:int = 0; i < entityPoint.length;i++ ) {
 									queryunit[0].x = x + entityPoint[i].x;
-									queryunit[0].y = x + entityPoint[i].y;
-									queryunit[0].z = x + entityPoint[i].z;
+									queryunit[0].y = y + entityPoint[i].y;
+									queryunit[0].z = z + entityPoint[i].z;
 								}
 								
 								view.scene.addChild(queryunit[0].mesh);
@@ -184,11 +184,10 @@
 								unit[0].time = 0;
 								//check point to exit
 								
-								
 								for (var ep:int = 0; ep < entityPoint.length; ep++ ) {
 									var m:Matrix3D = new Matrix3D();
 									m.position = new Vector3D(entityPoint[ep].x, entityPoint[ep].y,entityPoint[ep].z)
-									m.appendRotation(angle, new Vector3D(0, 1, 0));
+									m.appendRotation(_rotation.y, new Vector3D(0, 1, 0));
 									unit[0].x =x+ m.position.x;
 									unit[0].y =y+ m.position.y;
 									unit[0].z =z+ m.position.z;
@@ -196,8 +195,8 @@
 								
 								if(view != null){
 									//unitfun(unit[li].unit[0]);//build function
-									trace('spawn spaceship...');
-									unit[0].angle = angle;//need to work on direction spawn
+									//trace('spawn spaceship...');
+									unit[0].rotation.y = _rotation.y;//need to work on direction spawn
 									unit[0].balive = true;
 									unit[0].bjustspawn = true;
 									view.scene.addChild(unit[0].mesh);

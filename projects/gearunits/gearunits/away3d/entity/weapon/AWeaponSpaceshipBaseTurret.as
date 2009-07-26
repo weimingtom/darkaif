@@ -8,7 +8,7 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class AWeaponSpaceshipBaseTurret extends AWeapon
+	public class AWeaponSpaceshipBaseTurret extends AWeaponTurret
 	{
 		
 		public function AWeaponSpaceshipBaseTurret() 
