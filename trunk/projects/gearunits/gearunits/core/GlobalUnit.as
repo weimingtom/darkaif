@@ -14,6 +14,8 @@
 	 */
 	public class GlobalUnit
 	{
+		public static var GLOBALDEBUG:Boolean = false;//debug on
+		public var debug:Boolean = false;//debug single unit
 		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;

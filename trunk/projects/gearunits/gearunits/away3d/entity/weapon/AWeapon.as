@@ -1,5 +1,6 @@
 ﻿package gearunits.away3d.entity.weapon 
 {
+	//{
 	import away3d.containers.View3D;
 	import away3d.core.math.Number3D;
 	import flash.geom.Matrix3D;
@@ -7,6 +8,7 @@
 	import gearunits.away3d.entity.AStructureUnit;
 	import gearunits.away3d.entity.projectile.AProjectile;
 	import gearunits.core.GlobalUnit;
+	//}
 	
 	/**
 	 * ...
@@ -41,14 +43,14 @@
 		public var BALTFIRE:Boolean = false;
 		public var binfiniteammo:Boolean = false;
 		
-		public var bbot:Boolean = false;
-		public var bturret:Boolean = false;
+		public var bbot:Boolean = false;//deal with bot or player control but if player is used or not, set some condtions
+		public var bturret:Boolean = false;//this will deal with turret control or from a point fire
 		public var bautoturret:Boolean = false;
-		
 		
 		//WEAPON AMMO
 		public var ammoclip:Number = 0;
 		public var ammo:Number = 0;
+		public var buseammo:Boolean = false;//this deal with ammo build
 		//WEAPON OTHER SETTINGS
 		public var firerate:Number = 0;
 		public var heattime:Number = 0;
@@ -60,18 +62,26 @@
 		
 		public var detectrange:Number = 0;
 		
-		
 		public var targetid:String = '';
 		public var targetpoint:Number3D = new Number3D();
 		public var targetangle:Number3D = new Number3D();
 		
-		public function AWeapon() 
-		{
+		public function AWeapon() {
 			
 		}
 		
 		public function update():void {
 			var m:Matrix3D = new Matrix3D();
+			
+			if (mesh != null) {
+				m.position = new Vector3D(x, y, z);
+				m.appendRotation(_objectangle.y, new Vector3D(0, 1, 0));
+				
+				mesh.x = _objectpoint.x + m.position.x;
+				mesh.y = _objectpoint.y + m.position.y;
+				mesh.z = _objectpoint.z+  m.position.z;
+			}
+			
 			//trace('fire--');
 			//IF key is press to fire weapon Multi 
 			/*
@@ -88,27 +98,10 @@
 			if (units != null ){
 				for (var uid:int = 0; uid < units.length; uid++ ) {
 					if (_objectid != String(units[uid].id)) {//this make sure it doesn't loop slef
-						//trace('turret');
-						//trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
 						if (caldistance(currentpoint,units[uid].point) < detectrange ) {//check if ship in range
 							//trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
 							targetangle.y = rotationpoint(units[uid].point);
-							trace(targetangle.y);
-							//_rotation.y = targetangle.y;
-							//trace(rotation.y + ':'+targetangle.y);
-							//change direction to follow target
-								/*
-								if ((_rotation.y < 360 )&&(_rotation.y < targetangle.y-TurnSpeed)) {
-									//_rotation.y -= TurnSpeed;
-									//trace(rotation.y + ':'+targetangle.y);
-									_rotation.y += TurnSpeed;
-								}else if ((_rotation.y > 0 )&&(_rotation.y > targetangle.y+TurnSpeed)) {
-									_rotation.y -= TurnSpeed;
-								}else {
-									BWEAPONFIRE = true;
-								}
-								*/
-								BWEAPONFIRE = true;
+							BWEAPONFIRE = true;
 						}else {
 							BWEAPONFIRE = false;
 						}
@@ -116,16 +109,6 @@
 					}
 				}
 			}
-			}
-			
-			
-			if (mesh != null) {
-				m.position = new Vector3D(x, y, z);
-				m.appendRotation(_objectangle.y, new Vector3D(0, 1, 0));
-				
-				mesh.x = _objectpoint.x + m.position.x;
-				mesh.y = _objectpoint.y + m.position.y;
-				mesh.z = _objectpoint.z+  m.position.z;
 			}
 			
 			//if bot over ride control for bot to fire
@@ -189,11 +172,16 @@
 																 _objectpoint.z + m.position.z + m2.position.z));
 						m = null;
 						
-						projectileclass.angle = _objectangle.y;
-						if (bbot == true) {//if bot control is on 
+						//check what do deal with turret control settings
+						if ((bbot == true)&&(bturret == true)) {//if bot control is on 
 							projectileclass.angle = targetangle.y;
 							//projectileclass.angle = 270;
+						}else if ((bturret == true)) {//user control to shot
+							projectileclass.angle = targetangle.y;
+						} else {//deal with no turret control
+							projectileclass.angle = _objectangle.y + _rotation.y;
 						}
+						
 						
 						projectileclass.balive = true;
 						projectileclass.ownerentity = _objectid;
@@ -225,7 +213,6 @@
 		public function position():Number3D {
 			return new Number3D(x,y,z);
 		}
-		
 		
 		public function caldistance(a_point:Number3D,b_point:Number3D):Number {
 			//return Math.abs((((a_point.x - b_point.x) * 2) + ((a_point.y - b_point.y) * 2) + ((a_point.z - b_point.z) * 2)) / 2);
@@ -300,6 +287,15 @@
 		public function get currentpoint():Number3D {//add the current position of global
 			return new Number3D(x+_objectpoint.x,_objectpoint.y + y,_objectpoint.z+z);
 		}
+		
+		public function set rotation(p_rotation:Number3D):void {
+			_rotation = p_rotation;
+		}
+		
+		public function get rotation():Number3D {
+			return _rotation;
+		}
+		
 	}
 	
 }

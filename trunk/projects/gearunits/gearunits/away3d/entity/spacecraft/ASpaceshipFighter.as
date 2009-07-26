@@ -1,11 +1,13 @@
 ﻿package gearunits.away3d.entity.spacecraft 
 {
+	//{
 	import away3d.core.math.Number3D;
 	import flash.geom.Matrix3D;
 	import flash.geom.Vector3D;
 	import gearunits.away3d.entity.projectile.AProjectile;
 	import gearunits.away3d.entity.weapon.AWeapon;
 	import gearunits.away3d.entity.weapon.AWeaponAssaultRifle;
+	//}
 	
 	/**
 	 * ...
@@ -30,13 +32,13 @@
 				for (var uid:int = 0; uid < units.length; uid++ ) {
 					if (id != units[uid].id) {//this make sure it doesn't loop slef
 						if(bbot == true){
-						if (caldistance(point,units[uid].point) < detectrange ) {//check if ship in range
-							//trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
-							targetangle.y = rotationpoint(units[uid].point);
-							//trace(targetangle.y);
-							//_rotation.y = targetangle.y;
-							//trace(rotation.y + ':'+targetangle.y);
-							//change direction to follow target
+							if (caldistance(point,units[uid].point) < detectrange ) {//check if ship in range
+								//trace(name+ ' > bot: '+bbot+ ' detect ship...' + detectrange + ':' + caldistance(point, units[uid].point));
+								targetangle.y = rotationpoint(units[uid].point);
+								//trace(targetangle.y);
+								//_rotation.y = targetangle.y;
+								//trace(rotation.y + ':'+targetangle.y);
+								//change direction to follow target
 								if ((_rotation.y < 360 )&&(_rotation.y < targetangle.y-TurnSpeed)) {
 									//_rotation.y -= TurnSpeed;
 									//trace(rotation.y + ':'+targetangle.y);
@@ -46,15 +48,13 @@
 								}else {
 									BWEAPONFIRE = true;
 								}
-						}else {
-							BWEAPONFIRE = false;
-						}
+							}else {
+								BWEAPONFIRE = false;
+							}
 						}
 					}
 				}
 			}
-			
-			
 			
 			//trace('fire--');
 			//IF key is press to fire weapon Multi 
