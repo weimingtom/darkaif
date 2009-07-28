@@ -50,6 +50,7 @@
 		public var maxdistance:Number = 0;
 		
 		public var angle:Number = 0;//direction to point to face object
+		public var _rotation:Number3D = new Number3D();
 		public var degree:Number = 0;
 		
 		// FIRE CONTROLS

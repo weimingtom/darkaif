@@ -81,7 +81,6 @@
 				}
 			}
 			
-			
 			//AI BUILD TEST
 			if (order == 'move') {
 				velocity.x = movespeed * Math.sin(_rotation.y* Math.PI / 180);

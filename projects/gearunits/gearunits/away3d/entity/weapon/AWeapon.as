@@ -15,10 +15,12 @@
 	 * @author Darknet
 	 * 
 	 * Information: MAIN TEMPLATE
+	 * -this code check for projectiles to be reused
 	 * 
 	 */
 	public class AWeapon extends GlobalUnit
 	{
+		//{
 		//INFORMATION
 		public var name:String = 'AWeapon';
 		public var time:Number = 0;
@@ -65,6 +67,7 @@
 		public var targetid:String = '';
 		public var targetpoint:Number3D = new Number3D();
 		public var targetangle:Number3D = new Number3D();
+		//}
 		
 		public function AWeapon() {
 			
@@ -143,6 +146,7 @@
 						//BWEAPONFIRE = false;
 						//trace('FIRE....');
 						//check if there is use class projectile
+						
 						for (var tp:int = 0; tp < projectiles.length; tp++ ) {
 							if (projectiles[tp].CLASS == projectile[p].CLASS) {//class must match
 								if (projectiles[tp].balive == false) {
@@ -182,7 +186,6 @@
 							projectileclass.angle = _objectangle.y + _rotation.y;
 						}
 						
-						
 						projectileclass.balive = true;
 						projectileclass.ownerentity = _objectid;
 						//trace(mesh.name);
@@ -192,12 +195,14 @@
 							projectileclass.mesh.visible = true;
 							var bprojetfound:Boolean = false;
 							//this deal with same object class loop
+							
 							for (var ip:int = 0; ip < projectiles.length; ip++ ) {
 								if (projectiles[ip] == projectileclass) {
 									bprojetfound = true;
 									break;
 								}
 							}
+							
 							//if new project then add
 							if(!bprojetfound){
 								projectiles.push(projectileclass);
@@ -207,7 +212,6 @@
 					}
 				}
 			}
-			
 		}
 		
 		public function position():Number3D {
