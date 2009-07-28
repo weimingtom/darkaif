@@ -18,8 +18,7 @@
 		
 		override public function update():void {
 			super.update();
-			
-			
+			/*
 			for (var i:int = 0; i < weapon.length; i++ ) {
 				if (BWEAPONFIRE == true) {
 					weapon[i].PRESSFIRE = true;
@@ -31,6 +30,7 @@
 				weapon[i].objectpoint = point;//current ship rotation
 				weapon[i].update();
 			}
+			*/
 		}
 		
 	}

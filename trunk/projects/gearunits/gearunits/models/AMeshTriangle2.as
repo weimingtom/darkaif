@@ -1,23 +1,23 @@
-package gearunits.models{
+package  gearunits.models{
 	import away3d.core.base.Face;
 	import away3d.core.base.Mesh;
 	import away3d.core.base.UV;
 	import away3d.core.base.Vertex;
 	import away3d.core.utils.Init;
 
-	public class AMeshTriangle extends Mesh {
+	public class AMeshTriangle2 extends Mesh {
 		private var ve:Array;
 		private var fa:Array;
 
-		public function AMeshTriangle(init:Object = null) {
+		public function AMeshTriangle2(init:Object = null) {
 			super( init );
 			init = Init.parse(init);
 			ve = [];
-			v(7.000000,1.000000,12.000000);
-			v(7.000000,1.000000,-7.000000);
-			v(-12.000000,1.000000,-7.000000);
+			v(1.000000,16.000000,16.000000);
+			v(1.000003,16.000000,-16.000000);
+			v(1.000000,-16.000000,-16.000000);
 
-			f(1,0,2,0.000000,0.500000,0.500000,0.000000,0.500000,1.000000,-0.000000,0.000000,1.000000);
+			f(0,1,2,1.000000,1.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,-0.000000);
 
 			this.x = 0.000000;
 			this.y = 0.000000;

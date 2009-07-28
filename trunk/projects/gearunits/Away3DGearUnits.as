@@ -332,13 +332,24 @@
 		//TEST AERA
 		public function spacetest():void {
 			var structureunit:AStructureUnit;
-			
+			/*
 			structureunit = new ASpaceshipFedCarrier();
 			unitfun(structureunit);
 			structureunit.angle = 180;
 			//structureunit.busercontrol = true;
 			structureunit.ownerid = playername;
 			//structureunit.unit.push(structureunit2);
+			structureunit.x = 128;
+			view.scene.addChild(structureunit.mesh);
+			unit.push(structureunit);
+			*/
+			
+			
+			structureunit = new ASpaceshipFedBattleship();
+			unitfun(structureunit);
+			//structureunit.angle = 180;
+			//structureunit.busercontrol = true;
+			structureunit.ownerid = playername;
 			structureunit.x = 128;
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
