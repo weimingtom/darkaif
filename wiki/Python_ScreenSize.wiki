@@ -1,7 +1,7 @@
 #summary One-sentence summary of this page.
 
 = Basic Info: =
-Ptyhon version: 3.1
+Python version: 3.1
 
 {{{
 from tkinter import *
