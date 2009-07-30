@@ -1,9 +1,7 @@
 ﻿package
 {
 	//{
-	import away3d.containers.View3D;
 	import away3d.core.math.Number3D;
-	import away3d.primitives.Cube;
 	import darkaif.core.display.Button;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -15,8 +13,15 @@
 	import flash.text.TextFieldType;
 	import flash.events.KeyboardEvent;
 	import flash.system.System;
-	//import gearunits.away3d.entity.AStructureUnit;
-	//import gearunits.away3d.entity.infantry.AUnitBlock;
+	//import gearunits.papervision3d.entity.infantry.PUnitBlock;
+	//import gearunits.papervision3d.entity.PStructureUnit;
+	import org.papervision3d.materials.ColorMaterial;
+	import org.papervision3d.materials.special.CompositeMaterial;
+	import org.papervision3d.materials.utils.MaterialsList;
+	import org.papervision3d.materials.WireframeMaterial;
+	import org.papervision3d.objects.DisplayObject3D;
+	import org.papervision3d.objects.primitives.Cube;
+	import org.papervision3d.view.BasicView;
 	//}
 	
 	/**
@@ -24,11 +29,13 @@
 	 * 
 	 * Information:
 	 * 
-	 * Away3D Engine
+	 * Papervision3d Engine Version: 2.0
+	 * 
+	 * Note: Error in loop add objects that all ready there. It will slow down.
 	 * 
 	 */
 	
-	public class Away3DGearUnitsClient extends Sprite
+	public class Papervision3DGearUnitsClient extends BasicView
 	{
 		//{
 		private var host:String;
@@ -45,13 +52,11 @@
 		public var button_connect:Button = new Button("Con.");
 		public var button_disconnect:Button = new Button("Discon.");
 		
-		public var view:View3D = new View3D( { x:320, y:240 } );
-		
-		public var unit:Vector.<AUnitBlock> = new Vector.<AUnitBlock>();
+		public var unit:Vector.<PUnitBlock> = new Vector.<PUnitBlock>();
 		
 		//}
 		
-		public function Away3DGearUnitsClient()
+		public function Papervision3DGearUnitsClient()
 		{
 			host = "127.0.0.1";
 			port = 5555;
@@ -62,25 +67,33 @@
 			
 			connect();
 			init_textbox();
-			addChild(view);
-			view.camera.y = 64;
-			view.camera.z = -64;
-			view.camera.lookAt(new Number3D(0, 0, 0));
 			
-			var cube:Cube = new Cube( { height:8, width:8, depth:8 } );
-			view.scene.addChild(cube);
-			var cube1:Cube = new Cube( { height:8, width:8, depth:8 } );
+			camera.y = 64;
+			camera.z = -64;
+			camera.lookAt(new DisplayObject3D());
+			
+			var matcolor:ColorMaterial =  new ColorMaterial(0x00CC00);
+			var matwirecolor:WireframeMaterial = new WireframeMaterial(0x000000);
+			var compMat:CompositeMaterial = new CompositeMaterial();
+			compMat.addMaterial(matcolor);
+			compMat.addMaterial(matwirecolor);
+			
+			var materiallist:MaterialsList = new MaterialsList({all:compMat});
+			
+			var cube:Cube = new Cube(materiallist,16,16,16);
+			scene.addChild(cube);
+			var cube1:Cube = new Cube(materiallist,16,16,16);
 			cube1.x = 16;
 			cube1.z = 16;
-			view.scene.addChild(cube1);
-			var cube2:Cube = new Cube( { height:8, width:8, depth:8 } );
+			scene.addChild(cube1);
+			var cube2:Cube = new Cube(materiallist,16,16,16);
 			cube2.x = 16;
 			cube2.z = -16;
-			view.scene.addChild(cube2);
+			scene.addChild(cube2);
 			init_buttons();
-			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keypressdown );
 			stage.addEventListener(KeyboardEvent.KEY_UP, keypressup );
+			startRendering();
 		}
 		
 		public function init_buttons():void {
@@ -155,14 +168,12 @@
 			}
 		}
 		
-		public function enterFrameHandler(event:Event):void {
-			
+		override protected function onRenderTick(event:Event=null):void
+		{
 			for (var i:int = 0; i < unit.length;i++ ) {
 				unit[i].update();
 			}
-			
-			view.render();
-			
+			super.onRenderTick(event);
 		}
 		
 		public function init_textbox():void {
@@ -259,11 +270,23 @@
 						//trace(objectalive+'<<<< remiove?')
 						if (objectalive == false) {
 							trace('remove............');
-							view.scene.removeChild(unit[i].mesh);
+							scene.removeChild(unit[i].mesh);
 						}
 						if (objectalive == true) {
-							trace('remove............');
-							view.scene.addChild(unit[i].mesh);
+							
+							var bobjectfound:Boolean = false;
+							var meshes:Array = scene.objects;
+							for (var o:int = 0; o < meshes.length; o++ ) {
+								if (meshes[o].name == unit[i].mesh.name) {
+									bobjectfound = true;
+								}
+							}
+							
+							if(!bobjectfound){
+								//trace('remove............');
+								scene.addChild(unit[i].mesh);
+								//trace('name:' + unit[i].mesh.name);
+							}
 						}
 						
 						objectfound = true;
@@ -272,16 +295,17 @@
 				}
 				
 				if (objectfound == false) {
-					var buildunit:AUnitBlock = new AUnitBlock();
+					var buildunit:PUnitBlock = new PUnitBlock();
 					buildunit.onlineid = objectid;
 					buildunit.x = objectposition.x;
 					buildunit.y = objectposition.y;
 					buildunit.z = objectposition.z;
 					if (objectalive == true) {
-						view.scene.addChild(buildunit.mesh);
+						scene.addChild(buildunit.mesh);
 					}
 					unit.push(buildunit);
 				}
+				trace('Unit'+unit.length+ ' Objects:'+scene.numChildren);
 				
 			}else {
 				text_log.appendText(String(message));
@@ -339,7 +363,7 @@
 		
 		public function removeunits():void {
 			for (var i:int = 0; i < unit.length;i++ ) {
-				view.scene.removeChild(unit[i].mesh);
+				scene.removeChild(unit[i].mesh);
 			}
 		}
 		

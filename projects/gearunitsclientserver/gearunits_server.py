@@ -1,15 +1,28 @@
+#!/usr/local/bin/python
 """
 Gear Units Server
 
-Information: This is simple server that will be added on.
+Information: This is simple server that will be work on.
 
 This btye format build. No struct pack build for this yet.
 
 Python version: 3.1
 Actionscript: 3
 
+Current support for client are:
+-Away3D (test done)
+-Sandy3D (test done)
+-Papervision3D (test done)
+
+They are port as the same but papervision fixed odd over lap add for scene add.
+
+Features:
+-game server (not yet)
+-chat room (part working)
+-cmd controls (part working)
+
 """
-#!/usr/local/bin/python
+
 
 from struct import *
 import pickle

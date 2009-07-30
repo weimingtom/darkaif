@@ -1,9 +1,6 @@
 ﻿package
 {
 	//{
-	import away3d.containers.View3D;
-	import away3d.core.math.Number3D;
-	import away3d.primitives.Cube;
 	import darkaif.core.display.Button;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -15,8 +12,13 @@
 	import flash.text.TextFieldType;
 	import flash.events.KeyboardEvent;
 	import flash.system.System;
-	//import gearunits.away3d.entity.AStructureUnit;
-	//import gearunits.away3d.entity.infantry.AUnitBlock;
+	//import gearunits.sandy3d.entity.infantry.SUnitBlock;
+	//import gearunits.sandy3d.entity.SStructureUnit;
+	import sandy.core.data.Point3D;
+	import sandy.core.Scene3D;
+	import sandy.core.scenegraph.Camera3D;
+	import sandy.core.scenegraph.Group;
+	import sandy.primitive.Box;
 	//}
 	
 	/**
@@ -24,11 +26,11 @@
 	 * 
 	 * Information:
 	 * 
-	 * Away3D Engine
+	 * Sandy Engine
 	 * 
 	 */
 	
-	public class Away3DGearUnitsClient extends Sprite
+	public class Sandy3DGearUnitsClient extends Sprite
 	{
 		//{
 		private var host:String;
@@ -45,13 +47,15 @@
 		public var button_connect:Button = new Button("Con.");
 		public var button_disconnect:Button = new Button("Discon.");
 		
-		public var view:View3D = new View3D( { x:320, y:240 } );
+		public var scene:Scene3D; // just one scene or the world
+		public var camera:Camera3D; //basic one cam
+		public var g:Group = new Group("myGroup");
 		
-		public var unit:Vector.<AUnitBlock> = new Vector.<AUnitBlock>();
+		public var unit:Vector.<SUnitBlock> = new Vector.<SUnitBlock>();
 		
 		//}
 		
-		public function Away3DGearUnitsClient()
+		public function Sandy3DGearUnitsClient()
 		{
 			host = "127.0.0.1";
 			port = 5555;
@@ -62,23 +66,31 @@
 			
 			connect();
 			init_textbox();
-			addChild(view);
-			view.camera.y = 64;
-			view.camera.z = -64;
-			view.camera.lookAt(new Number3D(0, 0, 0));
 			
-			var cube:Cube = new Cube( { height:8, width:8, depth:8 } );
-			view.scene.addChild(cube);
-			var cube1:Cube = new Cube( { height:8, width:8, depth:8 } );
+			camera = new Camera3D(300,300);
+			camera.far = 1000;
+			camera.near = 0;
+			camera.y = 64;
+			camera.z = -64;
+			camera.lookAt(0, 0, 0);
+			
+			var cube:Box = new Box();
+			g.addChild(cube);
+			var cube1:Box = new Box();
 			cube1.x = 16;
 			cube1.z = 16;
-			view.scene.addChild(cube1);
-			var cube2:Cube = new Cube( { height:8, width:8, depth:8 } );
+			g.addChild(cube1);
+			var cube2:Box = new Box();
 			cube2.x = 16;
 			cube2.z = -16;
-			view.scene.addChild(cube2);
+			g.addChild(cube2);
 			init_buttons();
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
+			
+			var root:Group = g;
+			scene = new Scene3D( "scene", this, camera, root );
+			
+			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keypressdown );
 			stage.addEventListener(KeyboardEvent.KEY_UP, keypressup );
 		}
@@ -161,7 +173,7 @@
 				unit[i].update();
 			}
 			
-			view.render();
+			scene.render();
 			
 		}
 		
@@ -205,7 +217,7 @@
 				var data:Array = rawdata.split(",");
 				var objectalive:Boolean = true;
 				var objectid:String;
-				var objectposition:Number3D = new Number3D();
+				var objectposition:Point3D = new Point3D();
 				
 				for (var datano:int = 0; datano < data.length; datano++ ) {
 					//trace('>>>' + data[0])
@@ -259,11 +271,11 @@
 						//trace(objectalive+'<<<< remiove?')
 						if (objectalive == false) {
 							trace('remove............');
-							view.scene.removeChild(unit[i].mesh);
+							g.removeChildByName(unit[i].mesh.name);
 						}
 						if (objectalive == true) {
 							trace('remove............');
-							view.scene.addChild(unit[i].mesh);
+							g.addChild(unit[i].mesh);
 						}
 						
 						objectfound = true;
@@ -272,13 +284,13 @@
 				}
 				
 				if (objectfound == false) {
-					var buildunit:AUnitBlock = new AUnitBlock();
+					var buildunit:SUnitBlock = new SUnitBlock();
 					buildunit.onlineid = objectid;
 					buildunit.x = objectposition.x;
 					buildunit.y = objectposition.y;
 					buildunit.z = objectposition.z;
 					if (objectalive == true) {
-						view.scene.addChild(buildunit.mesh);
+						g.addChild(buildunit.mesh);
 					}
 					unit.push(buildunit);
 				}
@@ -339,7 +351,7 @@
 		
 		public function removeunits():void {
 			for (var i:int = 0; i < unit.length;i++ ) {
-				view.scene.removeChild(unit[i].mesh);
+				g.removeChildByName(unit[i].mesh.name);
 			}
 		}
 		

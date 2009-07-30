@@ -66,7 +66,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="Away3DGearUnitsClient.as" />
+    <compile path="Sandy3DGearUnitsClient.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
@@ -91,6 +91,10 @@
     <hidden path="gearunits_database_member_show.py" />
     <hidden path="gearunits_database_member_createtable.py" />
     <hidden path="Main.as" />
+    <hidden path="splashscreen.py" />
+    <hidden path="splashscreen.py.bat" />
+    <hidden path="appx.bat" />
+    <hidden path="gearunits_server_3.py" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
