@@ -85,5 +85,13 @@ class Application(Frame):
 
 root = Tk()
 app = Application(master=root)
+#app.master['y'] = 500; 
+print(dir(app.master));
+#root.geometry('+400+300')
+#set size:      root.geometry('400x300')
+#set position:  root.geometry('+100+100')
+#set both:      root.geometry('400x300+100+100')
+
+print(app.master.grid_location)
 app.mainloop()
 root.destroy()

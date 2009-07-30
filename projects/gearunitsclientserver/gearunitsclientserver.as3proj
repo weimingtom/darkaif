@@ -14,6 +14,9 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="." />
+    <class path="..\..\..\svn\flashengine" />
+    <class path="..\gearunits" />
+    <class path="..\..\darkaif\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -63,11 +66,31 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="Main.as" />
+    <compile path="Away3DGearUnitsClient.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="app1.py" />
+    <hidden path="app3.py" />
+    <hidden path="app4.py" />
+    <hidden path="app5.py" />
+    <hidden path="Widgets.py" />
+    <hidden path="appscreen.py.bat" />
+    <hidden path="app1.bat" />
+    <hidden path="app.bat" />
+    <hidden path="app.py" />
+    <hidden path="app2.py" />
+    <hidden path="button.py" />
+    <hidden path="python.gif" />
+    <hidden path="python.jpg" />
+    <hidden path="python.png" />
+    <hidden path="gearunits_database.py" />
+    <hidden path="gearunits_server_2.py" />
+    <hidden path="gearunits_database_member_show.py.bat" />
+    <hidden path="gearunits_database_member_createtable.py.bat" />
+    <hidden path="gearunits_database_member_show.py" />
+    <hidden path="gearunits_database_member_createtable.py" />
+    <hidden path="Main.as" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
