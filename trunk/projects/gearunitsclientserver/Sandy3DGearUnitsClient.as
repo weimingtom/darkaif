@@ -226,7 +226,7 @@
 					//trace(tmpvar[0])
 					if (tmpvar[0] == 'id') {
 						objectid = tmpvar[1];
-						trace('ID OBJECT:>'+tmpvar[1])
+						//trace('ID OBJECT:>'+tmpvar[1])
 					}
 					//trace(tmpvar[0] + '-------------')
 					if (tmpvar[0] == 'balive') {
@@ -236,11 +236,11 @@
 						//trace('>>>' + strbool + '<<<---');
 						if (strbool == 'false') {
 							objectalive = false;
-							trace('set false');
+							//trace('set false');
 						}
 						if (strbool == 'true') {
 							objectalive = true;
-							trace('set true');
+							//trace('set true');
 						}
 					}
 					
@@ -270,11 +270,11 @@
 						unit[i].z = objectposition.z;
 						//trace(objectalive+'<<<< remiove?')
 						if (objectalive == false) {
-							trace('remove............');
+							//trace('remove............');
 							g.removeChildByName(unit[i].mesh.name);
 						}
 						if (objectalive == true) {
-							trace('remove............');
+							//trace('remove............');
 							g.addChild(unit[i].mesh);
 						}
 						

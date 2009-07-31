@@ -1,32 +1,32 @@
 #!/usr/local/bin/python
 """
-Gear Units Server
+def 
+	Gear Units Server
 
-Information: This is simple server that will be work on.
+	Information: This is simple server that will be work on.
 
-This btye format build. No struct pack build for this yet.
+	This btye format build. No struct pack build for this yet.
 
-Python version: 3.1
-Actionscript: 3
+	Python version: 3.1
+	Actionscript version: 3
 
-Current support for client are:
--Away3D (test done)
--Sandy3D (test done)
--Papervision3D (test done)
+	Current support for client are:
+	-Away3D (test done)
+	-Sandy3D (test done)
+	-Papervision3D (test done)
 
-They are port as the same but papervision fixed odd over lap add for scene add.
+	They are port as the same but papervision fixed odd over lap add for scene add.
 
-Features:
--game server (not yet)
--chat room (part working)
--cmd controls (part working)
+	Features:
+	-game server (not yet)
+	-chat room (part working)
+	-cmd controls (part working)
 
-Note:
--There might be some network error that kick out the user connection.
+	Note:
+	-There might be some network error that kick out the user connection.
 
 """
-
-
+import sqlite3 as sqlite
 from struct import *
 import pickle
 import queue
@@ -35,11 +35,12 @@ import threading
 import time
 import re
 
-#host = '127.0.0.1'; #local host
-host = socket.gethostname(); #outside network #behind router
+host = '127.0.0.1'; #local host
+#host = socket.gethostname(); #outside network #behind router
 #host = ''; #out side network
 port = 5555;
 #port = 50007;
+fps = 30;
 
 Client = [];
 serverstart = True;
@@ -57,18 +58,69 @@ class GameServer (threading.Thread):
 		self.name = '';
 		self.id += 1
 		self.user = '';
+	def addthread(self,client): #add thread for user clients
+		#print("THREADS...=====================");
+		self.allClients.append(client);
+		for index,clientSock in enumerate(self.allClients):
+			#print("ID:" + str(clientSock.id));
+			try:
+				#print(clientSock.sockfd);
+				#print(clientSock.sockfd._closed)#this deal with socket closed if
+				
+				#if socket is closed
+				if clientSock.sockfd._closed == True:
+					del self.allClients[index]
+				
+				#address = clientSock.sockfd
+				#print (address)
+				#print("TYPE:",clientSock.sockfd.type)
+				#print(dir(clientSock.sockfd));
+			except (socket.error):
+				print ('client > error socket %s\n',index,"| clean");
+		
+	def boardcast(self):
+		print();
+	
+	def clientcontrol(self):
+		#print ('check control');
+		for index,clientSock in enumerate(self.allClients):
+			#print('client....')
+			if clientSock.sockfd._closed == True:
+					del self.allClients[index]
+			else:
+				#bmove = False;
+				if clientSock.control_left == True:
+					#print ('MOVE>>>>>')
+					clientSock.x -= 1;
+					#bmove = True
+					clientSock.movepoint();
+				if clientSock.control_right == True:
+					clientSock.x += 1;
+					#bmove = True
+					clientSock.movepoint();
+				if clientSock.control_up == True:
+					clientSock.z += 1;
+					#bmove = True
+					clientSock.movepoint();
+				if clientSock.control_down == True:
+					clientSock.z -= 1;
+					#bmove = True
+					clientSock.movepoint();
 	def run(self):
 		#print('game start' , self.id);
 		while True:
-			self.gametime = self.gametime + 1
-			if self.gametime > 10000000:
+			self.gametime += 1
+			if self.gametime > 1000000/fps:
+			#if self.gametime > 500000/fps:
 				self.gametime = 0;
+				self.clientcontrol();
 				#print(self.gametime);
 
 
 #thread class for client talking to each other
 class ClientThread (threading.Thread):
 	allClients = [];
+	bused = True;
 	vlock = threading.Lock();
 	id = 0 # next available thread number
 	control_left = False;
@@ -104,12 +156,13 @@ class ClientThread (threading.Thread):
 				#print ('--->>')#number client for sending them
 			except (socket.error):
 				print ('error socket %s\n',index,"| clean");
+				self.bused = False
 				clientSock.close()
 				del self.allClients[index]
 				#this deal with object render to not show up
 				self.sendAll(b'user left\n');
 				rawinput = 'object=none,'+'id=' + str(self.id) + ',balive=false\n'
-				print (rawinput)
+				#print (rawinput)
 				b = bytes ( ord(c) for c in rawinput) 
 				self.sendAll(b);
 	
@@ -125,29 +178,50 @@ class ClientThread (threading.Thread):
 			#print (result[1])
 			if result[0] == "cmd:left" and result[1] == "True":
 				#print ("left ture=>>")
-				self.x = self.x -1;
+				self.control_left = True;
+				#self.x = self.x -1;
+			else:
+				self.control_left = False;
 			if result[0] == "cmd:right" and result[1] == "True":
 				#print ("left ture=>>")
-				self.x = self.x +1;
+				#self.x = self.x +1;
+				self.control_right = True;
+			else:
+				self.control_right = False;
+				
 			if result[0] == "cmd:up" and result[1] == "True":
 				#print ("left ture=>>")
-				self.z = self.z +1;
+				#self.z = self.z +1;
+				self.control_up = True;
+			else:
+				self.control_up = False;
+				
 			if result[0] == "cmd:down" and result[1] == "True":
 				#print ("left ture=>>")
-				self.z = self.z -1;
-				
+				#self.z = self.z -1;
+				self.control_down = True;
+			else:
+				self.control_down = False;
+			
+			#rawinput ='object=none,' + 'id='  + str(self.id) + ',x=' + str(self.x)+ ',y=' + str(self.y)+',z='+ str(self.z)+ ',balive=true' + '\n'
+			#b = bytes ( ord(c) for c in rawinput) 
+			#self.sendAll(b)
+			
 			#print("x:",self.x," z:",self.z);
-			rawinput ='object=none,' + 'id='  + str(self.id) + ',x=' + str(self.x)+ ',y=' + str(self.y)+',z='+ str(self.z)+ ',balive=true' + '\n'
-			print(rawinput)
-			b = bytes ( ord(c) for c in rawinput) 
+			#print(rawinput)
 			#strdata =str(rawinput).encode('utf-8')
 			#print(type(b))
 			#print(type(rawinput))
-			self.sendAll(b)
 			#self.sendAll(strdata)
 			#self.sendAll(pack('hhl', 1, 2, 3))
 		else:
 			self.sendAll(buff)
+			
+	def movepoint(self):
+		#print("x:",self.x," z:",self.z);
+		rawinput ='object=none,' + 'id='  + str(self.id) + ',x=' + str(self.x)+ ',y=' + str(self.y)+',z='+ str(self.z)+ ',balive=true' + '\n'
+		b = bytes ( ord(c) for c in rawinput) 
+		self.sendAll(b)
 	
 	def run(self):
 		self.newClientConnect();
@@ -160,31 +234,44 @@ class ClientThread (threading.Thread):
 				rawinput = 'object=none,'+'id=' + str(self.id) + ',balive=false\n'
 				b = bytes ( ord(c) for c in rawinput) 
 				#strdata =str(rawinput).encode('utf-8')
-				print (b)
+				#print (b)
 				self.sendAll(b)
 				#self = None;
+				self.bused = False
 				break #incase it loop infinite
 			#print(buff);
-			print("ID>" + str(self.id))
+			#print("ID>" + str(self.id))
 			self.readrawdata(buff)
 			#self.sendAll(buff)
 		self.sockfd.close()
-		
-'''	
-print ("#  ------------- Init...gameserver -------------  #\n");
+
+print ("#  ------------- Init... Database -------------  #\n");
+#database need to be build some way
+#db = sqlite.connect('gearunits.db')
+#cur = db.cursor()
+#cur.execute('SELECT * FROM member')
+
+#for t in cur:
+	#print (t)
+	#print (t[1])#table
+print('database not init...')
+	
+print ("#  ------------- Init... Games Server -------------  #\n");
 gameserver = GameServer();
 gameserver.start();
-'''
-print ("#  ------------- Init...listen client -------------  #\n");
-server = socket.socket( socket.AF_INET, socket.SOCK_STREAM )#this default
+print('Game Server running...' , gameserver.id);
 
+print ("#  ------------- Init... Listen Client -------------  #\n");
+server = socket.socket( socket.AF_INET, socket.SOCK_STREAM )#this default
 server.bind((host,port))
-#server.bind((socket.gethostname(),port))
 server.listen(5)
-print ("Server Up Listen!",host,":",port,"BIND!");
+
+print ("Server Up Listen!",host,":",port," Bind!");
 
 while True:
 	(clientSocket, address) = server.accept();
 	print("client connect from :",address);
 	ct = ClientThread(clientSocket);
+	gameserver.addthread(ct);
+	print(ct.id);
 	ct.start();
