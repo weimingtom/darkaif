@@ -1,7 +1,6 @@
 ﻿package
 {
 	//{
-	import away3d.core.math.Number3D;
 	import darkaif.core.display.Button;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -13,8 +12,7 @@
 	import flash.text.TextFieldType;
 	import flash.events.KeyboardEvent;
 	import flash.system.System;
-	//import gearunits.papervision3d.entity.infantry.PUnitBlock;
-	//import gearunits.papervision3d.entity.PStructureUnit;
+	import org.papervision3d.core.math.Number3D;
 	import org.papervision3d.materials.ColorMaterial;
 	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.materials.utils.MaterialsList;

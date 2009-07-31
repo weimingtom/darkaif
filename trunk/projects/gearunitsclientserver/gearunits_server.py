@@ -21,6 +21,9 @@ Features:
 -chat room (part working)
 -cmd controls (part working)
 
+Note:
+-There might be some network error that kick out the user connection.
+
 """
 
 
@@ -32,8 +35,12 @@ import threading
 import time
 import re
 
-host = '127.0.0.1';
+#host = '127.0.0.1'; #local host
+host = socket.gethostname(); #outside network #behind router
+#host = ''; #out side network
 port = 5555;
+#port = 50007;
+
 Client = [];
 serverstart = True;
 #idclient = 0;
@@ -169,9 +176,11 @@ gameserver = GameServer();
 gameserver.start();
 '''
 print ("#  ------------- Init...listen client -------------  #\n");
-server = socket.socket ( socket.AF_INET, socket.SOCK_STREAM )
-server.bind ( ( host,port ) )
-server.listen ( 5 )
+server = socket.socket( socket.AF_INET, socket.SOCK_STREAM )#this default
+
+server.bind((host,port))
+#server.bind((socket.gethostname(),port))
+server.listen(5)
 print ("Server Up Listen!",host,":",port,"BIND!");
 
 while True:

@@ -5,12 +5,14 @@
 	import sandy.materials.ColorMaterial;
 	import sandy.materials.Material;
 	import sandy.primitive.Box;
+	
 	/**
 	 * ...
 	 * @author Darknet
 	 */
-	public class SUnitBlock
-	{
+	
+	public class SUnitBlock {
+		
 		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;
@@ -35,7 +37,5 @@
 				mesh.z = z;
 			}
 		}
-		
 	}
-	
 }
