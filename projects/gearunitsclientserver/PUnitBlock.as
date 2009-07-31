@@ -10,8 +10,9 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class PUnitBlock
-	{
+	
+	public class PUnitBlock {
+		
 		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;
@@ -19,8 +20,8 @@
 		public var mesh:TriangleMesh3D;
 		public var onlineid:String = '';
 		
-		public function PUnitBlock() 
-		{
+		public function PUnitBlock() {
+			
 			var matcolor:ColorMaterial =  new ColorMaterial(0x00CC00);
 			var matwirecolor:WireframeMaterial = new WireframeMaterial(0x000000);
 			var compMat:CompositeMaterial = new CompositeMaterial();

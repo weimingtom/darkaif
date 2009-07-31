@@ -51,9 +51,10 @@
 		
 		//}
 		
-		public function Away3DGearUnitsClient()
-		{
+		public function Away3DGearUnitsClient() {
+			
 			host = "127.0.0.1";
+			
 			port = 5555;
 			//flash.system.Security.loadPolicyFile("xmlsocket://" + host + ":" + policyPort)
 			flash.system.Security.allowDomain(host);
