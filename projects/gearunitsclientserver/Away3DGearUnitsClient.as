@@ -54,8 +54,8 @@
 		public function Away3DGearUnitsClient() {
 			
 			host = "127.0.0.1";
-			
 			port = 5555;
+			
 			//flash.system.Security.loadPolicyFile("xmlsocket://" + host + ":" + policyPort)
 			flash.system.Security.allowDomain(host);
 			//flash.system.Security.loadPolicyFile("*");
@@ -215,7 +215,7 @@
 					//trace(tmpvar[0])
 					if (tmpvar[0] == 'id') {
 						objectid = tmpvar[1];
-						trace('ID OBJECT:>'+tmpvar[1])
+						//trace('ID OBJECT:>'+tmpvar[1])
 					}
 					//trace(tmpvar[0] + '-------------')
 					if (tmpvar[0] == 'balive') {
@@ -225,11 +225,11 @@
 						//trace('>>>' + strbool + '<<<---');
 						if (strbool == 'false') {
 							objectalive = false;
-							trace('set false');
+							//trace('set false');
 						}
 						if (strbool == 'true') {
 							objectalive = true;
-							trace('set true');
+							//trace('set true');
 						}
 					}
 					
@@ -259,11 +259,11 @@
 						unit[i].z = objectposition.z;
 						//trace(objectalive+'<<<< remiove?')
 						if (objectalive == false) {
-							trace('remove............');
+							//trace('remove............');
 							view.scene.removeChild(unit[i].mesh);
 						}
 						if (objectalive == true) {
-							trace('remove............');
+							//trace('remove............');
 							view.scene.addChild(unit[i].mesh);
 						}
 						
