@@ -4,6 +4,24 @@ Created by: Darknet
 
 Information: This is stand alone to deal with client and server side build.
 
+Python server in testing stage.
+-away3d client (working)
+-sandy client (working)
+-papervision client (working)
+
+local access is fine.
+host not yet working.
+
+
+
+Java server not yet build.
+-away3d client (not build)
+-sandy client (not build)
+-papervision client (not build)
+
+local access is fine.
+host not yet working.
+
 Link:http://code.google.com/p/darkaif/
 project link:http://darkaif.googlecode.com/svn/trunk/projects/gearunitsclientserver/
 
