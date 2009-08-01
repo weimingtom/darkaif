@@ -24,6 +24,16 @@ def
 
 	Note:
 	-There might be some network error that kick out the user connection.
+	
+	b'<policy-file-request/>\x00 = python log
+	
+	POLICY_REQUEST = "<policy-file-request/>";
+	POLICY_XML =
+    "<?xml version=\"1.0\"?>" +
+    "<cross-domain-policy>" +
+    "<allow-access-from domain=\"*\" to-ports=\"*\" />" +
+    "</cross-domain-policy>";
+	
 
 """
 import sqlite3 as sqlite
@@ -35,8 +45,8 @@ import threading
 import time
 import re
 
-host = '127.0.0.1'; #local host
-#host = socket.gethostname(); #outside network #behind router
+#host = '127.0.0.1'; #local host
+host = socket.gethostname(); #outside network #behind router
 #host = ''; #out side network
 port = 5555;
 #port = 50007;
@@ -224,11 +234,15 @@ class ClientThread (threading.Thread):
 		self.sendAll(b)
 	
 	def run(self):
-		self.newClientConnect();
+		#self.newClientConnect();
 		while True:
 			buff = self.sockfd.recv(2048);
+			#print(dir(self.sockfd))
 			if not buff:
 				print ("connect close...(client side)");
+				#rawinput = '<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\" /></cross-domain-policy>'
+				#b = bytes ( ord(c) for c in rawinput) 
+				#self.sockfd.send(b);
 				self.sockfd.close();
 				#self.sendAll(b'user left...\n');
 				rawinput = 'object=none,'+'id=' + str(self.id) + ',balive=false\n'
@@ -239,7 +253,24 @@ class ClientThread (threading.Thread):
 				#self = None;
 				self.bused = False
 				break #incase it loop infinite
-			#print(buff);
+			#print(str("---b\'<policy-file-request/>\\x00\'"))
+			#print(type(buff))
+			#print(str(buff))
+			#rawinput = '<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\" /></cross-domain-policy>'
+			#b = bytes ( ord(c) for c in rawinput) 
+			#self.sockfd.send(b);
+			if str(buff) == str("b\'<policy-file-request/>\\x00\'"):
+				print(buff)
+				#print ('policy FOUND >>> sending...')
+				rawinput = str('<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\" /></cross-domain-policy>')
+				print (rawinput)
+				b = bytes ( ord(c) for c in rawinput) 
+				#self.sockfd.send();
+				self.sockfd.sendall(b"""<?xml version="1.0"?><cross-domain-policy><allow-access-from domain="*" to-ports="*"/></cross-domain-policy>""")
+				#self.sockfd.sendall(b)
+				
+				
+			print(buff);
 			#print("ID>" + str(self.id))
 			self.readrawdata(buff)
 			#self.sendAll(buff)
