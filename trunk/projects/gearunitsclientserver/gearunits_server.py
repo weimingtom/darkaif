@@ -269,7 +269,6 @@ class ClientThread (threading.Thread):
 				self.sockfd.sendall(b"""<?xml version="1.0"?><cross-domain-policy><allow-access-from domain="*" to-ports="*"/></cross-domain-policy>""")
 				#self.sockfd.sendall(b)
 				
-				
 			print(buff);
 			#print("ID>" + str(self.id))
 			self.readrawdata(buff)

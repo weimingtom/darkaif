@@ -17,7 +17,8 @@ spreadsheet = []
 db = sqlite.connect('gearunits.db');
 cur = db.cursor();
 
-cur.execute("select * from sqlite_master WHERE type='table' ORDER BY name");
+#cur.execute("select * from sqlite_master WHERE type='table' ORDER BY name");
+cur.execute("select * from sqlite_master WHERE type='table'");
 
 for t in cur:
 	print (t)
@@ -26,25 +27,16 @@ for t in cur:
 	tabledata = tablename.split(" ")
 	print (tabledata[6])
 	table.append(tabledata[6])
-	
-	#m = re.search('CREATE TABLE\w+  ', tablename)
-	#m = re.search('(?<=\'CREATE)\S(?<=TABLE)\S', tablename)
-	#m = re.search('(?<=TABLE)\S', tablename)
-	#m = re.search('(?<=\'CREATE TABLE )', tablename)
-	#print (">>>" + m.group(0));
-	#print (type(t))
-	#print (t[1])#table
-	#print(t.index)
-	#print(dir(t))
-
+	print (tabledata[7])
 
 title = "Sqlite3 Database";
 
 class Application(Frame):
 	#label_serverstatus = Label()
 	tablename = ''
-	tablerow = ''
-	
+	tablerowid = ''
+	tablecolid = '0'
+	tablerowname = ''
 	def say_hi(self):
 		print("hi there, everyone!")
 		
@@ -57,6 +49,7 @@ class Application(Frame):
 		print("stopping server...");
 		self.label_serverstatus["text"] = serverstatus
 
+	#Create Widgets
 	def createWidgets(self):
 		self.text_database = Label(self)
 		self.text_database["text"] = "Database:" + DATABASE
@@ -84,7 +77,7 @@ class Application(Frame):
 		
 		self.listbox = Listbox(self, exportselection=0, background="white")
 		self.listbox.bind("<<ListboxSelect>>",self.listselect_click)
-		self.listbox.bind("<Double-1>",self.listselect_doubleclick)
+		#self.listbox.bind("<Double-1>",self.listselect_doubleclick)
 		self.listbox.grid(column=1, row=4, sticky=W)
 		#self.listbox.insert("end", str("Hello1"))
 		#self.listbox.insert("end", str("Hello2"))
@@ -105,7 +98,10 @@ class Application(Frame):
 		self.combobox.current(1)
 		#print(dir(self.combobox.bind()))
 		
-	#just the table selected from query	
+		self.textbox = Text(self, width=40, height=10)
+		self.textbox.grid(column=2, row=3, sticky=W,columnspan=3,rowspan=2)
+		
+	#SELECT TABLE FROM COMBOBOX
 	def table_click(self,event):
 		#print("click")
 		self.tablename = str(self.combobox.selection_get())
@@ -113,6 +109,7 @@ class Application(Frame):
 		self.tableselected(self.tablename);
 		return "break"
 		
+	#SHOW TABLE ROWS IN THE LIST BOX
 	def tableselected(self,name):
 		print("TABLE SELECT ->" + str(name))
 		cur.execute("select * from " + name);
@@ -122,24 +119,35 @@ class Application(Frame):
 			print (t)
 			#print (t[1])#table
 			#spreadsheet.append(t[1])
-			#self.combobox["values"] = spreadsheet
-			self.listbox.insert("end", str(t[1]))
+			self.listbox.insert("end", str(t[0]))
 		#self.listbox["listvariable"] = spreadsheet
 		
+	#CLICK TABLE ROW SELECTED ID OR ROW NAME
 	def listselect_click(self,event):
 		rowid = self.listbox.curselection()
 		rowid = self.listbox.index(rowid)
 		print(self.listbox.get(rowid))
+		self.tablerowid = rowid
+		self.tablerowname = self.listbox.get(rowid)
+		self.selecttablerow()
 		return "break"
 		
-	def listselect_doubleclick(self,event):
-		rowid = str(self.listbox.index("active")) #last click index
-		print("row id >>>"+rowid)
-		return "break"
+	#TABLE ROW INFORMATION
+	def selecttablerow(self):
+		print ("TABLE ROW ->")
 		
-	def select(self, index):
-		print(index)
-	
+		
+		#cur.execute("select * from sqlite_master WHERE type='table'");
+		#cur.execute("select * " + tablename + " type='table' ORDER BY name");
+		#cur.execute('SELECT * FROM ' + self.tablename + '');
+		
+		query = str('SELECT * FROM ' + self.tablename + " WHERE id=\'" + self.tablerowname + "\'")
+		print(query)
+		cur.execute(query);
+		for t in cur:
+			print (t)
+			self.textbox.delete("1.0","end")
+			self.textbox.insert("end",t)
 	
 	def __init__(self, master=None):
 		Frame.__init__(self, master)
