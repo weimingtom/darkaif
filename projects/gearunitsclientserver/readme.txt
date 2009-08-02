@@ -4,23 +4,33 @@ Created by: Darknet
 
 Information: This is stand alone to deal with client and server side build.
 
+//===============================================
+
 Python server in testing stage.
+
 -away3d client (working)
--sandy client (working)
--papervision client (working)
+--Away3DGearUnitsClient.as
+-sandy3d client (working)
+--Sandy3DGearUnitsClient.as
+-papervision3d client (working)
+--Papervision3DGearUnitsClient.as
 
-local access is fine.
-host not yet working.
+local access is working.
+host access not working. (deal with sending <policy-file-request/>)
 
+//===============================================
 
+Java server in building.
 
-Java server not yet build.
--away3d client (not build)
--sandy client (not build)
--papervision client (not build)
+-away3d client (working)
+--Away3DGearUnitsClientj.as
+-sandy3d client (not build)
+-papervision3d client (not build)
 
-local access is fine.
-host not yet working.
+local access is working.
+host access is working.
+
+//===============================================
 
 Link:http://code.google.com/p/darkaif/
 project link:http://darkaif.googlecode.com/svn/trunk/projects/gearunitsclientserver/
@@ -35,7 +45,7 @@ Note: They are just work in progress build.
 
 Java version: 1.6.x
 Actionscript version: 3
-Python version: 3.0 - 3.1.0
+Python version: 3.x
 
 Away3D:
 Version: 3.3.3

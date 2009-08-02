@@ -1,3 +1,9 @@
+"""
+Splash Screen
+Python Version: 3.1
+
+"""
+
 """Only works if you got Python 3 installed with tkinter"""
 import tkinter
 import io
@@ -26,6 +32,7 @@ class Splash(object):
 		#print(dir(self.label))
 		self.label.pack()
 		self.root.geometry('+100+100')
+		#self.root.geometry(geo)
 		# This will quit the screen after about 5 seconds
 		self.root.after(5000, self.root.quit)
 

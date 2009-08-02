@@ -15,8 +15,6 @@
 	import flash.text.TextFieldType;
 	import flash.events.KeyboardEvent;
 	import flash.system.System;
-	//import gearunits.away3d.entity.AStructureUnit;
-	//import gearunits.away3d.entity.infantry.AUnitBlock;
 	//}
 	
 	/**
@@ -28,7 +26,7 @@
 	 * 
 	 */
 	
-	public class Away3DGearUnitsClient extends Sprite
+	public class Away3DGearUnitsClientj extends Sprite
 	{
 		//{
 		private var host:String;
@@ -51,7 +49,7 @@
 		
 		//}
 		
-		public function Away3DGearUnitsClient() {
+		public function Away3DGearUnitsClientj() {
 			
 			host = "127.0.0.1";
 			port = 5555;
@@ -94,31 +92,37 @@
 		
 		public function keypressdown(event:KeyboardEvent):void {
 			if (event.keyCode == 38) {//up
-				socket.writeUTFBytes('cmd:up=True' + "\n");
+				//socket.writeUTFBytes('cmd:up=True' + "\n");
+				socket.writeUTFBytes('cmd{forward:true}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 40) {//down
-				socket.writeUTFBytes('cmd:down=True' + "\n");
+				//socket.writeUTFBytes('cmd:down=True' + "\n");
+				socket.writeUTFBytes('cmd{backward:true}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 37) {//left
-				socket.writeUTFBytes('cmd:left=True' + "\n");
+				//socket.writeUTFBytes('cmd:left=True' + "\n");
+				socket.writeUTFBytes('cmd{left:true}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 39) {//right
-				socket.writeUTFBytes('cmd:right=True' + "\n");
+				//socket.writeUTFBytes('cmd:right=True' + "\n");
+				socket.writeUTFBytes('cmd{right:true}' + "\n"); //
+				
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 32) {//spacebar
-				socket.writeUTFBytes('cmd:spacebar=True' + "\n");
+				//socket.writeUTFBytes('cmd:spacebar=True' + "\n");
+				socket.writeUTFBytes('cmd{spacebar:true}' + "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
@@ -126,31 +130,36 @@
 		
 		public function keypressup(event:KeyboardEvent):void {
 			if (event.keyCode == 38) {//up
-				socket.writeUTFBytes('cmd:up=False' + "\n");
+				//socket.writeUTFBytes('cmd:up=False' + "\n");
+				socket.writeUTFBytes('cmd{forward:false}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 40) {//down
-				socket.writeUTFBytes('cmd:down=False' + "\n");
+				//socket.writeUTFBytes('cmd:down=False' + "\n");
+				socket.writeUTFBytes('cmd{backward:false}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 37) {//left
-				socket.writeUTFBytes('cmd:left=False' + "\n");
+				//socket.writeUTFBytes('cmd:left=False' + "\n");
+				socket.writeUTFBytes('cmd{left:false}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 39) {//right
-				socket.writeUTFBytes('cmd:right=False' + "\n");
+				//socket.writeUTFBytes('cmd:right=False' + "\n");
+				socket.writeUTFBytes('cmd{right:false}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 32) {//spacebar
-				socket.writeUTFBytes('cmd:spacebar=False' + "\n");
+				//socket.writeUTFBytes('cmd:spacebar=False' + "\n");
+				socket.writeUTFBytes('cmd{spacebar:false}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
