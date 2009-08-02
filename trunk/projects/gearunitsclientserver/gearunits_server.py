@@ -234,7 +234,14 @@ class ClientThread (threading.Thread):
 		self.sendAll(b)
 	
 	def run(self):
-		#self.newClientConnect();
+		buff = self.sockfd.recv(1028);
+		if str(buff) == str("b\'<policy-file-request/>\\x00\'"):
+			print ('policy FOUND >>> sending...')
+			print(buff)
+			rawinput = '<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\" /></cross-domain-policy>\x00\n'
+			b = bytes ( ord(c) for c in rawinput) 
+			print (b)
+			self.sockfd.send(b); 
 		while True:
 			buff = self.sockfd.recv(2048);
 			#print(dir(self.sockfd))
@@ -268,6 +275,7 @@ class ClientThread (threading.Thread):
 				#self.sockfd.send();
 				self.sockfd.sendall(b"""<?xml version="1.0"?><cross-domain-policy><allow-access-from domain="*" to-ports="*"/></cross-domain-policy>""")
 				#self.sockfd.sendall(b)
+				
 				
 			print(buff);
 			#print("ID>" + str(self.id))

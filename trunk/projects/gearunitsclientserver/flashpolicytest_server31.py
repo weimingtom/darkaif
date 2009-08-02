@@ -1,24 +1,19 @@
 #!/usr/local/bin/python
-
 '''
 Flash Policy Test
-Still under testing...
 Information: This is partly working. There are some different formats when receiving and sending from the socket
-for python version. Note there are some error in the socket.
-python version 2.5.x
+for python version.
+python version 3.x.x
 '''
 import socket
 import threading
 import sys
 import os
 
-#host = ''; #out side network
-host = socket.gethostname(); #out side network
+host = ''; #out side network
 port = 5555;
 
-print ("#  ------------- flash policy 2.5.x Init... -------------  #");
-
-#thread class for client talking to each other
+print ("#  ------------- flash policy 3.1.x Init... -------------  #");
 class ClientThread (threading.Thread):
 	allClients = [];
 	vlock = threading.Lock();
@@ -41,30 +36,34 @@ class ClientThread (threading.Thread):
 				del self.allClients[index]
 	def run(self):
 		while True:
-			#buff = self.sockfd.recv(2048);
-			buff = self.sockfd.recv(1024).strip();
+			buff = self.sockfd.recv(1028);
 			if not buff:
 				print ("connect close...(client side)");
 				self.sockfd.close();
 				break #incase it loop infinite
-			if str(buff) == str('<policy-file-request/>\x00'):
+			if str(buff) == str("b\'<policy-file-request/>\\x00\'"):
 				print ('policy FOUND >>> sending...')
 				print(buff)
 				rawinput = '<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\" /></cross-domain-policy>\x00\n'
 				b = bytes ( ord(c) for c in rawinput) 
 				print (b)
-				self.sockfd.send(b); 
-			print(buff)
+				self.sockfd.send(b);
+			print(buff);
 			self.sendAll(buff)
 		self.sockfd.close()
-
 print ("#  ------------- Init... Listen Client -------------  #\n");
-server = socket.socket( socket.AF_INET, socket.SOCK_STREAM )#this default
+try:
+	server = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+except AttributeError:
+	# AttributeError catches Python built without IPv6
+	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+except socket.error:
+	# socket.error catches OS with IPv6 disabled
+	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server.bind((host,port))
 server.listen(5)
-
 print ("Server Up Listen!",host,":",port," Bind!");
-
 while True:
 	(clientSocket, address) = server.accept();
 	print("client connect from :",address);
