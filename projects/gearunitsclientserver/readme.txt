@@ -15,9 +15,10 @@ Python server in testing stage.
 -papervision3d client (working)
 --Papervision3DGearUnitsClient.as
 
-local access is working.
-host access not working. (deal with sending <policy-file-request/>)
-
+-local access is working.
+-host access is working. (not tested outside yet)
+-flash policy working
+-network errors and working on it
 //===============================================
 
 Java server in building.
@@ -27,9 +28,9 @@ Java server in building.
 -sandy3d client (not build)
 -papervision3d client (not build)
 
-local access is working.
-host access is working.
-
+-local access is working.
+-host access is working. (not tested outside yet)
+-flash policy working
 //===============================================
 
 Link:http://code.google.com/p/darkaif/
