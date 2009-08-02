@@ -1,5 +1,8 @@
 #!/usr/local/bin/python
 '''
+
+Create by: Darknet
+
 This is for basic database access to view the information.
 Python version: 3.1.0
 '''
@@ -12,7 +15,6 @@ import re
 DATABASE = 'gearunits.db'
 
 table = []
-spreadsheet = []
 
 db = sqlite.connect('gearunits.db');
 cur = db.cursor();
@@ -52,7 +54,7 @@ class Application(Frame):
 	#Create Widgets
 	def createWidgets(self):
 		self.text_database = Label(self)
-		self.text_database["text"] = "Database:" + DATABASE
+		self.text_database["text"] = "Schemata Database:" + DATABASE
 		self.text_database.grid(column=1, row=1, sticky=W)
 		
 		self.text_table = Label(self)
@@ -60,16 +62,34 @@ class Application(Frame):
 		self.text_table.grid(column=1, row=2, sticky=W)
 		
 		self.button_deletetable = Button(self)
-		self.button_deletetable["text"] = "Delete"
+		self.button_deletetable["text"] = "Delete Table"
 		self.button_deletetable.grid(column=2, row=2, sticky=W)
 		
 		self.button_createtable = Button(self)
-		self.button_createtable["text"] = "Create"
+		self.button_createtable["text"] = "Create Table"
 		self.button_createtable.grid(column=3, row=2, sticky=W)
+		
+		self.button_inserttable = Button(self)
+		self.button_inserttable["text"] = "Insert Table"
+		self.button_inserttable.grid(column=4, row=2, sticky=W)
+		
+		self.button_removetable = Button(self)
+		self.button_removetable["text"] = "Remove Table"
+		self.button_removetable.grid(column=5, row=2, sticky=W)
+		'''
+		self.button_refresh = Button(self)
+		self.button_refresh["text"] = "Refresh"
+		self.button_refresh.grid(column=7, row=2, sticky=W)
+		'''
 		
 		self.button_script = Button(self)
 		self.button_script["text"] = "script"
-		self.button_script.grid(column=4, row=2, sticky=W)
+		self.button_script.grid(column=6, row=2, sticky=W)
+		
+		self.button_commit = Button(self)
+		self.button_commit["text"] = "Commit"
+		self.button_commit.grid(column=7, row=2, sticky=W)
+		
 		
 		#self.button_createtable.configure(text='blah',side='left')
 		#self.button_createtable.configure(side="left")
@@ -79,16 +99,12 @@ class Application(Frame):
 		self.listbox.bind("<<ListboxSelect>>",self.listselect_click)
 		#self.listbox.bind("<Double-1>",self.listselect_doubleclick)
 		self.listbox.grid(column=1, row=4, sticky=W)
-		#self.listbox.insert("end", str("Hello1"))
-		#self.listbox.insert("end", str("Hello2"))
 		
 		self.vbar = Scrollbar(self, name="vbar")
 		self.vbar.grid(column=1, row=4, sticky=E)
 		self.vbar.master.reqheight = 500
 		self.vbar.configure(orient=VERTICAL, command=self.listbox.yview)
 		self.listbox.configure(yscrollcommand=self.vbar.set)
-		
-		#print(dir(self.vbar.master))
 		
 		#self.combobox = ttk.Combobox(self,values=('one two', 'three'))
 		self.combobox = ttk.Combobox(self)
@@ -99,7 +115,7 @@ class Application(Frame):
 		#print(dir(self.combobox.bind()))
 		
 		self.textbox = Text(self, width=40, height=10)
-		self.textbox.grid(column=2, row=3, sticky=W,columnspan=3,rowspan=2)
+		self.textbox.grid(column=2, row=3, sticky=W,columnspan=8,rowspan=2)
 		
 	#SELECT TABLE FROM COMBOBOX
 	def table_click(self,event):
@@ -136,16 +152,24 @@ class Application(Frame):
 	def selecttablerow(self):
 		print ("TABLE ROW ->")
 		
+		cur.execute("select * from sqlite_master WHERE type='table'");
+		for t in cur:
+			if self.tablename == t[1]:
+				#print (t)
+				print ("-------")
+				print(t[4])
+				print ("-------")
+				break
 		
 		#cur.execute("select * from sqlite_master WHERE type='table'");
 		#cur.execute("select * " + tablename + " type='table' ORDER BY name");
 		#cur.execute('SELECT * FROM ' + self.tablename + '');
 		
 		query = str('SELECT * FROM ' + self.tablename + " WHERE id=\'" + self.tablerowname + "\'")
-		print(query)
+		#print(query)
 		cur.execute(query);
 		for t in cur:
-			print (t)
+			#print (t)
 			self.textbox.delete("1.0","end")
 			self.textbox.insert("end",t)
 	
@@ -156,7 +180,7 @@ class Application(Frame):
 		self.master.title(title)
 		self.pack()
 		self.createWidgets()
-		self.master.geometry("300x300")
+		self.master.geometry("600x480")
 		#print(dir(self))
 
 root = Tk()

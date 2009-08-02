@@ -37,10 +37,10 @@ public class Game extends Thread{
 				for (int iplayer=0; iplayer<list.size();iplayer++) {
 					//System.out.print("++++ id:>"+list.get(iplayer).m_clientID+"x:"+list.get(iplayer).x+"y:"+list.get(iplayer).y +"\n");
 					if (list.get(iplayer).forward == true){
-					list.get(iplayer).y--;
+					list.get(iplayer).z++;
 					}
 					if (list.get(iplayer).backward == true){
-						list.get(iplayer).y++;
+						list.get(iplayer).z--;
 					}
 					if (list.get(iplayer).right == true){
 						list.get(iplayer).x++;
@@ -49,8 +49,10 @@ public class Game extends Thread{
 						list.get(iplayer).x--;
 					}
 					if((list.get(iplayer).left == true)||(list.get(iplayer).left == true)||(list.get(iplayer).right == true)||(list.get(iplayer).forward == true)||(list.get(iplayer).backward == true)){
-						String senddata = list.get(iplayer).objecttype + "{id:"+ list.get(iplayer).m_clientID +",x:" + list.get(iplayer).x + ",y:"+list.get(iplayer).y+"}"+"\n";
+						//String senddata = list.get(iplayer).objecttype + "{id:"+ list.get(iplayer).m_clientID +",x:" + list.get(iplayer).x + ",y:"+list.get(iplayer).y+"}"+"\n";
+						String senddata = "object=none," + "id="+ list.get(iplayer).m_clientID +",x=" + list.get(iplayer).x + ",y="+list.get(iplayer).y+",z="+ list.get(iplayer).z +",balive=true"+"\n";
 						list.get(iplayer).sendallclient(senddata);
+						
 					}
 				}
 			}
@@ -164,8 +166,9 @@ public class Game extends Thread{
             	//System.out.print(x + ":" + y +"\n");
             	out.println(objecttype + "{id:"+ m_clientID +",x:" + x + ",y:"+y+"}"+"\n");
                 out.flush();
-                String senddata = objecttype + "{id:"+ m_clientID +",x:" + x + ",y:"+y+"}"+"\n";
-                sendallclient(senddata);
+                //String senddata = objecttype + "{id:"+ m_clientID +",x:" + x + ",y:"+y+"}"+"\n";
+                //String senddata = "object=none," + "id="+ m_clientID +",x=" + x + ",y="+y+",z="+ z +",balive=true"+"\n";
+                //sendallclient(senddata);
             }
 		}
 		
