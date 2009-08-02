@@ -2,7 +2,7 @@
 '''
 Flash Policy Test
 Information: This is partly working. There are some different formats when receiving and sending from the socket
-for python version.
+for python version. Note there are some error in the socket.
 python version 3.x.x
 '''
 import socket
@@ -11,6 +11,7 @@ import sys
 import os
 
 host = ''; #out side network
+#host = socket.gethostname() #out side network
 port = 5555;
 
 print ("#  ------------- flash policy 3.1.x Init... -------------  #");
@@ -36,7 +37,7 @@ class ClientThread (threading.Thread):
 				del self.allClients[index]
 	def run(self):
 		while True:
-			buff = self.sockfd.recv(1028);
+			buff = self.sockfd.recv(1024);
 			if not buff:
 				print ("connect close...(client side)");
 				self.sockfd.close();

@@ -2,7 +2,6 @@
 
 '''
 Flash Policy Test
-Still under testing...
 Information: This is partly working. There are some different formats when receiving and sending from the socket
 for python version. Note there are some error in the socket.
 python version 2.5.x
@@ -12,8 +11,8 @@ import threading
 import sys
 import os
 
-#host = ''; #out side network
-host = socket.gethostname(); #out side network
+host = ''; #out side network
+#host = socket.gethostname(); #out side network
 port = 5555;
 
 print ("#  ------------- flash policy 2.5.x Init... -------------  #");
@@ -42,7 +41,7 @@ class ClientThread (threading.Thread):
 	def run(self):
 		while True:
 			#buff = self.sockfd.recv(2048);
-			buff = self.sockfd.recv(1024).strip();
+			buff = self.sockfd.recv(1024);
 			if not buff:
 				print ("connect close...(client side)");
 				self.sockfd.close();
@@ -50,10 +49,9 @@ class ClientThread (threading.Thread):
 			if str(buff) == str('<policy-file-request/>\x00'):
 				print ('policy FOUND >>> sending...')
 				print(buff)
-				rawinput = '<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\" /></cross-domain-policy>\x00\n'
-				b = bytes ( ord(c) for c in rawinput) 
-				print (b)
-				self.sockfd.send(b); 
+				policy = '<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\" /></cross-domain-policy>\x00\n'
+				print (policy)
+				self.sockfd.sendall(policy);#old version 2.5.x need to socket.sendall()
 			print(buff)
 			self.sendAll(buff)
 		self.sockfd.close()
