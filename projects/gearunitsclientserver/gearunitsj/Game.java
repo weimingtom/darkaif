@@ -111,7 +111,7 @@ public class Game extends Thread{
             	String cmdmove = cmdstr[0];
             	String cmdbool = cmdstr[1];
             	//System.out.print("[-"+cmdmove.length()+ "-]");
-            	if (cmdmove.indexOf("forward") >= 0){
+            	if (cmdmove.indexOf("up") >= 0){
             		if (cmdbool.indexOf("true") >= 0 ){
             			forward = true;
             			//y--;
@@ -123,7 +123,7 @@ public class Game extends Thread{
             		}
             		//System.out.print("----forward---" +"\n");
             	}
-            	if (cmdmove.indexOf("backward") >= 0){//||(cmdstr[1] == "true")){
+            	if (cmdmove.indexOf("down") >= 0){//||(cmdstr[1] == "true")){
             		if (cmdbool.indexOf("true") >= 0 ){
             			backward = true;
             			//y++;
@@ -164,8 +164,8 @@ public class Game extends Thread{
             	//=================================================================================
             	
             	//System.out.print(x + ":" + y +"\n");
-            	out.println(objecttype + "{id:"+ m_clientID +",x:" + x + ",y:"+y+"}"+"\n");
-                out.flush();
+            	//out.println(objecttype + "{id:"+ m_clientID +",x:" + x + ",y:"+y+"}"+"\n");
+                //out.flush();
                 //String senddata = objecttype + "{id:"+ m_clientID +",x:" + x + ",y:"+y+"}"+"\n";
                 //String senddata = "object=none," + "id="+ m_clientID +",x=" + x + ",y="+y+",z="+ z +",balive=true"+"\n";
                 //sendallclient(senddata);
@@ -245,9 +245,15 @@ public class Game extends Thread{
                     System.out.println("...Stopped");
                     //clean out the socket just currently on the list player disconnect to the server
                     for (int iplayer=0; iplayer<list.size();iplayer++) {
-        				System.out.print("array:>"+list.get(iplayer).m_clientID+"\n");
+        				System.out.print("-array:>"+list.get(iplayer).m_clientID+"\n");
+        				String senddata = "object=none," + "id="+ m_clientID +",balive=false\n";
+        				sendallclient(senddata);
         				if (m_clientID == list.get(iplayer).m_clientID){
         					list.remove(iplayer);
+        					//String senddata = "object=none," + "id="+ list.get(iplayer).m_clientID +",balive=false"+"\n";
+        					//System.out.print(senddata);
+        					//sendallclient(senddata);
+    						//list.get(iplayer).sendallclient(senddata);
         				}
         			}
                 }

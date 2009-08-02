@@ -93,14 +93,14 @@
 		public function keypressdown(event:KeyboardEvent):void {
 			if (event.keyCode == 38) {//up
 				//socket.writeUTFBytes('cmd:up=True' + "\n");
-				socket.writeUTFBytes('cmd{forward:true}'+ "\n"); //
+				socket.writeUTFBytes('cmd{up:true}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 40) {//down
 				//socket.writeUTFBytes('cmd:down=True' + "\n");
-				socket.writeUTFBytes('cmd{backward:true}'+ "\n"); //
+				socket.writeUTFBytes('cmd{down:true}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
@@ -131,14 +131,14 @@
 		public function keypressup(event:KeyboardEvent):void {
 			if (event.keyCode == 38) {//up
 				//socket.writeUTFBytes('cmd:up=False' + "\n");
-				socket.writeUTFBytes('cmd{forward:false}'+ "\n"); //
+				socket.writeUTFBytes('cmd{up:false}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
 			
 			if (event.keyCode == 40) {//down
 				//socket.writeUTFBytes('cmd:down=False' + "\n");
-				socket.writeUTFBytes('cmd{backward:false}'+ "\n"); //
+				socket.writeUTFBytes('cmd{down:false}'+ "\n"); //
 				socket.flush();
 				//trace("send..");
 			}
@@ -228,10 +228,23 @@
 					}
 					//trace(tmpvar[0] + '-------------')
 					if (tmpvar[0] == 'balive') {
-						//trace(">>>" + tmpvar[1] +'<<<<<< set balive');
+						trace(">>>" + tmpvar[1] +'<<<<<< set balive');
 						var strbool:String = tmpvar[1];
+						trace(">>"+strbool+"<<")
 						strbool = strbool.replace('\n', '');
 						//trace('>>>' + strbool + '<<<---');
+						
+						if (strbool.indexOf('false') >= 0) {
+							objectalive = false;
+							//trace('set false');
+						}
+						if (strbool.indexOf('true') >=0 ) {
+							objectalive = true;
+							//trace('set true');
+						}
+						
+						
+						/*
 						if (strbool == 'false') {
 							objectalive = false;
 							//trace('set false');
@@ -240,6 +253,7 @@
 							objectalive = true;
 							//trace('set true');
 						}
+						*/
 					}
 					
 					if (tmpvar[0] == 'x') {
@@ -268,11 +282,11 @@
 						unit[i].z = objectposition.z;
 						//trace(objectalive+'<<<< remiove?')
 						if (objectalive == false) {
-							//trace('remove............');
+							trace('remove............');
 							view.scene.removeChild(unit[i].mesh);
 						}
 						if (objectalive == true) {
-							//trace('remove............');
+							trace('show............');
 							view.scene.addChild(unit[i].mesh);
 						}
 						
