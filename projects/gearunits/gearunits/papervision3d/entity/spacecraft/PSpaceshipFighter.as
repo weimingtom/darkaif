@@ -21,7 +21,7 @@
 		
 		override public function update():void {
 			super.update();
-			
+			/*
 			//trace('fire--');
 			//IF key is press to fire weapon Multi 
 			for (var i:int = 0; i < weapon.length; i++ ) {
@@ -50,9 +50,9 @@
 							weapon[w].BFIRE = false
 						}else if(weapon[w].time == 1){
 							for (var p:int = 0; p < weapon[w].projectile.length; p++ ) {
-								/*
-								 * Need to build a reuse projectile 
-								 */ 
+								//
+								// Need to build a reuse projectile 
+								// 
 								//projectile
 								
 								var projectileclass:PProjectile;
@@ -111,6 +111,7 @@
 					}
 				}
 			///}
+			*/
 		}
 		
 	}

@@ -110,6 +110,7 @@
 		public var weaponaction:Array = new Array();
 		
 		//other objects
+		public var targetunit:AStructureUnit;// this will reduce looping part once it target or still alive
 		public var targetid:String = '';
 		public var targettype:String = '';
 		public var targetposition:Number3D = new Number3D();
@@ -229,13 +230,14 @@
 					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[1].x, object.collisionmesh.faces[ii].vertices[1].y, object.collisionmesh.faces[ii].vertices[1].z);
 					m1.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 					var point2:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
-					
+					//trace(m1.position);
 					m1.position = new Vector3D(object.collisionmesh.faces[ii].vertices[2].x, object.collisionmesh.faces[ii].vertices[2].y, object.collisionmesh.faces[ii].vertices[2].z);
 					m1.appendRotation(object.rotation.y, new Vector3D(0, 1, 0));
 					var point3:Point = new Point(object.x + m1.position.x, object.z + m1.position.z);
 					
 					bhitobject = IntersectionMath.isPointInTriangle2D(point, point1, point2, point3);
 					if (bhitobject) {
+						trace('collision');
 						break;
 					}
 				}
@@ -331,18 +333,6 @@
 			return bhitobject;
 		}
 		
-		// GLOBAL VIEW SCENE
-		public function set gview(g_view:View3D):void {
-			view = g_view;
-		}
-		//Global unit
-		public function set gunit(g_unit:Vector.<AStructureUnit>):void {
-			units = g_unit;
-		}
-		//global projectile(
-		public function set gprojectile(g_projectile:Vector.<AProjectile>):void {
-			projectile = g_projectile;
-		}
 		
 		//DISPATCHER
 		public function addEventListener(p_type:String, p_listener:Function, p_useCapture:Boolean = false, p_priority:int = 0, p_useWeakReference:Boolean = false):void {
@@ -367,9 +357,7 @@
 			return structure;
 		}
 		
-		
 		//position
-		
 		public function set point(p_point:Number3D):void {
 			x = p_point.x;
 			y = p_point.y;
@@ -379,7 +367,6 @@
 		public function get point():Number3D {
 			return new Number3D(x,y,z);
 		}
-		
 		
 		public function set rotation(p_point:Number3D):void {
 			_rotation.x = p_point.x % 360;

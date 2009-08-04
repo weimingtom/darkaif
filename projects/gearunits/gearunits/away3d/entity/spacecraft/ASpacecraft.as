@@ -33,7 +33,7 @@
 				for (var c:int = 0; c < units.length; c++ ) {
 					if (( id != units[c].id) && (units[c].collisionmesh != null) ) {
 						if (ismeshintersect(units[c])) {
-							//trace('collision other objects...');
+							trace('collision other objects...');
 							bobjectcollision = true;
 						}
 						//check if the object just spawn from the entery point and do not let is load into the unit(ship)

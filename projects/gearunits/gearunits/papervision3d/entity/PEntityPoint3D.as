@@ -1,5 +1,6 @@
 ﻿package gearunits.papervision3d.entity 
 {
+	import org.papervision3d.core.geom.TriangleMesh3D;
 	import org.papervision3d.core.math.Number3D;
 	
 	/**
@@ -17,6 +18,8 @@
 		public var rotationx:Number = 0;
 		public var rotationy:Number = 0;
 		public var rotationz:Number = 0;
+		
+		public var meshbox:TriangleMesh3D;
 		
 		//box collision
 		public var min:Number3D = new Number3D();

@@ -1,6 +1,7 @@
 ﻿package gearunits.papervision3d.entity.spacecraft 
 {
 	import gearunits.models.PMeshSpacecraftFedCarrier;
+	import gearunits.models.PMeshSpacecraftFedCarrier_Box;
 	import gearunits.papervision3d.entity.PEntityPoint3D;
 	import org.papervision3d.materials.ColorMaterial;
 	import org.papervision3d.materials.special.CompositeMaterial;
@@ -23,6 +24,7 @@
 			compMat.addMaterial(matwirecolor);
 			compMat.interactive = true;
 			mesh = new PMeshSpacecraftFedCarrier(compMat);
+			collisionmesh = new PMeshSpacecraftFedCarrier_Box(compMat);
 			movespeed = 2;
 			spawntime = 10;
 			

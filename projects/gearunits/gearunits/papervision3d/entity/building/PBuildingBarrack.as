@@ -10,6 +10,7 @@
 	 * ...
 	 * @author Darknet
 	 */
+	
 	public class PBuildingBarrack extends PBuilding
 	{
 		public static const NAME:String = 'PBuildingBarrack';

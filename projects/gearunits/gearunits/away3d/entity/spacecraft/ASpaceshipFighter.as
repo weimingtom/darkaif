@@ -37,17 +37,57 @@
 								targetangle.y = rotationpoint(units[uid].point);
 								//trace(targetangle.y);
 								//_rotation.y = targetangle.y;
-								//trace(rotation.y + ':'+targetangle.y);
+								trace(rotation.y + ':'+targetangle.y);
 								//change direction to follow target
+								
+								var angle1:Number = 0;
+								var angle2:Number = 0;
+								//trace(_rotation.y + "[]" + targetangle.y )
+								
+								
+								if ((_rotation.y < targetangle.y + 10)&&(_rotation.y > targetangle.y - 10)){
+									BWEAPONFIRE = true;
+									trace("fighter")
+								}
+								else if (_rotation.y < targetangle.y) {
+									angle1 = (360 - _rotation.y)
+									angle2 = (targetangle.y + (360 - _rotation.y))
+									if (angle1 < angle2 ) {
+										_rotation.y += TurnSpeed;
+									}else {
+										_rotation.y -= TurnSpeed;
+									}
+								}
+								else if (_rotation.y > targetangle.y) {
+									angle1 = (targetangle.y - _rotation.y)
+									angle2 = (360 - targetangle.y + _rotation.y)
+									if (angle1 > angle2 ) {
+										_rotation.y += TurnSpeed;
+									}else {
+										_rotation.y -= TurnSpeed;
+									}
+								}
+								
+								/*
 								if ((_rotation.y < 360 )&&(_rotation.y < targetangle.y-TurnSpeed)) {
 									//_rotation.y -= TurnSpeed;
 									//trace(rotation.y + ':'+targetangle.y);
 									_rotation.y += TurnSpeed;
-								}else if ((_rotation.y > 0 )&&(_rotation.y > targetangle.y+TurnSpeed)) {
+								}else if ((_rotation.y > 0 ) && (_rotation.y > targetangle.y + TurnSpeed)) {
+									//_rotation.y = 360
 									_rotation.y -= TurnSpeed;
 								}else {
 									BWEAPONFIRE = true;
 								}
+								
+								if (_rotation.y < 360) {
+									_rotation.y = 1;
+								}
+								if (0 < _rotation.y ) {
+									_rotation.y = 360;
+								}
+								*/
+								
 							}else {
 								BWEAPONFIRE = false;
 							}
