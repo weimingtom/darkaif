@@ -25,6 +25,63 @@
 			}
 			*/
 			
+			if (units != null) {
+				var collisionpoint:Boolean = false;
+				var bobjectcollision:Boolean = false;
+				for (var c:int = 0; c < units.length; c++ ) {
+					//trace('check sollision...' + units[c].id);
+					if (( id != units[c].id) && (units[c].collisionmesh != null) ) {
+						if (ismeshintersect(units[c])) {
+							//trace('collision other objects...'+units[c].id);
+							bobjectcollision = true;
+						}
+						//check if the object just spawn from the entery point and do not let is load into the unit(ship)
+						if ((ismeshintersectentitypoint(units[c]) == true) && (balive == true) && (bjustspawn == true)) {
+							collisionpoint = true;
+						}
+						//loop object with entity points
+						if ((ismeshintersectentitypoint(units[c]) == true)&&(balive == true)&&(bjustspawn == false)) {
+							//trace('entity collision...');
+							balive = false;
+							if(mesh != null){
+								scene.removeChildByName(mesh.name);
+							}
+							/*
+							if(iconhud != null){
+								scene.removeChildByName(iconhud.name);
+							}
+							*/
+							units[c].unit.push(this); //push into the units that carry it
+							for (var ui:int = 0; ui < units.length;ui++ ) {//remove from main unit
+								if (units[ui] == this) {//if object is matches this class then remove it from unit
+									units.splice(ui, 1);
+									break;
+								}
+							}
+							//units.splice(c, 1);
+						}
+						
+					}
+				}
+				if (bobjectcollision) {
+					bhit = true;
+				}else {
+					bhit = false;
+				}
+				
+				//trace('collision point:'+collisionpoint);
+				//this make sure the spawn will not over lap the spawn and loading
+				//when player leave the entery point the is a timer will set the spawn to false
+				if ((bjustspawn == true) && (collisionpoint != true)&&(balive == true)) {
+					//trace('----' + collisionpoint);
+					justspawntime++;
+					if (justspawntime > justspawntimemax) {
+						justspawntime = 0;
+						bjustspawn = false;
+					}
+				}
+			}
+			
 			for (var t:int = 0; t < type.length; t++ ) {
 				//spawn ship
 				if (type[t].name == 'shipyard') {

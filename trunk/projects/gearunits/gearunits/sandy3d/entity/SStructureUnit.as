@@ -3,6 +3,7 @@
 	//{
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import gearunits.core.GlobalUnit;
 	import gearunits.sandy3d.entity.weapon.SWeapon;
 	import gearunits.sandy3d.events.SStructureUnitEvent;
 	import gearunits.sandy3d.events.SUnitEvent;
@@ -26,7 +27,7 @@
 	 * 
 	 */
 	
-	public class SStructureUnit
+	public class SStructureUnit extends GlobalUnit
 	{
 		//{
 		
@@ -81,9 +82,9 @@
 		//}
 		
 		public var mesh:Shape3D;
-		public var x:Number = 0;
-		public var y:Number = 0;
-		public var z:Number = 0;
+		//public var x:Number = 0;
+		//public var y:Number = 0;
+		//public var z:Number = 0;
 		
 		public var dirx:Number = 0;
 		public var diry:Number = 0;

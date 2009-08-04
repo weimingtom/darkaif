@@ -13,7 +13,7 @@
 		
 		public function AUnitBlock() 
 		{
-			mesh = new Cube( { height:32, width:32, depth:32 } );
+			mesh = new Cube( {name:id,height:32, width:32, depth:32 } );
 			movespeed = 2;
 		}
 		

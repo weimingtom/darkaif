@@ -1,6 +1,7 @@
 ﻿package gearunits.papervision3d.entity.spacecraft 
 {
 	import gearunits.models.PMeshSpacecraftFedFighter;
+	import gearunits.models.PMeshSpacecraftFedFighter_Box;
 	import gearunits.papervision3d.entity.weapon.PWeapon;
 	import gearunits.papervision3d.entity.weapon.PWeaponSpaceshipGun;
 	import org.papervision3d.materials.ColorMaterial;
@@ -27,6 +28,10 @@
 			
 			
 			mesh = new PMeshSpacecraftFedFighter(compMat);
+			collisionmesh = new PMeshSpacecraftFedFighter_Box(compMat);
+			
+			setbox(32, 32, 32);
+			
 			movespeed = 2;
 			TurnSpeed = 5;
 			spawntime = 10;

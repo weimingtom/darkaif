@@ -14,6 +14,7 @@
 	 */
 	public class GlobalUnit
 	{
+		
 		public static var GLOBALDEBUG:Boolean = false;//debug on
 		public var debug:Boolean = false;//debug single unit
 		public var x:Number = 0;
@@ -23,6 +24,8 @@
 		public var min:GUPoint = new GUPoint();
 		public var max:GUPoint = new GUPoint();
 		public var offset:GUPoint = new GUPoint();
+		
+		public var onlineid:String = '';
 		
 		public function GlobalUnit() 
 		{

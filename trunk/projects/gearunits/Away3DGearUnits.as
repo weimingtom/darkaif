@@ -345,6 +345,7 @@
 			*/
 			
 			
+			/*
 			structureunit = new ASpaceshipFedBattleship();
 			unitfun(structureunit);
 			//structureunit.angle = 180;
@@ -353,7 +354,7 @@
 			structureunit.x = 128;
 			view.scene.addChild(structureunit.mesh);
 			unit.push(structureunit);
-			
+			*/
 			
 			//trace(ASpaceshipFedCarrier.NAME);
 			//trace(ASpaceshipFedFighter.NAME);
@@ -377,7 +378,6 @@
 			unitfun(structureunit);
 			unit.push(structureunit);
 			
-			/*
 			structureunit = new ASpaceshipFedFighter();
 			structureunit.ownerid = playername;
 			structureunit.x = 128;
@@ -386,7 +386,7 @@
 			view.scene.addChild(structureunit.iconhud);
 			unitfun(structureunit);
 			unit.push(structureunit);
-			*/
+			
 			
 		}
 		

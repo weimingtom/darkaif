@@ -21,22 +21,25 @@
 	public class AWeapon extends GlobalUnit
 	{
 		//{
-		//INFORMATION
-		public var name:String = 'AWeapon';
-		public var time:Number = 0;
-		public var timemax:Number = 0;
-		public var damage:Number = 0;
-		public var mesh:*;
-		public var _objectid:String = '';
-		public var _objectpoint:Number3D = new Number3D();//this deal with object current attach to it.
-		public var _objectangle:Number3D = new Number3D();//this deal with object current attach to it.
-		//PROJECTILE
+		//GLOBAL VARS
 		public static var projectiles:Vector.<AProjectile>; //global var class
-		public var projectile:Vector.<AProjectile> = new Vector.<AProjectile>(); //global var class
 		public static var units:Vector.<AStructureUnit>; //global var class
 		public static var view:View3D; //global var class
-		//FLASH MUZZLE
-		// [?]
+		//weapon fire from
+		public var projectile:Vector.<AProjectile> = new Vector.<AProjectile>(); //global var class
+		
+		//INFORMATION
+		public var name:String = 'AWeapon'; //weapon name
+		public var time:Number = 0; //time 
+		public var timemax:Number = 0; //Time to fire
+		public var damage:Number = 0; //damage build
+		public var mesh:*; //mesh object 3d model
+		
+		//Attach Object
+		public var _objectid:String = ''; //this deal with object current attach to it.
+		public var _objectpoint:Number3D = new Number3D();//this deal with object current attach to it.
+		public var _objectangle:Number3D = new Number3D();//this deal with object current attach to it.
+		
 		//WEAPON CONTROL
 		public var BWEAPONFIRE:Boolean = false;
 		public var PRESSFIRE:Boolean = false;
@@ -45,9 +48,9 @@
 		public var BALTFIRE:Boolean = false;
 		public var binfiniteammo:Boolean = false;
 		
-		public var bbot:Boolean = false;//deal with bot or player control but if player is used or not, set some condtions
-		public var bturret:Boolean = false;//this will deal with turret control or from a point fire
-		public var bautoturret:Boolean = false;
+		//Bot
+		public var bbot:Boolean = false; //deal with bot or player control but if player is used or not, set some condtions
+		public var bautoturret:Boolean = false; //Not used yet
 		
 		//WEAPON AMMO
 		public var ammoclip:Number = 0;
@@ -57,13 +60,16 @@
 		public var firerate:Number = 0;
 		public var heattime:Number = 0;
 		public var cooltime:Number = 0;
-		public var offsetlengthfire:Number = 0; //2D spawn // current position and spacing and math of sin and cos base
-		public var firepoint:Number3D = new Number3D();//where spawn projectiles
-		public var _rotation:Number3D = new Number3D();
+		
+		//TURRET SETTING
+		public var bturret:Boolean = false; //this will deal with turret control or from a point fire
 		public var TurnSpeed:Number = 0;
+		public var detectrange:Number = 0; // weapon fire in range
+		public var _rotation:Number3D = new Number3D(); //turret
+		public var firepoint:Number3D = new Number3D();//where spawn projectiles
+		public var offsetlengthfire:Number = 0; //2D spawn // current position and spacing and math of sin and cos base
 		
-		public var detectrange:Number = 0;
-		
+		//TARGET OBJECT
 		public var targetid:String = '';
 		public var targetpoint:Number3D = new Number3D();
 		public var targetangle:Number3D = new Number3D();
