@@ -14,8 +14,7 @@
 	 * @author Darknet
 	 */
 	
-	public class ASpaceshipFighter extends ASpaceship
-	{
+	public class ASpaceshipFighter extends ASpaceship {
 		public static const NAME:String = 'ASpaceshipFighter';
 		public static const TYPE:String = 'Spaceship';
 		
@@ -37,7 +36,7 @@
 								targetangle.y = rotationpoint(units[uid].point);
 								//trace(targetangle.y);
 								//_rotation.y = targetangle.y;
-								trace(rotation.y + ':'+targetangle.y);
+								//trace(rotation.y + ':'+targetangle.y);
 								//change direction to follow target
 								
 								var angle1:Number = 0;
@@ -47,9 +46,9 @@
 								
 								if ((_rotation.y < targetangle.y + 10)&&(_rotation.y > targetangle.y - 10)){
 									BWEAPONFIRE = true;
-									trace("fighter")
+									//trace("fighter")
 								}
-								else if (_rotation.y < targetangle.y) {
+								else if ((_rotation.y < targetangle.y)){
 									angle1 = (360 - _rotation.y)
 									angle2 = (targetangle.y + (360 - _rotation.y))
 									if (angle1 < angle2 ) {
