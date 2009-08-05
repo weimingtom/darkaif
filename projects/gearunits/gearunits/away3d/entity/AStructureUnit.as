@@ -119,8 +119,6 @@
 		public var bdetectother:Boolean = false;
 		public var detectrange:Number = 0;//radius for emeny
 		
-		
-		
 		//}
 		public function AStructureUnit() {
 			_id++;

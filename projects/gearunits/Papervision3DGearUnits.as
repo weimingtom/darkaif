@@ -12,6 +12,7 @@
 	import gearunits.papervision3d.entity.infantry.*;
 	import gearunits.papervision3d.entity.projectile.*;
 	import gearunits.papervision3d.entity.spacecraft.*
+	import gearunits.papervision3d.entity.weapon.PWeapon;
 	import gearunits.papervision3d.node.PNodePoint3D;
 	import org.jloa.display.ResourceMonitor;
 	import org.papervision3d.core.geom.TriangleMesh3D;
@@ -221,6 +222,10 @@
 			PProjectile.units = unit;
 			PProjectile.projectile = projectile;
 			
+			PWeapon.projectiles = projectile;
+			PWeapon.scene = scene;
+			PWeapon.units = unit;
+			
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keypressdown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyupevent);
@@ -395,9 +400,20 @@
 		public function buildspaceunit():void {
 			var buildunit:PStructureUnit;
 			
+			/*
 			buildunit = new PSpacestationFedShipyard();
 			buildunit.ownerid = playername;
 			buildunit.x = 0;
+			buildunit.y = 0;
+			buildunit.z = 0;
+			unitfun(buildunit);
+			scene.addChild(buildunit.mesh);
+			unit.push(buildunit);
+			*/
+			
+			buildunit = new PSpaceshipFedBattleship();
+			buildunit.ownerid = playername;
+			buildunit.x = 256;
 			buildunit.y = 0;
 			buildunit.z = 0;
 			unitfun(buildunit);
@@ -696,11 +712,11 @@
 					if (unit[i].busercontrol == true) {
 						//trace('Hello');
 						if (KEY_RIGHT == true) {
-							unit[i].angle += unit[i].TurnSpeed;
+							unit[i]._rotation.y += unit[i].TurnSpeed;
 						}
 						
 						if (KEY_LEFT == true) {
-							unit[i].angle -= unit[i].TurnSpeed;
+							unit[i]._rotation.y -= unit[i].TurnSpeed;
 						}
 						
 						if (KEY_UP == true) {
@@ -729,7 +745,6 @@
 			}
 			
 		}
-		
 		
 		//=========================================================================================
 		//units building
