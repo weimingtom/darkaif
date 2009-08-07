@@ -4,7 +4,12 @@
 	import away3d.containers.View3D;
 	import away3d.core.base.Mesh;
 	import away3d.core.base.Object3D;
+	import away3d.events.MouseEvent3D;
+	import away3d.materials.BitmapMaterial;
+	import away3d.materials.CompositeMaterial;
+	import away3d.materials.ILayerMaterial;
 	import away3d.sprites.MovieClipSprite;
+	import flash.display.BitmapData;
 	import flash.geom.Matrix3D;
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
@@ -118,6 +123,16 @@
 		//detect
 		public var bdetectother:Boolean = false;
 		public var detectrange:Number = 0;//radius for emeny
+		
+		//SELECT OBJECT / HIGH LIGHT
+		public var BitTextOver:BitmapData = new BitmapData(10, 10, false, 0xFFFFFF);
+		public var BitTextOut:BitmapData = new BitmapData(10, 10, false, 0xadff2f);
+		public var BitTextSelected:BitmapData = new BitmapData(10, 10, false, 0xFFFFFF);
+		public var MatTextOver:ILayerMaterial = new BitmapMaterial(BitTextOver, { alpha:0.5 } );
+		public var MatTextOut:ILayerMaterial = new BitmapMaterial(BitTextOut, { alpha:1} );
+		//public var MatTextOut:ILayerMaterial = new BitmapMaterial(BitTextSkin.bitmapData, { alpha:1} );
+		public var MatTextSelected:ILayerMaterial = new BitmapMaterial(BitTextSelected, { alpha:0.2 } );
+		public var TexCom:CompositeMaterial = new CompositeMaterial();
 		
 		//}
 		public function AStructureUnit() {
@@ -355,30 +370,49 @@
 			return structure;
 		}
 		
-		//position
+		//POSITION / ROTATION
 		public function set point(p_point:Number3D):void {
 			x = p_point.x;
 			y = p_point.y;
 			z = p_point.z;
 		}
-		
 		public function get point():Number3D {
 			return new Number3D(x,y,z);
 		}
-		
 		public function set rotation(p_point:Number3D):void {
 			_rotation.x = p_point.x % 360;
 			_rotation.y = p_point.y % 360;
 			_rotation.z = p_point.z % 360;
 		}
-		
 		public function get rotation():Number3D {
 			//return new Number3D(x,angle,z);
 			return _rotation;
 		}
 		
-		
-		
+		//SELECT OBJECT / HIGH LIGHT
+		public function UnitObject_Over(event:MouseEvent3D):void {
+			TexCom.addMaterial(MatTextOut);
+			TexCom.addMaterial(MatTextOver);
+			TexCom.removeMaterial(MatTextSelected);
+			mesh.material = TexCom;
+		}
+		public function UnitObject_Out(event:MouseEvent3D = null):void {
+			//TexCom.removeMaterial(MatTextOver);
+			if (bselected == false) {
+				TexCom.removeMaterial(MatTextSelected);
+				TexCom.removeMaterial(MatTextOver);
+				TexCom.addMaterial(MatTextOut);
+				mesh.material = MatTextOut;
+			}else {
+				UnitObject_Selected();
+			}
+		}
+		public function UnitObject_Selected(event:MouseEvent3D = null):void {
+			TexCom.removeMaterial(MatTextOver);
+			TexCom.addMaterial(MatTextOut);
+			TexCom.addMaterial(MatTextSelected);
+			//mesh.material = Tex_Out;
+		}
 		
 	}
 	

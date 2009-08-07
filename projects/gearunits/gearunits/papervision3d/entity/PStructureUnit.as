@@ -1,5 +1,6 @@
 ﻿package gearunits.papervision3d.entity 
 {
+	import flash.display.BitmapData;
 	import flash.geom.Matrix3D;
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
@@ -11,6 +12,10 @@
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import org.papervision3d.core.math.Number3D;
+	import org.papervision3d.events.InteractiveScene3DEvent;
+	import org.papervision3d.materials.BitmapMaterial;
+	import org.papervision3d.materials.ColorMaterial;
+	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.scenes.Scene3D;
 	import sandy.math.IntersectionMath;
 	
@@ -81,10 +86,21 @@
 		public var bdetectother:Boolean = false;
 		public var detectrange:Number = 0;//radius for emeny
 		
-		public function PStructureUnit() 
-		{
+		//public var BitTextOver:BitmapData = new BitmapData(10, 10, false, 0xFFFFFF);
+		public var BitTextOut:BitmapData = new BitmapData(10, 10, false, 0xadff2f);
+		//public var BitTextSelected:BitmapData = new BitmapData(10, 10, false, 0xFFFFFF);
+		//public var MatTextOver:BitmapMaterial = new BitmapMaterial(BitTextOver);
+		public var MatTextOut:BitmapMaterial = new BitmapMaterial(BitTextOut);
+		//public var MatTextOut:BitmapMaterial = new BitmapMaterial(BitTextSkin.bitmapData, { alpha:1} );
+		//public var MatTextSelected:BitmapMaterial = new BitmapMaterial(BitTextSelected);
+		public var MatTextOver:ColorMaterial = new ColorMaterial(0xFFFFFF,0.5);
+		public var MatTextSelected:ColorMaterial = new ColorMaterial(0xFFFFFF,0.2);
+		public var TexCom:CompositeMaterial = new CompositeMaterial();
+		
+		public function PStructureUnit(){
 			_id++;
 			id = _id;
+			TexCom.interactive = true;
 		}
 		
 		public function update():void {
@@ -162,10 +178,6 @@
 			if (disp == null) { return; }
 			disp.dispatchEvent(p_event);
 		}
-		
-		
-		
-		
 		
 		
 		//MESH COLLISION AGAINIST MESH COLLISION
@@ -306,6 +318,38 @@
 		public function get rotation():Number3D {
 			//return new Number3D(x,angle,z);
 			return _rotation;
+		}
+		
+		
+		//SELECT OBJECT / HIGH LIGHT
+		public function UnitObject_Over(event:InteractiveScene3DEvent):void {
+			//MatTextOver.fillAlpha = 0.5;
+			TexCom.addMaterial(MatTextOver);
+			TexCom.addMaterial(MatTextOut);
+			TexCom.removeMaterial(MatTextSelected);
+			//TexCom.interactive = true;
+			//mesh.material = TexCom;
+			//trace('over...');
+		}
+		public function UnitObject_Out(event:InteractiveScene3DEvent = null):void {
+			//TexCom.removeMaterial(MatTextOver);
+			if (bselected == false) {
+				TexCom.removeMaterial(MatTextSelected);
+				TexCom.removeMaterial(MatTextOver);
+				TexCom.addMaterial(MatTextOut);
+				//TexCom.interactive = true;
+				//mesh.material = MatTextOut;
+			}else {
+				UnitObject_Selected();
+				
+			}
+		}
+		public function UnitObject_Selected(event:InteractiveScene3DEvent = null):void {
+			TexCom.removeMaterial(MatTextOver);
+			TexCom.addMaterial(MatTextOut);
+			TexCom.addMaterial(MatTextSelected);
+			//TexCom.interactive = true;
+			//mesh.material = MatTextOut;
 		}
 		
 	}

@@ -1,5 +1,6 @@
 ﻿package gearunits.papervision3d.entity.spacecraft 
 {
+	import flash.display.Bitmap;
 	import gearunits.models.PMeshSpacecraftFedBattleship;
 	import gearunits.models.PMeshSpacecraftFedBattleship_Box;
 	import gearunits.models.PMeshSpacecraftFedCarrier;
@@ -8,6 +9,8 @@
 	import gearunits.papervision3d.entity.weapon.PWeaponBaseRocket;
 	import gearunits.papervision3d.entity.weapon.PWeaponPanelRocket;
 	import gearunits.papervision3d.entity.weapon.PWeaponSpaceshipBaseTurret;
+	import org.papervision3d.events.InteractiveScene3DEvent;
+	import org.papervision3d.materials.BitmapMaterial;
 	import org.papervision3d.materials.ColorMaterial;
 	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.materials.WireframeMaterial;
@@ -18,19 +21,24 @@
 	 */
 	public class PSpaceshipFedBattleship extends PSpaceshipBattleship
 	{
+		[Embed(source = "../../../models/textures/SpaceshipFedBattleship01.png")]
+		private var textskin:Class;
+		public var BitTextSkin:Bitmap = new textskin();
 		public static const NAME:String = 'PSpaceshipFedCarrier';
 		
 		public function PSpaceshipFedBattleship() 
 		{
-			var matcolor:ColorMaterial =  new ColorMaterial(0x0FFFF00);
-			var matwirecolor:WireframeMaterial = new WireframeMaterial(0x000000);
-			var compMat:CompositeMaterial = new CompositeMaterial();
-			compMat.addMaterial(matcolor);
-			compMat.addMaterial(matwirecolor);
-			compMat.interactive = true;
-			mesh = new PMeshSpacecraftFedBattleship(compMat);
+			MatTextOut = new BitmapMaterial(BitTextSkin.bitmapData);
+			TexCom.addMaterial(MatTextOut);
+			mesh = new PMeshSpacecraftFedBattleship(TexCom);
+			mesh.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, UnitObject_Over);
+			mesh.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, UnitObject_Out);
 			
-			collisionmesh = new PMeshSpacecraftFedBattleship_Box(compMat);
+			collisionmesh = new PMeshSpacecraftFedBattleship_Box(TexCom);
+			
+			
+			
+			
 			setbox(50,150,150);//set bounding box
 			movespeed = 2;
 			spawntime = 10;
