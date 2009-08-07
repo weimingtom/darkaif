@@ -1,7 +1,10 @@
 ﻿package gearunits.away3d.entity.spacecraft 
 {
 	//{
+	import away3d.materials.BitmapMaterial;
 	import away3d.materials.WireframeMaterial;
+	import away3d.events.MouseEvent3D;
+	import flash.display.Bitmap;
 	import flash.geom.Matrix3D;
 	import flash.geom.Vector3D;
 	import gearunits.away3d.entity.AEntityPoint3D;
@@ -22,6 +25,10 @@
 	
 	public class ASpaceshipFedBattleship extends ASpaceshipBattleship
 	{
+		[Embed(source = "../../../models/textures/SpaceshipFedBattleship01.png")]
+		private var textskin:Class;
+		public var BitTextSkin:Bitmap = new textskin();
+		
 		public static const NAME:String = 'FedBattleship';
 		public static const TYPE:String = 'Spaceship';
 		
@@ -32,6 +39,13 @@
 			var matwire:WireframeMaterial = new WireframeMaterial(0x999999);
 			mesh = new AMeshSpacecraftFedBattleship();
 			mesh.name = name + '_' + id;
+			
+			//skin texture
+			MatTextOut = new BitmapMaterial(BitTextSkin.bitmapData, { alpha:1 } );
+			mesh.material = MatTextOut;
+			mesh.addEventListener(MouseEvent3D.MOUSE_OVER, UnitObject_Over);
+			mesh.addEventListener(MouseEvent3D.MOUSE_OUT, UnitObject_Out);
+			
 			detectrange = 128;
 			//mesh.material = matwire;
 			//mesh = new AMeshSpacecraftFedMedCarrier();

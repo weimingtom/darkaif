@@ -6,6 +6,7 @@
 	import away3d.materials.CompositeMaterial;
 	import away3d.materials.ILayerMaterial;
 	import away3d.materials.IMaterial;
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import gearunits.away3d.entity.weapon.AWeapon;
 	import gearunits.away3d.entity.weapon.AWeaponSpaceshipGun;
@@ -17,29 +18,35 @@
 	/**
 	 * ...
 	 * @author Darknet
+	 * 
+	 * information:
+	 * 
+	 * To Do list: 
+	 * low texture
+	 * meduim texture
+	 * High texture
+	 * 
+	 * 
 	 */
 	public class ASpaceshipFedFighter extends ASpaceshipFighter
 	{
+		[Embed(source = "../../../models/textures/SpacecraftFedFighter01.png")]
+		private var textskin:Class;
+		public var BitTextSkin:Bitmap = new textskin();
 		
 		public static const NAME:String = 'FedFighter';
 		public static const TYPE:String = 'Spaceship';
 		public var uniticon:AUnitIconHUD = new AUnitIconHUD();
 		
-		//public var colorData:BitmapData = new BitmapData(10, 10, false, 0xCC6699);
-		//public var colorMat:ILayerMaterial = new BitmapMaterial(colorData, { alpha:0.5 } );
+		//public var BitTextOver:BitmapData = new BitmapData(10, 10, false, 0x363430);
+		//public var BitTextOut:BitmapData = new BitmapData(10, 10, false, 0xadff2f);
+		//public var BitTextSelected:BitmapData = new BitmapData(10, 10, false, 0x363430);
 		
-		public var BitTextOver:BitmapData = new BitmapData(10, 10, false, 0x363430);
-		public var MatTextOver:ILayerMaterial = new BitmapMaterial(BitTextOver, { alpha:0.2 } );
-		public var BitTextOut:BitmapData = new BitmapData(10, 10, false, 0xadff2f);
-		public var MatTextOut:ILayerMaterial = new BitmapMaterial(BitTextOut, { alpha:1} );
-		public var BitTextSelected:BitmapData = new BitmapData(10, 10, false, 0x363430);
-		public var MatTextSelected:ILayerMaterial = new BitmapMaterial(BitTextSelected, { alpha:0.5 } );
-		
-		//public var Tex_Over:ColorMaterial = new ColorMaterial(0xbfbfbf);
-		//public var Tex_Selected:ColorMaterial = new ColorMaterial(0x808080);
-		//public var Tex_Out:ColorMaterial = new ColorMaterial(0x363430);
-		//public var Tex:ColorMaterial = new ColorMaterial(0x008000);
-		public var TexCom:CompositeMaterial = new CompositeMaterial();
+		//public var MatTextOver:ILayerMaterial = new BitmapMaterial(BitTextOver, { alpha:0.2 } );
+		//public var MatTextOut:ILayerMaterial = new BitmapMaterial(BitTextOut, { alpha:1} );
+		//public var MatTextOut:ILayerMaterial = new BitmapMaterial(BitTextSkin.bitmapData, { alpha:1} );
+		//public var MatTextSelected:ILayerMaterial = new BitmapMaterial(BitTextSelected, { alpha:0.5 } );
+		//public var TexCom:CompositeMaterial = new CompositeMaterial();
 		
 		public function ASpaceshipFedFighter() {
 			
@@ -48,12 +55,18 @@
 			mesh.name = name + '_' + id;
 			collisionmesh = new AMeshSpacecraftFedFighter_Box();
 			mesh.debugBoundingBox;
+			
+			//skin texture
+			MatTextOut = new BitmapMaterial(BitTextSkin.bitmapData, { alpha:1 } );
+			mesh.material = MatTextOut;
 			mesh.addEventListener(MouseEvent3D.MOUSE_OVER, UnitObject_Over);
 			mesh.addEventListener(MouseEvent3D.MOUSE_OUT, UnitObject_Out);
+			
 			movespeed = 4;
 			TurnSpeed = 5;
 			spawntime = 30;
 			detectrange = 128;
+			
 			
 			//mesh.debugbb = true;
 			
@@ -91,31 +104,6 @@
 			}
 		}
 		
-		public function UnitObject_Over(event:MouseEvent3D):void {
-			TexCom.addMaterial(MatTextOut);
-			TexCom.addMaterial(MatTextOver);
-			TexCom.removeMaterial(MatTextSelected);
-			mesh.material = TexCom;
-		}
-		
-		public function UnitObject_Out(event:MouseEvent3D = null):void {
-			//TexCom.removeMaterial(MatTextOver);
-			if (bselected == false) {
-				TexCom.removeMaterial(MatTextSelected);
-				TexCom.removeMaterial(MatTextOver);
-				TexCom.addMaterial(MatTextOut);
-				mesh.material = MatTextOut;
-			}else {
-				UnitObject_Selected();
-			}
-		}
-		
-		public function UnitObject_Selected(event:MouseEvent3D = null):void {
-			TexCom.removeMaterial(MatTextOver);
-			TexCom.addMaterial(MatTextOut);
-			TexCom.addMaterial(MatTextSelected);
-			//mesh.material = Tex_Out;
-		}
 	}
 	
 }
