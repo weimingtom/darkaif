@@ -1,5 +1,6 @@
 ﻿package gearunits.papervision3d.entity 
 {
+	//{
 	import flash.display.BitmapData;
 	import flash.geom.Matrix3D;
 	import flash.geom.Point;
@@ -18,6 +19,7 @@
 	import org.papervision3d.materials.special.CompositeMaterial;
 	import org.papervision3d.scenes.Scene3D;
 	import sandy.math.IntersectionMath;
+	//}
 	
 	/**
 	 * ...
@@ -61,7 +63,6 @@
 		//public var z:Number = 0;
 		
 		public var bhit:Boolean = false;
-		
 		
 		//public var min:Number3D = new Number3D();
 		//public var max:Number3D = new Number3D();

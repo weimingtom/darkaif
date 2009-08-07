@@ -11,10 +11,12 @@
 	import sandy.materials.BitmapMaterial;
 	import sandy.materials.ColorMaterial;
 	import sandy.materials.Material;
+	
 	/**
 	 * ...
 	 * @author Darknet
 	 */
+	
 	public class SSpacecraftFedFighter extends SSpaceshipFighter
 	{
 		[Embed(source = "../../../models/textures/SpacecraftFedFighter01.png")]
@@ -41,6 +43,8 @@
 			name = 'FedFighter';
 			classtype = 'SpacecraftFedFighter';
 			
+			//MatTextOut.
+			//TexAppOut.frontMaterial.
 			
 			mesh = new SMeshSpacecraftFedFighter();
 			mesh.enableInteractivity = true;
