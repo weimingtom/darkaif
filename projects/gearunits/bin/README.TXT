@@ -16,5 +16,10 @@ unit = soliders/vehicles
 Controls:
 Shif key: mini unit
 ctrl key: plus unit
+z = unit menu (building)
+x = unit main menu
+
 
 Note: This game is bit buggy.
+
+Working progress build test...
