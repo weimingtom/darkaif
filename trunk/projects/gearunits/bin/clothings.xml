@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<item>
+		<clothing>
+			<name>pants test</name>
+			<id>01</id>
+			<mesh>
+				<name>pants</name>
+				<type>ase</type>
+				<file>data/storeshoppants.ase</file>
+			</mesh>
+			<material>
+				<texture>
+					<name>shirtskin</name>
+					<id>02</id>
+					<file>data/storeshopshirt01.jpg</file>					
+				</texture>
+			</material>
+		</clothing>
+		
+		<clothing>
+			<name>shirt test</name>
+			<id>01</id>
+			<mesh>
+				<name>shirt</name>
+				<type>ase</type>
+				<file>data/storeshopshirt.ase</file>
+			</mesh>
+			<material>
+				<texture>
+					<name>shirtskin</name>
+					<id>02</id>
+					<file>data/storeshopshirt01.jpg</file>					
+				</texture>
+			</material>
+		</clothing>
+	</item>
+</data>
