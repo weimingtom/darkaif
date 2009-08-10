@@ -3,8 +3,15 @@
 	//{
 	import away3d.containers.View3D;
 	import away3d.core.base.Mesh;
+	import away3d.core.base.Object3D;
 	import away3d.core.math.Number3D;
 	import away3d.loaders.Ase;
+	import away3d.loaders.utils.MaterialLibrary;
+	import away3d.loaders.utils.TextureLoadQueue;
+	import away3d.materials.BitmapMaterial;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import gearunits.away3d.shop.AMeshBody;
 	//import away3d.loaders.Object3DLoader;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.Cube;
@@ -24,8 +31,8 @@
 	import gearunits.models.AMeshStoreshopSkirt;
 	import gearunits.models.AMeshStoreshopTable;
 	import gearunits.models.AMeshStoreshopWall;
-	import shop.Clothing;
-	import shop.Texture;
+	import gearunits.away3d.shop.AClothing;
+	import gearunits.away3d.shop.ATexture;
 	//}
 	
 	/**
@@ -35,6 +42,7 @@
 	
 	public class Away3DStoreShop extends Sprite
 	{
+		//{
 		public var view:View3D = new View3D( { x:320, y:240 } );
 		public var KEY_LEFT:Boolean = false;
 		public var KEY_RIGHT:Boolean = false;
@@ -42,18 +50,24 @@
 		public var KEY_DOWN:Boolean = false;
 		public var KEY_SPACE:Boolean = false;
 		
-		public var clothing:Vector.<Clothing> = new Vector.<Clothing>();
-		public var texture:Vector.<Texture> = new Vector.<Texture>();
+		public var clothing:Vector.<AClothing> = new Vector.<AClothing>();
+		public var texture:Vector.<ATexture> = new Vector.<ATexture>();
 		public var siteurl:String = 'http://localhost/projects/gearunits/bin/'
 		public var itemurlrequest:String = 'clothings.xml';
 		public var itemxml:XML = new XML();
 		public var dropboxmenu:DropBoxList = new DropBoxList();
+		public var dropboxmenu_chest:DropBoxList = new DropBoxList();
+		public var dropboxmenu_leg:DropBoxList = new DropBoxList();
+		public var bodymesh:AMeshBody = new AMeshBody();
 		
+		public var checkmeshtexture:Boolean = false;
+		
+		//}
 		
 		//public var leg
-		
 		public function Away3DStoreShop() {
-			Clothing.view = view;
+			ATexture.stage = stage;
+			AClothing.view = view;
 			addChild(view);
 			view.camera.y = 200;
 			view.camera.z = -200;
@@ -66,6 +80,8 @@
 			//view.camera.y = 800;
 			//view.camera.z = -567;
 			//view.camera.lookAt(new Number3D(0, 0, 0))
+			//bodymesh.z = 300;
+			bodymesh.y = 100;
 			
 			var cube:Cube = new Cube({height:8,width:8,depth:8});
 			view.scene.addChild(cube);
@@ -98,6 +114,7 @@
 			//trace(view.camera);
 			
 			view.render();
+			checkmeshmaterial();
 		}
 		
 		public function init_scene():void {
@@ -240,7 +257,6 @@
 		}
 		//}
 		
-		
 		public function loadclothinglistdata():void {
 			var urlrequest:URLRequest = new URLRequest(itemurlrequest);
 			var urlloader:URLLoader = new URLLoader(urlrequest);
@@ -267,29 +283,29 @@
 				trace(itemxml.item.clothing[c].name)
 				
 				var material:ColorMaterial = new ColorMaterial(0xFF0000);
-				var buildclothing:Clothing = new Clothing();
+				var buildclothing:AClothing = new AClothing();
 				//var fileobjectnam:String = 'http://localhost/projects/gearunits/bin/data/cubeobj.ase';
 				//var fileobjectnam:String = 'data/cubeobj.ase';
 				var objectname:String = itemxml.item.clothing[c].mesh.name;
 				var localdir:String = siteurl + itemxml.item.clothing[c].mesh.file;
-				//var localdir:String = itemxml.item.clothing[c].mesh.file;
 				buildclothing.load(Ase.load(localdir, { name:objectname, material:material, autoLoadTextures:false  } ));
-				//buildclothing.meshloader.y = 128 * c;
-				buildclothing.name = itemxml.item.clothing[c].mesh.name;
-				//view.scene.addChild(buildclothing.meshloader)
-				//buildclothing.meshloader.scale(0.01)
-				//trace(buildclothing.meshloader.url)
+				buildclothing.name = itemxml.item.clothing[c].name;
+				buildclothing.type = itemxml.item.clothing[c].type;
+				buildclothing.weartype = itemxml.item.clothing[c].weartype;
+				
+				for (var m:int = 0; m < itemxml.item.clothing[c].mesh.material.texture.length(); m++) {
+					var _tex:ATexture  = new ATexture();
+					_tex.name = itemxml.item.clothing[c].mesh.material.texture[m].name;
+					_tex.load(itemxml.item.clothing[c].mesh.material.texture[m].file);
+					buildclothing.texture.push(_tex);
+					texture.push(_tex);
+				}
 				countmesh++;
 				clothing.push(buildclothing);
 			}
+			checkmeshtexture = true;
 			init_menu();
 			//testbuildmesh();
-		}
-		
-		public function testbuildmesh():void {
-			for (var ci:int = 0; ci < clothing.length; ci++ ) {
-				view.scene.addChild(clothing[ci].meshloader)
-			}
 		}
 		
 		public function init_menu():void {
@@ -303,34 +319,99 @@
 		}
 		
 		public function dropboxlistselected(event:DropBoxEvent):void {
-			trace("|>>>|" + dropboxmenu._idname)
+			//trace("|>>>|" + dropboxmenu._idname)
 			//view.scene
+			var _type:String = "";
+			var _weartype:String = "";
 			var cc:int = 0
+			var holderclothing:AClothing;
 			
-			for (cc = 0; cc < clothing.length; cc++ ) {
-				try{
-					view.scene.removeChildByName(clothing[cc].meshloader.name);
-				}catch (e:Error) {
-					trace('error');
-				}
-				trace("clean..."+clothing[cc].meshloader.name)
-			}
-			
+			//look for type
 			for (cc = 0; cc < clothing.length; cc++ ) {
 				if (String(clothing[cc].id) == dropboxmenu._idname) {
-					//view.scene.addChild(clothing[cc].meshloader);
-					//clothing[cc].meshloader.scale(0.01);
-					clothing[cc].meshloader.scale(1);
-					//clothing[cc].meshloader.y = 64;
-					view.scene.addChild(clothing[cc].meshloader.handle);
-					trace(clothing[cc].meshloader.x + "|" + clothing[cc].meshloader.y + "|" + clothing[cc].meshloader.z);
-					view.camera.lookAt(new Number3D(clothing[cc].meshloader.x,clothing[cc].meshloader.y,clothing[cc].meshloader.z))
-					trace("added...")
+					holderclothing = clothing[cc];
+					_type = clothing[cc].type;
+					_weartype = clothing[cc].weartype;
+					break;
 				}
-				//dropboxmenu.addlist( { name:clothing[cc].name, id:clothing[cc].id } );
-				//trace("++" + clothing[cc].name);
+			}
+			
+			//remove form type
+			for (cc = 0; cc < clothing.length; cc++ ) {
+				if ((clothing[cc].type == _type)&&(clothing[cc].weartype == _weartype)){
+					try{
+						view.scene.removeChild(clothing[cc].meshloader);
+					}catch (e:Error) {
+						//trace('error');
+					}
+					
+					try{
+						view.scene.removeChild(clothing[cc].meshloader.handle);
+					}catch (e:Error) {
+						//trace('error');
+					}
+					//trace("clean..." + clothing[cc].meshloader.name)
+				}
+			}
+			
+			if (holderclothing != null) {
+				//trace('found');
+				for (var lc:int = 0; lc < bodymesh.clothing.length; lc++) {
+					//trace('checking---');
+					//trace(bodymesh.clothing[lc].type+ '>>'+ holderclothing.type+'>>'+bodymesh.clothing[lc].weartype +'>>'+ holderclothing.weartype)
+					if ((bodymesh.clothing[lc].type == holderclothing.type) && (bodymesh.clothing[lc].weartype == holderclothing.weartype)) {
+						holderclothing.meshloader.handle.x = bodymesh.clothing[lc].x + bodymesh.x;
+						holderclothing.meshloader.handle.y = bodymesh.clothing[lc].y + bodymesh.y;
+						holderclothing.meshloader.handle.z = bodymesh.clothing[lc].z + bodymesh.z;
+						//trace('found---');
+						break;
+					}
+				}
+			}
+			//holderclothing.meshloader.handle.y = 64;
+			view.scene.addChild(holderclothing.meshloader.handle);
+			
+		}
+		
+		public function checkmeshmaterial():void {
+			if(checkmeshtexture == true){
+				var bfilemeshloaded:Boolean = false;
+				var bfiletextureloaded:Boolean = false;
+				for (var l:int = 0; l < clothing.length; l++ ) {
+					if (clothing[l].bloaded == false) {
+						bfilemeshloaded = true;
+						break;
+					}
+				}
+			
+				for (var t:int = 0; t < texture.length; t++ ) {
+					if (texture[t].bloaded == false) {
+						bfilemeshloaded = true;
+						break;
+					}
+				}
+				
+				//trace(bfilemeshloaded+"|"+bfiletextureloaded)
+				if ((bfilemeshloaded == false)&& (bfiletextureloaded == false)){
+					trace('ALL FILE LOADED...')
+					for (var m:int = 0; m < clothing.length; m++ ) {
+						for (var tm:int = 0; tm < clothing[m].texture.length; tm++) {
+							var bitmat:BitmapMaterial = new BitmapMaterial (clothing[m].texture[tm].texture.bitmapData);
+							var matlist:MaterialLibrary = new MaterialLibrary()
+							matlist.addMaterial(clothing[m].texture[tm].location);
+							//matlist.texturesLoaded()
+							//matlist.texturesLoaded(
+							//var texmat:TextureLoadQueue = new TextureLoadQueue();
+							//var mesh:Object3D = new Object3D();
+							//mesh.materialLibrary
+							clothing[m].meshloader.materialLibrary = matlist;
+						}
+					}
+					checkmeshtexture = false;
+				}
 			}
 		}
+		
 	}
 	
 }

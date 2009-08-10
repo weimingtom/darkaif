@@ -1,4 +1,4 @@
-﻿package shop 
+﻿package gearunits.away3d.shop 
 {
 	import adobe.utils.CustomActions;
 	import away3d.containers.View3D;
@@ -17,7 +17,7 @@
 	 * ...
 	 * @author Darknet
 	 */
-	public class Clothing 
+	public class AClothing 
 	{
 		public static var view:View3D;
 		
@@ -26,12 +26,14 @@
 		public var bodyid:int = 0;
 		public var name:String = "";
 		public var bloaded:Boolean = false;
+		public var btextureloaded:Boolean = false;
 		
 		public var x:Number = 0;
 		public var y:Number = 0;
 		public var z:Number = 0;
 		
 		public var weartype:String = "";
+		public var type:String = "";
 		
 		public var rotate:Number3D = new Number3D();
 		public var offset:Number3D = new Number3D();
@@ -39,10 +41,9 @@
 		public var mesh:Object3D;
 		public var meshloader:Loader3D;
 		
-		public var texture:Vector.<Texture> = new Vector.<Texture>();
+		public var texture:Vector.<ATexture> = new Vector.<ATexture>();
 		
-		public function Clothing() 
-		{
+		public function AClothing() {
 			ID++;
 			id = ID;
 		}
@@ -65,17 +66,8 @@
 		
 		public function objOnSuccess(e:Loader3DEvent):void {
 			bloaded = true;
-			meshloader.handle
-			trace("SUCCESS IN CLASS");
-			//meshloader.scale(0.01);
-			//view.scene.addChild(meshloader);
-			//meshloader.updateObject();
-			//mesh = meshloader.clone();
-			//view.scene.addChild(mesh);
-			//trace(mesh.name);
-			//meshloader.updateObject()
-			//meshloader.updateSession()
-			//meshloader.visible = true;
+			//meshloader.handle
+			trace("Mesh loaded");
 		}
 		
 	}

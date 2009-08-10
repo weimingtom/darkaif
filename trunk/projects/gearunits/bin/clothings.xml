@@ -4,35 +4,61 @@
 		<clothing>
 			<name>pants test</name>
 			<id>01</id>
+			<type>legs</type>
+			<weartype>legs</weartype>
 			<mesh>
-				<name>pants</name>
 				<type>ase</type>
 				<file>data/storeshoppants.ase</file>
+				<material>
+					
+					<texture>
+						<name>skin01</name>
+						<id>02</id>
+						<matid>0</matid>
+						<file>data/grayscale02.jpg</file>					
+					</texture>
+					
+				</material>
 			</mesh>
-			<material>
-				<texture>
-					<name>shirtskin</name>
-					<id>02</id>
-					<file>data/storeshopshirt01.jpg</file>					
-				</texture>
-			</material>
+		</clothing>
+		
+		<clothing>
+			<name>shirt01 test</name>
+			<id>05</id>
+			<type>chest</type>
+			<weartype>chest</weartype>
+			<mesh>
+				<type>ase</type>
+				<file>data/shirt.ase</file>
+				<material>
+					
+					<texture>
+						<name>skin02</name>
+						<id>06</id>
+						<matid>0</matid>
+						<file>data/grayscale01.jpg</file>					
+					</texture>
+					
+				</material>
+			</mesh>
 		</clothing>
 		
 		<clothing>
 			<name>shirt test</name>
-			<id>01</id>
+			<id>03</id>
+			<type>chest</type>
+			<weartype>chest</weartype>
 			<mesh>
-				<name>shirt</name>
 				<type>ase</type>
 				<file>data/storeshopshirt.ase</file>
+				<material>
+					<texture>
+						<name>shirtskin</name>
+						<id>04</id>
+						<file>data/storeshopshirt01.jpg</file>					
+					</texture>
+				</material>
 			</mesh>
-			<material>
-				<texture>
-					<name>shirtskin</name>
-					<id>02</id>
-					<file>data/storeshopshirt01.jpg</file>					
-				</texture>
-			</material>
 		</clothing>
 	</item>
 </data>
