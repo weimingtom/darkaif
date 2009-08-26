@@ -32,7 +32,7 @@
   * [AS3_Class_implements_interface]
   * [actionscript3_client_server_others]
 
-Going to to rebuild some part of the area need to be clean and simple to deal with online and offline hosting. The Projects will become stand but not for 3D Engines. Once complete it, The packages will be rebuilded.
+Going to to rebuild some part of the area need to be clean and simple to deal with online and offline hosting. The Projects will become stand but not for 3D Engines. Once complete it, The packages will be rebuild. This deal with game classes and others.
 
  * Project Build
  * [Projects] -Game/Test Projects
