@@ -1,0 +1,1 @@
+&lt;wiki:gadget url="http://darkaif.googlecode.com/svn/trunk/apps/away3d/gearunitsaway3d.xml" width="850" height="650" /&gt;
